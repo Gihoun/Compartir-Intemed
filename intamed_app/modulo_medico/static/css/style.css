@@ -1,0 +1,5 @@
+.navcolor{
+    background: rgb(2,0,36);
+    background: linear-gradient(45deg, rgb(172, 172, 207) 0%, rgba(48,165,171,0.684093386627907) 43%, rgba(48,99,171,0.684093386627907) 70%);
+    color: whitesmoke; 
+}
