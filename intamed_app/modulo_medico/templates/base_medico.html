@@ -106,7 +106,7 @@
                 <button class="nav-link border m-3" id="v-pills-reporte-tab" data-bs-toggle="pill"
                     data-bs-target="#v-pills-reporte" type="button" role="tab" aria-controls="v-pills-reporte"
                     aria-selected="false">
-                    reporte
+                    Estudios Clinicos
                 </button>
             </div>
             <!-- Contenido de los tab de cada tabla -->
@@ -128,6 +128,7 @@
                 <div class="tab-pane fade container-fluid" id="v-pills-atencion" role="tabpanel"
                     aria-labelledby="v-pills-atencion-tab">
                     <!-- Primera Atencion Paciente -->
+                    <h2 class="text-center mb-5">Atención Pacientes Nuevos</h2>
                     <form class="row ">
                         <!-- Datos Basicos del Paciente -->
                         <div class="col-lg-2">
@@ -181,7 +182,7 @@
                                     placeholder="Talla Paciente (cm)">
                             </div>
                             <div class="col-lg-2">
-                                <label for="inputPesp" class="form-label">Peso</label>
+                                <label for="inputPeso" class="form-label">Peso</label>
                                 <input type="text" class="form-control" id="inputPeso" placeholder="Peso Paciente (Kg)">
                             </div>
                         </div>
@@ -261,6 +262,156 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-12 mt-5">
+                            <button type="submit" class="btn btn-primary">Registrar Nueva Atencion</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- Datos Basicos del Paciente consulta antigua -->
+                <div class="tab-pane fade container-fluid" id="v-pills-buscarpac" role="tabpanel"
+                    aria-labelledby="v-pills-buscarpac-tab">
+                    <h2 class="text-center mb-5">Consulta Pacientes</h2>
+                    <form class="row ">
+                        <!-- Datos Basicos del Paciente -->
+                        <div class="col-lg-2">
+                            <label for="inputRutpaciente2" class="form-label">Rut Paciente</label>
+                            <input type="text" class="form-control" id="inputRutpaciente2" placeholder="Ingrese Rut">
+                        </div>
+                        <div class="col-lg-1">
+                            <label for="inputDV2" class="form-label">Dv</label>
+                            <input type="text" class="form-control" id="inputDV2" placeholder="Dv">
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-lg-4">
+                                <label for="inputNombre2" class="form-label">Nombres</label>
+                                <input type="text" class="form-control" id="inputNombre2" placeholder="Nombre Paciente">
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="inputApellidop2" class="form-label">Apellido P.</label>
+                                <input type="text" class="form-control" id="inputApellidop2"
+                                    placeholder="Apellido Paterno">
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="inputApellidom2" class="form-label">Apellido M.</label>
+                                <input type="text" class="form-control" id="inputApellidom2"
+                                    placeholder="Apellido Materno">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class=" col-lg-4">
+                                <label for="inputcorreo2" class="form-label">Correo Electronico</label>
+                                <input type="email" class="form-control" id="inputcorreo2"
+                                    placeholder="Ejemplo@correo.paciente">
+                            </div>
+                            <div class="col-lg-8">
+                                <label for="inputDireccion2" class="form-label">Direccion</label>
+                                <input type="text" class="form-control" id="inputDireccion2" placeholder="Direccion">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class=" col-lg-6">
+                                <label for="inputNac2" class="form-label">Nacionalidad</label>
+                                <input type="text" class="form-control" id="inputNac2"
+                                    placeholder="Nacionalidad Paciente">
+                            </div>
+                            <div class="col-lg-2">
+                                <label for="inputEdad2" class="form-label">Edad</label>
+                                <input type="text" class="form-control" id="inputEdad2" placeholder="Edad Paciente">
+                            </div>
+                            <div class="col-lg-2">
+                                <label for="inputTalla2" class="form-label">Talla</label>
+                                <input type="text" class="form-control" id="inputTalla2"
+                                    placeholder="Talla Paciente (cm)">
+                            </div>
+                            <div class="col-lg-2">
+                                <label for="inputPeso2" class="form-label">Peso</label>
+                                <input type="text" class="form-control" id="inputPeso2" placeholder="Peso Paciente (Kg)">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <label for="inputFono2" class="form-label">Fono</label>
+                                <input type="text" class="form-control" id="inputFono2" placeholder="Telefono Paciente">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="inputAlergia2" class="form-label">Alergia</label>
+                                <select id="inputAlergia2" class="form-select " oninput="validar_Alergia2()">
+                                    <option selected>NO</option>
+                                    <option>SI</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputDetalleA2" class="form-label">Detalle Alergia</label>
+                                <input type="text" class="form-control" id="inputDetalleA2"
+                                    placeholder="Detalle de Alergia" disabled>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="inputPrev2" class="form-label">Prevision</label>
+                                <select id="inputPrev2" class="form-select ">
+                                    <option selected>Fonasa</option>
+                                    <option>Colmena</option>
+                                    <option>Cruz Blanca</option>
+                                    <option>Codelco</option>
+                                    <option>ETC</option>
+                                </select>
+                            </div>
+                            <script>
+                                function validar_Alergia2() {
+                                    var Alergia = document.getElementById('inputAlergia2').value;
+                                    if (Alergia == 'SI') {
+                                        document.getElementById('inputDetalleA2').disabled = false
+                                    } else {
+                                        document.getElementById('inputDetalleA2').disabled = true;
+                                    }
+                                }
+                            </script>
+                        </div>
+                        <hr class="mt-5" style="color: grey" />
+                        <!-- Observaciones Receta y mas Modificaciones -->
+                        <ul class="nav nav-tabs mt-3" id="tabsObs2" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="observaciones2-tab" data-bs-toggle="tab"
+                                    data-bs-target="#observaciones2" type="button" role="tab"
+                                    aria-controls="observaciones2" aria-selected="true">Observaciones</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="farmaco2-tab" data-bs-toggle="tab" data-bs-target="#farmaco2"
+                                    type="button" role="tab" aria-controls="farmaco2"
+                                    aria-selected="false">Farmacos</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="diagnotico2-tab" data-bs-toggle="tab"
+                                    data-bs-target="#diagnostico2" type="button" role="tab" aria-controls="diagnostico2"
+                                    aria-selected="false">Diagnostico</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="tabcontenidobs2">
+                            <div class="tab-pane fade show active" id="observaciones2" role="tabpanel"
+                                aria-labelledby="observaciones2-tab">
+                                <div class="mb-3 mt-5">
+                                    <label for="inputObservacion" class="form-label">Observaciones Anteriores</label>
+                                    <textarea class="form-control" id="inputObservacion" rows="3" disabled></textarea>
+                                </div>
+                                <div class="mb-3 mt-5">
+                                    <label for="inputObservacion2" class="form-label">Escriba nuevas observaciones</label>
+                                    <textarea class="form-control" id="inputObservacion2" rows="3" ></textarea>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="farmaco2" role="tabpanel" aria-labelledby="farmaco2-tab">
+                                <h1>TRABAJANDO EN UN MEJOR SERVICIO</h1>
+                            </div>
+                            <div class="tab-pane fade" id="diagnostico2" role="tabpanel"
+                                aria-labelledby="diagnotico2-tab">
+                                <div class="mb-3 mt-5">
+                                    <label for="inputDiagnostico" class="form-label">Diagnostico anterior</label>
+                                    <textarea class="form-control" id="inputDiagnostico" rows="3" disabled></textarea>
+                                </div>
+                                <div class="mb-3 mt-5">
+                                    <label for="inputDiagnostico2" class="form-label">Escriba nuevo diagnostico</label>
+                                    <textarea class="form-control" id="inputDiagnostico2" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
 
 
 
@@ -268,16 +419,6 @@
                             <button type="submit" class="btn btn-primary">Registrar Atencion</button>
                         </div>
                     </form>
-                </div>
-                <div class="tab-pane fade container-fluid" id="v-pills-buscarpac" role="tabpanel"
-                    aria-labelledby="v-pills-buscarpac-tab">
-                    <div>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas sed
-                        voluptate veniam omnis ullam eveniet ipsa ad laboriosam quia.
-                        Velit quos quo voluptates blanditiis minus excepturi eos impedit
-                        itaque! Possimus placeat magnam officiis ratione praesentium, iure
-                        obcaecati reiciendis! Consectetur numquam quo magnam, consequuntur
-                    </div>
                 </div>
                 <!-- Lista de Examenes por Paciente -->
                 <div class="tab-pane fade" id="v-pills-examen" role="tabpanel" aria-labelledby="v-pills-examen-tab">
