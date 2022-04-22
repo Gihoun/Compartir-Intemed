@@ -1,379 +1,275 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Inicio Consulta Medica</title>
-    <link
-      type="text/css"
-      rel="stylesheet"
-      href="{% static 'css/style.css' %}"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-      crossorigin="anonymous"
-    />
+    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
     <style>
-      header {
-        background: rgb(2, 0, 36);
-        background: linear-gradient(
-          45deg,
-          rgb(172, 172, 207) 0%,
-          rgba(48, 165, 171, 0.684093386627907) 43%,
-          rgba(48, 99, 171, 0.684093386627907) 70%
-        );
-        color: whitesmoke;
-        border-bottom: 10px;
-      }
-      .banner {
-        background-size: cover;
-        height: 500px;
-      }
-      #v-pills-agenda-tab {
-        width: 200px;
-      }
+        header {
+            background: rgb(2, 0, 36);
+            background: linear-gradient(45deg,
+                    rgb(172, 172, 207) 0%,
+                    rgba(48, 165, 171, 0.684093386627907) 43%,
+                    rgba(48, 99, 171, 0.684093386627907) 70%);
+            color: whitesmoke;
+            border-bottom: 10px;
+        }
+
+        .banner {
+            background-size: cover;
+            height: 500px;
+        }
+
+        #v-pills-agenda-tab {
+            width: 200px;
+        }
     </style>
-  </head>
-  <body>
+</head>
+
+<body>
     <!-- navbar clasica -->
     <header class="fixed-top">
-      <nav class="navbar navbar-expand-xl navbar-light border p-md-3">
-        <div class="container">
-          <a class="navbar-brand" href="#">Intemed</a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
+        <nav class="navbar navbar-expand-xl navbar-light border p-md-3">
+            <div class="container">
+                <a class="navbar-brand" href="#">Intemed</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-          <div class="collapse navbar-collapse">
-            <div class="mx-auto"></div>
-            <ul class="navbar-nav hstack gap-3">
-              <li class="nav-item">
-                <a class="nav-link text-white" href="#">Inicio</a>
-              </li>
-              <div class="vr"></div>
-              <li class="nav-item">
-                <a class="nav-link text-white" href="#">Nuestra Clinica</a>
-              </li>
-              <div class="vr"></div>
-              <li class="nav-item">
-                <a class="nav-link text-white" href="#">Mi Cuenta</a>
-              </li>
-              <div class="vr"></div>
-              <li class="nav-item">
-                <a class="nav-link text-white" href="#">Cerrar Sesión</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+                <div class="collapse navbar-collapse">
+                    <div class="mx-auto"></div>
+                    <ul class="navbar-nav hstack gap-3">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Inicio</a>
+                        </li>
+                        <div class="vr"></div>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Nuestra Clinica</a>
+                        </li>
+                        <div class="vr"></div>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Mi Cuenta</a>
+                        </li>
+                        <div class="vr"></div>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Cerrar Sesión</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
     <!-- Banner -->
     <div class="d-flex justify-content-center align-items-center">
-      <img
-        class="banner w-100"
-        src="{% static 'img/banner_m_medico.jpg' %}"
-        alt=""
-      />
+        <img class="banner w-100" src="{% static 'img/banner_m_medico.jpg' %}" alt="" />
     </div>
     <!-- La linea -->
     <hr class="mx-auto" style="color: grey" />
     <div>
-      <h2 class="ms-5" style="text-align: start">Bienvenido Usuario.......</h2>
+        <h2 class="ms-5" style="text-align: start">Bienvenido Usuario.......</h2>
     </div>
+    <!-- La linea -->
+    <hr class="mx-auto" style="color: grey" />
     <!-- Contenido del medico -->
     <main class="p-5">
-      <div class="d-flex align-items-start">
-        <div
-          class="nav flex-column nav-pills me-5"
-          id="v-pills-tab"
-          role="tablist"
-          aria-orientation="vertical"
-        >
-          <button
-            class="nav-link active border m-3"
-            id="v-pills-agenda-tab"
-            data-bs-toggle="pill"
-            data-bs-target="#v-pills-agenda"
-            type="button"
-            role="tab"
-            aria-controls="v-pills-agenda"
-            aria-selected="true"
-          >
-            Agenda
-          </button>
-          <button
-            class="nav-link border m-3"
-            id="v-pills-atencion-tab"
-            data-bs-toggle="pill"
-            data-bs-target="#v-pills-atencion"
-            type="button"
-            role="tab"
-            aria-controls="v-pills-atencion"
-            aria-selected="false"
-          >
-            Atencion Paciente
-          </button>
-          <button
-            class="nav-link border m-3"
-            id="v-pills-buscarpac-tab"
-            data-bs-toggle="pill"
-            data-bs-target="#v-pills-buscarpac"
-            type="button"
-            role="tab"
-            aria-controls="v-pills-buscarpac"
-            aria-selected="false"
-          >
-            Consulta Paciente
-          </button>
-          <button
-            class="nav-link border m-3"
-            id="v-pills-examen-tab"
-            data-bs-toggle="pill"
-            data-bs-target="#v-pills-examen"
-            type="button"
-            role="tab"
-            aria-controls="v-pills-examen"
-            aria-selected="false"
-          >
-            Examenes
-          </button>
-          <button
-            class="nav-link border m-3"
-            id="v-pills-reporte-tab"
-            data-bs-toggle="pill"
-            data-bs-target="#v-pills-reporte"
-            type="button"
-            role="tab"
-            aria-controls="v-pills-reporte"
-            aria-selected="false"
-          >
-            reporte
-          </button>
-        </div>
-        <div class="tab-content" id="v-pills-tabContent">
-          <div
-            class="tab-pane fade show active container-fluid"
-            id="v-pills-agenda"
-            role="tabpanel"
-            aria-labelledby="v-pills-agenda-tab"
-          >
-            <div class="row">
-              <div class="col-lg-11">
-                <h2 class="text-center">Agenda Paciente</h2>
-              </div>
-              <div class="col-lg-1">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Distinctio fugiat deserunt voluptatibus tenetur dolorem delectus
-                placeat dicta dolor nulla! Sit mollitia quae eum ipsa suscipit
-                nemo, delectus rerum est necessitatibus.
-              </div>
+        <div class="d-flex">
+            <div class="nav flex-column nav-pills me-5 border border-3 rounded border-info" id="v-pills-tab"
+                role="tablist" aria-orientation="vertical">
+                <button class="nav-link active border m-3" id="v-pills-agenda-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-agenda" type="button" role="tab" aria-controls="v-pills-agenda"
+                    aria-selected="true">
+                    Agenda
+                </button>
+                <button class="nav-link border m-3" id="v-pills-atencion-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-atencion" type="button" role="tab" aria-controls="v-pills-atencion"
+                    aria-selected="false">
+                    Atencion Paciente
+                </button>
+                <button class="nav-link border m-3" id="v-pills-buscarpac-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-buscarpac" type="button" role="tab" aria-controls="v-pills-buscarpac"
+                    aria-selected="false">
+                    Consulta Paciente
+                </button>
+                <button class="nav-link border m-3" id="v-pills-examen-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-examen" type="button" role="tab" aria-controls="v-pills-examen"
+                    aria-selected="false">
+                    Examenes
+                </button>
+                <button class="nav-link border m-3" id="v-pills-reporte-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-reporte" type="button" role="tab" aria-controls="v-pills-reporte"
+                    aria-selected="false">
+                    reporte
+                </button>
             </div>
-          </div>
-          <div
-            class="tab-pane fade container-fluid"
-            id="v-pills-atencion"
-            role="tabpanel"
-            aria-labelledby="v-pills-atencion-tab"
-          >
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iusto,
-            facere et sint magnam dolore, rem ducimus voluptatum ut amet, atque
-            quia architecto possimus. Dolores ipsum laudantium, facilis id,
-          </div>
-          <div
-            class="tab-pane fade container-fluid"
-            id="v-pills-buscarpac"
-            role="tabpanel"
-            aria-labelledby="v-pills-buscarpac-tab"
-          >
-            <div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas sed
-              voluptate veniam omnis ullam eveniet ipsa ad laboriosam quia.
-              Velit quos quo voluptates blanditiis minus excepturi eos impedit
-              itaque! Possimus placeat magnam officiis ratione praesentium, iure
-              obcaecati reiciendis! Consectetur numquam quo magnam, consequuntur
-            </div>
-          </div>
-        <!-- Lista de Examenes por Paciente -->
-        <div
-            class="tab-pane fade"
-            id="v-pills-examen"
-            role="tabpanel"
-            aria-labelledby="v-pills-examen-tab"
-          >
-            <div class=" container-fluid row">
-              <div class="col-lg-12">
-                <h2 class="text-center mb-5">Examenes Pacientes</h2>
-                  <!-- form para buscar examen paciente -->
-                <form class="row row-cols-lg-auto g-3 align-items-center mb-5">
-                  <label class="" for="rutPaciente">Rut Paciente</label>
-                  <div class="col-12">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="rutPaciente"
-                      placeholder="Ingrese rut paciente"
-                    />
-                  </div>
-                  <div class="col-12">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="DV"
-                      placeholder="DV"
-                      style="width: 75px;"
-                    />
-                  </div>
-                  <div class="col-12">
-                    <button
-                      type="submit"
-                      class="btn btn-primary"
-                      id="btnbuscarPaciente"
-                    >
-                      Buscar Paciente
-                    </button>
-                  </div>
-                </form>
-                        <!-- Tabla de examenes -->
-                <div class="container m-1 table-responsive  border">
-                    <table class="table table-secundary table-hover">
-                    <thead>
-                        <tr>
-                        <th scope="col">ID Examen</th>
-                        <th scope="col">Nombre Archivo</th>
-                        <th scope="col">Fecha subida</th>
-                        <th scope="col" style="text-align: center">Funciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                        <th scope="row">0122</th>
-                        <td>Examen 1</td>
-                        <td>22-11-2022</td>
-                        <td style="text-align: center;">
-                            <button
-                            id="boton"
-                            type="button"
-                            class="btn btn-info m-1 text-white"
-                            onclick=""
-                            >
-                            Visualizar
-                            </button>
-                            <button
-                            id="boton"
-                            type="button"
-                            class="btn btn-info m-1 text-white"
-                            onclick=""
-                            >
-                            Imprimir
-                            </button>
-                            <button
-                            id="boton"
-                            type="button"
-                            class="btn btn-info m-1 text-white"
-                            onclick=""
-                            >
-                            Eliminar
-                            </button>
-                        </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">0123</th>
-                            <td>Examen 2</td>
-                            <td>22-11-2022</td>
-                            <td style="text-align: center;">
-                            <button
-                                id="boton"
-                                type="button"
-                                class="btn btn-info m-1 text-white"
-                                onclick=""
-                            >
-                                Visualizar
-                            </button>
-                            <button
-                                id="boton"
-                                type="button"
-                                class="btn btn-info m-1 text-white"
-                                onclick=""
-                            >
-                                Imprimir
-                            </button>
-                            <button
-                                id="boton"
-                                type="button"
-                                class="btn btn-info m-1 text-white"
-                                onclick=""
-                            >
-                                Eliminar
-                            </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">0124</th>
-                            <td>Examen 3</td>
-                            <td>22-11-2022</td>
-                            <td style="text-align: center;">
-                            <button
-                                id="boton"
-                                type="button"
-                                class="btn btn-info m-1 text-white"
-                                onclick=""
-                            >
-                                Visualizar
-                            </button>
-                            <button
-                                id="boton"
-                                type="button"
-                                class="btn btn-info m-1 text-white"
-                                onclick=""
-                            >
-                                Imprimir
-                            </button>
-                            <button
-                                id="boton"
-                                type="button"
-                                class="btn btn-info m-1 text-white"
-                                onclick=""
-                            >
-                                Eliminar
-                            </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                    </table>
+            <div class="tab-content  container-fluid" id="v-pills-tabContent">
+                <div class="tab-pane fade show active container-fluid" id="v-pills-agenda" role="tabpanel"
+                    aria-labelledby="v-pills-agenda-tab">
+                    <div class="row">
+                        <div class="col-lg-11">
+                            <h2 class="text-center">Agenda Paciente</h2>
+                        </div>
+                        <div class="col-lg-1">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                            Distinctio fugiat deserunt voluptatibus tenetur dolorem delectus
+                            placeat dicta dolor nulla! Sit mollitia quae eum ipsa suscipit
+                            nemo, delectus rerum est necessitatibus.
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-12 mt-5">
-                    Disclaimer de Privacidad: Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, eveniet nulla? Illo, voluptatem repudiandae, perspiciatis impedit quo quas corrupti praesentium, cum delectus minima alias aliquam. Quia veritatis rem dicta tempore. 
+                <div class="tab-pane fade container-fluid" id="v-pills-atencion" role="tabpanel"
+                    aria-labelledby="v-pills-atencion-tab">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iusto,
+                    facere et sint magnam dolore, rem ducimus voluptatum ut amet, atque
+                    quia architecto possimus. Dolores ipsum laudantium, facilis id,
                 </div>
-            </div>
-        </div>
-        </div>
-        <!-- Reporte de Estudios -->
-        <div
-            class="tab-pane fade"
-            id="v-pills-reporte"
-            role="tabpanel"
-            aria-labelledby="v-pills-reporte-tab"
-          >
+                <div class="tab-pane fade container-fluid" id="v-pills-buscarpac" role="tabpanel"
+                    aria-labelledby="v-pills-buscarpac-tab">
+                    <div>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas sed
+                        voluptate veniam omnis ullam eveniet ipsa ad laboriosam quia.
+                        Velit quos quo voluptates blanditiis minus excepturi eos impedit
+                        itaque! Possimus placeat magnam officiis ratione praesentium, iure
+                        obcaecati reiciendis! Consectetur numquam quo magnam, consequuntur
+                    </div>
+                </div>
+                <!-- Lista de Examenes por Paciente -->
+                <div class="tab-pane fade" id="v-pills-examen" role="tabpanel" aria-labelledby="v-pills-examen-tab">
+                    <div class=" container-fluid row">
+                        <div class="col-lg-12">
+                            <h2 class="text-center mb-5">Examenes Pacientes</h2>
+                            <!-- form para buscar examen paciente -->
+                            <form class="row row-cols-lg-auto g-3 align-items-center mb-5">
+                                <label class="" for="rutPaciente">Rut Paciente</label>
+                                <div class="col-12">
+                                    <input type="text" class="form-control" id="rutPaciente"
+                                        placeholder="Ingrese rut paciente" />
+                                </div>
+                                <div class="col-12">
+                                    <input type="text" class="form-control" id="DV" placeholder="DV"
+                                        style="width: 75px;" />
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary" id="btnbuscarPaciente">
+                                        Buscar Paciente
+                                    </button>
+                                </div>
+                            </form>
+                            <!-- Tabla de examenes -->
+                            <div class="container m-1 table-responsive  border">
+                                <table class="table table-secundary table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID Examen</th>
+                                            <th scope="col">Nombre Archivo</th>
+                                            <th scope="col">Fecha subida</th>
+                                            <th scope="col" style="text-align: center">Funciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">0122</th>
+                                            <td>Examen 1</td>
+                                            <td>22-11-2022</td>
+                                            <td style="text-align: center;">
+                                                <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                                    onclick="">
+                                                    Visualizar
+                                                </button>
+                                                <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                                    onclick="">
+                                                    Imprimir
+                                                </button>
+                                                <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                                    onclick="">
+                                                    Eliminar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">0123</th>
+                                            <td>Examen 2</td>
+                                            <td>22-11-2022</td>
+                                            <td style="text-align: center;">
+                                                <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                                    onclick="">
+                                                    Visualizar
+                                                </button>
+                                                <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                                    onclick="">
+                                                    Imprimir
+                                                </button>
+                                                <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                                    onclick="">
+                                                    Eliminar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">0124</th>
+                                            <td>Examen 3</td>
+                                            <td>22-11-2022</td>
+                                            <td style="text-align: center;">
+                                                <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                                    onclick="">
+                                                    Visualizar
+                                                </button>
+                                                <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                                    onclick="">
+                                                    Imprimir
+                                                </button>
+                                                <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                                    onclick="">
+                                                    Eliminar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-lg-12 mt-5">
+                                Disclaimer de Privacidad: Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                Rerum, eveniet nulla? Illo, voluptatem repudiandae, perspiciatis impedit quo quas
+                                corrupti praesentium, cum delectus minima alias aliquam. Quia veritatis rem dicta
+                                tempore.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Reporte de Estudios -->
+                <div class="tab-pane fade" id="v-pills-reporte" role="tabpanel" aria-labelledby="v-pills-reporte-tab">
+                    <h2 class="text-center mb-5">Estudios Clinicos</h2>
+                    <div class="card w-75 mx-auto text-center">
+                        <img src="{% static 'img/estudios_clinicos.jpg' %}" class="card-img-top" alt="..."
+                            style="height: 320px;">
+                        <div class="card-body">
 
-
-        </div>
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-4 mx-auto">
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option selected>Seleciona los datos</option>
+                                            <option value="1">1 anno</option>
+                                            <option value="2">6 meses</option>
+                                            <option value="3">Todos los datos</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-primary btn-lg mt-5">Generar Reporte</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
     </main>
-  </body>
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-    crossorigin="anonymous"
-  ></script>
+    crossorigin="anonymous"></script>
+
 </html>
