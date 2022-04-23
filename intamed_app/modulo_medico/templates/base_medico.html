@@ -252,8 +252,53 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="farmaco" role="tabpanel" aria-labelledby="farmaco-tab">
-                                <h1>TRABAJANDO EN UN MEJOR SERVICIO</h1>
+                                <h3 class="text-center"> Receta Médica</h3>
+                                <table class="table border" id="tablaF">
+                                    <thead>
+                                        <tr>
+
+                                            <th scope="col">Nombre Fármaco</th>
+                                            <th scope="col">Dosis</th>
+                                            <th scope="col">Via de Adminsitración</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr id="row">
+                                            <td><input type="text" id="nombrefarmaco" placeholder="Ingrese Fármaco">
+                                            </td>
+                                            <td><input type="string" id="dosisfarmaco" placeholder="Ingrese Dosis"></td>
+                                            <td>
+                                                <select class="form-select" aria-label="Default select example"
+                                                    id="viafarmaco">
+                                                    <option selected>Enteral</option>
+                                                    <option value="1">Parenteral</option>
+                                                    <option value="2">Tópica</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <button type="button" class="btn btn-primary" onclick="delete_row()">Eliminar Fármaco</button>
+                                <button type="button" class="btn btn-primary" onclick="add_row()">Agregar
+                                    Fármaco</button>
+                                <button type="submit" class="btn btn-primary">Generar Receta</button>
+                                <script>
+                                    function add_row() {
+                                        var nombrefarmaco = document.getElementById("nombrefarmaco").value;
+                                        var dosisfarmaco = document.getElementById("dosisfarmaco").value;
+                                        var viafarmaco = document.getElementById("viafarmaco").value;
+                                        var tablafarmaco = document.getElementById("tablaF");
+                                        var tabla_len = (tablafarmaco.rows.length);
+                                        var row = tablafarmaco.insertRow(tabla_len).outerHTML = '<tr id="row' + tabla_len + '"><td><input type="text" id="nombrefarmaco' + tabla_len + '" placeholder="Ingrese Fármaco"></td> <td><input type="string" id="dosisfarmaco' + tabla_len + '" placeholder="Ingrese Dosis"></td><td><select class="form-select" aria-label="Default select example" id="viafarmaco' + tabla_len + '"><option selected>Enteral</option><option value="1">Parenteral</option><option value="2">Tópica</option></select></td></tr>'
+                                    }
+                                    function delete_row() {
+                                        var tablafarmaco = document.getElementById("tablaF")
+                                        var tabla_len = (tablafarmaco.rows.length)-1;
+                                        document.getElementById("row"+ tabla_len).outerHTML = "";
+                                    }
+                                </script>
                             </div>
+                            <!-- Primer Diagnostico Paciente -->
                             <div class="tab-pane fade" id="diagnostico" role="tabpanel"
                                 aria-labelledby="diagnotico-tab">
                                 <div class="mb-3 mt-5">
@@ -263,7 +308,7 @@
                             </div>
                         </div>
                         <div class="col-12 mt-5">
-                            <button type="submit" class="btn btn-primary">Registrar Nueva Atencion</button>
+                            <button type="submit" class="btn btn-primary">Registrar Nueva Atención</button>
                         </div>
                     </form>
                 </div>
@@ -325,7 +370,8 @@
                             </div>
                             <div class="col-lg-2">
                                 <label for="inputPeso2" class="form-label">Peso</label>
-                                <input type="text" class="form-control" id="inputPeso2" placeholder="Peso Paciente (Kg)">
+                                <input type="text" class="form-control" id="inputPeso2"
+                                    placeholder="Peso Paciente (Kg)">
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -375,8 +421,8 @@
                                     aria-controls="observaciones2" aria-selected="true">Observaciones</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="farmaco2-tab" data-bs-toggle="tab" data-bs-target="#farmaco2"
-                                    type="button" role="tab" aria-controls="farmaco2"
+                                <button class="nav-link" id="farmaco2-tab" data-bs-toggle="tab"
+                                    data-bs-target="#farmaco2" type="button" role="tab" aria-controls="farmaco2"
                                     aria-selected="false">Farmacos</button>
                             </li>
                             <li class="nav-item" role="presentation">
@@ -393,8 +439,9 @@
                                     <textarea class="form-control" id="inputObservacion" rows="3" disabled></textarea>
                                 </div>
                                 <div class="mb-3 mt-5">
-                                    <label for="inputObservacion2" class="form-label">Escriba nuevas observaciones</label>
-                                    <textarea class="form-control" id="inputObservacion2" rows="3" ></textarea>
+                                    <label for="inputObservacion2" class="form-label">Escriba nuevas
+                                        observaciones</label>
+                                    <textarea class="form-control" id="inputObservacion2" rows="3"></textarea>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="farmaco2" role="tabpanel" aria-labelledby="farmaco2-tab">
