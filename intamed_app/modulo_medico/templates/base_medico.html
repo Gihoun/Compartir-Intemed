@@ -278,10 +278,14 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <button type="button" class="btn btn-primary" onclick="delete_row()">Eliminar Fármaco</button>
-                                <button type="button" class="btn btn-primary" onclick="add_row()">Agregar
-                                    Fármaco</button>
-                                <button type="submit" class="btn btn-primary">Generar Receta</button>
+                                <div class="text-end">
+                                    <button type="button" class="btn btn-primary" onclick="delete_row()">Eliminar
+                                        Fármaco</button>
+                                    <button type="button" class="btn btn-primary" onclick="add_row()">Agregar
+                                        Fármaco</button>
+                                    <button type="submit" class="btn btn-primary">Generar Receta</button>
+                                </div>
+
                                 <script>
                                     function add_row() {
                                         var nombrefarmaco = document.getElementById("nombrefarmaco").value;
@@ -293,8 +297,8 @@
                                     }
                                     function delete_row() {
                                         var tablafarmaco = document.getElementById("tablaF")
-                                        var tabla_len = (tablafarmaco.rows.length)-1;
-                                        document.getElementById("row"+ tabla_len).outerHTML = "";
+                                        var tabla_len = (tablafarmaco.rows.length) - 1;
+                                        document.getElementById("row" + tabla_len).outerHTML = "";
                                     }
                                 </script>
                             </div>
