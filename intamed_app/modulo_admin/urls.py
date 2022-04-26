@@ -3,5 +3,5 @@ from django.urls import path
 from .views import administrator
 
 urlpatterns = [   
-    path('administracion/',administrator,name="administracion"),
+    path('panel/',administrator,name="administracion"),
 ]
