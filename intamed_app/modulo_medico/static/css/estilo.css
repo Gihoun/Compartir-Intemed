@@ -1,0 +1,8 @@
+header {
+    background: rgb(2,0,36);
+    background: linear-gradient(45deg, rgb(172, 172, 207) 0%, rgb(48, 165, 171) 43%, rgb(48, 99, 171) 70%);
+    color: whitesmoke; 
+}
+.banner {
+    background-size: cover;
+}
