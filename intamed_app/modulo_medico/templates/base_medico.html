@@ -11,11 +11,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
-    <style>
+    <!-- <style>
         #v-pills-agenda-tab {
             width: 200px;
         }
-    </style>
+    </style> -->
 </head>
 
 <body>
@@ -113,7 +113,6 @@
                             </div>
                         </form>
                     </div>
-
                     <div class="container m-1 table-responsive  border">
                         <table class="table is-fullwidth is-striped is-bordered">
                             <thead>
@@ -223,19 +222,61 @@
                                 <label for="inputFono" class="form-label">Fono</label>
                                 <input type="text" class="form-control" id="inputFono" placeholder="Telefono Paciente">
                             </div>
-                            <div class="col-md-2">
-                                <label for="inputAlergia" class="form-label">Alergia</label>
-                                <select id="inputAlergia" class="form-select " oninput="validar_Alergia()">
-                                    <option selected>NO</option>
-                                    <option>SI</option>
-                                </select>
-                            </div>
                             <div class="col-md-4">
-                                <label for="inputDetalleA" class="form-label">Detalle Alergia</label>
-                                <input type="text" class="form-control" id="inputDetalleA"
-                                    placeholder="Detalle de Alergia" disabled>
+                                <label for="inputAlergia" class="form-label">Alergia</label>
+                                <div class="input-group ">
+                                    <input type="text col-md-8" class="form-control" id="inputDetalleA"
+                                        placeholder="Detalle de Alergia" value="" disabled>
+                                    <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#modal_alergia_scroll"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="16" height="16" fill="currentColor" class="bi bi-plus-circle"
+                                            viewBox="0 0 16 16">
+                                            <path
+                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                            <path
+                                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                        </svg>
+                                    </button>
+                                    <div class="modal fade" id="modal_alergia_scroll" data-bs-backdrop="static"
+                                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="alergia_estatica"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="alergia_estatica">Seleccione una Alergia
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <button type="button" class="btn btn-outline-primary"
+                                                        id="tipo_alergia1" onclick="validar_Alergia(this.id)">Alergia 1</button>
+                                                    <button type="button" class="btn btn-outline-secondary"
+                                                        id="tipo_alergia2"
+                                                        onclick="validar_Alergia(this.id)">Alergia 2</button>
+                                                    <button type="button" class="btn btn-outline-success"
+                                                        id="tipo_alergia3"
+                                                        onclick="validar_Alergia(this.id)">Alergia 3</button>
+                                                    <button type="button" class="btn btn-outline-danger"
+                                                        id="tipo_alergia4"
+                                                        onclick="validar_Alergia(this.id)">Alergia 6</button>
+                                                    <button type="button" class="btn btn-outline-warning"
+                                                        id="tipo_alergia5"
+                                                        onclick="validar_Alergia(this.id)">Alergia 5</button>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Cerrar
+                                                    </button>
+                                                    <button type="button" class="btn btn-warning" onclick="borrar_Alergia()">Borrar</button>
+                                                    <button type="button" class="btn btn-primary" id="select_alergia" data-bs-dismiss="modal" onclick="detalle_Alergia()" >Guardar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <label for="inputPrev" class="form-label">Prevision</label>
                                 <select id="inputPrev" class="form-select ">
                                     <option selected>Fonasa</option>
@@ -246,13 +287,19 @@
                                 </select>
                             </div>
                             <script>
-                                function validar_Alergia() {
-                                    var Alergia = document.getElementById('inputAlergia').value;
-                                    if (Alergia == 'SI') {
-                                        document.getElementById('inputDetalleA').disabled = false
-                                    } else {
-                                        document.getElementById('inputDetalleA').disabled = true;
-                                    }
+                                function validar_Alergia(id) {
+                                    var Alergia = document.getElementById(id).innerHTML;
+                                    document.getElementById('select_alergia').value = Alergia;
+                                }
+                                function detalle_Alergia(){
+                                    var detalle = document.getElementById('select_alergia').value;
+                                    var agregado = document.getElementById('inputDetalleA').value;
+                                    document.getElementById('inputDetalleA').value = ''+detalle+', '+agregado;
+                                    document.getElementById('inputDetalleA').innerHTML = ''+agregado+', '+detalle;
+                                }
+                                function borrar_Alergia(){
+                                    document.getElementById('inputDetalleA').value = '';
+                                    document.getElementById('inputDetalleA').innerHTML = '';
                                 }
                             </script>
                         </div>
@@ -308,19 +355,19 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <svg onclick="" xmlns="http://www.w3.org/2000/svg" width="16"
-                                                    height="16" fill="currentColor" class="bi bi-trash3"
-                                                    viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
-                                                </svg>
+                                                <button class="mt-1" type="button" id="eliminarFar"
+                                                    onclick="delete_row2()" disabled><svg xmlns="http://www.w3.org/2000/svg"
+                                                        width="16" height="16" fill="currentColor" class="bi bi-trash3"
+                                                        viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                                                    </svg>
+                                                </button>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                                 <div class="text-end">
-                                    <button type="button" class="btn btn-primary" onclick="delete_row()">Eliminar
-                                        Fármaco</button>
                                     <button type="button" class="btn btn-primary" onclick="add_row()">Agregar
                                         Fármaco</button>
                                     <button type="submit" class="btn btn-primary">Generar Receta</button>
@@ -333,13 +380,9 @@
                                         var viafarmaco = document.getElementById("viafarmaco").value;
                                         var tablafarmaco = document.getElementById("tablaF");
                                         var tabla_len = (tablafarmaco.rows.length);
-                                        var row = tablafarmaco.insertRow(tabla_len).outerHTML = '<tr id="row' + tabla_len + '"><td><input type="text" id="nombrefarmaco' + tabla_len + '" placeholder="Ingrese Fármaco"></td> <td><input type="string" id="dosisfarmaco' + tabla_len + '" placeholder="Ingrese Dosis"></td><td><select class="form-select" aria-label="Default select example" id="viafarmaco' + tabla_len + '"><option selected>Enteral</option><option value="1">Parenteral</option><option value="2">Tópica</option></select></td>'
-                                    }
-                                    function delete_row() {
-                                        var tablafarmaco = document.getElementById("tablaF")
-                                        var tabla_len = (tablafarmaco.rows.length) - 1;
-                                        document.getElementById("row" + tabla_len).outerHTML = "";
-                                    }
+                                        var row = tablafarmaco.insertRow(tabla_len).outerHTML = '<tr id="row' + tabla_len + '"><td><input type="text" id="nombrefarmaco' + tabla_len + '" placeholder="Ingrese Fármaco"></td> <td><input type="string" id="dosisfarmaco' + tabla_len + '" placeholder="Ingrese Dosis"></td><td><select class="form-select" aria-label="Default select example" id="viafarmaco' + tabla_len + '"><option selected>Enteral</option><option value="1">Parenteral</option><option value="2">Tópica</option></select></td>    <td><button class="mt-1" type="button" id="eliminarFar' + tabla_len + '"  onclick="delete_row2(this)" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16"><path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" /></svg></button></td>'
+                                       }
+                                 
                                 </script>
                             </div>
                             <!-- Primer Diagnostico Paciente -->
@@ -423,19 +466,62 @@
                                 <label for="inputFono2" class="form-label">Fono</label>
                                 <input type="text" class="form-control" id="inputFono2" placeholder="Telefono Paciente">
                             </div>
-                            <div class="col-md-2">
-                                <label for="inputAlergia2" class="form-label">Alergia</label>
-                                <select id="inputAlergia2" class="form-select " oninput="validar_Alergia2()">
-                                    <option selected>NO</option>
-                                    <option>SI</option>
-                                </select>
-                            </div>
                             <div class="col-md-4">
                                 <label for="inputDetalleA2" class="form-label">Detalle Alergia</label>
-                                <input type="text" class="form-control" id="inputDetalleA2"
-                                    placeholder="Detalle de Alergia" disabled>
+                                <div class="input-group ">
+                                    <input type="text col-md-8" class="form-control" id="inputDetalleA2"
+                                        placeholder="Detalle de Alergia" value="" disabled>
+                                    <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#modal_alergia_scroll2"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="16" height="16" fill="currentColor" class="bi bi-plus-circle"
+                                            viewBox="0 0 16 16">
+                                            <path
+                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                            <path
+                                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                        </svg>
+                                    </button>
+                                    <!-- Modal alergia paciente antiguo -->
+                                    <div class="modal fade" id="modal_alergia_scroll2" data-bs-backdrop="static"
+                                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="alergia_estatica2"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="alergia_estatica2">Seleccione una Alergia
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <button type="button" class="btn btn-outline-primary"
+                                                        id="tipo_alergia1" onclick="validar_Alergia(this.id)">Alergia 1</button>
+                                                    <button type="button" class="btn btn-outline-secondary"
+                                                        id="tipo_alergia2"
+                                                        onclick="validar_Alergia2(this.id)">Alergia 2</button>
+                                                    <button type="button" class="btn btn-outline-success"
+                                                        id="tipo_alergia3"
+                                                        onclick="validar_Alergia2(this.id)">Alergia 3</button>
+                                                    <button type="button" class="btn btn-outline-danger"
+                                                        id="tipo_alergia4"
+                                                        onclick="validar_Alergia2(this.id)">Alergia 6</button>
+                                                    <button type="button" class="btn btn-outline-warning"
+                                                        id="tipo_alergia5"
+                                                        onclick="validar_Alergia2(this.id)">Alergia 5</button>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Cerrar
+                                                    </button>
+                                                    <button type="button" class="btn btn-warning" onclick="borrar_Alergia2()">Borrar</button>
+                                                    <button type="button" class="btn btn-primary" id="select_alergia2" data-bs-dismiss="modal" onclick="detalle_Alergia2()" >Guardar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <label for="inputPrev2" class="form-label">Prevision</label>
                                 <select id="inputPrev2" class="form-select ">
                                     <option selected>Fonasa</option>
@@ -446,13 +532,19 @@
                                 </select>
                             </div>
                             <script>
-                                function validar_Alergia2() {
-                                    var Alergia = document.getElementById('inputAlergia2').value;
-                                    if (Alergia == 'SI') {
-                                        document.getElementById('inputDetalleA2').disabled = false
-                                    } else {
-                                        document.getElementById('inputDetalleA2').disabled = true;
-                                    }
+                                function validar_Alergia2(id) {
+                                    var Alergia = document.getElementById(id).innerHTML;
+                                    document.getElementById('select_alergia2').value = Alergia;
+                                }
+                                function detalle_Alergia2(){
+                                    var detalle = document.getElementById('select_alergia2').value;
+                                    var agregado = document.getElementById('inputDetalleA2').value;
+                                    document.getElementById('inputDetalleA2').value = ''+detalle+', '+agregado;
+                                    document.getElementById('inputDetalleA').innerHTML = ''+agregado+', '+detalle;
+                                }
+                                function borrar_Alergia2(){
+                                    document.getElementById('inputDetalleA2').value = '';
+                                    document.getElementById('inputDetalleA2').innerHTML = '';
                                 }
                             </script>
                         </div>
@@ -460,9 +552,14 @@
                         <!-- Observaciones Receta y mas Modificaciones -->
                         <ul class="nav nav-tabs mt-3" id="tabsObs2" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="observaciones2-tab" data-bs-toggle="tab"
+                                <button class="nav-link active" id="antecedente-tab" data-bs-toggle="tab"
+                                    data-bs-target="#antecedente" type="button" role="tab" aria-controls="antecedente"
+                                    aria-selected="false">Antecedentes Paciente</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="observaciones2-tab" data-bs-toggle="tab"
                                     data-bs-target="#observaciones2" type="button" role="tab"
-                                    aria-controls="observaciones2" aria-selected="true">Observaciones</button>
+                                    aria-controls="observaciones2" aria-selected="true">Nuevas Observaciones</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="farmaco2-tab" data-bs-toggle="tab"
@@ -472,16 +569,65 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="diagnotico2-tab" data-bs-toggle="tab"
                                     data-bs-target="#diagnostico2" type="button" role="tab" aria-controls="diagnostico2"
-                                    aria-selected="false">Diagnostico</button>
+                                    aria-selected="false">Nuevo Diagnostico</button>
                             </li>
+
                         </ul>
                         <div class="tab-content" id="tabcontenidobs2">
-                            <div class="tab-pane fade show active" id="observaciones2" role="tabpanel"
-                                aria-labelledby="observaciones2-tab">
-                                <div class="mb-3 mt-5">
-                                    <label for="inputObservacion" class="form-label">Observaciones Anteriores</label>
-                                    <textarea class="form-control" id="inputObservacion" rows="3" disabled></textarea>
+                            <div class="tab-pane fade show active" id="antecedente" role="tabpanel"
+                                aria-labelledby="antecedente-tab">
+                                <h3 class="text-center mt-4"> Consultas anteriores</h3>
+                                <div class="table-responsive">
+                                   <table class="table borde table-hover" id="tablaF2">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Fecha Consulta</th>
+                                            <th scope="col">Observaciones</th>
+                                            <th scope="col">Diagnostico</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr id="row">
+                                            <td>
+                                                <p>Fecha (DD-MM-AAAA)</p>
+                                            </td>
+                                            <td>
+                                                <textarea name="obs_anterior" id="obs_anterior" cols="30" rows="3" disabled style="resize: none;"></textarea>
+                                            </td>
+                                            <td>
+                                                <textarea name="diag_anterior" id="diag_anterior" cols="30" rows="3" disabled style="resize: none;"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr id="row2">
+                                            <td>
+                                                <p>Fecha (DD-MM-AAAA)</p>
+                                            </td>
+                                            <td>
+                                                <textarea name="obs_anterior" id="obs_anterior" cols="30" rows="3"  disabled style="resize: none;"></textarea>
+                                            </td>
+                                            <td>
+                                                <textarea name="diag_anterior" id="diag_anterior" cols="30" rows="3" disabled style="resize: none;"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr id="row3">
+                                            <td>
+                                                <p>Fecha (DD-MM-AAAA)</p>
+                                            </td>
+                                            <td>
+                                                <textarea name="obs_anterior" id="obs_anterior" cols="30" rows="3" disabled style="resize: none;"></textarea>
+                                            </td>
+                                            <td>
+                                                <textarea name="diag_anterior" id="diag_anterior" cols="30" rows="3" disabled style="resize: none;"></textarea>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table> 
                                 </div>
+                                
+                                
+                            </div>                        
+                            <div class="tab-pane fade" id="observaciones2" role="tabpanel"
+                                aria-labelledby="observaciones2-tab">
                                 <div class="mb-3 mt-5">
                                     <label for="inputObservacion2" class="form-label">Escriba nuevas
                                         observaciones</label>
@@ -513,7 +659,8 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <button class="mt-1" type="button" id="eliminarFar2"  onclick="delete_row2()" ><svg xmlns="http://www.w3.org/2000/svg"
+                                                <button class="mt-1" type="button" id="eliminarFar2"
+                                                    onclick="delete_row2()" disabled><svg xmlns="http://www.w3.org/2000/svg"
                                                         width="16" height="16" fill="currentColor" class="bi bi-trash3"
                                                         viewBox="0 0 16 16">
                                                         <path
@@ -527,8 +674,6 @@
                                 <div class="text-end">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#modalhistorial">Historial</button>
-                                    <button type="button" class="btn btn-primary" onclick="delete_row2()">Eliminar
-                                        Fármaco</button>
                                     <button type="button" class="btn btn-primary" onclick="add_row2()">Agregar
                                         Fármaco</button>
                                     <button type="submit" class="btn btn-primary">Generar Receta</button>
@@ -588,25 +733,19 @@
                                         var nombrefarmaco = document.getElementById("nombrefarmaco2").value;
                                         var dosisfarmaco = document.getElementById("dosisfarmaco2").value;
                                         var viafarmaco = document.getElementById("viafarmaco2").value;
-                                        var elifarmaco =  document.getElementById("eliminarFar2").value;
+                                        var elifarmaco = document.getElementById("eliminarFar2").value;
                                         var tablafarmaco = document.getElementById("tablaF2");
                                         var tabla_len = (tablafarmaco.rows.length);
-                                        var row = tablafarmaco.insertRow(tabla_len).outerHTML = '<tr id="row' + tabla_len + '"><td><input type="text" id="nombrefarmaco' + tabla_len + '" placeholder="Ingrese Fármaco"></td> <td><input type="string" id="dosisfarmaco' + tabla_len + '" placeholder="Ingrese Dosis"></td><td><select class="form-select" aria-label="Default select example" id="viafarmaco' + tabla_len + '"><option selected>Enteral</option><option value="1">Parenteral</option><option value="2">Tópica</option></select></td>    <td><button class="mt-1" type="button" id="eliminarFar' + tabla_len + '"  onclick="delete_row2(id)" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16"><path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" /></svg></button></td>'
+                                        var row = tablafarmaco.insertRow(tabla_len).outerHTML = '<tr id="row' + tabla_len + '"><td><input type="text" id="nombrefarmaco' + tabla_len + '" placeholder="Ingrese Fármaco"></td> <td><input type="string" id="dosisfarmaco' + tabla_len + '" placeholder="Ingrese Dosis"></td><td><select class="form-select" aria-label="Default select example" id="viafarmaco' + tabla_len + '"><option selected>Enteral</option><option value="1">Parenteral</option><option value="2">Tópica</option></select></td>    <td><button class="mt-1" type="button" id="eliminarFar' + tabla_len + '"  onclick="delete_row2(this)" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16"><path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" /></svg></button></td>'
                                     }
-                                    function delete_row2(id) {
-                                        var tablafarmaco = document.getElementById("tablaF2")
-                                        var tabla_len = (tablafarmaco.rows.length);
-                                        var id = document.getElementById("row" + tabla_len)
-                                        id.remove()
+                                    function delete_row2(botonE) {
+                                        var fila = botonE.parentNode.parentNode;
+                                        fila.parentNode.removeChild(fila);
                                     }
                                 </script>
                             </div>
                             <div class="tab-pane fade" id="diagnostico2" role="tabpanel"
                                 aria-labelledby="diagnotico2-tab">
-                                <div class="mb-3 mt-5">
-                                    <label for="inputDiagnostico" class="form-label">Diagnostico anterior</label>
-                                    <textarea class="form-control" id="inputDiagnostico" rows="3" disabled></textarea>
-                                </div>
                                 <div class="mb-3 mt-5">
                                     <label for="inputDiagnostico2" class="form-label">Escriba nuevo diagnostico</label>
                                     <textarea class="form-control" id="inputDiagnostico2" rows="3"></textarea>
