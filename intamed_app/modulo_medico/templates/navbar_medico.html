@@ -1,0 +1,36 @@
+{% load static %}
+
+{% block navbar_medico %}
+<header class="fixed-top">
+    <nav class="navbar navbar-expand-xl navbar-light border p-md-3">
+        <div class="container">
+            <a class="navbar-brand" href="#">Intemed</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse">
+                <div class="mx-auto"></div>
+                <ul class="navbar-nav hstack gap-3">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Inicio</a>
+                    </li>
+                    <div class="vr"></div>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Nuestra Clinica</a>
+                    </li>
+                    <div class="vr"></div>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Mi Cuenta</a>
+                    </li>
+                    <div class="vr"></div>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Cerrar Sesión</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+{% endblock navbar_medico %}

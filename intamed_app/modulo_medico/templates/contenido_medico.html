@@ -1,0 +1,836 @@
+{% load static %}
+
+{% block contenido_medico %}
+<main class="p-5">
+    <div class="d-flex">
+        <!-- Tabla de navegacion vertical  -->
+        <div class="nav flex-column nav-pills me-5 border border-3 rounded border-info" id="v-pills-tab"
+            role="tablist" aria-orientation="vertical">
+            <button class="nav-link active border m-3" id="v-pills-agenda-tab" data-bs-toggle="pill"
+                data-bs-target="#v-pills-agenda" type="button" role="tab" aria-controls="v-pills-agenda"
+                aria-selected="true">
+                Agenda
+            </button>
+            <button class="nav-link border m-3" id="v-pills-atencion-tab" data-bs-toggle="pill"
+                data-bs-target="#v-pills-atencion" type="button" role="tab" aria-controls="v-pills-atencion"
+                aria-selected="false">
+                Atencion Paciente
+            </button>
+            <button class="nav-link border m-3" id="v-pills-buscarpac-tab" data-bs-toggle="pill"
+                data-bs-target="#v-pills-buscarpac" type="button" role="tab" aria-controls="v-pills-buscarpac"
+                aria-selected="false">
+                Consulta Paciente
+            </button>
+            <button class="nav-link border m-3" id="v-pills-examen-tab" data-bs-toggle="pill"
+                data-bs-target="#v-pills-examen" type="button" role="tab" aria-controls="v-pills-examen"
+                aria-selected="false">
+                Examenes
+            </button>
+            <button class="nav-link border m-3" id="v-pills-reporte-tab" data-bs-toggle="pill"
+                data-bs-target="#v-pills-reporte" type="button" role="tab" aria-controls="v-pills-reporte"
+                aria-selected="false">
+                Estudios Clinicos
+            </button>
+        </div>
+        <!-- Contenido de los tab de cada tabla -->
+        <div class="tab-content  container-fluid" id="v-pills-tabContent">
+            <div class="tab-pane fade show active container-fluid" id="v-pills-agenda" role="tabpanel"
+                aria-labelledby="v-pills-agenda-tab">
+                <div class="row">
+                    <div class="col-lg-11">
+                        <h2 class="text-center">Agenda Paciente</h2>
+                    </div>
+                    <form class="row row-cols-lg-auto g-3 align-items-center mb-5">
+                        <div class="col-12">
+                            <label for="fecha"> Seleccione una fecha para ver informacion de reserva:
+                        </div>
+                        <div>
+                            <input type="text" class="form-control" id="fecha" value="" placeholder="Seleccione fecha" />
+                        </div>
+                    </form>
+                </div>
+                <div class="container m-1 table-responsive  border">
+                    <table class="table is-fullwidth is-striped is-bordered">
+                        <thead>
+                            <tr>
+                                <th>Nombre paciente</th>
+                                <th>Edad paciente</th>
+                                <th>Hora</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Andrea Verdugo</th>
+                                <td>29</td>
+                                <td>12:00</td>
+                                <td>NEW</td>
+                
+                            </tr>
+                            <tr>
+                                <th>Mauricio Candia</th>
+                                <td>33</td>
+                                <td>13:00</td>
+                                <td>OLD</td>
+                
+                            </tr>
+                            <tr>
+                                <th>Aaron Farias</th>
+                                <td>27</td>
+                                <td>14:00</td>
+                                <td>NEW</td>
+                
+                            </tr>
+                            <tr>
+                                <th>Manuel Albornoz</th>
+                                <td>23</td>
+                                <td>15:00</td>
+                                <td>OLD</td>
+                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane fade container-fluid" id="v-pills-atencion" role="tabpanel"
+                aria-labelledby="v-pills-atencion-tab">
+                <!-- Primera Atencion Paciente -->
+                <h2 class="text-center mb-5">Atención Pacientes Nuevos</h2>
+                <form class="row ">
+                    <!-- Datos Basicos del Paciente -->
+                    <div class="col-lg-2">
+                        <label for="inputRutpaciente" class="form-label">Rut Paciente</label>
+                        <input type="text" class="form-control" id="inputRutpaciente" placeholder="Ingrese Rut">
+                    </div>
+                    <div class="col-lg-1">
+                        <label for="inputDV" class="form-label">Dv</label>
+                        <input type="text" class="form-control" id="inputDV" placeholder="Dv">
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-lg-4">
+                            <label for="inputNombre" class="form-label">Nombres</label>
+                            <input type="text" class="form-control" id="inputNombre" placeholder="Nombre Paciente">
+                        </div>
+                        <div class="col-lg-4">
+                            <label for="inputApellidop" class="form-label">Apellido P.</label>
+                            <input type="text" class="form-control" id="inputApellidop"
+                                placeholder="Apellido Paterno">
+                        </div>
+                        <div class="col-lg-4">
+                            <label for="inputApellidom" class="form-label">Apellido M.</label>
+                            <input type="text" class="form-control" id="inputApellidom"
+                                placeholder="Apellido Materno">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class=" col-lg-4">
+                            <label for="inputcorreo" class="form-label">Correo Electronico</label>
+                            <input type="email" class="form-control" id="inputcorreo"
+                                placeholder="Ejemplo@correo.paciente">
+                        </div>
+                        <div class="col-lg-8">
+                            <label for="inputDireccion" class="form-label">Direccion</label>
+                            <input type="text" class="form-control" id="inputDireccion" placeholder="Direccion">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class=" col-lg-6">
+                            <label for="inputNac" class="form-label">Nacionalidad</label>
+                            <input type="text" class="form-control" id="inputNac"
+                                placeholder="Nacionalidad Paciente">
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="inputEdad" class="form-label">Edad</label>
+                            <input type="text" class="form-control" id="inputEdad" placeholder="Edad Paciente">
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="inputTalla" class="form-label">Talla</label>
+                            <input type="text" class="form-control" id="inputTalla"
+                                placeholder="Talla Paciente (cm)">
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="inputPeso" class="form-label">Peso</label>
+                            <input type="text" class="form-control" id="inputPeso" placeholder="Peso Paciente (Kg)">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <label for="inputFono" class="form-label">Fono</label>
+                            <input type="text" class="form-control" id="inputFono" placeholder="Telefono Paciente">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputAlergia" class="form-label">Alergia</label>
+                            <div class="input-group ">
+                                <input type="text col-md-8" class="form-control" id="inputDetalleA"
+                                    placeholder="Detalle de Alergia" value="" disabled>
+                                <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#modal_alergia_scroll"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16" fill="currentColor" class="bi bi-plus-circle"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                        <path
+                                            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                    </svg>
+                                </button>
+                                <div class="modal fade" id="modal_alergia_scroll" data-bs-backdrop="static"
+                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="alergia_estatica"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="alergia_estatica">Seleccione una Alergia
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <button type="button" class="btn btn-outline-primary"
+                                                    id="tipo_alergia1" onclick="validar_Alergia(this.id)">Alergia 1</button>
+                                                <button type="button" class="btn btn-outline-secondary"
+                                                    id="tipo_alergia2" onclick="validar_Alergia(this.id)">Alergia 2</button>
+                                                <button type="button" class="btn btn-outline-success"
+                                                    id="tipo_alergia3" onclick="validar_Alergia(this.id)">Alergia 3</button>
+                                                <button type="button" class="btn btn-outline-danger"
+                                                    id="tipo_alergia4" onclick="validar_Alergia(this.id)">Alergia 6</button>
+                                                <button type="button" class="btn btn-outline-warning"
+                                                    id="tipo_alergia5" onclick="validar_Alergia(this.id)">Alergia 5</button>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Cerrar
+                                                </button>
+                                                <button type="button" class="btn btn-warning"
+                                                    onclick="borrar_Alergia()">Borrar</button>
+                                                <button type="button" class="btn btn-primary" id="select_alergia"
+                                                    data-bs-dismiss="modal"
+                                                    onclick="detalle_Alergia()">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="inputPrev" class="form-label">Prevision</label>
+                            <select id="inputPrev" class="form-select ">
+                                <option selected>Fonasa</option>
+                                <option>Colmena</option>
+                                <option>Cruz Blanca</option>
+                                <option>Codelco</option>
+                                <option>ETC</option>
+                            </select>
+                        </div>
+                        <script>
+                            function validar_Alergia(id) {
+                                var Alergia = document.getElementById(id).innerHTML;
+                                document.getElementById('select_alergia').value = Alergia;
+                            }
+                            function detalle_Alergia() {
+                                var detalle = document.getElementById('select_alergia').value;
+                                var agregado = document.getElementById('inputDetalleA').value;
+                                document.getElementById('inputDetalleA').value = '' + detalle + ', ' + agregado;
+                                document.getElementById('inputDetalleA').innerHTML = '' + agregado + ', ' + detalle;
+                            }
+                            function borrar_Alergia() {
+                                document.getElementById('inputDetalleA').value = '';
+                                document.getElementById('inputDetalleA').innerHTML = '';
+                            }
+                        </script>
+                    </div>
+                    <hr class="mt-5" style="color: grey" />
+                    <!-- Observaciones Receta y mas -->
+                    <ul class="nav nav-tabs mt-3" id="tabsObs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="observaciones-tab" data-bs-toggle="tab"
+                                data-bs-target="#observaciones" type="button" role="tab"
+                                aria-controls="observaciones" aria-selected="true">Observaciones</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="farmaco-tab" data-bs-toggle="tab" data-bs-target="#farmaco"
+                                type="button" role="tab" aria-controls="farmaco"
+                                aria-selected="false">Farmacos</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="diagnotico-tab" data-bs-toggle="tab"
+                                data-bs-target="#diagnostico" type="button" role="tab" aria-controls="diagnostico"
+                                aria-selected="false">Diagnostico</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="tabcontenidobs">
+                        <div class="tab-pane fade show active" id="observaciones" role="tabpanel"
+                            aria-labelledby="observaciones-tab">
+                            <div class="mb-3 mt-5">
+                                <label for="inputObservacion" class="form-label">Escriba sus observaciones</label>
+                                <textarea class="form-control" id="inputObservacion" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="farmaco" role="tabpanel" aria-labelledby="farmaco-tab">
+                            <h3 class="text-center"> Receta Médica</h3>
+                            <table class="table borde table-hover" id="tablaF">
+                                <thead>
+                                    <tr>
+
+                                        <th scope="col">Nombre Fármaco</th>
+                                        <th scope="col">Dosis</th>
+                                        <th scope="col">Via de Adminsitración</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr id="row">
+                                        <td><input type="text" id="nombrefarmaco" placeholder="Ingrese Fármaco">
+                                        </td>
+                                        <td><input type="string" id="dosisfarmaco" placeholder="Ingrese Dosis"></td>
+                                        <td>
+                                            <select class="form-select" aria-label="Default select example"
+                                                id="viafarmaco">
+                                                <option selected>Enteral</option>
+                                                <option value="1">Parenteral</option>
+                                                <option value="2">Tópica</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <button class="mt-1" type="button" id="eliminarFar"
+                                                onclick="delete_row2()" disabled><svg
+                                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                                                </svg>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="text-end">
+                                <button type="button" class="btn btn-primary" onclick="add_row()">Agregar
+                                    Fármaco</button>
+                                <button type="submit" class="btn btn-primary">Generar Receta</button>
+                            </div>
+
+                            <script>
+                                function add_row() {
+                                    var nombrefarmaco = document.getElementById("nombrefarmaco").value;
+                                    var dosisfarmaco = document.getElementById("dosisfarmaco").value;
+                                    var viafarmaco = document.getElementById("viafarmaco").value;
+                                    var tablafarmaco = document.getElementById("tablaF");
+                                    var tabla_len = (tablafarmaco.rows.length);
+                                    var row = tablafarmaco.insertRow(tabla_len).outerHTML = '<tr id="row' + tabla_len + '"><td><input type="text" id="nombrefarmaco' + tabla_len + '" placeholder="Ingrese Fármaco"></td> <td><input type="string" id="dosisfarmaco' + tabla_len + '" placeholder="Ingrese Dosis"></td><td><select class="form-select" aria-label="Default select example" id="viafarmaco' + tabla_len + '"><option selected>Enteral</option><option value="1">Parenteral</option><option value="2">Tópica</option></select></td>    <td><button class="mt-1" type="button" id="eliminarFar' + tabla_len + '"  onclick="delete_row2(this)" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16"><path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" /></svg></button></td>'
+                                }
+
+                            </script>
+                        </div>
+                        <!-- Primer Diagnostico Paciente -->
+                        <div class="tab-pane fade" id="diagnostico" role="tabpanel"
+                            aria-labelledby="diagnotico-tab">
+                            <div class="mb-3 mt-5">
+                                <label for="inputDiagnostico" class="form-label">Escriba su Diagnostico</label>
+                                <textarea class="form-control" id="inputDiagnostico" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-5">
+                        <button type="submit" class="btn btn-primary">Registrar Nueva Atención</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Datos Basicos del Paciente consulta antigua -->
+            <div class="tab-pane fade container-fluid" id="v-pills-buscarpac" role="tabpanel"
+                aria-labelledby="v-pills-buscarpac-tab">
+                <h2 class="text-center mb-5">Consulta Pacientes</h2>
+                <form class="row ">
+                    <!-- Datos Basicos del Paciente -->
+                    <div class="col-lg-2">
+                        <label for="inputRutpaciente2" class="form-label">Rut Paciente</label>
+                        <input type="text" class="form-control" id="inputRutpaciente2" placeholder="Ingrese Rut">
+                    </div>
+                    <div class="col-lg-1">
+                        <label for="inputDV2" class="form-label">Dv</label>
+                        <input type="text" class="form-control" id="inputDV2" placeholder="Dv">
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-lg-4">
+                            <label for="inputNombre2" class="form-label">Nombres</label>
+                            <input type="text" class="form-control" id="inputNombre2" placeholder="Nombre Paciente">
+                        </div>
+                        <div class="col-lg-4">
+                            <label for="inputApellidop2" class="form-label">Apellido P.</label>
+                            <input type="text" class="form-control" id="inputApellidop2"
+                                placeholder="Apellido Paterno">
+                        </div>
+                        <div class="col-lg-4">
+                            <label for="inputApellidom2" class="form-label">Apellido M.</label>
+                            <input type="text" class="form-control" id="inputApellidom2"
+                                placeholder="Apellido Materno">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class=" col-lg-4">
+                            <label for="inputcorreo2" class="form-label">Correo Electronico</label>
+                            <input type="email" class="form-control" id="inputcorreo2"
+                                placeholder="Ejemplo@correo.paciente">
+                        </div>
+                        <div class="col-lg-8">
+                            <label for="inputDireccion2" class="form-label">Direccion</label>
+                            <input type="text" class="form-control" id="inputDireccion2" placeholder="Direccion">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class=" col-lg-6">
+                            <label for="inputNac2" class="form-label">Nacionalidad</label>
+                            <input type="text" class="form-control" id="inputNac2"
+                                placeholder="Nacionalidad Paciente">
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="inputEdad2" class="form-label">Edad</label>
+                            <input type="text" class="form-control" id="inputEdad2" placeholder="Edad Paciente">
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="inputTalla2" class="form-label">Talla</label>
+                            <input type="text" class="form-control" id="inputTalla2"
+                                placeholder="Talla Paciente (cm)">
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="inputPeso2" class="form-label">Peso</label>
+                            <input type="text" class="form-control" id="inputPeso2"
+                                placeholder="Peso Paciente (Kg)">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <label for="inputFono2" class="form-label">Fono</label>
+                            <input type="text" class="form-control" id="inputFono2" placeholder="Telefono Paciente">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputDetalleA2" class="form-label">Detalle Alergia</label>
+                            <div class="input-group ">
+                                <input type="text col-md-8" class="form-control" id="inputDetalleA2"
+                                    placeholder="Detalle de Alergia" value="" disabled>
+                                <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#modal_alergia_scroll2"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16" fill="currentColor" class="bi bi-plus-circle"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                        <path
+                                            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                    </svg>
+                                </button>
+                                <!-- Modal alergia paciente antiguo -->
+                                <div class="modal fade" id="modal_alergia_scroll2" data-bs-backdrop="static"
+                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="alergia_estatica2"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="alergia_estatica2">Seleccione una
+                                                    Alergia
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <button type="button" class="btn btn-outline-primary"
+                                                    id="tipo_alergia1" onclick="validar_Alergia(this.id)">Alergia
+                                                    1</button>
+                                                <button type="button" class="btn btn-outline-secondary"
+                                                    id="tipo_alergia2" onclick="validar_Alergia2(this.id)">Alergia
+                                                    2</button>
+                                                <button type="button" class="btn btn-outline-success"
+                                                    id="tipo_alergia3" onclick="validar_Alergia2(this.id)">Alergia
+                                                    3</button>
+                                                <button type="button" class="btn btn-outline-danger"
+                                                    id="tipo_alergia4" onclick="validar_Alergia2(this.id)">Alergia
+                                                    6</button>
+                                                <button type="button" class="btn btn-outline-warning"
+                                                    id="tipo_alergia5" onclick="validar_Alergia2(this.id)">Alergia
+                                                    5</button>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Cerrar
+                                                </button>
+                                                <button type="button" class="btn btn-warning"
+                                                    onclick="borrar_Alergia2()">Borrar</button>
+                                                <button type="button" class="btn btn-primary" id="select_alergia2"
+                                                    data-bs-dismiss="modal"
+                                                    onclick="detalle_Alergia2()">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="inputPrev2" class="form-label">Prevision</label>
+                            <select id="inputPrev2" class="form-select ">
+                                <option selected>Fonasa</option>
+                                <option>Colmena</option>
+                                <option>Cruz Blanca</option>
+                                <option>Codelco</option>
+                                <option>ETC</option>
+                            </select>
+                        </div>
+                        <script>
+                            function validar_Alergia2(id) {
+                                var Alergia = document.getElementById(id).innerHTML;
+                                document.getElementById('select_alergia2').value = Alergia;
+                            }
+                            function detalle_Alergia2() {
+                                var detalle = document.getElementById('select_alergia2').value;
+                                var agregado = document.getElementById('inputDetalleA2').value;
+                                document.getElementById('inputDetalleA2').value = '' + detalle + ', ' + agregado;
+                                document.getElementById('inputDetalleA').innerHTML = '' + agregado + ', ' + detalle;
+                            }
+                            function borrar_Alergia2() {
+                                document.getElementById('inputDetalleA2').value = '';
+                                document.getElementById('inputDetalleA2').innerHTML = '';
+                            }
+                        </script>
+                    </div>
+                    <hr class="mt-5" style="color: grey" />
+                    <!-- Observaciones Receta y mas Modificaciones -->
+                    <ul class="nav nav-tabs mt-3" id="tabsObs2" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="antecedente-tab" data-bs-toggle="tab"
+                                data-bs-target="#antecedente" type="button" role="tab" aria-controls="antecedente"
+                                aria-selected="false">Antecedentes Paciente</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="observaciones2-tab" data-bs-toggle="tab"
+                                data-bs-target="#observaciones2" type="button" role="tab"
+                                aria-controls="observaciones2" aria-selected="true">Nuevas Observaciones</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="farmaco2-tab" data-bs-toggle="tab"
+                                data-bs-target="#farmaco2" type="button" role="tab" aria-controls="farmaco2"
+                                aria-selected="false">Farmacos</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="diagnotico2-tab" data-bs-toggle="tab"
+                                data-bs-target="#diagnostico2" type="button" role="tab" aria-controls="diagnostico2"
+                                aria-selected="false">Nuevo Diagnostico</button>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content" id="tabcontenidobs2">
+                        <div class="tab-pane fade show active" id="antecedente" role="tabpanel"
+                            aria-labelledby="antecedente-tab">
+                            <h3 class="text-center mt-4"> Consultas anteriores</h3>
+                            <div class="table-responsive">
+                                <table class="table borde table-hover" id="tablaF2">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Fecha Consulta</th>
+                                            <th scope="col">Observaciones</th>
+                                            <th scope="col">Diagnostico</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr id="row">
+                                            <td>
+                                                <p>Fecha (DD-MM-AAAA)</p>
+                                            </td>
+                                            <td>
+                                                <textarea name="obs_anterior" id="obs_anterior" cols="30" rows="3"
+                                                    disabled style="resize: none;"></textarea>
+                                            </td>
+                                            <td>
+                                                <textarea name="diag_anterior" id="diag_anterior" cols="30" rows="3"
+                                                    disabled style="resize: none;"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr id="row2">
+                                            <td>
+                                                <p>Fecha (DD-MM-AAAA)</p>
+                                            </td>
+                                            <td>
+                                                <textarea name="obs_anterior" id="obs_anterior" cols="30" rows="3"
+                                                    disabled style="resize: none;"></textarea>
+                                            </td>
+                                            <td>
+                                                <textarea name="diag_anterior" id="diag_anterior" cols="30" rows="3"
+                                                    disabled style="resize: none;"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr id="row3">
+                                            <td>
+                                                <p>Fecha (DD-MM-AAAA)</p>
+                                            </td>
+                                            <td>
+                                                <textarea name="obs_anterior" id="obs_anterior" cols="30" rows="3"
+                                                    disabled style="resize: none;"></textarea>
+                                            </td>
+                                            <td>
+                                                <textarea name="diag_anterior" id="diag_anterior" cols="30" rows="3"
+                                                    disabled style="resize: none;"></textarea>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div>
+                        <div class="tab-pane fade" id="observaciones2" role="tabpanel"
+                            aria-labelledby="observaciones2-tab">
+                            <div class="mb-3 mt-5">
+                                <label for="inputObservacion2" class="form-label">Escriba nuevas
+                                    observaciones</label>
+                                <textarea class="form-control" id="inputObservacion2" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="farmaco2" role="tabpanel" aria-labelledby="farmaco2-tab">
+                            <h3 class="text-center"> Receta Médica</h3>
+                            <table class="table borde table-hover" id="tablaF2">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Nombre Fármaco</th>
+                                        <th scope="col">Dosis</th>
+                                        <th scope="col">Via de Adminsitración</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr id="row">
+                                        <td><input type="text" id="nombrefarmaco2" placeholder="Ingrese Fármaco">
+                                        </td>
+                                        <td><input type="text" id="dosisfarmaco2" placeholder="Ingrese Dosis">
+                                        </td>
+                                        <td>
+                                            <select class="form-select" aria-label="Default select example"
+                                                id="viafarmaco2">
+                                                <option selected>Enteral</option>
+                                                <option value="1">Parenteral</option>
+                                                <option value="2">Tópica</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <button class="mt-1" type="button" id="eliminarFar2"
+                                                onclick="delete_row2()" disabled><svg
+                                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                                                </svg>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="text-end">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#modalhistorial">Historial</button>
+                                <button type="button" class="btn btn-primary" onclick="add_row2()">Agregar
+                                    Fármaco</button>
+                                <button type="submit" class="btn btn-primary">Generar Receta</button>
+                            </div>
+                            <!-- Historial de Farmacos -->
+                            <div class="modal fade" id="modalhistorial" tabindex="-1"
+                                aria-labelledby="modalhistirial" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Historial de Farmacos:
+                                                Paciente .....</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">N. farmaco</th>
+                                                        <th scope="col">Dosis</th>
+                                                        <th scope="col">Via Adm.</th>
+                                                        <th scope="col">Fecha</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Aspirina</td>
+                                                        <td>2</td>
+                                                        <td>por ahi</td>
+                                                        <td> 22-11-2021</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>paracetamol</td>
+                                                        <td>1</td>
+                                                        <td>por otro lado</td>
+                                                        <td> 23-09-2019</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>otra pastilla</td>
+                                                        <td>3</td>
+                                                        <td>por otr lado</td>
+                                                        <td>10-08-2019</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                function add_row2() {
+                                    var nombrefarmaco = document.getElementById("nombrefarmaco2").value;
+                                    var dosisfarmaco = document.getElementById("dosisfarmaco2").value;
+                                    var viafarmaco = document.getElementById("viafarmaco2").value;
+                                    var elifarmaco = document.getElementById("eliminarFar2").value;
+                                    var tablafarmaco = document.getElementById("tablaF2");
+                                    var tabla_len = (tablafarmaco.rows.length);
+                                    var row = tablafarmaco.insertRow(tabla_len).outerHTML = '<tr id="row' + tabla_len + '"><td><input type="text" id="nombrefarmaco' + tabla_len + '" placeholder="Ingrese Fármaco"></td> <td><input type="string" id="dosisfarmaco' + tabla_len + '" placeholder="Ingrese Dosis"></td><td><select class="form-select" aria-label="Default select example" id="viafarmaco' + tabla_len + '"><option selected>Enteral</option><option value="1">Parenteral</option><option value="2">Tópica</option></select></td>    <td><button class="mt-1" type="button" id="eliminarFar' + tabla_len + '"  onclick="delete_row2(this)" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16"><path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" /></svg></button></td>'
+                                }
+                                function delete_row2(botonE) {
+                                    var fila = botonE.parentNode.parentNode;
+                                    fila.parentNode.removeChild(fila);
+                                }
+                            </script>
+                        </div>
+                        <div class="tab-pane fade" id="diagnostico2" role="tabpanel"
+                            aria-labelledby="diagnotico2-tab">
+                            <div class="mb-3 mt-5">
+                                <label for="inputDiagnostico2" class="form-label">Escriba nuevo diagnostico</label>
+                                <textarea class="form-control" id="inputDiagnostico2" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-5">
+                        <button type="submit" class="btn btn-primary">Registrar Atencion</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Lista de Examenes por Paciente -->
+            <div class="tab-pane fade" id="v-pills-examen" role="tabpanel" aria-labelledby="v-pills-examen-tab">
+                <div class=" container-fluid row">
+                    <div class="col-lg-12">
+                        <h2 class="text-center mb-5">Examenes Pacientes</h2>
+                        <!-- form para buscar examen paciente -->
+                        <form class="row row-cols-lg-auto g-3 align-items-center mb-5">
+                            <label class="" for="rutPaciente">Rut Paciente</label>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="rutPaciente"
+                                    placeholder="Ingrese rut paciente" />
+                            </div>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="DV" placeholder="DV"
+                                    style="width: 75px;" />
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary" id="btnbuscarPaciente">
+                                    Buscar Paciente
+                                </button>
+                            </div>
+                        </form>
+                        <!-- Tabla de examenes -->
+                        <div class="container m-1 table-responsive  border">
+                            <table class="table table-secundary table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID Examen</th>
+                                        <th scope="col">Nombre Archivo</th>
+                                        <th scope="col">Fecha subida</th>
+                                        <th scope="col" style="text-align: center">Funciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">0122</th>
+                                        <td>Examen 1</td>
+                                        <td>22-11-2022</td>
+                                        <td style="text-align: center;">
+                                            <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                                onclick="">
+                                                Visualizar
+                                            </button>
+                                            <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                                onclick="">
+                                                Imprimir
+                                            </button>
+                                            <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                                onclick="">
+                                                Eliminar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">0123</th>
+                                        <td>Examen 2</td>
+                                        <td>22-11-2022</td>
+                                        <td style="text-align: center;">
+                                            <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                                onclick="">
+                                                Visualizar
+                                            </button>
+                                            <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                                onclick="">
+                                                Imprimir
+                                            </button>
+                                            <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                                onclick="">
+                                                Eliminar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">0124</th>
+                                        <td>Examen 3</td>
+                                        <td>22-11-2022</td>
+                                        <td style="text-align: center;">
+                                            <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                                onclick="">
+                                                Visualizar
+                                            </button>
+                                            <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                                onclick="">
+                                                Imprimir
+                                            </button>
+                                            <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                                onclick="">
+                                                Eliminar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-lg-12 mt-5">
+                            Disclaimer de Privacidad: Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                            Rerum, eveniet nulla? Illo, voluptatem repudiandae, perspiciatis impedit quo quas
+                            corrupti praesentium, cum delectus minima alias aliquam. Quia veritatis rem dicta
+                            tempore.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Reporte de Estudios -->
+            <div class="tab-pane fade" id="v-pills-reporte" role="tabpanel" aria-labelledby="v-pills-reporte-tab">
+                <h2 class="text-center mb-5">Estudios Clinicos</h2>
+                <div class="card w-75 mx-auto text-center">
+                    <img src="{% static 'img/estudios_clinicos.jpg' %}" class="card-img-top" alt="..."
+                        style="height: 320px;">
+                    <div class="card-body">
+
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-4 mx-auto">
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected>Seleciona los datos</option>
+                                        <option value="1">1 anno</option>
+                                        <option value="2">6 meses</option>
+                                        <option value="3">Todos los datos</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary btn-lg mt-5">Generar Reporte</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock contenido_medico %}
