@@ -9,4 +9,11 @@ header {
 
 #v-pills-agenda-tab {
     width: 200px;
+    color: red;
+} 
+
+#v-pills-tab{
+    border: 5px solid rgb(240, 239, 239);
+    border-radius: 2%;
+    background-color: rgb(242, 245, 247);
 }

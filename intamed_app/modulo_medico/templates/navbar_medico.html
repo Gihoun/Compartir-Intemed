@@ -1,5 +1,4 @@
 {% load static %}
-
 <header class="fixed-top">
     <nav class="navbar navbar-expand-xl navbar-light border p-md-3">
         <div class="container">
@@ -13,15 +12,15 @@
                 <div class="mx-auto"></div>
                 <ul class="navbar-nav hstack gap-3">
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Inicio</a>
+                        <a class="nav-link text-white" href="{% url 'index' %}">Inicio</a>
                     </li>
                     <div class="vr"></div>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Nuestra Clinica</a>
+                        <a class="nav-link text-white" href="{% url 'nuestraclinica' %}"">Nuestra Clinica</a>
                     </li>
                     <div class="vr"></div>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Mi Cuenta</a>
+                        <a class="nav-link text-white" href="{% url 'micuenta' %}">Mi Cuenta</a>
                     </li>
                     <div class="vr"></div>
                     <li class="nav-item">
