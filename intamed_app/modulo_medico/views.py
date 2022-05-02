@@ -14,3 +14,6 @@ def nuestraclinica(request):
 
 def funcionarios(request):
     return render(request,"funcionarios.html")    
+
+def prueba(request):
+    return render(request,"contenido_medico.html")
