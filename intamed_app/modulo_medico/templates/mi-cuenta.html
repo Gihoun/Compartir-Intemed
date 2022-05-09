@@ -30,9 +30,6 @@
         .div-pad-pass{
             padding: 5px;
         }
-        .div-pad{
-            padding: 40px; 
-        }
     </style>
 </head>
 
@@ -42,12 +39,11 @@
         <nav class="navbar navbar-expand-xl navbar-light border p-md-3">
             <div class="container">
                 <a class="navbar-brand" href="#">Intemed</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse">
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <div class="mx-auto"></div>
                     <ul class="navbar-nav hstack gap-3">
                         <li class="nav-item">
@@ -115,42 +111,20 @@
                     <input type="email" class="form-control" id="inputcorreo"
                         placeholder="Ejemplo@correo.Medico">
                 </div>
-                <div class="col-lg-8">
+                <div class="col-lg-4">
                     <label for="inputDireccion" class="form-label">Dirección</label>
                     <input type="text" class="form-control" id="inputDireccion" placeholder="Dirección">
                 </div>
-            </div>
-            <div class="row mt-3">
-                <div class=" col-lg-6">
-                    <label for="inputNac" class="form-label">Nacionalidad</label>
-                    <input type="text" class="form-control" id="inputNac"
-                        placeholder="Nacionalidad Medico">
-                </div>
-                <div class="col-lg-2">
-                    <label for="inputEdad" class="form-label">Edad</label>
-                    <input type="text" class="form-control" id="inputEdad" placeholder="Edad Medico">
-                </div>
-                <div class="col-lg-2">
-                    <label for="inputTalla" class="form-label">Talla</label>
-                    <input type="text" class="form-control" id="inputTalla"
-                        placeholder="Talla Medico (cm)">
-                </div>
-                <div class="col-lg-2">
-                    <label for="inputPeso" class="form-label">Peso</label>
-                    <input type="text" class="form-control" id="inputPeso"
-                        placeholder="Peso Medico (Kg)">
-                </div>
-            </div>
-
-                <div class="row align-items-center">
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <label for="inputFono" class="form-label">Fono</label>
                         <input type="text" class="form-control" id="inputFono" placeholder="Teléfono Medico">
                     </div>
-                    <div class="col-sm-6 div-pad">
+                <div class="row mt-3"> 
+                    <div class="col-sm-4">
                         <button type="submit" class="btn btn-primary ">Modificar</button>
                     </div>
-                </div>
+                </div>    
+            </div>
         </form>
 
 
