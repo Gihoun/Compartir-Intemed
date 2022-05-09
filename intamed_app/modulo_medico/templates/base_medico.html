@@ -11,8 +11,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
-</head>
 
+</head>
 <body>
     <!-- navbar clasica -->
     {% include "navbar_medico.html" %}
@@ -22,32 +22,32 @@
     <main class="p-5">
         <div class="d-flex">
             <!-- Tabla de navegacion vertical  -->
-            <div class="nav flex-column nav-pills me-5 border border-3 rounded border-info" id="v-pills-tab"
-                role="tablist" aria-orientation="vertical">
-                <button class="nav-link active border m-3" id="v-pills-agenda-tab" data-bs-toggle="pill"
+            <div class="nav flex-column nav-pills me-5" id="v-pills-tab"
+                role="tablist" aria-orientation="vertical" >
+                <button class="nav-link active border m-3  btn btn-primary" id="v-pills-agenda-tab" data-bs-toggle="pill"
                     data-bs-target="#v-pills-agenda" type="button" role="tab" aria-controls="v-pills-agenda"
                     aria-selected="true">
                     Agenda
                 </button>
-                <button class="nav-link border m-3" id="v-pills-atencion-tab" data-bs-toggle="pill"
+                <button class="nav-link border m-3 btn btn-primary" id="v-pills-atencion-tab" data-bs-toggle="pill"
                     data-bs-target="#v-pills-atencion" type="button" role="tab" aria-controls="v-pills-atencion"
                     aria-selected="false">
                     Atención Paciente
                 </button>
-                <button class="nav-link border m-3" id="v-pills-buscarpac-tab" data-bs-toggle="pill"
+                <button class="nav-link border m-3 btn btn-primary" id="v-pills-buscarpac-tab" data-bs-toggle="pill"
                     data-bs-target="#v-pills-buscarpac" type="button" role="tab" aria-controls="v-pills-buscarpac"
                     aria-selected="false">
                     Consulta Paciente
                 </button>
-                <button class="nav-link border m-3" id="v-pills-examen-tab" data-bs-toggle="pill"
+                <button class="nav-link border m-3 btn btn-primary" id="v-pills-examen-tab" data-bs-toggle="pill"
                     data-bs-target="#v-pills-examen" type="button" role="tab" aria-controls="v-pills-examen"
                     aria-selected="false">
                     Exámenes
                 </button>
-                <button class="nav-link border m-3" id="v-pills-reporte-tab" data-bs-toggle="pill"
+                <button class="nav-link border m-3 btn btn-primary" id="v-pills-reporte-tab" data-bs-toggle="pill"
                     data-bs-target="#v-pills-reporte" type="button" role="tab" aria-controls="v-pills-reporte"
                     aria-selected="false">
-                    Estudios Clinicos
+                    Estudios Clínicos
                 </button>
             </div>
             <!-- Contenido de los tab de cada tabla -->
@@ -57,12 +57,12 @@
                     {% include "agenda_paciente.html" %}
                 </div>
                 <!-- Primera Atencion Paciente -->
-                <div class="tab-pane fade container-fluid" id="v-pills-atencion" role="tabpanel"
+                <div class="tab-pane fade container-fluid p-4" id="v-pills-atencion" role="tabpanel"
                     aria-labelledby="v-pills-atencion-tab">
                     {% include "atencion_paciente.html" %}
                 </div>
                 <!-- Datos Basicos del Paciente consulta antigua -->
-                <div class="tab-pane fade container-fluid" id="v-pills-buscarpac" role="tabpanel"
+                <div class="tab-pane fade container-fluid p-4" id="v-pills-buscarpac" role="tabpanel"
                     aria-labelledby="v-pills-buscarpac-tab">
                     {% include "consulta_paciente.html" %}
                 </div>
@@ -71,19 +71,18 @@
                     {% include "examenes_paciente.html" %}
                 </div>
                 <!-- Reporte de Estudios -->
-                <div class="tab-pane fade" id="v-pills-reporte" role="tabpanel" aria-labelledby="v-pills-reporte-tab">
+                <div class="tab-pane fade p-4" id="v-pills-reporte" role="tabpanel" aria-labelledby="v-pills-reporte-tab">
                     {% include "reporte_estudio.html" %}
                 </div>
             </div>
         </div>
     </main>
-    
-</body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+<script src="{% static 'js/funciones.js' %}"></script>
 
 <script>
     $.datepicker.regional['es'] = {
@@ -107,6 +106,6 @@
     $(function () {
         $("#fecha").datepicker();
     });
-</script>
-
+</script>  
+</body>
 </html>
