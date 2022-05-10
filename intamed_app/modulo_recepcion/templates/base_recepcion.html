@@ -59,7 +59,90 @@
                 <!-- Ingresar hora paciente -->
                 <div class="tab-pane fade show active container-fluid p-4" id="v-pills-ingresarP" role="tabpanel"
                     aria-labelledby="v-pills-ingresarP-tab">
-                <p>asdasdasdasd</p>
+                    <h2 class="text-center mb-5">Ingreso Paciente</h2>
+                    <form class="row" action="">
+                        <div class="col-lg-2">
+                            <label for="inputRutpaciente" class="form-label">Rut Paciente</label>
+                            <input type="text" class="form-control" id="inputRutpaciente" placeholder="Ingrese Rut">
+                        </div>
+                        <div class="col-lg-1">
+                            <label for="inputDV" class="form-label">Dv</label>
+                            <input type="text" class="form-control" id="inputDV" placeholder="Dv">
+                        </div>
+                        <div class="col-lg-4">
+                            <label for="fecha" class="form-label"> Seleccione una fecha:</label>
+                            <input type="text" class="form-control" id="fecha" value="" onchange="selectdia()"
+                                placeholder="Seleccione fecha" />
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-lg-3">
+                                <label for="inputNombre" class="form-label">Nombres</label>
+                                <input type="text" class="form-control" id="inputNombre" placeholder="Nombre Paciente">
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="inputApellidop" class="form-label">Apellido P.</label>
+                                <input type="text" class="form-control" id="inputApellidop"
+                                    placeholder="Apellido Paterno">
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="inputApellidom" class="form-label">Apellido M.</label>
+                                <input type="text" class="form-control" id="inputApellidom"
+                                    placeholder="Apellido Materno">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class=" col-lg-4">
+                                <label for="inputcorreo" class="form-label">Correo Electrónico</label>
+                                <input type="email" class="form-control" id="inputcorreo"
+                                    placeholder="Ejemplo@correo.paciente">
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="inputDireccion" class="form-label">Dirección</label>
+                                <input type="text" class="form-control" id="inputDireccion" placeholder="Dirección">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="inputFono" class="form-label">Fono</label>
+                                <input type="text" class="form-control" id="inputFono" placeholder="Teléfono Paciente">
+                            </div>
+                        </div>
+                        <div class="accordion col-lg-4 mx-auto mt-5" id="accordion_recep_ingreso" hidden>
+                            <h4 class="text-center mb-2">Horario disponible.</h4>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" id="titulo_fecha" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                                        aria-controls="collapseOne">
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show"
+                                    aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                <input class="form-check-input me-1" type="checkbox" value=""
+                                                    aria-label="...">
+                                                Horario disponible
+                                            </li>
+                                            <li class="list-group-item">
+                                                <input class="form-check-input me-1" type="checkbox" value=""
+                                                    aria-label="...">
+                                                Horario disponible
+                                            </li>
+                                            <li class="list-group-item">
+                                                <input class="form-check-input me-1" type="checkbox" value=""
+                                                    aria-label="... " disabled>
+                                                Horario no disponible
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mt-5">
+                            <button type="submit" class="btn btn-primary">Ingresar Paciente</button>
+                            <button type="reset"  class="btn btn-primary">Limpiar</button>
+                        </div>
+                    </form>
                 </div>
                 <!-- Modificar y anular hora paciente -->
                 <div class="tab-pane fade container-fluid p-4" id="v-pills-buscarP" role="tabpanel"
@@ -134,10 +217,10 @@
 
                 </div>
                 </div>
-                 <!-- Ingresar pago del paciente -->
+                <!-- Ingresar pago del paciente -->
                 <div class="tab-pane fade container-fluid p-4" id="v-pills-ingresarPago" role="tabpanel"
                     aria-labelledby="v-pills-ingresarPago-tab">
-                <p>asdasda</p>
+                    <p>asdasda</p>
                 </div>
             </div>
         </div>
@@ -148,7 +231,39 @@
         crossorigin="anonymous"></script>
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-
+    <script>
+        $.datepicker.regional['es'] = {
+            closeText: 'Cerrar',
+            prevText: '< Ant',
+            nextText: 'Sig >',
+            currentText: 'Hoy',
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+            weekHeader: 'Sm',
+            dateFormat: 'dd/mm/yy',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: ''
+        };
+        $.datepicker.setDefaults($.datepicker.regional['es']);
+        $(function () {
+            $("#fecha").datepicker();
+            document.getElementById('accordion_recep_ingreso').hidden = true;
+        });
+        function selectdia() {
+            var fechaselect = document.getElementById("fecha").value;
+            if (!!fechaselect) {
+                document.getElementById('accordion_recep_ingreso').hidden = false;
+                document.getElementById('titulo_fecha').innerHTML = 'Fecha: ' + fechaselect
+            } else {
+                document.getElementById('accordion_recep_ingreso').hidden = true;
+            }
+        }
+    </script>
 </body>
 
 </html>
