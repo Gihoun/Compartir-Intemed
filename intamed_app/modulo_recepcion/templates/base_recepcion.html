@@ -64,7 +64,75 @@
                 <!-- Modificar y anular hora paciente -->
                 <div class="tab-pane fade container-fluid p-4" id="v-pills-buscarP" role="tabpanel"
                     aria-labelledby="v-pills-buscarP-tab">
-                <p>hola </p>
+                    <ul class="nav nav-tabs mt-3" id="tabsObs" role="tablist">
+                      <li class="nav-item" role="presentation">
+                          <button class="nav-link active" id="modificarpaciente-tab" data-bs-toggle="tab" data-bs-target="#modificarpaciente"
+                              type="button" role="tab" aria-controls="modificarpaciente" aria-selected="true">Modificar Paciente</button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="anularhora-tab" data-bs-toggle="tab" data-bs-target="#anularhora" 
+                              type="button" role="tab" aria-controls="anularhora" aria-selected="false">Anular Hora</button>
+                      </li>
+                    </ul>
+                    <div class="tab-content" id="tabcontenidobs">
+                        <div class="tab-pane fade show active" id="modificarpaciente" role="tabpanel" aria-labelledby="modificarpaciente-tab">
+                            <div class="container m-1 table-responsive  border">
+                                <!-- Datos Basicos del Medico -->
+                               <form class="row mt-3">
+                                    <div class="col-sm-4">
+                                        <label for="inputRutPaciente" class="form-label">Rut Paciente</label>
+                                        <input type="text" class="form-control" id="inputRutPaciente" placeholder="Ingrese Rut">
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label for="inputDV" class="form-label">Dv</label>
+                                        <input type="text" class="form-control" id="inputDV" placeholder="Dv">
+                                    </div>
+                                    <div class="col-sm-4" style="margin-top: 32px;">
+                                        <button type="submit" class="btn btn-primary mb-3">Buscar</button>
+                                    </div>
+                                </form>
+                                <div class="row mt-3">
+                                    <div class="col-lg-4">
+                                        <label for="inputNombre" class="form-label">Nombres</label>
+                                        <input type="text" class="form-control" id="inputNombre" placeholder="Nombre Paciente">
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="inputApellidoPaciente" class="form-label">Apellido P.</label>
+                                        <input type="text" class="form-control" id="inputApellidoPaciente"
+                                            placeholder="Apellido Paterno">
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="inputApellidomPaciente" class="form-label">Apellido M.</label>
+                                        <input type="text" class="form-control" id="inputApellidomPaciente"
+                                            placeholder="Apellido Materno">
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class=" col-lg-4">
+                                        <label for="inputcorreo" class="form-label">Correo Electrónico</label>
+                                        <input type="email" class="form-control" id="inputcorreo"
+                                            placeholder="Ejemplo@correo.Paciente">
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="inputDireccion" class="form-label">Dirección</label>
+                                        <input type="text" class="form-control" id="inputDireccion" placeholder="Dirección">
+                                    </div>
+                                        <div class="col-lg-4">
+                                            <label for="inputFono" class="form-label">Fono</label>
+                                            <input type="text" class="form-control" id="inputFono" placeholder="Teléfono Paciente">
+                                        </div>
+                                    <div class="row mt-3"> 
+                                        <div class="col-sm-4">
+                                            <button type="submit" class="btn btn-primary ">Modificar</button>
+                                        </div>
+                                    </div>    
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="anularhora" aria-labelledby="anularhora-tab">
+
+                </div>
                 </div>
                  <!-- Ingresar pago del paciente -->
                 <div class="tab-pane fade container-fluid p-4" id="v-pills-ingresarPago" role="tabpanel"
