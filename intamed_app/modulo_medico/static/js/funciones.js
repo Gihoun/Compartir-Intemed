@@ -23,14 +23,17 @@ function delete_row2(botonE) {
 
 // Atencion alergias
 function validar_Alergia(id) {
-    var Alergia = document.getElementById(id).innerHTML;
+    var Alergia = document.getElementById(id).value;
     document.getElementById('select_alergia').value = Alergia;
 }
 function detalle_Alergia() {
     var detalle = document.getElementById('select_alergia').value;
     var agregado = document.getElementById('inputDetalleA').value;
-    document.getElementById('inputDetalleA').value = '' + detalle + ', ' + agregado;
-    document.getElementById('inputDetalleA').innerHTML = '' + agregado + ', ' + detalle;
+    if (detalle=='' && agregado == ''){
+        alert('No ha seleccionado una alergia.')
+    }else{
+        document.getElementById('inputDetalleA').value = detalle+ ', '+ agregado;
+    }
 }
 function borrar_Alergia() {
     document.getElementById('inputDetalleA').value = '';
@@ -38,18 +41,41 @@ function borrar_Alergia() {
 }
 // Consulta alergias
 function validar_Alergia2(id) {
-    var Alergia = document.getElementById(id).innerHTML;
+    var Alergia = document.getElementById(id).value;
     document.getElementById('select_alergia2').value = Alergia;
 }
 function detalle_Alergia2() {
     var detalle = document.getElementById('select_alergia2').value;
     var agregado = document.getElementById('inputDetalleA2').value;
-    document.getElementById('inputDetalleA2').value = '' + detalle + ', ' + agregado;
-    document.getElementById('inputDetalleA').innerHTML = '' + agregado + ', ' + detalle;
+    if (detalle=='' && agregado == ''){
+        alert('No ha seleccionado una alergia.')
+    }else{
+        document.getElementById('inputDetalleA2').value = detalle+ ', '+ agregado;
+    }
 }
 function borrar_Alergia2() {
     document.getElementById('inputDetalleA2').value = '';
     document.getElementById('inputDetalleA2').innerHTML = '';
+}
+function desplegar_alergia() {
+    var desplegado = document.getElementById('auto_completar').hidden
+    if (desplegado == true){
+        document.getElementById('auto_completar').hidden = false;
+    } else {
+        document.getElementById('auto_completar').hidden = true ;
+        document.getElementById('auto_alergia').value = '';
+        document.getElementById('select_alergia').value = '';
+    }
+}
+function desplegar_alergia2() {
+    var desplegado = document.getElementById('auto_completar2').hidden
+    if (desplegado == true){
+        document.getElementById('auto_completar2').hidden = false;
+    } else {
+        document.getElementById('auto_completar2').hidden = true ;
+        document.getElementById('auto_alergia2').value = '';
+        document.getElementById('select_alergia2').value = '';
+    }
 }
 
 //Calendario no sacar por ahora ta weno para nuestros requisitos.
