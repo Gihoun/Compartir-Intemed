@@ -36,7 +36,7 @@
         </div>
     </div>
     <div class="row mt-3">
-        <div class=" col-lg-6">
+        <div class=" col-lg-4">
             <label for="inputNac" class="form-label">Nacionalidad</label>
             <input type="text" class="form-control" id="inputNac" placeholder="Nacionalidad Paciente">
         </div>
@@ -51,6 +51,10 @@
         <div class="col-lg-2">
             <label for="inputPeso" class="form-label">Peso</label>
             <input type="text" class="form-control" id="inputPeso" placeholder="Peso Paciente (Kg)">
+        </div>
+        <div class="col-lg-2">
+            <label for="inputIMC" class="form-label">IMC</label>
+            <input type="text" class="form-control" id="inputIMC" placeholder="IMC Paciente" disabled>
         </div>
     </div>
     <div class="row mt-3">
@@ -82,16 +86,23 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <button type="button" class="btn btn-outline-primary" id="tipo_alergia1"
-                                    onclick="validar_Alergia(this.id)">Alergia 1</button>
-                                <button type="button" class="btn btn-outline-secondary" id="tipo_alergia2"
-                                    onclick="validar_Alergia(this.id)">Alergia 2</button>
-                                <button type="button" class="btn btn-outline-success" id="tipo_alergia3"
-                                    onclick="validar_Alergia(this.id)">Alergia 3</button>
-                                <button type="button" class="btn btn-outline-danger" id="tipo_alergia4"
-                                    onclick="validar_Alergia(this.id)">Alergia 6</button>
-                                <button type="button" class="btn btn-outline-warning" id="tipo_alergia5"
-                                    onclick="validar_Alergia(this.id)">Alergia 5</button>
+                                <div class="d-grid gap-2 d-md-block">
+                                    <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder" id="tipo_alergia1" 
+                                        onclick="validar_Alergia(this.id)" value="Alergia 1">Alergia 1</button>
+                                    <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder" id="tipo_alergia2" 
+                                        onclick="validar_Alergia(this.id)" value="Alergia 2">Alergia 2</button>
+                                    <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder" id="tipo_alergia3" 
+                                        onclick="validar_Alergia(this.id)" value="Alergia 3">Alergia 3</button>
+                                    <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder" id="tipo_alergia4" 
+                                        onclick="validar_Alergia(this.id)" value="Alergia 6">Alergia 6</button>
+                                    <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder" id="tipo_alergia5" 
+                                        onclick="validar_Alergia(this.id)" value="Alergia 5">Alergia 5</button>
+                                    <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder" id="tipo_alergia_otro" 
+                                        onclick="desplegar_alergia()">Otra Alergia</button>
+                                    <div class="m-2" id="auto_completar" hidden>
+                                        <input type="text" class="form-control " id="auto_alergia" placeholder="Ingrese una Alergia" oninput="validar_Alergia(this.id)">
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar
@@ -108,7 +119,7 @@
         <div class="col-md-3">
             <label for="inputPrev" class="form-label">Previsión</label>
             <select id="inputPrev" class="form-select ">
-                <option selected>Fonasa</option>
+                <option selected>FONASA</option>
                 <option>Colmena</option>
                 <option>Cruz Blanca</option>
                 <option>Codelco</option>
@@ -144,7 +155,6 @@
             <table class="table borde table-hover" id="tablaF">
                 <thead>
                     <tr>
-
                         <th scope="col">Nombre Fármaco</th>
                         <th scope="col">Dosis</th>
                         <th scope="col">Via de Adminsitración</th>
