@@ -59,7 +59,7 @@
                 <!-- Ingresar hora paciente -->
                 <div class="tab-pane fade show active container-fluid p-4" id="v-pills-ingresarP" role="tabpanel"
                     aria-labelledby="v-pills-ingresarP-tab">
-                    <h2 class="text-center mb-5">Ingreso Paciente</h2>
+                    <h3 class="text-center mb-5">Ingreso paciente </h3>
                     <form class="row" action="">
                         <div class="col-lg-2">
                             <label for="inputRutpaciente" class="form-label">Rut Paciente</label>
@@ -174,54 +174,186 @@
                                         <button type="submit" class="btn btn-primary mb-3">Buscar</button>
                                     </div>
                                 </form>
-                                <div class="row mt-3">
-                                    <div class="col-lg-4">
-                                        <label for="inputNombre" class="form-label">Nombres</label>
-                                        <input type="text" class="form-control" id="inputNombre" placeholder="Nombre Paciente">
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <label for="inputApellidoPaciente" class="form-label">Apellido P.</label>
-                                        <input type="text" class="form-control" id="inputApellidoPaciente"
-                                            placeholder="Apellido Paterno">
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <label for="inputApellidomPaciente" class="form-label">Apellido M.</label>
-                                        <input type="text" class="form-control" id="inputApellidomPaciente"
-                                            placeholder="Apellido Materno">
-                                    </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class=" col-lg-4">
-                                        <label for="inputcorreo" class="form-label">Correo Electrónico</label>
-                                        <input type="email" class="form-control" id="inputcorreo"
-                                            placeholder="Ejemplo@correo.Paciente">
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <label for="inputDireccion" class="form-label">Dirección</label>
-                                        <input type="text" class="form-control" id="inputDireccion" placeholder="Dirección">
-                                    </div>
+                                <form action="">
+                                    <div class="row mt-3">
                                         <div class="col-lg-4">
-                                            <label for="inputFono" class="form-label">Fono</label>
-                                            <input type="text" class="form-control" id="inputFono" placeholder="Teléfono Paciente">
+                                            <label for="inputNombre" class="form-label">Nombres</label>
+                                            <input type="text" class="form-control" id="inputNombre" placeholder="Nombre Paciente">
                                         </div>
-                                    <div class="row mt-3"> 
+                                        <div class="col-lg-4">
+                                            <label for="inputApellidoPaciente" class="form-label">Apellido P.</label>
+                                            <input type="text" class="form-control" id="inputApellidoPaciente"
+                                                placeholder="Apellido Paterno">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label for="inputApellidomPaciente" class="form-label">Apellido M.</label>
+                                            <input type="text" class="form-control" id="inputApellidomPaciente"
+                                                placeholder="Apellido Materno">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class=" col-lg-4">
+                                            <label for="inputcorreo" class="form-label">Correo Electrónico</label>
+                                            <input type="email" class="form-control" id="inputcorreo"
+                                                placeholder="Ejemplo@correo.Paciente">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label for="inputDireccion" class="form-label">Dirección</label>
+                                            <input type="text" class="form-control" id="inputDireccion" placeholder="Dirección">
+                                        </div>
+                                            <div class="col-lg-4">
+                                                <label for="inputFono" class="form-label">Fono</label>
+                                                <input type="text" class="form-control" id="inputFono" placeholder="Teléfono Paciente">
+                                            </div>
+                                        <div class="row mt-3"> 
+                                            <div class="col-sm-4">
+                                                <button type="submit" class="btn btn-primary ">Modificar</button>
+                                            </div>
+                                        </div>    
+                                    </div>
+                                </form>
+                        </div>
+                        
+                    </div>
+                    <div class="tab-pane fade" id="anularhora" role="tabpanel" aria-labelledby="anularhora-tab">
+                        <div class="container table-responsive border left" style="width: 50%; float: left;"> 
+                            <form >
+                                    <div class="row mt-3">
                                         <div class="col-sm-4">
-                                            <button type="submit" class="btn btn-primary ">Modificar</button>
+                                            <label for="inputRutPaciente" class="form-label">Rut Paciente</label>
+                                            <input type="text" class="form-control" id="inputRutPaciente" placeholder="Ingrese Rut">
                                         </div>
-                                    </div>    
-                                </div>
+                                        <div class="col-sm-2">
+                                            <label for="inputDV" class="form-label">Dv</label>
+                                            <input type="text" class="form-control" id="inputDV" placeholder="Dv">
+                                        </div>
+                                        <div class="col-sm-4" style="margin-top: 32px;">
+                                            <button type="submit" class="btn btn-primary mb-3">Buscar</button>
+                                        </div>
+                                    
+                                        <div class="col-sm-8">
+                                            <label for="inputNombre" class="form-label">Nombres</label>
+                                            <input type="text" class="form-control" id="inputNombre" placeholder="Nombre Paciente">
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <label for="inputApellidoPaciente" class="form-label">Apellido P.</label>
+                                            <input type="text" class="form-control" id="inputApellidoPaciente"
+                                                placeholder="Apellido Paterno">
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <label for="inputApellidomPaciente" class="form-label">Apellido M.</label>
+                                            <input type="text" class="form-control" id="inputApellidomPaciente"
+                                                placeholder="Apellido Materno">
+                                        </div>
+                                        <div class="col-12 mt-3">
+                                            <button type="submit" class="btn btn-primary mb-4">Buscar</button>
+                                            <button type="submit" class="btn btn-primary mb-4">Anular</button>
+                                        </div>
+                                    </div>
+                            </form>
+                        </div>
+                        <div class="container table-responsive" style="width: 50%; float: right;"> 
+                            <h3 class="text-center mb-5">Horas Registradas</h3>
+                            <table class="table is-fullwidth is-striped is-bordered table-hover">
+                                <thead>
+                                  <tr>
+                                    <th>Nombre paciente</th>
+                                    <th>Dìa</th>
+                                    <th>Hora</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th>Andrea Verdugo</th>
+                                    <td>Lunes</td>
+                                    <td>12:00</td>
+                                  </tr>
+                                    <tr>
+                                    <th>Andrea Verdugo</th>
+                                    <td>Martes</td>
+                                    <td>13:00</td>
+                                  </tr>
+                                    <tr>
+                                    <th>Andrea Verdugo</th>
+                                    <td>Martes</td>
+                                    <td>14:00</td>
+                                  </tr>
+                                </tbody>
+                              </table>
                         </div>
                     </div>
+                    
                 </div>
-                <div id="anularhora" aria-labelledby="anularhora-tab">
-
-                </div>
-                </div>
+                
                 <!-- Ingresar pago del paciente -->
-                <div class="tab-pane fade container-fluid p-4" id="v-pills-ingresarPago" role="tabpanel"
-                    aria-labelledby="v-pills-ingresarPago-tab">
-                    <p>asdasda</p>
-                </div>
+                
+            </div>
+            <div class="tab-pane fade container-fluid p-4 " id="v-pills-ingresarPago" role="tabpanel" aria-labelledby="v-pills-ingresarPago-tab">
+                <form>
+                    <h3 class="text-center mb-5">Ingresar Pago paciente</h3>
+                        <div class="row mt-3">
+                            <div class="col-sm-3">
+                                <label for="inputRutPaciente" class="form-label">Rut Paciente</label>
+                                <input type="text" class="form-control" id="inputRutPaciente" placeholder="Ingrese Rut">
+                            </div>
+                            <div class="col-sm-1">
+                                <label for="inputDV" class="form-label">Dv</label>
+                                <input type="text" class="form-control" id="inputDV" placeholder="Dv">
+                            </div>
+                            <div class="col-sm-4" style="margin-top: 32px;">
+                                <button type="submit" class="btn btn-primary mb-3">Buscar</button>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-sm-4 mt-1">
+                                <label for="inputNombre" class="form-label">Nombres</label>
+                                <input type="text" class="form-control" id="inputNombre" placeholder="Nombre Paciente">
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="inputApellidoPaciente" class="form-label">Apellido P.</label>
+                                <input type="text" class="form-control" id="inputApellidoPaciente"
+                                    placeholder="Apellido Paterno">
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="inputApellidomPaciente" class="form-label">Apellido M.</label>
+                                <input type="text" class="form-control" id="inputApellidomPaciente"
+                                    placeholder="Apellido Materno">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class=" col-sm-4">
+                                <label for="inputcorreo" class="form-label">Correo Electrónico</label>
+                                <input type="email" class="form-control" id="inputcorreo" placeholder="Ejemplo@correo.paciente">
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="inputPrev" class="form-label">Previsión</label>
+                                <select id="inputPrev" class="form-select ">
+                                    <option selected>Fonasa</option>
+                                    <option>Colmena</option>
+                                    <option>Cruz Blanca</option>
+                                    <option>Codelco</option>
+                                    <option>ETC</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="container table-responsive border mt-5">
+                            <h3 class="text-center mb-5">Atencion</h3>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">Hora de atencion </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                <label class="form-check-label" for="flexRadioDefault2"> Examenes </label>
+                            </div> 
+                        </div>
+                        <div class="col-12 mt-5">
+                            <button type="submit" class="btn btn-primary mb-4">Cancelar</button>
+                            <button type="submit" class="btn btn-primary mb-4">Imprimir Bono</button>
+                        </div> 
+                </form>
             </div>
         </div>
     </main>
