@@ -5,99 +5,260 @@
 {% endblock titulo %}
 
 {% block contenido %}  
-<main class="p-5">
-    <div class="d-flex">
-        <!-- Tabla de navegacion vertical  -->
-        <div class="nav flex-column nav-pills me-5 border border-3 rounded border-info" id="v-pills-tab"
-            role="tablist" aria-orientation="vertical">
-            <button class="nav-link active border m-3" id="v-pills-agenda-tab" data-bs-toggle="pill"
-                data-bs-target="#v-pills-agenda" type="button" role="tab" aria-controls="v-pills-agenda"
-                aria-selected="true">
-                Inicio
-            </button>
-            <button class="nav-link border m-3" id="v-pills-atencion-tab" data-bs-toggle="pill"
-                data-bs-target="#v-pills-atencion" type="button" role="tab" aria-controls="v-pills-atencion"
-                aria-selected="false">
-                Agregar Usuario
-            </button>
-            <button class="nav-link border m-3" id="v-pills-buscarpac-tab" data-bs-toggle="pill"
-                data-bs-target="#v-pills-buscarpac" type="button" role="tab" aria-controls="v-pills-buscarpac"
-                aria-selected="false">
-                Modificar/Eliminar
-            </button>
-            <button class="nav-link border m-3" id="v-pills-examen-tab" data-bs-toggle="pill"
-                data-bs-target="#v-pills-examen" type="button" role="tab" aria-controls="v-pills-examen"
-                aria-selected="false">
-                Herramientas
-            </button>
-            <button class="nav-link border m-3" id="v-pills-reporte-tab" data-bs-toggle="pill"
-                data-bs-target="#v-pills-reporte" type="button" role="tab" aria-controls="v-pills-reporte"
-                aria-selected="false">
-                Farmacos
-            </button>
+  <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      <h1 class="h2">Resumen Atenciones</h1>
+      <div class="btn-toolbar mb-2 mb-md-0">
+        <input type="TextBox" ID="datebox" Class="form-control"></input>
+        <div class="btn-group me-2">
+          <button type="button" class="btn btn-sm btn-outline-secondary">Compartir</button>
+          <button type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
         </div>
-        <!-- Contenido de los tab de cada tabla -->
-        <div class="tab-content  container-fluid" id="v-pills-tabContent">
-            <div class="tab-pane fade show active container-fluid" id="v-pills-agenda" role="tabpanel"
-                aria-labelledby="v-pills-agenda-tab">
-                <div class="row">
-                    <div class="col-lg-11">
-                        <h2 class="text-center">Panel de Control</h2>
-                    </div>
-                    <form class="row row-cols-lg-auto g-3 align-items-center mb-5">
-                        <div class="col-12">
-                            <label for="floatingInputValue"> Instrucciones
-                        </div>
-                        <div class="container-fluid">
-                            <label for="floatingInputValue">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repellat harum a ab impedit possimus nostrum dolore mollitia beatae maiores vel ut nulla suscipit eveniet iste, inventore aut minus temporibus ad!</label>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="container m-1 row align-items-center border">
-                    <div class="card" style="width: 15rem;height: 25rem;">
-                        <img src="{% static 'img/clipart2045091.png' %}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title">Usuarios Registrados</h5>
-                          <p class="card-text">Some quick example text </p>
-                          <a href="#" class="btn btn-primary">administrar</a>
-                        </div>
-                    </div>
-                    <div class="card" style="width: 15rem;height: 25rem;">
-                        <img src="{% static 'img/clipart2045091.png' %}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title">Atenciones Realizadas</h5>
-                          <p class="card-text">Some quick example text</p>
-                          <a href="#" class="btn btn-primary">administrar</a>
-                        </div>
-                    </div>
-                    <div class="card" style="width: 15rem;height: 25rem;">
-                        <img src="{% static 'img/clipart2045091.png' %}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title">Farmacos Guardados</h5>
-                          <p class="card-text">Some quick example text </p>
-                          <a href="#" class="btn btn-primary">administrar</a>
-                        </div>
-                    </div>
-                    <div class="card" style="width: 15rem;height: 25rem;">
-                        <img src="{% static 'img/clipart2045091.png' %}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title">Examenes Guardados</h5>
-                          <p class="card-text">Some quick example text .</p>
-                          <a href="#" class="btn btn-primary">administrar</a>
-                        </div>
-                    </div>
-                    <div class="card" style="width: 15rem;height: 25rem;">
-                        <img src="{% static 'img/clipart2045091.png' %}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title">Pacientes Guardados</h5>
-                          <p class="card-text">Some quick example text </p>
-                          <a href="#" class="btn btn-primary">administrar</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>    
+        <form type="submit" method="POST" action="{% url 'Dash' %}" name="annio">
+        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle dropdown-toggle-split" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+          <span class="sr-only" data-feather="calendar"></span>
+          Año
+        </button>
+        {% csrf_token %}
+          <ul id="select1" class="dropdown-menu"  >
+            <li><a id="1"  class="dropdown-item" href="#" value="2010">2010</a></li>
+            <li><a id="2" class="dropdown-item" href="#" value="2011"  >2011</a></li>
+            <li><a id="3" class="dropdown-item" href="#" value="2013" >2013</a></li>
+            <li><a id="4" class="dropdown-item" href="#" value="2014" >2014</a></li>
+            <li><a id="5" class="dropdown-item" href="#" value="2015" >2015</a></li>
+            <li><a id="6" class="dropdown-item" href="#" value="2016" >2016</a></li>
+            <li><a id="7" class="dropdown-item" href="#" value="2017" >2017</a></li>
+          </ul>
+        </form>
+      </div>
     </div>
-</main>
+
+    <canvas id="lineChart" width="400" height="150"></canvas>
+        
+    <h2>Sesiones activas {{cant}}</h2>
+    <div class="table-responsive">
+      <table class="table table-striped table-sm">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Rut</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Rol</th>
+            <th scope="col">Direccion IP</th>
+          </tr>
+        </thead>
+        <tbody>
+         
+          <tr>
+            <td>1,002</td>
+            <td>placeholder</td>
+            <td>irrelevant</td>
+            <td>visual</td>
+            <td>layout</td>
+          </tr>
+          <tr>
+            <td>1,003</td>
+            <td>data</td>
+            <td>rich</td>
+            <td>dashboard</td>
+            <td>tabular</td>
+          </tr>
+          <tr>
+            <td>1,003</td>
+            <td>information</td>
+            <td>placeholder</td>
+            <td>illustrative</td>
+            <td>data</td>
+          </tr>
+          <tr>
+            <td>1,004</td>
+            <td>text</td>
+            <td>random</td>
+            <td>layout</td>
+            <td>dashboard</td>
+          </tr>
+          <tr>
+            <td>1,005</td>
+            <td>dashboard</td>
+            <td>irrelevant</td>
+            <td>text</td>
+            <td>placeholder</td>
+          </tr>
+          <tr>
+            <td>1,006</td>
+            <td>dashboard</td>
+            <td>illustrative</td>
+            <td>rich</td>
+            <td>data</td>
+          </tr>
+          <tr>
+            <td>1,007</td>
+            <td>placeholder</td>
+            <td>tabular</td>
+            <td>information</td>
+            <td>irrelevant</td>
+          </tr>
+          <tr>
+            <td>1,008</td>
+            <td>random</td>
+            <td>data</td>
+            <td>placeholder</td>
+            <td>text</td>
+          </tr>
+          <tr>
+            <td>1,009</td>
+            <td>placeholder</td>
+            <td>irrelevant</td>
+            <td>visual</td>
+            <td>layout</td>
+          </tr>
+          <tr>
+            <td>1,010</td>
+            <td>data</td>
+            <td>rich</td>
+            <td>dashboard</td>
+            <td>tabular</td>
+          </tr>
+          <tr>
+            <td>1,011</td>
+            <td>information</td>
+            <td>placeholder</td>
+            <td>illustrative</td>
+            <td>data</td>
+          </tr>
+          <tr>
+            <td>1,012</td>
+            <td>text</td>
+            <td>placeholder</td>
+            <td>layout</td>
+            <td>dashboard</td>
+          </tr>
+          <tr>
+            <td>1,013</td>
+            <td>dashboard</td>
+            <td>irrelevant</td>
+            <td>text</td>
+            <td>visual</td>
+          </tr>
+          <tr>
+            <td>1,014</td>
+            <td>dashboard</td>
+            <td>illustrative</td>
+            <td>rich</td>
+            <td>data</td>
+          </tr>
+          <tr>
+            <td>1,015</td>
+            <td>random</td>
+            <td>tabular</td>
+            <td>information</td>
+            <td>text</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
 {% endblock contenido %}
+
+{% block js%}
+<script type="text/javascript">
+    var ctxL = document.getElementById("lineChart").getContext('2d');
+    var en = "{{ene}}";
+    var fe ="{{feb}}";
+    var ma = "{{mar}}";
+    var ab = "{{abr}}";
+    var ma = "{{may}}";
+    var jn = "{{jun}}";
+    var ju = "{{jul}}";
+    var myLineChart = new Chart(ctxL, {
+      type: 'line',
+      data: {
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        datasets: [{
+          label: "Atenciones concertadas",
+          data: [en, fe, ma, ab, ma, jn, ju],
+          backgroundColor: [
+            'rgba(105, 0, 132, .2)',
+          ],
+          borderColor: [
+            'rgba(200, 99, 132, .7)',
+          ],
+          borderWidth: 2
+        },
+        {
+          label: "Atenciones canceladas",
+          data: [0, 5, 20, 19, 13, 3, 22],
+          backgroundColor: [
+            'rgba(0, 137, 132, .2)',
+          ],
+          borderColor: [
+            'rgba(0, 10, 130, .7)',
+          ],
+          borderWidth: 2
+        }
+        ]
+      },
+      options: {
+        responsive: true
+      }
+    });
+    
+</script>
+<script>
+    $('#select1 li a').on('click', function(){
+        $('#datebox').val($(this).html());
+
+        var url="{% url 'Dash' %}"
+        var ctxL = document.getElementById("lineChart").getContext('2d');
+        var context = "{{ contexto1 }}"       
+        $.ajax({
+            url : url,
+            type: "POST",
+            data : {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value, annio: $(this).html()},
+            dataType : "json"
+            
+           
+        }).done(function(response) {
+            console.log(response);
+            var myLineChart = new Chart(ctxL, {
+                type: 'line',
+                data: {
+                  labels: ["January", "February", "March", "April", "May", "June", "July"],
+                  datasets: [{
+                    label: "Atenciones concertadas",
+                    data: [response.ene, response.feb, response.mar, response.abr, response.may, response.jun, response.jul],
+                    backgroundColor: [
+                      'rgba(105, 0, 132, .2)',
+                    ],
+                    borderColor: [
+                      'rgba(200, 99, 132, .7)',
+                    ],
+                    borderWidth: 2
+                  },
+                  {
+                    label: "Atenciones canceladas",
+                    data: [0, 5, 20, 19, 13, 3, 22],
+                    backgroundColor: [
+                      'rgba(0, 137, 132, .2)',
+                    ],
+                    borderColor: [
+                      'rgba(0, 10, 130, .7)',
+                    ],
+                    borderWidth: 2
+                  }
+                  ]
+                },
+                options: {
+                  responsive: true
+                }
+              });
+            
+
+        }).fail(function (error) {
+              console.log(error);
+        });
+       console.log(document.getElementsByName('csrfmiddlewaretoken')[0].value ,$(this).html() ,url )
+       
+    });
+</script>
+{% endblock js%}

@@ -78,10 +78,15 @@ WSGI_APPLICATION = 'intamed_app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.oracle',
+        'NAME': 'XE',
+        'USER': 'USUARIO_ADMIN',
+        'PASSWORD': 'ADMIN_INTEMED',
+        'HOST': '172.17.0.2',
+        'PORT': '1521',
     }
 }
+
 
 
 # Password validation
