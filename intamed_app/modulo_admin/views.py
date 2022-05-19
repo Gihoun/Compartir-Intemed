@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from .models import Medico, Paciente, Usuario, Atencion
+from .models import Medico, Paciente, Usuario, Atencion, Farmaco
 from django.contrib.auth import authenticate,logout,login
 from django.contrib.auth.decorators import login_required,permission_required
 from django.views.decorators.csrf import csrf_protect
@@ -72,3 +72,20 @@ def filtro_usuarios(request):
     else:
         contexto = {"usuarios":users_all,"cantidad":users_cant}
     return render(request, 'busqueda.html', contexto)
+
+def vista_farmaco(request):
+    farmacos = Farmaco.objects.all()
+    farmaco_cant = farmacos.count()
+    if request.POST:
+        busqueda = request.POST.get("txbusqueda")
+
+        farma_selected = Farmaco.objects.filter(nombre_farmaco__startswith=busqueda)
+        farma_cant = farma_selected.count()
+        contexto = {"farmacos":farma_selected,"cantidad":farma_cant}
+    else:
+        contexto = {"farmacos":farmacos,"cantidad":farmaco_cant}
+    return render(request, 'farmacos.html', contexto)
+
+
+
+
