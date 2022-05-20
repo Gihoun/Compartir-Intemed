@@ -23,7 +23,6 @@
       <table class="table table-striped table-sm">
         <thead>
           <tr>
-            <th scope="col">#</th>
             <th scope="col">Run</th>
             <th scope="col">Nombre Completo</th>
             <th scope="col">Fecha Nacimiento</th>
@@ -35,7 +34,6 @@
             {% if cantidad >= 1 %}
                 {% for usu in usuarios %}
                   <tr>
-                    <td>id</td>
                     <td>{{usu.run}}</td>
                     <td>{{usu.p_nombre}} {{usu.s_nombre}} {{usu.apellido_pa}} {{usu.apellido_ma}}</td>
                     <td>{{usu.fecha_nac}}</td>
@@ -46,8 +44,8 @@
                           Acciones
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
-                          <li><a id="1"  class="dropdown-item" href="#" value="editar">editar</a></li>
-                          <li><a id="2"  class="dropdown-item" href="#" value="eliminar">eliminar</a></li>
+                          <li><a id="1"  class="dropdown-item" href="#" value="editar">Editar</a></li>
+                          <li><a id="2"  class="dropdown-item" href="#" value="eliminar">Eliminar</a></li>
                         </ul>
                       </div>
                     </td>
@@ -56,10 +54,10 @@
             {% elif cantidad < 1 %}
           <tr>
             <td>00000</td>
-            <td>no encontrado</td>
-            <td>no encontrado</td>
-            <td>no encontrado</td>
-            <td>no encontrado</td>
+            <td>No Encontrado</td>
+            <td>No Encontrado</td>
+            <td>No Encontrado</td>
+            <td>No Encontrado</td>
           </tr>
           
           {% endif %} 

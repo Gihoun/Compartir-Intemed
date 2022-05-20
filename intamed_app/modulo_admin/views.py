@@ -1,3 +1,5 @@
+from multiprocessing.sharedctypes import Array
+from select import select
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from .models import Medico, Paciente, Usuario, Atencion, Farmaco, Prevision
@@ -65,12 +67,14 @@ def filtro_usuarios(request):
     users_all = Usuario.objects.all()[:25]
     users_cant = users_all.count()
     if request.POST:
+
         busqueda = request.POST.get("txbusqueda")
 
-        users_ret = Usuario.objects.filter(run__startswith=busqueda)
+        users_ret = Usuario.objects.filter(run__startswith=busqueda, id_perfil = 1)
         users_cant = users_ret.count()
         contexto = {"usuarios":users_ret,"cantidad":users_cant}
     else:
+        users_all = Usuario.objects.all().select_related('paciente').filter(id_perfil = 1)
         contexto = {"usuarios":users_all,"cantidad":users_cant}
     return render(request, 'usuarios_s.html', contexto)
 
@@ -80,7 +84,7 @@ def filtro_pacientes(request):
     prev = Prevision.objects.all()
     if request.POST:
         busqueda = request.POST.get("txbusqueda")
-        pac_ret = Usuario.objects.all().select_related('paciente').filter(run__startswith=busqueda)
+        pac_ret = Usuario.objects.all().select_related('paciente').filter(run__startswith=busqueda, id_perfil=4)
         #pac_ret = Paciente.objects.all().select_related('run_paciente').filter(run_paciente_id__startswith=busqueda)
         cant_p = pac_ret.count()
         if cant_p>=1:
@@ -89,7 +93,7 @@ def filtro_pacientes(request):
         else:
             contexto = {"usuarios":0,"pacientes":0,"cantidad":0}
     else:
-        users_pac = Usuario.objects.all().select_related('paciente')
+        users_pac = Usuario.objects.all().select_related('paciente').filter(id_perfil=4)
         pac_user = Paciente.objects.all().select_related('id_prevision')
         userp_cant = pac_all.count()
         contexto = {"usuarios":users_pac,"pacientes":pac_user,"cantidad":userp_cant}
@@ -107,7 +111,4 @@ def vista_farmaco(request):
     else:
         contexto = {"farmacos":farmacos,"cantidad":farmaco_cant}
     return render(request, 'farmacos.html', contexto)
-
-
-
 
