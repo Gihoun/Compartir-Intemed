@@ -17,9 +17,7 @@ header {
     background-color: rgb(255, 252, 252);
 
 }
-#v-pills-agenda-tab {
-    min-height: fit-content;
-} 
+
 
 #v-pills-tab{
     border: 3px solid rgb(167, 167, 167);

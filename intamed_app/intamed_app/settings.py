@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'modulo_medico',
-    'modulo_recepcion'
+    'modulo_recepcion',
+    'modulo_inicio'
 ]
 
 MIDDLEWARE = [
