@@ -42,10 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'modulo_medico',
     'modulo_recepcion',
-<<<<<<< HEAD
-=======
-    'modulo_paciente'
->>>>>>> 298c253dc1d3dbbf7809aef6fc10f36f8c980b39
+    'modulo_paciente',
+    'modulo_inicio',
 ]
 
 MIDDLEWARE = [
