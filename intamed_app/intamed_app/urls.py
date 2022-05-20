@@ -22,7 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('medico/',include('modulo_medico.urls')),
     path('recepcion/',include('modulo_recepcion.urls')),
-    path('paciente/',include('modulo_paciente.urls'))
+    path('paciente/',include('modulo_paciente.urls')),
+    path('inicio/',include('modulo_inicio.urls'))
 ]
 if settings.DEBUG:
     urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
