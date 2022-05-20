@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import os
 
+import modulo_paciente
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -40,7 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'modulo_medico',
     'modulo_recepcion',
-    'modulo_inicio'
+<<<<<<< HEAD
+=======
+    'modulo_paciente'
+>>>>>>> 298c253dc1d3dbbf7809aef6fc10f36f8c980b39
 ]
 
 MIDDLEWARE = [

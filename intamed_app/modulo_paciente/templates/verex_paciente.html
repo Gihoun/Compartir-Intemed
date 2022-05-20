@@ -1,0 +1,93 @@
+{% load static %}
+<section class="p-4">
+    <div class=" container-fluid row p-4">
+        <div class="col-lg-12">
+            <h2 class="text-center mb-5">Exámenes Pacientes</h2>
+            <!-- form para buscar examen paciente -->
+            <form class="row row-cols-lg-auto g-3 align-items-center mb-5">
+                <div class="input-group">
+                    <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                    <button class="btn btn-outline-primary" type="button" id="inputGroupFileAddon04">Subir Archivo</button>
+                </div>
+            </form>
+            <!-- Tabla de examenes -->
+            <div class="container m-1 table-responsive  border">
+                <table class="table table-secundary table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID Examen</th>
+                            <th scope="col">Nombre Archivo</th>
+                            <th scope="col">Fecha subida</th>
+                            <th scope="col" style="text-align: center">Funciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">0122</th>
+                            <td>Exámen 1</td>
+                            <td>22-11-2022</td>
+                            <td style="text-align: center;">
+                                <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                    onclick="">
+                                    Visualizar
+                                </button>
+                                <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                    onclick="">
+                                    Imprimir
+                                </button>
+                                <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                    onclick="">
+                                    Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">0123</th>
+                            <td>Exámen 2</td>
+                            <td>22-11-2022</td>
+                            <td style="text-align: center;">
+                                <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                    onclick="">
+                                    Visualizar
+                                </button>
+                                <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                    onclick="">
+                                    Imprimir
+                                </button>
+                                <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                    onclick="">
+                                    Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">0124</th>
+                            <td>Exámen 3</td>
+                            <td>22-11-2022</td>
+                            <td style="text-align: center;">
+                                <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                    onclick="">
+                                    Visualizar
+                                </button>
+                                <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                    onclick="">
+                                    Imprimir
+                                </button>
+                                <button id="boton" type="button" class="btn btn-info m-1 text-white"
+                                    onclick="">
+                                    Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-12 mt-5">
+                Disclaimer de Privacidad: Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Rerum, eveniet nulla? Illo, voluptatem repudiandae, perspiciatis impedit quo quas
+                corrupti praesentium, cum delectus minima alias aliquam. Quia veritatis rem dicta
+                tempore.
+            </div>
+        </div>
+    </div>
+</section>
