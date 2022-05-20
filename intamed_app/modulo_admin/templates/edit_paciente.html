@@ -1,0 +1,144 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+{% block titulo %}
+<title>Editar Datos Paciente</title>
+{% endblock titulo %}
+
+{% block contenido %}  
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <h2>Paciente XXXXXXX</h2>
+    <div>
+        <form class="row ">
+            <!-- Datos Basicos del Paciente -->
+            <div class="col-lg-2">
+                <label for="inputRutpaciente2" class="form-label">Rut Paciente</label>
+                <input type="text" class="form-control" id="inputRutpaciente2" placeholder="Ingrese Rut">
+            </div>
+            <div class="col-lg-1">
+                <label for="inputDV2" class="form-label">Dv</label>
+                <input type="text" class="form-control" id="inputDV2" placeholder="Dv">
+            </div>
+            <div class="row mt-3">
+                <div class="col-lg-4">
+                    <label for="inputNombre2" class="form-label">Nombres</label>
+                    <input type="text" class="form-control" id="inputNombre2" placeholder="Nombre Paciente">
+                </div>
+                <div class="col-lg-4">
+                    <label for="inputApellidop2" class="form-label">Apellido P.</label>
+                    <input type="text" class="form-control" id="inputApellidop2"
+                        placeholder="Apellido Paterno">
+                </div>
+                <div class="col-lg-4">
+                    <label for="inputApellidom2" class="form-label">Apellido M.</label>
+                    <input type="text" class="form-control" id="inputApellidom2"
+                        placeholder="Apellido Materno">
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class=" col-lg-4">
+                    <label for="inputcorreo2" class="form-label">Correo Electronico</label>
+                    <input type="email" class="form-control" id="inputcorreo2"
+                        placeholder="Ejemplo@correo.paciente">
+                </div>
+                <div class="col-lg-8">
+                    <label for="inputDireccion2" class="form-label">Direccion</label>
+                    <input type="text" class="form-control" id="inputDireccion2" placeholder="Direccion">
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class=" col-lg-6">
+                    <label for="inputNac2" class="form-label">Nacionalidad</label>
+                    <input type="text" class="form-control" id="inputNac2"
+                        placeholder="Nacionalidad Paciente">
+                </div>
+                <div class="col-lg-2">
+                    <label for="inputEdad2" class="form-label">Edad</label>
+                    <input type="text" class="form-control" id="inputEdad2" placeholder="Edad Paciente">
+                </div>
+                <div class="col-lg-2">
+                    <label for="inputTalla2" class="form-label">Talla</label>
+                    <input type="text" class="form-control" id="inputTalla2"
+                        placeholder="Talla Paciente (cm)">
+                </div>
+                <div class="col-lg-2">
+                    <label for="inputPeso2" class="form-label">Peso</label>
+                    <input type="text" class="form-control" id="inputPeso2"
+                        placeholder="Peso Paciente (Kg)">
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <label for="inputFono2" class="form-label">Fono</label>
+                    <input type="text" class="form-control" id="inputFono2" placeholder="Telefono Paciente">
+                </div>
+                <div class="col-md-2">
+                    <label for="inputAlergia2" class="form-label">Alergia</label>
+                    <select id="inputAlergia2" class="form-select " oninput="validar_Alergia2()">
+                        <option selected>NO</option>
+                        <option>SI</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="inputDetalleA2" class="form-label">Detalle Alergia</label>
+                    <input type="text" class="form-control" id="inputDetalleA2"
+                        placeholder="Detalle de Alergia" disabled>
+                </div>
+                <div class="col-md-2">
+                    <label for="inputPrev2" class="form-label">Prevision</label>
+                    <select id="inputPrev2" class="form-select ">
+                        <option selected>Fonasa</option>
+                        <option>Colmena</option>
+                        <option>Cruz Blanca</option>
+                        <option>Codelco</option>
+                        <option>ETC</option>
+                    </select>
+                </div>
+                <script>
+                    function validar_Alergia2() {
+                        var Alergia = document.getElementById('inputAlergia2').value;
+                        if (Alergia == 'SI') {
+                            document.getElementById('inputDetalleA2').disabled = false
+                        } else {
+                            document.getElementById('inputDetalleA2').disabled = true;
+                        }
+                    }
+                </script>
+            </div>
+        </form>
+    </div>
+    <!-- Contenido de los tab de cada tabla -->
+          
+ 
+</main>
+
+
+
+{% endblock contenido %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

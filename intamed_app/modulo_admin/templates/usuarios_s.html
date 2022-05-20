@@ -28,6 +28,7 @@
             <th scope="col">Nombre Completo</th>
             <th scope="col">Fecha Nacimiento</th>
             <th scope="col">Correo</th>
+            <th scope="col">--</th>
           </tr>
         </thead>
         <tbody>
@@ -39,6 +40,17 @@
                     <td>{{usu.p_nombre}} {{usu.s_nombre}} {{usu.apellido_pa}} {{usu.apellido_ma}}</td>
                     <td>{{usu.fecha_nac}}</td>
                     <td>{{usu.correo}}</td>
+                    <td>
+                      <div class="btn-group">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Acciones
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                          <li><a id="1"  class="dropdown-item" href="#" value="editar">editar</a></li>
+                          <li><a id="2"  class="dropdown-item" href="#" value="eliminar">eliminar</a></li>
+                        </ul>
+                      </div>
+                    </td>
                   </tr>
                 {% endfor %} 
             {% elif cantidad < 1 %}

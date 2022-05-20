@@ -12,7 +12,7 @@
             aria-labelledby="v-pills-agenda-tab">
             <form class="d-flex" method="POST" action="{% url 'farmag' %}">
                 {% csrf_token %}
-                    <input class="form-control me-2" type="search" placeholder="rut usuario" name="txbusqueda" aria-label="Search">
+                    <input class="form-control me-2" type="search" placeholder="introduzca nombre" name="txbusqueda" aria-label="Search">
                     <button id="boton" class="btn btn-outline" type="submit">Buscar</button>
             </form>
             <div></div>
@@ -26,6 +26,7 @@
             <th scope="col">Nombre</th>
             <th scope="col">Vía de Administración</th>
             <th scope="col">Contraindicación</th>
+            <th scope="col">Accion</th>
           </tr>
         </thead>
         <tbody>
@@ -35,6 +36,17 @@
                     <td>{{farma.nombre_farmaco}}</td>
                     <td>{{farma.via_administracion}}</td>
                     <td>{{farma.contraindicacion}}</td>
+                    <td>
+                      <div class="btn-group">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Accion
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                          <li><a id="1"  class="dropdown-item" href="#" value="editar">editar</a></li>
+                          <li><a id="2"  class="dropdown-item" href="#" value="eliminar">eliminar</a></li>
+                        </ul>
+                      </div>
+                    </td>
                   </tr>
                 {% endfor %} 
             {% elif cantidad < 1 %}

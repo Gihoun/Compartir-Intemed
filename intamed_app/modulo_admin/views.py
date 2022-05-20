@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from .models import Medico, Paciente, Usuario, Atencion, Farmaco
+from .models import Medico, Paciente, Usuario, Atencion, Farmaco, Prevision
 from django.contrib.auth import authenticate,logout,login
 from django.contrib.auth.decorators import login_required,permission_required
 from django.views.decorators.csrf import csrf_protect
+
 from datetime import datetime
 from django.db.models import Count
 import requests
@@ -71,7 +72,28 @@ def filtro_usuarios(request):
         contexto = {"usuarios":users_ret,"cantidad":users_cant}
     else:
         contexto = {"usuarios":users_all,"cantidad":users_cant}
-    return render(request, 'busqueda.html', contexto)
+    return render(request, 'usuarios_s.html', contexto)
+
+def filtro_pacientes(request):
+    users_all = Usuario.objects.all()
+    pac_all = Paciente.objects.all()
+    prev = Prevision.objects.all()
+    if request.POST:
+        busqueda = request.POST.get("txbusqueda")
+        pac_ret = Usuario.objects.all().select_related('paciente').filter(run__startswith=busqueda)
+        #pac_ret = Paciente.objects.all().select_related('run_paciente').filter(run_paciente_id__startswith=busqueda)
+        cant_p = pac_ret.count()
+        if cant_p>=1:
+            #user_ret = Usuario.objects.filter(run__startswith=busqueda)
+            contexto = {"usuarios":pac_ret,"cantidad":cant_p}
+        else:
+            contexto = {"usuarios":0,"pacientes":0,"cantidad":0}
+    else:
+        users_pac = Usuario.objects.all().select_related('paciente')
+        pac_user = Paciente.objects.all().select_related('id_prevision')
+        userp_cant = pac_all.count()
+        contexto = {"usuarios":users_pac,"pacientes":pac_user,"cantidad":userp_cant}
+    return render(request, 'pacientes_s.html', contexto)
 
 def vista_farmaco(request):
     farmacos = Farmaco.objects.all()
