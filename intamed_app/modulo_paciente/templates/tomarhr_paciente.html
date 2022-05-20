@@ -1,0 +1,72 @@
+
+{% load static %}
+<section class="p-4">
+    <form class="row g-3">
+        <div class="col-lg-2">
+            <label for="testing" class="visually-hidden"></label>
+            <input type="text" readonly class="form-control-plaintext" id="testing" value="Seleccione médico">
+        </div>
+        <div class="col-lg-4">
+            <select class="form-select" aria-label="">
+                <option selected>Seleccione</option>
+                <option value="1">Rick</option>
+                <option value="2">and</option>
+                <option value="3">Morty</option>
+            </select>
+        </div>  
+        <div class="col-lg-4">
+            <select class="form-select" aria-label="">
+                <option selected>Especialidad</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+        </div>
+    </form>
+    <div class="container table-responsive left border" style="width: 50%; float: left;"> 
+        <form action="">
+        <div class="row mt-3">
+
+            <h5>Seleccionar día</h5>
+            <div id="datepicker"></div>
+            
+            <div class="col-sm-4 mt-3">
+                <button type="submit" class="btn btn-primary ">Confirmar</button>
+            </div>
+        </div>
+        </form>
+    </div>
+    <div class="container table-responsive border" style="width: 50%; float: right;"> 
+        <h3 class="text-center mb-5">Horas Registradas día</h3>
+        <table class="table is-fullwidth is-striped is-bordered table-hover">
+            <thead>
+            <tr>
+                <th>Hora</th>
+                <th>Estado hora</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th>10:30-11:30</th>
+                <th>Reservada</th>
+            </tr>
+            <tr>
+                <th>11:30-12:30</th>
+                <th>Reservada</th>
+            </tr>
+            <tr>
+                <th>12:30-13:30</th>
+                <th>Reservada</th>
+            </tr>
+            <tr>
+                <th>13:30-14:30</th>
+                <th>Reservada</th>
+            </tr>
+            <tr>
+                <th>14:30-15:30</th>
+                <th>Reservada</th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
