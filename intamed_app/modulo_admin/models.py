@@ -314,7 +314,7 @@ class Telefono(models.Model):
 
 
 class TelefonoUsuario(models.Model):
-    id_telefono = models.OneToOneField(Telefono, models.DO_NOTHING, db_column='id_telefono', primary_key=True)
+    id_telefono = models.OneToOneField('Telefono', models.DO_NOTHING, db_column='id_telefono', primary_key=True)
     run_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='run_usuario')
 
     class Meta:

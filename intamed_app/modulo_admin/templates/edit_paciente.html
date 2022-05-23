@@ -11,11 +11,11 @@
         <form class="row ">
             <!-- Datos Basicos del Paciente -->
             <div class="col-lg-2">
-                <label for="inputRutpaciente2" class="form-label">Rut Paciente</label>
+                <label for="inputRutpaciente2" class="form-label">RUT Paciente</label>
                 <input type="text" class="form-control" id="inputRutpaciente2" placeholder="{{paciente.run}}">
             </div>
             <div class="col-lg-1">
-                <label for="inputDV2" class="form-label">Dv</label>
+                <label for="inputDV2" class="form-label">DV</label>
                 <input type="text" class="form-control" id="inputDV2" placeholder="{{paciente.dv}}">
             </div>
             <div class="row mt-3">
@@ -44,12 +44,12 @@
             </div>
             <div class="row mt-3">
                 <div class=" col-lg-4">
-                    <label for="inputcorreo2" class="form-label">Correo Electronico</label>
+                    <label for="inputcorreo2" class="form-label">Correo Electrónico</label>
                     <input type="email" class="form-control" id="inputcorreo2"
                         placeholder="{{paciente.correo}}">
                 </div>
                 <div class="col-lg-8">
-                    <label for="inputDireccion2" class="form-label">Direccion</label>
+                    <label for="inputDireccion2" class="form-label">Dirección</label>
                     <input type="text" class="form-control" id="inputDireccion2" placeholder="{{paciente.direccion}}">
                 </div>
                 <div class="col-md-2">
@@ -72,7 +72,7 @@
                     <input type="text" class="form-control" id="inputEdad2" placeholder="{{paciente.id_estado.nombre_estado}}">
                 </div>
                 <div class="col-lg-2">
-                    <label for="inputGenero" class="form-label">Genero</label>
+                    <label for="inputGenero" class="form-label">Género</label>
                     <input type="text" class="form-control" id="inputTalla2"
                         placeholder="{{paciente.id_genero.nombre_genero}}">
                 </div>
@@ -92,30 +92,34 @@
             <div class="row mt-3">
                 <div class="col-md-4">
                     <label for="inputFono2" class="form-label">Fono</label>
-                    <input type="text" class="form-control" id="inputFono2" placeholder="">
+                        {% for y in telefonos %}
+                            <input type="text" class="form-control" id="inputFono2" placeholder="{{y}}">
+                        {% endfor %}
+                   
                 </div>
                 
                 <div class="col-md-2">
-                    <label for="inputPrev2" class="form-label">Prevision</label>
+                    <label for="inputPrev2" class="form-label">Previsión</label>
                     <select id="inputPrev2" class="form-select ">
-                        <option selected>Fonasa</option>
-                        <option>Colmena</option>
-                        <option>Cruz Blanca</option>
-                        <option>Codelco</option>
-                        <option>ETC</option>
+                    {% for x in prevision %}
+                        {% if x.nombre_prevision == paciente.paciente.id_prevision.nombre_prevision %}
+                            <option selected>{{x.nombre_prevision}}</option>
+                        {% else %}
+                            <option>{{x.nombre_prevision}}</option>
+                        {% endif %}
+                    {% endfor %}
                     </select>
+                </div>
+                <div>
+                    <label></label>
+                    <label></label>
                 </div>
             
             </div>
         </form>
     </div>
     <!-- Contenido de los tab de cada tabla -->
-          
- 
 </main>
-
-
-
 {% endblock contenido %}
 
 
