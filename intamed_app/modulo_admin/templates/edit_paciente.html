@@ -6,83 +6,95 @@
 
 {% block contenido %}  
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <h2>Paciente XXXXXXX</h2>
+    <h2>Paciente {{paciente.p_nombre}} {{paciente.apellido_pa}}</h2>
     <div>
         <form class="row ">
             <!-- Datos Basicos del Paciente -->
             <div class="col-lg-2">
                 <label for="inputRutpaciente2" class="form-label">Rut Paciente</label>
-                <input type="text" class="form-control" id="inputRutpaciente2" placeholder="Ingrese Rut">
+                <input type="text" class="form-control" id="inputRutpaciente2" placeholder="{{paciente.run}}">
             </div>
             <div class="col-lg-1">
                 <label for="inputDV2" class="form-label">Dv</label>
-                <input type="text" class="form-control" id="inputDV2" placeholder="Dv">
+                <input type="text" class="form-control" id="inputDV2" placeholder="{{paciente.dv}}">
             </div>
             <div class="row mt-3">
                 <div class="col-lg-4">
-                    <label for="inputNombre2" class="form-label">Nombres</label>
-                    <input type="text" class="form-control" id="inputNombre2" placeholder="Nombre Paciente">
+                    <label for="inputNombre2" class="form-label">Primer Nombre</label>
+                    <input type="text" class="form-control" id="inputNombre2" placeholder="{{paciente.p_nombre}}">
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputApellidop2" class="form-label">Apellido P.</label>
+                    <label for="inputNombre2" class="form-label">Segundo Nombre</label>
+                    <input type="text" class="form-control" id="inputNombre2" placeholder="{{paciente.s_nombre}}">
+                </div>
+                <div class="col-lg-4">
+                    <label for="inputNombre2" class="form-label">Nombre Social</label>
+                    <input type="text" class="form-control" id="inputNombre2" placeholder="{{paciente.nombre_social}}">
+                </div>
+                <div class="col-lg-4">
+                    <label for="inputApellidop2" class="form-label">Apellido Paterno</label>
                     <input type="text" class="form-control" id="inputApellidop2"
-                        placeholder="Apellido Paterno">
+                        placeholder="{{paciente.apellido_pa}}">
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputApellidom2" class="form-label">Apellido M.</label>
+                    <label for="inputApellidom2" class="form-label">Apellido Materno</label>
                     <input type="text" class="form-control" id="inputApellidom2"
-                        placeholder="Apellido Materno">
+                        placeholder="{{paciente.apellido_ma}}">
                 </div>
             </div>
             <div class="row mt-3">
                 <div class=" col-lg-4">
                     <label for="inputcorreo2" class="form-label">Correo Electronico</label>
                     <input type="email" class="form-control" id="inputcorreo2"
-                        placeholder="Ejemplo@correo.paciente">
+                        placeholder="{{paciente.correo}}">
                 </div>
                 <div class="col-lg-8">
                     <label for="inputDireccion2" class="form-label">Direccion</label>
-                    <input type="text" class="form-control" id="inputDireccion2" placeholder="Direccion">
+                    <input type="text" class="form-control" id="inputDireccion2" placeholder="{{paciente.direccion}}">
+                </div>
+                <div class="col-md-2">
+                    <label for="inputComuna" class="form-label">Comuna</label>
+                    <input type="text" class="form-control" id="inputFono2" placeholder="{{paciente.id_comuna.nombre_comuna}}">
                 </div>
             </div>
             <div class="row mt-3">
                 <div class=" col-lg-6">
                     <label for="inputNac2" class="form-label">Nacionalidad</label>
                     <input type="text" class="form-control" id="inputNac2"
-                        placeholder="Nacionalidad Paciente">
+                        placeholder="{{paciente.id_nacionalidad.nombre_nac}}">
                 </div>
                 <div class="col-lg-2">
-                    <label for="inputEdad2" class="form-label">Edad</label>
-                    <input type="text" class="form-control" id="inputEdad2" placeholder="Edad Paciente">
+                    <label for="Fecha_nac" class="form-label">Fecha Nacimiento</label>
+                    <input type="text" class="form-control" id="inputEdad2" placeholder="{{paciente.fecha_nac}}">
+                </div>
+                <div class="col-lg-2">
+                    <label for="inputEstado" class="form-label">Estado Civil</label>
+                    <input type="text" class="form-control" id="inputEdad2" placeholder="{{paciente.id_estado.nombre_estado}}">
+                </div>
+                <div class="col-lg-2">
+                    <label for="inputGenero" class="form-label">Genero</label>
+                    <input type="text" class="form-control" id="inputTalla2"
+                        placeholder="{{paciente.id_genero.nombre_genero}}">
                 </div>
                 <div class="col-lg-2">
                     <label for="inputTalla2" class="form-label">Talla</label>
-                    <input type="text" class="form-control" id="inputTalla2"
-                        placeholder="Talla Paciente (cm)">
+                    <input type="number" class="form-control" id="inputTalla2"
+                        placeholder="{{paciente.paciente.talla}}">
                 </div>
+                
                 <div class="col-lg-2">
                     <label for="inputPeso2" class="form-label">Peso</label>
-                    <input type="text" class="form-control" id="inputPeso2"
-                        placeholder="Peso Paciente (Kg)">
+                    <input type="number" class="form-control" id="inputPeso2"
+                        placeholder="{{paciente.paciente.peso}}">
                 </div>
+                
             </div>
             <div class="row mt-3">
                 <div class="col-md-4">
                     <label for="inputFono2" class="form-label">Fono</label>
-                    <input type="text" class="form-control" id="inputFono2" placeholder="Telefono Paciente">
+                    <input type="text" class="form-control" id="inputFono2" placeholder="">
                 </div>
-                <div class="col-md-2">
-                    <label for="inputAlergia2" class="form-label">Alergia</label>
-                    <select id="inputAlergia2" class="form-select " oninput="validar_Alergia2()">
-                        <option selected>NO</option>
-                        <option>SI</option>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <label for="inputDetalleA2" class="form-label">Detalle Alergia</label>
-                    <input type="text" class="form-control" id="inputDetalleA2"
-                        placeholder="Detalle de Alergia" disabled>
-                </div>
+                
                 <div class="col-md-2">
                     <label for="inputPrev2" class="form-label">Prevision</label>
                     <select id="inputPrev2" class="form-select ">
@@ -93,16 +105,7 @@
                         <option>ETC</option>
                     </select>
                 </div>
-                <script>
-                    function validar_Alergia2() {
-                        var Alergia = document.getElementById('inputAlergia2').value;
-                        if (Alergia == 'SI') {
-                            document.getElementById('inputDetalleA2').disabled = false
-                        } else {
-                            document.getElementById('inputDetalleA2').disabled = true;
-                        }
-                    }
-                </script>
+            
             </div>
         </form>
     </div>

@@ -19,7 +19,7 @@
             
         </div>
     </div>  
-    <div class="table-responsive">
+    <div class="table-responsive" style="min-height: 500px;">
       <table class="table table-striped table-sm">
         <thead>
           <tr>
@@ -43,16 +43,16 @@
                       <td>{{usu.p_nombre}} {{usu.s_nombre}} {{usu.apellido_pa}} {{usu.apellido_ma}}</td>
                       <td>{{usu.fecha_nac}}</td>
                       <td>{{usu.correo}}</td>
-                      <td>{{usu.paciente.id_prevision}}</td>
+                      <td>{{usu.paciente.id_prevision.nombre_prevision}}</td>
                       <td>{{usu.paciente.observaciones}}</td>
                       <td>
                         <div class="btn-group">
                           <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Acciones
                           </button>
-                          <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a id="1"  class="dropdown-item" href="#" value="editar">editar</a></li>
-                            <li><a id="2"  class="dropdown-item" href="#" value="eliminar">eliminar</a></li>
+                          <ul class="dropdown-menu dropdown-menu-dark">    
+                            <li><a id="1"  class="dropdown-item" name="runpac" value="editar" href="{% url 'edit_pac' usu.run %}">Editar</a></li>                            
+                            <li><a id="2"  class="dropdown-item" href="#" value="eliminar">Eliminar</a></li>
                           </ul>
                         </div>
                       </td>
@@ -63,10 +63,10 @@
             {% elif cantidad < 1 %}
           <tr>
             <td>00000</td>
-            <td>no encontrado</td>
-            <td>no encontrado</td>
-            <td>no encontrado</td>
-            <td>no encontrado</td>
+            <td>No Encontrado</td>
+            <td>No Encontrado</td>
+            <td>No Encontrado</td>
+            <td>No Encontrado</td>
           </tr>
           
           {% endif %} 

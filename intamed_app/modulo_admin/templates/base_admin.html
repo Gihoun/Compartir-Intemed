@@ -37,18 +37,34 @@
 </head>
 <script src="https://unpkg.com/feather-icons"></script>
     <body>
-        <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-            <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">INTEMED PANEL</a>
-            <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-            <div class="navbar-nav">
-              <div class="nav-item text-nowrap">
-                <a class="nav-link px-3" href="#">Sign out</a>
-              </div>
+        <header>
+          <nav class="navbar navbar-expand-xl navbar-light border p-md-3">
+            <div class="container">
+                <a class="navbar-brand position-absolute top-3 start-0" style="padding-left: 25px;" href="#" >Panel Intemed</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse d-flex flex-row-reverse float-right" >
+                    
+                    <ul class="navbar-nav hstack gap-3 " >
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Inicio</a>
+                        </li>
+                        <div class="vr"></div>                      
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Mi Cuenta</a>
+                        </li>
+                        <div class="vr"></div>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Cerrar Sesión</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-          </header>
+          </nav>
+        </header>
 
 <div class="container-fluid">
     <div class="row">

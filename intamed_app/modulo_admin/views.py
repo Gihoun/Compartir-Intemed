@@ -6,7 +6,6 @@ from .models import Medico, Paciente, Usuario, Atencion, Farmaco, Prevision
 from django.contrib.auth import authenticate,logout,login
 from django.contrib.auth.decorators import login_required,permission_required
 from django.views.decorators.csrf import csrf_protect
-
 from datetime import datetime
 from django.db.models import Count
 import requests
@@ -64,24 +63,23 @@ def administrator(request):
     return render(request,"administrator.html",contexto)
 
 def filtro_usuarios(request):
+    arr_id=[1,2,3]
     users_all = Usuario.objects.all()[:25]
     users_cant = users_all.count()
     if request.POST:
 
         busqueda = request.POST.get("txbusqueda")
 
-        users_ret = Usuario.objects.filter(run__startswith=busqueda, id_perfil = 1)
+        users_ret = Usuario.objects.filter(run__startswith=busqueda, id_perfil__in = arr_id)
         users_cant = users_ret.count()
         contexto = {"usuarios":users_ret,"cantidad":users_cant}
     else:
-        users_all = Usuario.objects.all().select_related('paciente').filter(id_perfil = 1)
+        users_all = Usuario.objects.all().filter(id_perfil__in = arr_id)
         contexto = {"usuarios":users_all,"cantidad":users_cant}
     return render(request, 'usuarios_s.html', contexto)
 
 def filtro_pacientes(request):
     users_all = Usuario.objects.all()
-    pac_all = Paciente.objects.all()
-    prev = Prevision.objects.all()
     if request.POST:
         busqueda = request.POST.get("txbusqueda")
         pac_ret = Usuario.objects.all().select_related('paciente').filter(run__startswith=busqueda, id_perfil=4)
@@ -91,13 +89,21 @@ def filtro_pacientes(request):
             #user_ret = Usuario.objects.filter(run__startswith=busqueda)
             contexto = {"usuarios":pac_ret,"cantidad":cant_p}
         else:
-            contexto = {"usuarios":0,"pacientes":0,"cantidad":0}
+            contexto = {"usuarios":0,"cantidad":0}
     else:
-        users_pac = Usuario.objects.all().select_related('paciente').filter(id_perfil=4)
-        pac_user = Paciente.objects.all().select_related('id_prevision')
-        userp_cant = pac_all.count()
-        contexto = {"usuarios":users_pac,"pacientes":pac_user,"cantidad":userp_cant}
+        users_pac = Usuario.objects.all().select_related('paciente').filter(id_perfil=4)[:25]
+        userp_cant = users_pac.count()
+        contexto = {"usuarios":users_pac,"cantidad":userp_cant}
     return render(request, 'pacientes_s.html', contexto)
+
+
+def edit_paciente(request,id):
+    paciente = Usuario.objects.get(run=id)
+    contexto = {"paciente": paciente}
+    if request.POST:
+        print("holi")
+
+    return render(request, 'edit_paciente.html',contexto)
 
 def vista_farmaco(request):
     farmacos = Farmaco.objects.all()
