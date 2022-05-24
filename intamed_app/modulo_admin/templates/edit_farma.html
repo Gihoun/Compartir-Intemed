@@ -1,0 +1,50 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+{% block titulo %}
+<title>Editar Fármaco</title>
+{% endblock titulo %}
+
+{% block contenido %}  
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <h2>Fármaco</h2>
+    <div>
+        <form class="row ">
+            <!-- Datos de farmaco-->
+            <div class="col-lg-2">
+                <label for="inputRutpaciente2" class="form-label">Nombre Fármaco</label>
+                <input type="text" class="form-control" id="inputRutpaciente2" placeholder="{{farmaco.nombre_farmaco}}">
+            </div>
+            <div class="col-lg-3">
+                <label for="inputDV2" class="form-label">Via Administración</label>
+                <input type="text" class="form-control" id="inputDV2" placeholder="{{farmaco.via_administracion}}">
+            </div>
+            <div class="row mt-3">
+                
+                <label for="inputNombre2" class="form-label">Contraindicación</label>
+                   
+                <div class="form-outline">
+                    <textarea class="form-control" id="textAreaExample1" rows="4">{{farmaco.contraindicacion}}</textarea>
+                    <label class="form-label" for="textAreaExample"></label>
+                  </div>
+                
+            </div>
+            <div class="col-md-5">
+                <label for="inputPrev2" class="form-label">Tipo Fármaco</label>
+                <select id="inputPrev2" class="form-select ">
+                {% for x in tipos %}
+                    {% if x.tipo_farma == farmaco.id_tipo_farma.tipo_farma %}
+                        <option selected>{{x.tipo_farma}}</option>
+                    {% else %}
+                        <option>{{x.tipo_farma}}</option>
+                    {% endif %}
+                {% endfor %}
+                </select>
+            </div>
+        </form>
+    </div>
+</main>
+
+
+
+
+{% endblock contenido %}

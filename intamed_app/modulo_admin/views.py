@@ -2,7 +2,7 @@ from multiprocessing.sharedctypes import Array
 from select import select
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from .models import Medico, Paciente, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono
+from .models import Medico, Paciente, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono, TipoFarmaco
 from django.contrib.auth import authenticate,logout,login
 from django.contrib.auth.decorators import login_required,permission_required
 from django.views.decorators.csrf import csrf_protect
@@ -98,7 +98,6 @@ def filtro_pacientes(request):
 
 
 def edit_paciente(request,id):
-    tel = []
     prevision = Prevision.objects.all()
     tel_users = TelefonoUsuario.objects.filter(run_usuario=id).values_list('id_telefono', flat=True)
     cant_tel = tel_users.count()    
@@ -123,3 +122,8 @@ def vista_farmaco(request):
         contexto = {"farmacos":farmacos,"cantidad":farmaco_cant}
     return render(request, 'farmacos.html', contexto)
 
+def edit_farmaco(request,id):
+    tipo_farmacos= TipoFarmaco.objects.all()
+    farmaco_todos =  Farmaco.objects.get(id_farmaco=id)
+    contexto = {"farmaco": farmaco_todos,"tipos": tipo_farmacos}
+    return render(request, 'edit_farma.html', contexto)
