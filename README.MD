@@ -18,8 +18,3 @@ Por Hacer:
 7. edicion mi propio perfil de admin
 #### 8. mejorar dashboard estadisticas como respaldo de BBDD,
 8. pensar en un par de tipos de reportes por defecto
-
-
-----------------------------------------------------------------------------------------------------------------
-Ideas:
-

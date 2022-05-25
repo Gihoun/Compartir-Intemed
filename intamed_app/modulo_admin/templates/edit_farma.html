@@ -6,7 +6,7 @@
 
 {% block contenido %}  
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <h2>Fármaco</h2>
+    <h2>Edición Fármaco</h2>
     <div>
         <form class="row ">
             <!-- Datos de farmaco-->
@@ -15,18 +15,16 @@
                 <input type="text" class="form-control" id="inputRutpaciente2" placeholder="{{farmaco.nombre_farmaco}}">
             </div>
             <div class="col-lg-3">
-                <label for="inputDV2" class="form-label">Via Administración</label>
+                <label for="inputDV2" class="form-label">Vía de Administración</label>
                 <input type="text" class="form-control" id="inputDV2" placeholder="{{farmaco.via_administracion}}">
             </div>
             <div class="row mt-3">
                 
-                <label for="inputNombre2" class="form-label">Contraindicación</label>
-                   
+                <label for="inputNombre2" class="form-label">Contraindicación</label>   
                 <div class="form-outline">
                     <textarea class="form-control" id="textAreaExample1" rows="4">{{farmaco.contraindicacion}}</textarea>
                     <label class="form-label" for="textAreaExample"></label>
                   </div>
-                
             </div>
             <div class="col-md-5">
                 <label for="inputPrev2" class="form-label">Tipo Fármaco</label>
@@ -40,11 +38,11 @@
                 {% endfor %}
                 </select>
             </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end" class="row mt-3">
+                <button type="button" class="btn btn-outline-primary">Guardar</button>
+            </div>
         </form>
     </div>
 </main>
-
-
-
 
 {% endblock contenido %}

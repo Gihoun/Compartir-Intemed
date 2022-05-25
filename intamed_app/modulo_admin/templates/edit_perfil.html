@@ -1,0 +1,38 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+{% block titulo %}
+<title>Editar Perfil</title>
+{% endblock titulo %}
+
+{% block contenido %}  
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <h2>Edición Perfiles Usuarios del Sistema</h2>
+    <div>
+        <form class="row ">
+            <!-- Datos del Perfil-->
+            <div class="col-lg-4">
+                <label for="inputDV2" class="form-label">Nombre del Perfil de Usuario</label>
+                <input type="text" class="form-control" id="inputDV2" placeholder="{{perfil.nombre_perfil}}">
+            </div>
+            <div class="row mt-3">
+                <label for="inputNombre2" class="form-label">Permisos</label>   
+                <div class="form-outline">
+                    <textarea class="form-control" id="textAreaExample1" rows="4">Permiso 1, Permiso 2, Permiso 3, etc</textarea>
+                    <label class="form-label" for="textAreaExample"></label>
+                  </div>
+            </div>
+            <div class="row mt-3">
+                <label for="inputNombre2" class="form-label">Privilegios</label>   
+                <div class="form-outline">
+                    <textarea class="form-control" id="textAreaExample1" rows="4">Privilegio 1, Privilegio 2, Privilegio 3, etc</textarea>
+                    <label class="form-label" for="textAreaExample"></label>
+                  </div>
+            </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end" class="row mt-3">
+                <button type="button" class="btn btn-outline-primary">Guardar</button>
+            </div>
+        </form>
+    </div>
+</main>
+
+{% endblock contenido %}

@@ -2,7 +2,8 @@ from multiprocessing.sharedctypes import Array
 from select import select
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from .models import Medico, Paciente, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono, TipoFarmaco
+from .models import Medico, Paciente, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono
+from .models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista
 from django.contrib.auth import authenticate,logout,login
 from django.contrib.auth.decorators import login_required,permission_required
 from django.views.decorators.csrf import csrf_protect
@@ -64,12 +65,10 @@ def administrator(request):
 
 def filtro_usuarios(request):
     arr_id=[1,2,3]
-    users_all = Usuario.objects.all()[:25]
+    users_all = Usuario.objects.filter(id_perfil__in = arr_id) #Usuario.objects.all() -- Cambie esto para que solo aparezcan Todos los Usuario Colaboradores
     users_cant = users_all.count()
     if request.POST:
-
         busqueda = request.POST.get("txbusqueda")
-
         users_ret = Usuario.objects.filter(run__startswith=busqueda, id_perfil__in = arr_id)
         users_cant = users_ret.count()
         contexto = {"usuarios":users_ret,"cantidad":users_cant}
@@ -83,10 +82,8 @@ def filtro_pacientes(request):
     if request.POST:
         busqueda = request.POST.get("txbusqueda")
         pac_ret = Usuario.objects.all().select_related('paciente').filter(run__startswith=busqueda, id_perfil=4)
-        #pac_ret = Paciente.objects.all().select_related('run_paciente').filter(run_paciente_id__startswith=busqueda)
         cant_p = pac_ret.count()
         if cant_p>=1:
-            #user_ret = Usuario.objects.filter(run__startswith=busqueda)
             contexto = {"usuarios":pac_ret,"cantidad":cant_p}
         else:
             contexto = {"usuarios":0,"cantidad":0}
@@ -127,3 +124,40 @@ def edit_farmaco(request,id):
     farmaco_todos =  Farmaco.objects.get(id_farmaco=id)
     contexto = {"farmaco": farmaco_todos,"tipos": tipo_farmacos}
     return render(request, 'edit_farma.html', contexto)
+
+
+### Super Método Aarón, guiado por Andreina :D  <3
+def vista_perfil(request):
+    perfiles = PerfilUsuario.objects.all()
+    perfiles_cant = perfiles.count()
+    if request.POST:
+        busqueda = request.POST.get("txbusqueda")
+
+        perfil_selected = PerfilUsuario.objects.filter(nombre_perfil__startswith=busqueda)
+        perfiles_cant = perfil_selected.count()
+        contexto = {"perfiles":perfil_selected,"cantidad":perfiles_cant}
+    else:
+        contexto = {"perfiles":perfiles,"cantidad":perfiles_cant}
+    return render(request, 'perfiles.html', contexto)
+
+### Método 2 del Aarón :)
+def edit_perfil(request,id):
+    perfiles = PerfilUsuario.objects.get(id_perfil=id)
+    contexto = {"perfil": perfiles}
+    return render(request, 'edit_perfil.html', contexto)
+
+### Método 3 :O
+def edit_colab(request,id):
+    colabs = Usuario.objects.get(run=id)
+    tel_users = TelefonoUsuario.objects.filter(run_usuario=id).values_list('id_telefono', flat=True)
+    cant_tel = tel_users.count()    
+    num_tel = Telefono.objects.all().filter(id_telefono__in=tel_users).values_list('num_telefono', flat=True)
+    cant = num_tel.count()
+
+    #admin = Administrador.objects.get(run=id)
+    #doc = Medico.objects.get(run=id)
+    #secre = Recepcionista.objects.get(run=id)
+
+    contexto = {"colab": colabs, "telefonos": num_tel, "cantidad": cant_tel}##, "admin": admin, "doc": doc, "secre": secre}
+
+    return render(request, 'edit_usuario.html', contexto)

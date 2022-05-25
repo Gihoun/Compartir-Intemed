@@ -1,152 +1,116 @@
 {% extends 'base_admin.html' %}
 {% load static %}
 {% block titulo %}
-<title>Editar Datos Paciente</title>
+<title>Editar Datos Colaborador</title>
 {% endblock titulo %}
 
 {% block contenido %}  
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <h2>Paciente: {{paciente.p_nombre}} {{paciente.s_nombre}} {{paciente.apellido_pa}} {{paciente.apellido_ma}}</h2>
+    <h2>Colaborador: {{colab.p_nombre}} {{colab.s_nombre}} {{colab.apellido_pa}} {{colab.apellido_ma}}</h2>
     <div>
         <form class="row ">
             <!-- Datos Basicos del Paciente -->
             <div class="col-lg-2">
                 <label for="inputRutpaciente2" class="form-label">RUT</label>
-                <input type="text" class="form-control" id="inputRutpaciente2" placeholder="{{paciente.run}}">
+                <input type="text" class="form-control" id="inputRutpaciente2" placeholder="{{colab.run}}">
             </div>
             <div class="col-lg-1">
                 <label for="inputDV2" class="form-label">DV</label>
-                <input type="text" class="form-control" id="inputDV2" placeholder="{{paciente.dv}}">
+                <input type="text" class="form-control" id="inputDV2" placeholder="{{colab.dv}}">
             </div>
             <div class="row mt-3">
                 <div class="col-lg-4">
                     <label for="inputNombre2" class="form-label">Primer Nombre</label>
-                    <input type="text" class="form-control" id="inputNombre2" placeholder="{{paciente.p_nombre}}">
+                    <input type="text" class="form-control" id="inputNombre2" placeholder="{{colab.p_nombre}}">
                 </div>
                 <div class="col-lg-4">
                     <label for="inputNombre2" class="form-label">Segundo Nombre</label>
-                    <input type="text" class="form-control" id="inputNombre2" placeholder="{{paciente.s_nombre}}">
+                    <input type="text" class="form-control" id="inputNombre2" placeholder="{{colab.s_nombre}}">
                 </div>
                 <div class="col-lg-4">
                     <label for="inputNombre2" class="form-label">Nombre Social</label>
-                    <input type="text" class="form-control" id="inputNombre2" placeholder="{{paciente.nombre_social}}">
+                    <input type="text" class="form-control" id="inputNombre2" placeholder="{{colab.nombre_social}}">
                 </div>
                 <div class="col-lg-4">
                     <label for="inputApellidop2" class="form-label">Apellido Paterno</label>
                     <input type="text" class="form-control" id="inputApellidop2"
-                        placeholder="{{paciente.apellido_pa}}">
+                        placeholder="{{colab.apellido_pa}}">
                 </div>
                 <div class="col-lg-4">
                     <label for="inputApellidom2" class="form-label">Apellido Materno</label>
                     <input type="text" class="form-control" id="inputApellidom2"
-                        placeholder="{{paciente.apellido_ma}}">
+                        placeholder="{{colab.apellido_ma}}">
                 </div>
             </div>
             <div class="row mt-3">
                 <div class=" col-lg-4">
                     <label for="inputcorreo2" class="form-label">Correo Electrónico</label>
                     <input type="email" class="form-control" id="inputcorreo2"
-                        placeholder="{{paciente.correo}}">
+                        placeholder="{{colab.correo}}">
                 </div>
                 <div class="col-lg-8">
                     <label for="inputDireccion2" class="form-label">Dirección</label>
-                    <input type="text" class="form-control" id="inputDireccion2" placeholder="{{paciente.direccion}}">
+                    <input type="text" class="form-control" id="inputDireccion2" placeholder="{{colab.direccion}}">
                 </div>
                 <div class="col-md-2">
                     <label for="inputComuna" class="form-label">Comuna</label>
-                    <input type="text" class="form-control" id="inputFono2" placeholder="{{paciente.id_comuna.nombre_comuna}}">
+                    <input type="text" class="form-control" id="inputFono2" placeholder="{{colab.id_comuna.nombre_comuna}}">
                 </div>
             </div>
+
             <div class="row mt-3">
                 <div class=" col-lg-6">
                     <label for="inputNac2" class="form-label">Nacionalidad</label>
                     <input type="text" class="form-control" id="inputNac2"
-                        placeholder="{{paciente.id_nacionalidad.nombre_nac}}">
+                        placeholder="{{colab.id_nacionalidad.nombre_nac}}">
                 </div>
                 <div class="col-lg-2">
                     <label for="Fecha_nac" class="form-label">Fecha Nacimiento</label>
-                    <input type="text" class="form-control" id="inputEdad2" placeholder="{{paciente.fecha_nac}}">
+                    <input type="text" class="form-control" id="inputEdad2" placeholder="{{colab.fecha_nac}}">
                 </div>
                 <div class="col-lg-2">
                     <label for="inputEstado" class="form-label">Estado Civil</label>
-                    <input type="text" class="form-control" id="inputEdad2" placeholder="{{paciente.id_estado.nombre_estado}}">
+                    <input type="text" class="form-control" id="inputEdad2" placeholder="{{colab.id_estado.nombre_estado}}">
                 </div>
                 <div class="col-lg-2">
                     <label for="inputGenero" class="form-label">Género</label>
                     <input type="text" class="form-control" id="inputTalla2"
-                        placeholder="{{paciente.id_genero.nombre_genero}}">
+                        placeholder="{{colab.id_genero.nombre_genero}}">
                 </div>
-                <div class="col-lg-2">
-                    <label for="inputTalla2" class="form-label">Talla</label>
-                    <input type="number" class="form-control" id="inputTalla2"
-                        placeholder="{{paciente.paciente.talla}}">
-                </div>
-                
-                <div class="col-lg-2">
-                    <label for="inputPeso2" class="form-label">Peso</label>
-                    <input type="number" class="form-control" id="inputPeso2"
-                        placeholder="{{paciente.paciente.peso}}">
-                </div>
-                
             </div>
+                
             <div class="row mt-3">
                 <div class="col-md-4">
                     <label for="inputFono2" class="form-label">Teléfono</label>
                         {% for y in telefonos %}
                             <input type="text" class="form-control" id="inputFono2" placeholder="{{y}}">
                         {% endfor %}    
-                </div>
+            </div>
+
+            <!-- Hasta acá no más llegue Andreina Perdoname :'(
+            <div>
+            {% if colab.id_perfil == 1 %}
+              <div class="col-lg-2">
+                <label for="Fecha_ingreso" class="form-label">Fecha Ingreso</label>
+                <input type="text" class="form-control" id="inputEdad2" placeholder="{{colab.admin.fecha_ingreso}}">
+              </div>
+            {% elif colab.id_perfil == 2 %}
+            {% elif colab.id_perfil == 3 %}
+            {% endif %} 
+            </div>
+            -->
+            
                 
-                <div class="col-md-2">
-                    <label for="inputPrev2" class="form-label">Previsión</label>
-                    <select id="inputPrev2" class="form-select ">
-                    {% for x in prevision %}
-                        {% if x.nombre_prevision == paciente.paciente.id_prevision.nombre_prevision %}
-                            <option selected>{{x.nombre_prevision}}</option>
-                        {% else %}
-                            <option>{{x.nombre_prevision}}</option>
-                        {% endif %}
-                    {% endfor %}
-                    </select>
-                </div>
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end" class="row mt-3">
-                    <button type="button" class="btn btn-outline-primary">Guardar</button>
-                </div>
-                <div>
-                    <label></label>
-                    <label></label>
-                </div>          
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end" class="row mt-3">
+                <button type="button" class="btn btn-outline-primary">Guardar</button>
+            </div>
+            <div>
+                <label></label>
+                <label></label>
+            </div>          
             </div>
         </form>
     </div>
     <!-- Contenido de los tab de cada tabla -->
 </main>
 {% endblock contenido %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
