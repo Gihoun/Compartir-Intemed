@@ -9,104 +9,158 @@
     <h2>Colaborador: {{colab.p_nombre}} {{colab.s_nombre}} {{colab.apellido_pa}} {{colab.apellido_ma}}</h2>
     <div>
         <form class="row ">
-            <!-- Datos Basicos del Paciente -->
+            <!-- Datos del Colaborador del Sistema -->
             <div class="col-lg-2">
-                <label for="inputRutpaciente2" class="form-label">RUT</label>
-                <input type="text" class="form-control" id="inputRutpaciente2" placeholder="{{colab.run}}">
+                <label for="inputRutColab" class="form-label">RUT</label>
+                <input type="text" class="form-control" id="inputRutColab" placeholder="{{colab.run}}" value="{{colab.run}}">
             </div>
             <div class="col-lg-1">
-                <label for="inputDV2" class="form-label">DV</label>
-                <input type="text" class="form-control" id="inputDV2" placeholder="{{colab.dv}}">
+                <label for="inputDV" class="form-label">DV</label>
+                <input type="text" class="form-control" id="inputDV" placeholder="{{colab.dv}}" value="{{colab.dv}}">
             </div>
-            <div class="row mt-3">
+             <div class="row mt-3">
                 <div class="col-lg-4">
-                    <label for="inputNombre2" class="form-label">Primer Nombre</label>
-                    <input type="text" class="form-control" id="inputNombre2" placeholder="{{colab.p_nombre}}">
+                    <label for="inputPrimerNombre" class="form-label">Primer Nombre</label>
+                    <input type="text" class="form-control" id="inputPrimerNombre" placeholder="{{colab.p_nombre}}" value="{{colab.p_nombre}}">
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputNombre2" class="form-label">Segundo Nombre</label>
-                    <input type="text" class="form-control" id="inputNombre2" placeholder="{{colab.s_nombre}}">
+                    <label for="inputSegundoNombre" class="form-label">Segundo Nombre</label>
+                    <input type="text" class="form-control" id="inputSegundoNombre" placeholder="{{colab.s_nombre}}" value="{{colab.s_nombre}}">
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputNombre2" class="form-label">Nombre Social</label>
-                    <input type="text" class="form-control" id="inputNombre2" placeholder="{{colab.nombre_social}}">
+                    <label for="inputNombreSocial" class="form-label">Nombre Social</label>
+                    <input type="text" class="form-control" id="inputNombreSocial" placeholder="{{colab.nombre_social}}" value="{{colab.nombre_social}}">
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputApellidop2" class="form-label">Apellido Paterno</label>
-                    <input type="text" class="form-control" id="inputApellidop2"
-                        placeholder="{{colab.apellido_pa}}">
+                    <label for="inputApellidoPaterno" class="form-label">Apellido Paterno</label>
+                    <input type="text" class="form-control" id="inputApellidoPaterno" placeholder="{{colab.apellido_pa}}" value="{{colab.apellido_pa}}">
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputApellidom2" class="form-label">Apellido Materno</label>
-                    <input type="text" class="form-control" id="inputApellidom2"
-                        placeholder="{{colab.apellido_ma}}">
+                    <label for="inputApellidoMaterno" class="form-label">Apellido Materno</label>
+                    <input type="text" class="form-control" id="inputApellidoMaterno" placeholder="{{colab.apellido_ma}}" value="{{colab.apellido_ma}}">
                 </div>
             </div>
+
             <div class="row mt-3">
-                <div class=" col-lg-4">
-                    <label for="inputcorreo2" class="form-label">Correo Electrónico</label>
-                    <input type="email" class="form-control" id="inputcorreo2"
-                        placeholder="{{colab.correo}}">
+                <hr>
+                <div class="col-md-4">
+                    <label for="inputComuna" class="form-label">Comuna</label>
+                    <select id="inputComuna" class="form-select ">
+                    {% for x in comuna %}
+                        {% if x.nombre_comuna == colab.id_comuna.nombre_comuna %}
+                            <option selected>{{x.nombre_comuna}}</option>
+                        {% else %}
+                            <option>{{x.nombre_comuna}}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
                 </div>
                 <div class="col-lg-8">
                     <label for="inputDireccion2" class="form-label">Dirección</label>
-                    <input type="text" class="form-control" id="inputDireccion2" placeholder="{{colab.direccion}}">
+                    <input type="text" class="form-control" id="inputDireccion" placeholder="{{colab.direccion}}" value="{{colab.direccion}}">
                 </div>
-                <div class="col-md-2">
-                    <label for="inputComuna" class="form-label">Comuna</label>
-                    <input type="text" class="form-control" id="inputFono2" placeholder="{{colab.id_comuna.nombre_comuna}}">
+                <div class=" col-lg-4">
+                    <label for="inputCorreo" class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-control" id="inputCorreo" placeholder="{{colab.correo}}" value="{{colab.correo}}">
+                </div>
+                <div class="col-lg-5">
+                    <label for="inputNac" class="form-label">Nacionalidad</label>
+                    <select id="inputNac" class="form-select ">
+                    {% for x in nacionalidad %}
+                        {% if x.nombre_nac == colab.id_nacionalidad.nombre_nac %}
+                            <option selected>{{x.nombre_nac}}</option>
+                        {% else %}
+                            <option>{{x.nombre_nac}}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <label for="inputFechaNac" class="form-label">Fecha Nacimiento</label>
+                    <input type="text" class="form-control" id="inputFechaNac" placeholder="{{colab.fecha_nac}}" value="{{colab.fecha_nac}}">
                 </div>
             </div>
-
             <div class="row mt-3">
-                <div class=" col-lg-6">
-                    <label for="inputNac2" class="form-label">Nacionalidad</label>
-                    <input type="text" class="form-control" id="inputNac2"
-                        placeholder="{{colab.id_nacionalidad.nombre_nac}}">
-                </div>
-                <div class="col-lg-2">
-                    <label for="Fecha_nac" class="form-label">Fecha Nacimiento</label>
-                    <input type="text" class="form-control" id="inputEdad2" placeholder="{{colab.fecha_nac}}">
-                </div>
-                <div class="col-lg-2">
+                <div class="col-lg-4">
                     <label for="inputEstado" class="form-label">Estado Civil</label>
-                    <input type="text" class="form-control" id="inputEdad2" placeholder="{{colab.id_estado.nombre_estado}}">
+                    <select id="inputEstado" class="form-select ">
+                    {% for x in estado %}
+                        {% if x.nombre_estado == colab.id_estado.nombre_estado %}
+                            <option selected>{{x.nombre_estado}}</option>
+                        {% else %}
+                            <option>{{x.nombre_estado}}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-4">
                     <label for="inputGenero" class="form-label">Género</label>
-                    <input type="text" class="form-control" id="inputTalla2"
-                        placeholder="{{colab.id_genero.nombre_genero}}">
+                    <select id="inputGenero" class="form-select ">
+                    {% for x in genero %}
+                        {% if x.nombre_genero == colab.id_genero.nombre_genero %}
+                            <option selected>{{x.nombre_genero}}</option>
+                        {% else %}
+                            <option>{{x.nombre_genero}}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
                 </div>
-            </div>
-                
-            <div class="row mt-3">
                 <div class="col-md-4">
-                    <label for="inputFono2" class="form-label">Teléfono</label>
+                    <label for="inputTelefono" class="form-label">Teléfono</label>
                     {% if cantidad > 0%}
-                    
                         {% for y in telefonos %}
-
-                            <input type="text" class="form-control" id="inputFono2" placeholder="{{y}}">
+                            <input type="text" class="form-control" id="inputTelefono" placeholder="{{y}}" value="{{y}}">
                         {% endfor %}  
                     {% else%}
-                    <input type="text" class="form-control" id="inputFono2" placeholder="sin fono">
+                    <input type="text" class="form-control" id="inputTelefono" placeholder="Sin Teléfono Registrado" value="Sin Teléfono Registrado">
                     {% endif%}  
+                </div>
             </div>
-
-            <!-- Hasta acá no más llegue Andreina Perdoname no aparecio la fecha de ingreso:' no te perdono( -->
-            <div>
-            {% if colab.id_perfil_id == 1 %}
-              <div class="col-lg-2">
-                <label for="Fecha_ingreso" class="form-label">Fecha Ingreso</label>
-                <input type="text" class="form-control" id="inputEdad2" placeholder="{{colab.administrador.fecha_ingreso}}">
-              </div>
-            {% elif colab.id_perfil_id == 2 %}
-            {% elif colab.id_perfil_id == 3 %}
-            {% endif %} 
-            </div>
-           
-            
                 
+            <div class="row mt-3">
+                <div>
+                    <hr>
+                    {% if colab.id_perfil_id == 1 %}
+                        <div class="row mt-3">
+                          <div class="col-lg-3">
+                            <label for="inputFechaIngreso" class="form-label">Fecha Ingreso Colaborador</label>
+                            <input type="text" class="form-control" id="inputFechaIngreso" placeholder="{{colab.administrador.fecha_ingreso}}" value="{{colab.administrador.fecha_ingreso}}">
+                          </div>
+                          <div class="col-lg-3">
+                            <label for="inputSueldo" class="form-label">Sueldo ($)</label>
+                            <input type="number" class="form-control" id="inputSueldo" placeholder="{{colab.administrador.sueldo}}" value="{{colab.administrador.sueldo}}">
+                          </div>
+                        </div>  
+
+                    {% elif colab.id_perfil_id == 2 %}
+                        <div class="row mt-3">
+                            <div class="col-lg-3">
+                                <label for="inputFechaIngreso" class="form-label">Fecha Ingreso Colaborador</label>
+                                <input type="text" class="form-control" id="inputFechaIngreso" placeholder="{{colab.medico.fecha_ingreso}}" value="{{colab.medico.fecha_ingreso}}">
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="inputSueldo" class="form-label">Sueldo ($)</label>
+                                <input type="number" class="form-control" id="inputSueldo" placeholder="{{colab.medico.sueldo}}" value="{{colab.medico.sueldo}}">
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="inputRegimenHrs" class="form-label">Horas Diarias de Trabajo</label>
+                                <input type="number" class="form-control" id="inputRegimenHrs" placeholder="{{colab.medico.regimen_hrs}}" value="{{colab.medico.regimen_hrs}}">
+                            </div>
+                        </div>
+
+                    {% elif colab.id_perfil_id == 3 %}
+                        <div class="row mt-3">
+                            <div class="col-lg-3">
+                              <label for="inputFechaIngreso" class="form-label">Fecha Ingreso Colaborador</label>
+                              <input type="text" class="form-control" id="inputFechaIngreso" placeholder="{{colab.recepcionista.fecha_ingreso}}" value="{{colab.recepcionista.fecha_ingreso}}">
+                            </div>
+                            <div class="col-lg-3">
+                              <label for="inputSueldo" class="form-label">Sueldo ($)</label>
+                              <input type="number" class="form-control" id="inputSueldo" placeholder="{{colab.recepcionista.sueldo}}" value="{{colab.recepcionista.sueldo}}">
+                            </div>
+                          </div> 
+                    {% endif %} 
+                </div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end" class="row mt-3">
                 <button type="button" class="btn btn-outline-primary">Guardar</button>
             </div>

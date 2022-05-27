@@ -2,8 +2,8 @@ from multiprocessing.sharedctypes import Array
 from select import select
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from .models import Medico, Paciente, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono
-from .models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista
+from .models import Comuna, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono
+from .models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato
 from django.contrib.auth import authenticate,logout,login
 from django.contrib.auth.decorators import login_required,permission_required
 from django.views.decorators.csrf import csrf_protect
@@ -13,14 +13,12 @@ import requests
 import logging
 from django.http import JsonResponse
 
-# Create your views here.
 def administrator(request):
     #Dash por defecto
     logger = logging.getLogger(__name__)
     users_all = Usuario.objects.all().count()
     
     if request.POST:
-        
         annio = request.POST.get("annio")
         logger.warning(annio)
         ate_year = Atencion.objects.filter(fecha_atencion__year=annio)
@@ -65,7 +63,7 @@ def administrator(request):
 
 def filtro_usuarios(request):
     arr_id=[1,2,3]
-    users_all = Usuario.objects.filter(id_perfil__in = arr_id) #Usuario.objects.all() -- Cambie esto para que solo aparezcan Todos los Usuario Colaboradores
+    users_all = Usuario.objects.filter(id_perfil__in = arr_id)
     users_cant = users_all.count()
     if request.POST:
         busqueda = request.POST.get("txbusqueda")
@@ -93,7 +91,6 @@ def filtro_pacientes(request):
         contexto = {"usuarios":users_pac,"cantidad":userp_cant}
     return render(request, 'pacientes_s.html', contexto)
 
-
 def edit_paciente(request,id):
     prevision = Prevision.objects.all()
     tel_users = TelefonoUsuario.objects.filter(run_usuario=id).values_list('id_telefono', flat=True)
@@ -101,9 +98,15 @@ def edit_paciente(request,id):
     num_tel = Telefono.objects.all().filter(id_telefono__in=tel_users).values_list('num_telefono', flat=True)
     cant = num_tel.count()
     paciente = Usuario.objects.get(run=id)
-    contexto = {"paciente": paciente, "prevision": prevision, "telefonos": num_tel, "cantidad": cant_tel}
-    if request.POST:
-        print("holi")
+    comunas = Comuna.objects.all()
+    nacionalidades = Nacionalidad.objects.all()
+    estados = EstadoCivil.objects.all()
+    generos = Genero.objects.all()
+
+    contexto = {"paciente": paciente, "prevision": prevision, "telefonos": num_tel, "cantidad": cant_tel,
+                "comuna": comunas, "nacionalidad": nacionalidades, "estado": estados, "genero": generos}
+    ##if request.POST:
+    ##    print("holi")
     return render(request, 'edit_paciente.html',contexto)
 
 def vista_farmaco(request):
@@ -125,8 +128,6 @@ def edit_farmaco(request,id):
     contexto = {"farmaco": farmaco_todos,"tipos": tipo_farmacos}
     return render(request, 'edit_farma.html', contexto)
 
-
-
 def vista_perfil(request):
     perfiles = PerfilUsuario.objects.all()
     perfiles_cant = perfiles.count()
@@ -140,24 +141,21 @@ def vista_perfil(request):
         contexto = {"perfiles":perfiles,"cantidad":perfiles_cant}
     return render(request, 'perfiles.html', contexto)
 
-
 def edit_perfil(request,id):
     perfiles = PerfilUsuario.objects.get(id_perfil=id)
     contexto = {"perfil": perfiles}
     return render(request, 'edit_perfil.html', contexto)
 
-### Método 3 :O
 def edit_colab(request,id):
     colabs = Usuario.objects.get(run=id)
     tel_users = TelefonoUsuario.objects.filter(run_usuario=id).values_list('id_telefono', flat=True)
     cant_tel = tel_users.count()    
     num_tel = Telefono.objects.all().filter(id_telefono__in=tel_users).values_list('num_telefono', flat=True)
+    comunas= Comuna.objects.all()
+    nacionalidades = Nacionalidad.objects.all()
+    estados = EstadoCivil.objects.all()
+    generos = Genero.objects.all()
 
-
-    #admin = Administrador.objects.get(run=id)
-    #doc = Medico.objects.get(run=id)
-    #secre = Recepcionista.objects.get(run=id)
-
-    contexto = {"colab": colabs, "telefonos": num_tel, "cantidad": cant_tel}##, "admin": admin, "doc": doc, "secre": secre}
-
+    contexto = {"colab": colabs, "telefonos": num_tel, "cantidad": cant_tel, "comuna": comunas, 
+                "nacionalidad":nacionalidades, "estado":estados, "genero":generos}
     return render(request, 'edit_usuario.html', contexto)

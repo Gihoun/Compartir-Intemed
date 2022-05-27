@@ -9,97 +9,120 @@
     <h2>Paciente: {{paciente.p_nombre}} {{paciente.s_nombre}} {{paciente.apellido_pa}} {{paciente.apellido_ma}}</h2>
     <div>
         <form class="row ">
-            <!-- Datos Basicos del Paciente -->
+            <!-- Datos Básicos del Paciente -->
             <div class="col-lg-2">
-                <label for="inputRutpaciente2" class="form-label">RUT</label>
-                <input type="text" class="form-control" id="inputRutpaciente2" placeholder="{{paciente.run}}">
+                <label for="inputRutPaciente" class="form-label">RUT</label>
+                <input type="text" class="form-control" id="inputRutPaciente" placeholder="{{paciente.run}}" value="{{paciente.run}}">
             </div>
             <div class="col-lg-1">
-                <label for="inputDV2" class="form-label">DV</label>
-                <input type="text" class="form-control" id="inputDV2" placeholder="{{paciente.dv}}">
+                <label for="inputDVPaciente" class="form-label">DV</label>
+                <input type="text" class="form-control" id="inputDVPaciente" placeholder="{{paciente.dv}}" value="{{paciente.dv}}">
             </div>
             <div class="row mt-3">
                 <div class="col-lg-4">
-                    <label for="inputNombre2" class="form-label">Primer Nombre</label>
-                    <input type="text" class="form-control" id="inputNombre2" placeholder="{{paciente.p_nombre}}">
+                    <label for="inputPrimerNombrePac" class="form-label">Primer Nombre</label>
+                    <input type="text" class="form-control" id="inputPrimerNombrePac" placeholder="{{paciente.p_nombre}}" value="{{paciente.p_nombre}}">
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputNombre2" class="form-label">Segundo Nombre</label>
-                    <input type="text" class="form-control" id="inputNombre2" placeholder="{{paciente.s_nombre}}">
+                    <label for="inputSegundoNombrePac" class="form-label">Segundo Nombre</label>
+                    <input type="text" class="form-control" id="inputSegundoNombrePac" placeholder="{{paciente.s_nombre}}" value="{{paciente.s_nombre}}">
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputNombre2" class="form-label">Nombre Social</label>
-                    <input type="text" class="form-control" id="inputNombre2" placeholder="{{paciente.nombre_social}}">
+                    <label for="inputNombreSocialPac" class="form-label">Nombre Social</label>
+                    <input type="text" class="form-control" id="inputNombreSocialPac" placeholder="{{paciente.nombre_social}}" value="{{paciente.nombre_social}}">
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputApellidop2" class="form-label">Apellido Paterno</label>
-                    <input type="text" class="form-control" id="inputApellidop2"
-                        placeholder="{{paciente.apellido_pa}}">
+                    <label for="inputApellidoPaPac" class="form-label">Apellido Paterno</label>
+                    <input type="text" class="form-control" id="inputApellidoPaPac" placeholder="{{paciente.apellido_pa}}" value="{{paciente.apellido_pa}}">
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputApellidom2" class="form-label">Apellido Materno</label>
-                    <input type="text" class="form-control" id="inputApellidom2"
-                        placeholder="{{paciente.apellido_ma}}">
+                    <label for="inputApellidoMaPac" class="form-label">Apellido Materno</label>
+                    <input type="text" class="form-control" id="inputApellidoMaPac" placeholder="{{paciente.apellido_ma}}" value="{{paciente.apellido_ma}}">
                 </div>
             </div>
             <div class="row mt-3">
-                <div class=" col-lg-4">
-                    <label for="inputcorreo2" class="form-label">Correo Electrónico</label>
-                    <input type="email" class="form-control" id="inputcorreo2"
-                        placeholder="{{paciente.correo}}">
+                <hr>
+                <div class="col-md-4">
+                    <label for="inputComunaPac" class="form-label">Comuna</label>
+                    <select id="inputComunaPac" class="form-select ">
+                    {% for x in comuna %}
+                        {% if x.nombre_comuna == paciente.id_comuna.nombre_comuna %}
+                            <option selected>{{x.nombre_comuna}}</option>
+                        {% else %}
+                            <option>{{x.nombre_comuna}}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
                 </div>
                 <div class="col-lg-8">
-                    <label for="inputDireccion2" class="form-label">Dirección</label>
-                    <input type="text" class="form-control" id="inputDireccion2" placeholder="{{paciente.direccion}}">
+                    <label for="inputDireccionPac" class="form-label">Dirección</label>
+                    <input type="text" class="form-control" id="inputDireccionPac" placeholder="{{paciente.direccion}}" value="{{paciente.direccion}}">
                 </div>
-                <div class="col-md-2">
-                    <label for="inputComuna" class="form-label">Comuna</label>
-                    <input type="text" class="form-control" id="inputFono2" placeholder="{{paciente.id_comuna.nombre_comuna}}">
+                <div class=" col-lg-4">
+                    <label for="inputCorreoPac" class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-control" id="inputCorreoPac" placeholder="{{paciente.correo}}" value="{{paciente.correo}}">
+                </div>
+                <div class="col-lg-5">
+                    <label for="inputNacPac" class="form-label">Nacionalidad</label>
+                    <select id="inputNacPac" class="form-select ">
+                    {% for x in nacionalidad %}
+                        {% if x.nombre_nac == paciente.id_nacionalidad.nombre_nac %}
+                            <option selected>{{x.nombre_nac}}</option>
+                        {% else %}
+                            <option>{{x.nombre_nac}}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <label for="FechaNacPac" class="form-label">Fecha Nacimiento</label>
+                    <input type="text" class="form-control" id="FechaNacPac" placeholder="{{paciente.fecha_nac}}" value="{{paciente.fecha_nac}}">
                 </div>
             </div>
             <div class="row mt-3">
-                <div class=" col-lg-6">
-                    <label for="inputNac2" class="form-label">Nacionalidad</label>
-                    <input type="text" class="form-control" id="inputNac2"
-                        placeholder="{{paciente.id_nacionalidad.nombre_nac}}">
+                <div class="col-lg-4">
+                    <label for="inputEstadoPac" class="form-label">Estado Civil</label>
+                    <select id="inputEstadoPac" class="form-select ">
+                    {% for x in estado %}
+                        {% if x.nombre_estado == paciente.id_estado.nombre_estado %}
+                            <option selected>{{x.nombre_estado}}</option>
+                        {% else %}
+                            <option>{{x.nombre_estado}}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-4">
+                    <label for="inputGeneroPac" class="form-label">Género</label>
+                    <select id="inputGeneroPac" class="form-select ">
+                    {% for x in genero %}
+                        {% if x.nombre_genero == paciente.id_genero.nombre_genero %}
+                            <option selected>{{x.nombre_genero}}</option>
+                        {% else %}
+                            <option>{{x.nombre_genero}}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
                 </div>
                 <div class="col-lg-2">
-                    <label for="Fecha_nac" class="form-label">Fecha Nacimiento</label>
-                    <input type="text" class="form-control" id="inputEdad2" placeholder="{{paciente.fecha_nac}}">
+                    <label for="inputTalla" class="form-label">Talla (mts)</label>
+                    <input type="number" class="form-control" id="inputTalla" placeholder="{{paciente.paciente.talla}}" value="{{paciente.paciente.talla}}">
                 </div>
                 <div class="col-lg-2">
-                    <label for="inputEstado" class="form-label">Estado Civil</label>
-                    <input type="text" class="form-control" id="inputEdad2" placeholder="{{paciente.id_estado.nombre_estado}}">
-                </div>
-                <div class="col-lg-2">
-                    <label for="inputGenero" class="form-label">Género</label>
-                    <input type="text" class="form-control" id="inputTalla2"
-                        placeholder="{{paciente.id_genero.nombre_genero}}">
-                </div>
-                <div class="col-lg-2">
-                    <label for="inputTalla2" class="form-label">Talla</label>
-                    <input type="number" class="form-control" id="inputTalla2"
-                        placeholder="{{paciente.paciente.talla}}">
-                </div>
-                
-                <div class="col-lg-2">
-                    <label for="inputPeso2" class="form-label">Peso</label>
-                    <input type="number" class="form-control" id="inputPeso2"
-                        placeholder="{{paciente.paciente.peso}}">
-                </div>
-                
+                    <label for="inputPeso" class="form-label">Peso (kgs)</label>
+                    <input type="number" class="form-control" id="inputPeso" placeholder="{{paciente.paciente.peso}}" value="{{paciente.paciente.peso}}">
+                </div>  
             </div>
             <div class="row mt-3">
                 <div class="col-md-4">
-                    <label for="inputFono2" class="form-label">Teléfono</label>
+                    <label for="inputFonoPac" class="form-label">Teléfono</label>
                         {% for y in telefonos %}
-                            <input type="text" class="form-control" id="inputFono2" placeholder="{{y}}">
+                            <input type="number" class="form-control" id="inputFonoPac" placeholder="{{y}}" value="{{y}}">
                         {% endfor %}    
                 </div>
-                
-                <div class="col-md-2">
-                    <label for="inputPrev2" class="form-label">Previsión</label>
-                    <select id="inputPrev2" class="form-select ">
+                <div class="col-md-4">
+                    <label for="inputPrev" class="form-label">Previsión</label>
+                    <select id="inputPrev" class="form-select ">
                     {% for x in prevision %}
                         {% if x.nombre_prevision == paciente.paciente.id_prevision.nombre_prevision %}
                             <option selected>{{x.nombre_prevision}}</option>
@@ -109,6 +132,17 @@
                     {% endfor %}
                     </select>
                 </div>
+
+                <!--Me falta realizar el cálculo del IMC del paciente (No sé si en los metodos, o aca mismo)
+                <div class="col-md-4">
+                    <label for="inputIMC" class="form-label">IMC Paciente</label>
+                    <input type="number" class="form-control" id="inputIMC"
+                     placeholder="{{paciente.paciente.peso}}" 
+                     value="{{paciente.paciente.talla}}">
+                     <br>
+                </div>
+                -->
+                
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end" class="row mt-3">
                     <button type="button" class="btn btn-outline-primary">Guardar</button>
                 </div>
