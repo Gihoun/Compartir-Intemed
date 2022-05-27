@@ -82,23 +82,29 @@
             <div class="row mt-3">
                 <div class="col-md-4">
                     <label for="inputFono2" class="form-label">Teléfono</label>
+                    {% if cantidad > 0%}
+                    
                         {% for y in telefonos %}
+
                             <input type="text" class="form-control" id="inputFono2" placeholder="{{y}}">
-                        {% endfor %}    
+                        {% endfor %}  
+                    {% else%}
+                    <input type="text" class="form-control" id="inputFono2" placeholder="sin fono">
+                    {% endif%}  
             </div>
 
-            <!-- Hasta acá no más llegue Andreina Perdoname :'(
+            <!-- Hasta acá no más llegue Andreina Perdoname no aparecio la fecha de ingreso:' no te perdono( -->
             <div>
-            {% if colab.id_perfil == 1 %}
+            {% if colab.id_perfil_id == 1 %}
               <div class="col-lg-2">
                 <label for="Fecha_ingreso" class="form-label">Fecha Ingreso</label>
-                <input type="text" class="form-control" id="inputEdad2" placeholder="{{colab.admin.fecha_ingreso}}">
+                <input type="text" class="form-control" id="inputEdad2" placeholder="{{colab.administrador.fecha_ingreso}}">
               </div>
-            {% elif colab.id_perfil == 2 %}
-            {% elif colab.id_perfil == 3 %}
+            {% elif colab.id_perfil_id == 2 %}
+            {% elif colab.id_perfil_id == 3 %}
             {% endif %} 
             </div>
-            -->
+           
             
                 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end" class="row mt-3">

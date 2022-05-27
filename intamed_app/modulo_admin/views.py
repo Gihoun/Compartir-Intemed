@@ -126,7 +126,7 @@ def edit_farmaco(request,id):
     return render(request, 'edit_farma.html', contexto)
 
 
-### Super Método Aarón, guiado por Andreina :D  <3
+
 def vista_perfil(request):
     perfiles = PerfilUsuario.objects.all()
     perfiles_cant = perfiles.count()
@@ -140,7 +140,7 @@ def vista_perfil(request):
         contexto = {"perfiles":perfiles,"cantidad":perfiles_cant}
     return render(request, 'perfiles.html', contexto)
 
-### Método 2 del Aarón :)
+
 def edit_perfil(request,id):
     perfiles = PerfilUsuario.objects.get(id_perfil=id)
     contexto = {"perfil": perfiles}
@@ -152,7 +152,7 @@ def edit_colab(request,id):
     tel_users = TelefonoUsuario.objects.filter(run_usuario=id).values_list('id_telefono', flat=True)
     cant_tel = tel_users.count()    
     num_tel = Telefono.objects.all().filter(id_telefono__in=tel_users).values_list('num_telefono', flat=True)
-    cant = num_tel.count()
+
 
     #admin = Administrador.objects.get(run=id)
     #doc = Medico.objects.get(run=id)
