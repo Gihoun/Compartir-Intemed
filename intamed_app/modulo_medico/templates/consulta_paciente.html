@@ -1,70 +1,72 @@
 {% load static %}
 
 <!-- Datos Basicos del Paciente consulta antigua -->
-<h2 class="text-center mb-5">Consulta Pacientes</h2>
+<h2 class="text-center mb-5 fw-bolder">Consulta Pacientes</h2>
 <form class="row ">
     <!-- Datos Basicos del Paciente -->
-    <div class="col-lg-2">
-        <label for="inputRutpaciente2" class="form-label">Rut Paciente</label>
-        <input type="text" class="form-control" id="inputRutpaciente2" placeholder="Ingrese Rut">
-    </div>
-    <div class="col-lg-1">
-        <label for="inputDV2" class="form-label">Dv</label>
-        <input type="text" class="form-control" id="inputDV2" placeholder="Dv">
+    <div class="row mt-3">
+        <div class="col-lg-2">
+            <label for="inputRutpaciente2" class="form-label fw-bolder">Rut Paciente</label>
+            <input type="text" class="form-control" id="inputRutpaciente2" placeholder="Ingrese Rut">
+        </div>
+        <div class="col-lg-1">
+            <label for="inputDV2" class="form-label fw-bolder">DV</label>
+            <input type="text" class="form-control" id="inputDV2" placeholder="Dv">
+        </div>
     </div>
     <div class="row mt-3">
         <div class="col-lg-4">
-            <label for="inputNombre2" class="form-label">Nombres</label>
+            <label for="inputNombre2" class="form-label fw-bolder">Nombres</label>
             <input type="text" class="form-control" id="inputNombre2" placeholder="Nombre Paciente">
         </div>
         <div class="col-lg-4">
-            <label for="inputApellidop2" class="form-label">Apellido P.</label>
+            <label for="inputApellidop2" class="form-label fw-bolder">Apellido P.</label>
             <input type="text" class="form-control" id="inputApellidop2" placeholder="Apellido Paterno">
         </div>
         <div class="col-lg-4">
-            <label for="inputApellidom2" class="form-label">Apellido M.</label>
+            <label for="inputApellidom2" class="form-label fw-bolder">Apellido M.</label>
             <input type="text" class="form-control" id="inputApellidom2" placeholder="Apellido Materno">
         </div>
     </div>
     <div class="row mt-3">
         <div class=" col-lg-4">
-            <label for="inputcorreo2" class="form-label">Correo Electrónico</label>
+            <label for="inputcorreo2" class="form-label fw-bolder">Correo Electrónico</label>
             <input type="email" class="form-control" id="inputcorreo2" placeholder="Ejemplo@correo.paciente">
         </div>
         <div class="col-lg-8">
-            <label for="inputDireccion2" class="form-label">Dirección</label>
+            <label for="inputDireccion2" class="form-label fw-bolder">Dirección</label>
             <input type="text" class="form-control" id="inputDireccion2" placeholder="Dirección">
         </div>
     </div>
     <div class="row mt-3">
         <div class=" col-lg-4">
-            <label for="inputNac2" class="form-label">Nacionalidad</label>
+            <label for="inputNac2" class="form-label fw-bolder">Nacionalidad</label>
             <input type="text" class="form-control" id="inputNac2" placeholder="Nacionalidad Paciente">
         </div>
         <div class="col-lg-2">
-            <label for="inputEdad2" class="form-label">Edad</label>
-            <input type="text" class="form-control" id="inputEdad2" placeholder="Edad Paciente">
+            <label for="inputEdad2" class="form-label fw-bolder">Edad</label>
+            <input type="number" class="form-control" id="inputEdad2" placeholder="Edad Paciente">
         </div>
         <div class="col-lg-2">
-            <label for="inputTalla2" class="form-label">Talla</label>
-            <input type="text" class="form-control" id="inputTalla2" placeholder="Talla Paciente (cm)">
+            <label for="inputTalla2" class="form-label fw-bolder">Talla</label>
+            <input type="number" class="form-control" id="inputTalla2" placeholder="Talla Paciente (cm)">
         </div>
         <div class="col-lg-2">
-            <label for="inputPeso2" class="form-label">Peso</label>
-            <input type="text" class="form-control" id="inputPeso2" placeholder="Peso Paciente (Kg)">
+            <label for="inputPeso2" class="form-label fw-bolder">Peso</label>
+            <input type="number" class="form-control" id="inputPeso2" placeholder="Peso Paciente (Kg)">
         </div>
         <div class="col-lg-2">
-            <label for="inputIMC2" class="form-label">IMC</label>
-            <input type="text" class="form-control" id="inputIMC2" placeholder="IMC Paciente" disabled>
+            <label for="inputIMC2" class="form-label fw-bolder">IMC</label>
+            <input type="number" class="form-control" id="inputIMC2" placeholder="IMC Paciente" disabled>
         </div>
     </div>
     <div class="row mt-3">
         <div class="col-md-4">
-            <label for="inputFono2" class="form-label">Fono</label>
-            <input type="text" class="form-control" id="inputFono2" placeholder="Teléfono Paciente">
+            <label for="inputFono2" class="form-label fw-bolder">Fono</label>
+            <input type="tel" class="form-control" id="inputFono2" placeholder="Teléfono Paciente">
         </div>
         <div class="col-md-4">
-            <label for="inputDetalleA2" class="form-label">Detalle Alergia</label>
+            <label for="inputDetalleA2" class="form-label fw-bolder">Detalle Alergia</label>
             <div class="input-group ">
                 <input type="text col-md-8" class="form-control" id="inputDetalleA2" placeholder="Detalle de Alergia"
                     value="" disabled>
@@ -121,7 +123,7 @@
             </div>
         </div>
         <div class="col-md-3">
-            <label for="inputPrev2" class="form-label">Previsión</label>
+            <label for="inputPrev2" class="form-label fw-bolder">Previsión</label>
             <select id="inputPrev2" class="form-select ">
                 <option selected>Fonasa</option>
                 <option>Colmena</option>
@@ -135,24 +137,23 @@
     <!-- Observaciones Receta y mas Modificaciones -->
     <ul class="nav nav-tabs mt-3" id="tabsObs2" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="antecedente-tab" data-bs-toggle="tab" data-bs-target="#antecedente"
+            <button class="nav-link active fw-bolder" id="antecedente-tab" data-bs-toggle="tab" data-bs-target="#antecedente"
                 type="button" role="tab" aria-controls="antecedente" aria-selected="false">Antecedentes
                 Paciente</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="observaciones2-tab" data-bs-toggle="tab" data-bs-target="#observaciones2"
+            <button class="nav-link fw-bolder" id="observaciones2-tab" data-bs-toggle="tab" data-bs-target="#observaciones2"
                 type="button" role="tab" aria-controls="observaciones2" aria-selected="true">Nuevas
                 Observaciones</button>
         </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="farmaco2-tab" data-bs-toggle="tab" data-bs-target="#farmaco2" type="button"
+        <li class="nav-item " role="presentation">
+            <button class="nav-link fw-bolder" id="farmaco2-tab" data-bs-toggle="tab" data-bs-target="#farmaco2" type="button"
                 role="tab" aria-controls="farmaco2" aria-selected="false">Fármacos</button>
         </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="diagnotico2-tab" data-bs-toggle="tab" data-bs-target="#diagnostico2"
+        <li class="nav-item " role="presentation">
+            <button class="nav-link fw-bolder" id="diagnotico2-tab" data-bs-toggle="tab" data-bs-target="#diagnostico2"
                 type="button" role="tab" aria-controls="diagnostico2" aria-selected="false">Nuevo Diagnostico</button>
         </li>
-
     </ul>
     <div class="tab-content" id="tabcontenidobs2">
         <div class="tab-pane fade show active" id="antecedente" role="tabpanel" aria-labelledby="antecedente-tab">
