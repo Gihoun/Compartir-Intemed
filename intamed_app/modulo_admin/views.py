@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required,permission_required
 from django.views.decorators.csrf import csrf_protect
 from datetime import datetime
 from django.db.models import Count
+from django.contrib import messages
 import requests
 import logging
 from django.http import JsonResponse
@@ -123,9 +124,43 @@ def vista_farmaco(request):
     return render(request, 'farmacos.html', contexto)
 
 def edit_farmaco(request,id):
+    logger = logging.getLogger(__name__)
     tipo_farmacos= TipoFarmaco.objects.all()
     farmaco_todos =  Farmaco.objects.get(id_farmaco=id)
-    contexto = {"farmaco": farmaco_todos,"tipos": tipo_farmacos}
+    mensaje=''
+    if request.POST:
+        n_farm = request.POST.get("nombre_farma")
+        v_adm = request.POST.get("via_adm")
+        contraind = request.POST.get("contra_ind")
+        tipo_farm = request.POST.get("tipo_farma")
+        try:
+            t_farm= TipoFarmaco.objects.get(tipo_farma=tipo_farm)
+            farma= Farmaco.objects.get(id_farmaco=id)
+            
+            farma.id_tipo_farma = t_farm
+            if n_farm is not None and contraind is not None and v_adm is not None :
+                if n_farm.strip() !='' and contraind.strip() !='' and v_adm.strip() !='' :
+                    farma.nombre_farmaco = n_farm
+                    farma.via_administracion = v_adm
+                    farma.contraindicacion = contraind.strip()
+                    farma.save()
+                    flag=True
+                    mensaje="Farmaco modificado con exito"
+            else:
+                mensaje="Farmaco con campos no validos"
+                flag=False 
+            
+            contexto = {"farmaco": farma,"tipos": tipo_farmacos,"mensaje": mensaje}
+            messages.info(request, mensaje)
+            logger.warning(mensaje)
+        except:
+            flag=False
+            mensaje="El Farmaco no ha podido ser modificado"
+            messages.info(request, mensaje)
+            logger.warning(mensaje)
+            contexto = {"farmaco": farmaco_todos,"tipos": tipo_farmacos,"mensaje": farma}
+    else:
+        contexto = {"farmaco": farmaco_todos,"tipos": tipo_farmacos,"mensaje": mensaje}
     return render(request, 'edit_farma.html', contexto)
 
 def vista_perfil(request):
