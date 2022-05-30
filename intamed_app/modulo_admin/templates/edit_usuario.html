@@ -11,12 +11,12 @@
         <form class="row ">
             <!-- Datos del Colaborador del Sistema -->
             <div class="col-lg-2">
-                <label for="inputRutColab" class="form-label">RUT</label>
-                <input type="text" class="form-control" id="inputRutColab" placeholder="{{colab.run}}" value="{{colab.run}}">
+                <label for="inputRutColab" class="form-label">RUT<span id="rut_span" class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="inputRut" oninput="val_rut()" placeholder="{{colab.run}}" value="{{colab.run}}" minlength="7" maxlength="8" required>
             </div>
             <div class="col-lg-1">
-                <label for="inputDV" class="form-label">DV</label>
-                <input type="text" class="form-control" id="inputDV" placeholder="{{colab.dv}}" value="{{colab.dv}}">
+                <label for="inputDV" class="form-label">DV<span id="dv_span" class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="inputDV" oninput="val_dv()" placeholder="{{colab.dv}}" value="{{colab.dv}}" minlength="1" maxlength="1" required>
             </div>
              <div class="row mt-3">
                 <div class="col-lg-4">

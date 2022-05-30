@@ -11,9 +11,9 @@
         <form class="row ">
             <!-- Datos del Perfil-->
             <div class="col-lg-4">
-                <label for="inputNombrePerfil" class="form-label">Nombre del Perfil de Usuario</label>
-                <input type="text" class="form-control" id="inputNombrePerfil" placeholder="{{perfil.nombre_perfil}}" value="{{perfil.nombre_perfil}}">
-            </div>
+                <label for="inputNombrePerfil" class="form-label">Nombre del Perfil de Usuario<span id="nom_span" class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="inputNombrePerfil" oninput="val_nom_per()" placeholder="{{perfil.nombre_perfil}}" value="{{perfil.nombre_perfil}}" minlength="3" maxlength="100" required>
+            </div>   
             <div class="row mt-3">
                 <label for="inputNombre2" class="form-label">Permisos</label>   
                 <div class="form-outline">

@@ -258,6 +258,7 @@ class Prevision(models.Model):
 class Recepcionista(models.Model):
     run_recepcionista = models.OneToOneField('Usuario', models.DO_NOTHING, db_column='run_recepcionista', primary_key=True)
     fecha_ingreso = models.DateField()
+    
     sueldo = models.BigIntegerField()
     id_contrato = models.ForeignKey(Contrato, models.DO_NOTHING, db_column='id_contrato')
 

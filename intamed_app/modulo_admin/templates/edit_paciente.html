@@ -11,33 +11,33 @@
         <form class="row ">
             <!-- Datos Básicos del Paciente -->
             <div class="col-lg-2">
-                <label for="inputRutPaciente" class="form-label">RUT</label>
-                <input type="text" class="form-control" id="inputRutPaciente" placeholder="{{paciente.run}}" value="{{paciente.run}}">
+                <label for="inputRutPaciente" class="form-label">RUT<span id="rut_span" class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="inputRut" oninput="val_rut()" placeholder="{{paciente.run}}" value="{{paciente.run}}" minlength="6" maxlength="8" required>
             </div>
             <div class="col-lg-1">
-                <label for="inputDVPaciente" class="form-label">DV</label>
-                <input type="text" class="form-control" id="inputDVPaciente" placeholder="{{paciente.dv}}" value="{{paciente.dv}}">
+                <label for="inputDVPaciente" class="form-label">DV<span id="dv_span" class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="inputDV" oninput="val_dv()" placeholder="{{paciente.dv}}" value="{{paciente.dv}}" minlength="1" maxlength="1" required>
             </div>
             <div class="row mt-3">
                 <div class="col-lg-4">
-                    <label for="inputPrimerNombrePac" class="form-label">Primer Nombre</label>
-                    <input type="text" class="form-control" id="inputPrimerNombrePac" placeholder="{{paciente.p_nombre}}" value="{{paciente.p_nombre}}">
+                    <label for="inputPrimerNombrePac" class="form-label">Primer Nombre<span id="primn_span" class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="inputPNom" oninput="val_primn()" placeholder="{{paciente.p_nombre}}" value="{{paciente.p_nombre}}" minlength="2" maxlength="100" required>
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputSegundoNombrePac" class="form-label">Segundo Nombre</label>
-                    <input type="text" class="form-control" id="inputSegundoNombrePac" placeholder="{{paciente.s_nombre}}" value="{{paciente.s_nombre}}">
+                    <label for="inputSegundoNombrePac" class="form-label">Segundo Nombre<span id="segn_span" class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="inputSNom"  oninput="val_segn()" placeholder="{{paciente.s_nombre}}" value="{{paciente.s_nombre}}" minlength="2" maxlength="100" required>
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputNombreSocialPac" class="form-label">Nombre Social</label>
-                    <input type="text" class="form-control" id="inputNombreSocialPac" placeholder="{{paciente.nombre_social}}" value="{{paciente.nombre_social}}">
+                    <label for="inputNombreSocialPac" class="form-label">Nombre Social<span id="nomsoc_span" class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="inputNomSoc" oninput="val_nomsoc()" placeholder="{{paciente.nombre_social}}" value="{{paciente.nombre_social}}"  maxlength="100" >
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputApellidoPaPac" class="form-label">Apellido Paterno</label>
-                    <input type="text" class="form-control" id="inputApellidoPaPac" placeholder="{{paciente.apellido_pa}}" value="{{paciente.apellido_pa}}">
+                    <label for="inputApellidoPaPac" class="form-label">Apellido Paterno<span id="ap_span" class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="inputAp" oninput="val_apPaterno()" placeholder="{{paciente.apellido_pa}}" value="{{paciente.apellido_pa}}"  minlength="2" maxlength="100" required>
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputApellidoMaPac" class="form-label">Apellido Materno</label>
-                    <input type="text" class="form-control" id="inputApellidoMaPac" placeholder="{{paciente.apellido_ma}}" value="{{paciente.apellido_ma}}">
+                    <label for="inputApellidoMaPac" class="form-label">Apellido Materno<span id="am_span" class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="inputAM"  oninput="val_apMaterno()" placeholder="{{paciente.apellido_ma}}" value="{{paciente.apellido_ma}}"  minlength="2" maxlength="100" required>
                 </div>
             </div>
             <div class="row mt-3">
@@ -55,12 +55,12 @@
                     </select>
                 </div>
                 <div class="col-lg-8">
-                    <label for="inputDireccionPac" class="form-label">Dirección</label>
-                    <input type="text" class="form-control" id="inputDireccionPac" placeholder="{{paciente.direccion}}" value="{{paciente.direccion}}">
+                    <label for="inputDireccionPac" class="form-label">Dirección<span id="dir_span" class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="inputDir" oninput="val_direccion()" placeholder="{{paciente.direccion}}" value="{{paciente.direccion}}"  minlength="5" maxlength="100" required>
                 </div>
                 <div class=" col-lg-4">
-                    <label for="inputCorreoPac" class="form-label">Correo Electrónico</label>
-                    <input type="email" class="form-control" id="inputCorreoPac" placeholder="{{paciente.correo}}" value="{{paciente.correo}}">
+                    <label for="inputCorreoPac" class="form-label">Correo Electrónico<span id="correo_span" class="text-danger">*</span></label>
+                    <input type="email" class="form-control" id="inputCorreo" oninput="ValidateEmail()" placeholder="{{paciente.correo}}" value="{{paciente.correo}}"  minlength="5" maxlength="100" required>
                 </div>
                 <div class="col-lg-5">
                     <label for="inputNacPac" class="form-label">Nacionalidad</label>
@@ -75,8 +75,8 @@
                     </select>
                 </div>
                 <div class="col-lg-3">
-                    <label for="FechaNacPac" class="form-label">Fecha Nacimiento</label>
-                    <input type="text" class="form-control" id="FechaNacPac" placeholder="{{paciente.fecha_nac}}" value="{{paciente.fecha_nac}}">
+                    <label for="FechaNacPac" class="form-label">Fecha Nacimiento<span id="fnac_span" class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="fecha" oninput="val_fechanac()" value="{{paciente.fecha_nac}}" placeholder="{{paciente.fecha_nac}}" minlength="8" maxlength="10" readonly required/>
                 </div>
             </div>
             <div class="row mt-3">
@@ -115,9 +115,9 @@
             </div>
             <div class="row mt-3">
                 <div class="col-md-4">
-                    <label for="inputFonoPac" class="form-label">Teléfono</label>
+                    <label for="inputFonoPac" class="form-label">Teléfono<span id="tel_span" class="text-danger">*</span></label>
                         {% for y in telefonos %}
-                            <input type="number" class="form-control" id="inputFonoPac" placeholder="{{y}}" value="{{y}}">
+                            <input type="number" class="form-control" id="inputFono" oninput="val_telefono()" placeholder="{{y}}" value="{{y}}"  minlength="5" maxlength="12" required>
                         {% endfor %}    
                 </div>
                 <div class="col-md-4">
@@ -149,35 +149,28 @@
             
             <div class="container">
                 <hr>
-                <p class="form-label">Alergias </p>
+                <p class="form-label">Alergias</p>
                 <form role="form">
                   <div class="form-group">
-                    <input class="form-control" type="text" name="name" placeholder="nueva alergia" />
+                    <input class="form-control" type="text" name="inputNuevaAlergia" placeholder="Ingrese Nueva Alergia" />
                   </div>
-                  
                 </form>
-                
-              
                 <div class="row">
                   <div class="col-sm-6 ">
                     <div id="modules" class="d-flex flex-wrap overflow-auto" style="max-height: 300px">
-                    {% for aler in alers%}
-                      <p class="drag"><a class="btn  btn-outline-primary">{{aler.nombre_alergia}}</a></p>
-              
-                    {% endfor %}
+                        {% for aler in alers%}
+                          <p class="drag"><a class="btn  btn-outline-primary">{{aler.nombre_alergia}}</a></p>
+                        {% endfor %}
                     </div>
                   </div>
-              
                   <div class="col-sm-6">
                     <div id="dropzone">
                         {%for ale in alergias%}
-                        <div class="drop-item">{{ale}}
-                        <button type="button" class="btn btn-primary remove" onclick="return this.parentNode.remove();"><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" ></span></button>
-                        </div>
+                            <div class="drop-item">{{ale}}
+                                <button type="button" class="btn btn-primary remove" onclick="return this.parentNode.remove();"><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" ></span></button>
+                            </div>
                         {% endfor%}
-
                     </div>
-                    
                   </div>
                 </div>
               </div>
@@ -195,31 +188,28 @@
 {% endblock contenido %}
 {% block js1 %}
 <script src="{% static 'js/drag_drop.js' %}"></script>
+<script>
+    $.datepicker.regional['es'] = {
+        closeText: 'Cerrar',
+        prevText: '< Ant',
+        nextText: 'Sig >',
+        currentText: 'Hoy',
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+        weekHeader: 'Sm',
+        dateFormat: 'M dd, yy',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ''
+    };
+    $.datepicker.setDefaults($.datepicker.regional['es']);
+    $(function () {
+        $("#fecha").datepicker();
+    });
+</script>
 {% endblock js1%}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
