@@ -3,7 +3,7 @@ from select import select
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from .models import Comuna, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono
-from .models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato
+from .models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato, Alergia, DetalleAlergia
 from django.contrib.auth import authenticate,logout,login
 from django.contrib.auth.decorators import login_required,permission_required
 from django.views.decorators.csrf import csrf_protect
@@ -95,17 +95,23 @@ def filtro_pacientes(request):
 def edit_paciente(request,id):
     prevision = Prevision.objects.all()
     tel_users = TelefonoUsuario.objects.filter(run_usuario=id).values_list('id_telefono', flat=True)
-    cant_tel = tel_users.count()    
+       
     num_tel = Telefono.objects.all().filter(id_telefono__in=tel_users).values_list('num_telefono', flat=True)
+    cant_tel = tel_users.count() 
     cant = num_tel.count()
+    
     paciente = Usuario.objects.get(run=id)
     comunas = Comuna.objects.all()
     nacionalidades = Nacionalidad.objects.all()
     estados = EstadoCivil.objects.all()
     generos = Genero.objects.all()
 
+    todo_alergias = Alergia.objects.all()
+    aler_user = DetalleAlergia.objects.filter(run_paciente=id).values_list('id_alergia',flat=True)
+    alergias = Alergia.objects.all().filter(id_alergia__in=aler_user).values_list('nombre_alergia', flat=True)
+
     contexto = {"paciente": paciente, "prevision": prevision, "telefonos": num_tel, "cantidad": cant_tel,
-                "comuna": comunas, "nacionalidad": nacionalidades, "estado": estados, "genero": generos}
+                "comuna": comunas, "nacionalidad": nacionalidades, "estado": estados, "genero": generos, "alergias": alergias,"alers":todo_alergias}
     ##if request.POST:
     ##    print("holi")
     return render(request, 'edit_paciente.html',contexto)

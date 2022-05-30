@@ -6,12 +6,13 @@ Realizados:
 5. Panel de Paciente: Solo muestre los Pacientes del sistema, o sea, solo a los Usuarios cuyos "id_perfil" sea igual a 4 (id_perfil == 4)
 6. Panel de Usuario: Solo muestre los Usuarios Trabajadores del sistema, o sea, al admin, medicos, recepcionistas. Solo a los Usuarios cuyos "id_perfil" sea distinto a 4 (id_perfil != 4)
 7.  Diseño botones edicion y eliminar (aceptado)
+3. edicion farmacos (validaciones listas)
 ----------------------------------------------------------------------------------------------------------------
 
 Por Hacer:
 
 2. Redirección a plantilla de Edicion paciente edit_paciente.html (comenzado )
-3. edicion farmacos (pendiente)
+
 4. edicion medico (pendiente)
 5. edicion recepcionista (pendiente)
 6. pantalla crear perfil usuario (pendiente)

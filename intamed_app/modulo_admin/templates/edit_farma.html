@@ -12,7 +12,7 @@
             {% csrf_token %}
             <!-- Datos de farmaco-->
             <div class="col-lg-2">
-                <label class="form-label">Nombre Fármaco</label>
+                <label class="form-label">Nombre Fármaco<span id="nom_span" class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="inputNF" name="nombre_farma" oninput="valida_nom()" placeholder="{{farmaco.nombre_farmaco}}" value="{{farmaco.nombre_farmaco}}" minlength="3" maxlength="100" required>
             </div>
             <div class="col-lg-3">
@@ -20,7 +20,7 @@
                 <input type="text" class="form-control" id="inputVia" name="via_adm" oninput="valida_via()" placeholder="{{farmaco.via_administracion}}" value="{{farmaco.via_administracion}}"  minlength="3" maxlength="100" required >
             </div>
             <div class="row mt-3">
-                <label class="form-label">Contraindicación</label>   
+                <label class="form-label">Contraindicación<span id="contra_span" class="text-danger">*</span></label>   
                 <div class="form-outline">
                     <textarea class="form-control" id="textArea1" name="contra_ind" rows="4" oninput="validar_txt()"  maxlength="500" required>{{farmaco.contraindicacion}}</textarea>
                     <label class="form-label" for="textAreaExample"></label>
