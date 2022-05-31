@@ -20,24 +20,24 @@
             </div>
              <div class="row mt-3">
                 <div class="col-lg-4">
-                    <label for="inputPrimerNombre" class="form-label">Primer Nombre</label>
-                    <input type="text" class="form-control" id="inputPrimerNombre" placeholder="{{colab.p_nombre}}" value="{{colab.p_nombre}}">
+                    <label for="inputPrimerNombre" class="form-label">Primer Nombre<span id="primn_span" class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="inputPNom" oninput="val_primn()" placeholder="{{colab.p_nombre}}" value="{{colab.p_nombre}}" minlength="2" maxlength="100" required>
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputSegundoNombre" class="form-label">Segundo Nombre</label>
-                    <input type="text" class="form-control" id="inputSegundoNombre" placeholder="{{colab.s_nombre}}" value="{{colab.s_nombre}}">
+                    <label for="inputSegundoNombre" class="form-label">Segundo Nombre<span id="segn_span" class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="inputSNom" oninput="val_segn()" placeholder="{{colab.s_nombre}}" value="{{colab.s_nombre}}" minlength="2" maxlength="100" required>
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputNombreSocial" class="form-label">Nombre Social</label>
-                    <input type="text" class="form-control" id="inputNombreSocial" placeholder="{{colab.nombre_social}}" value="{{colab.nombre_social}}">
+                    <label for="inputNombreSocial" class="form-label">Nombre Social<span id="nomsoc_span" class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="inputNomSoc" oninput="val_nomsoc()" placeholder="{{colab.nombre_social}}" value="{{colab.nombre_social}}" maxlength="100">
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputApellidoPaterno" class="form-label">Apellido Paterno</label>
-                    <input type="text" class="form-control" id="inputApellidoPaterno" placeholder="{{colab.apellido_pa}}" value="{{colab.apellido_pa}}">
+                    <label for="inputApellidoPaterno" class="form-label">Apellido Paterno<span id="ap_span" class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="inputAp" oninput="val_apPaterno()" placeholder="{{colab.apellido_pa}}" value="{{colab.apellido_pa}}" minlength="2" maxlength="100" required>
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputApellidoMaterno" class="form-label">Apellido Materno</label>
-                    <input type="text" class="form-control" id="inputApellidoMaterno" placeholder="{{colab.apellido_ma}}" value="{{colab.apellido_ma}}">
+                    <label for="inputApellidoMaterno" class="form-label">Apellido Materno<span id="am_span" class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="inputAM" oninput="val_apMaterno()" placeholder="{{colab.apellido_ma}}" value="{{colab.apellido_ma}}" minlength="2" maxlength="100" required>
                 </div>
             </div>
 
@@ -56,12 +56,12 @@
                     </select>
                 </div>
                 <div class="col-lg-8">
-                    <label for="inputDireccion2" class="form-label">Dirección</label>
-                    <input type="text" class="form-control" id="inputDireccion" placeholder="{{colab.direccion}}" value="{{colab.direccion}}">
+                    <label for="inputDireccion2" class="form-label">Dirección<span id="dir_span" class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="inputDir" oninput="val_direccion()" placeholder="{{colab.direccion}}" value="{{colab.direccion}}" minlength="5" maxlength="100" required>
                 </div>
                 <div class=" col-lg-4">
-                    <label for="inputCorreo" class="form-label">Correo Electrónico</label>
-                    <input type="email" class="form-control" id="inputCorreo" placeholder="{{colab.correo}}" value="{{colab.correo}}">
+                    <label for="inputCorreo" class="form-label">Correo Electrónico<span id="correo_span" class="text-danger">*</span></label>
+                    <input type="email" class="form-control" id="inputCorreo" oninput="ValidateEmail()" placeholder="{{colab.correo}}" value="{{colab.correo}}" minlength="5" maxlength="100" required>
                 </div>
                 <div class="col-lg-5">
                     <label for="inputNac" class="form-label">Nacionalidad</label>
@@ -76,8 +76,8 @@
                     </select>
                 </div>
                 <div class="col-lg-3">
-                    <label for="inputFechaNac" class="form-label">Fecha Nacimiento</label>
-                    <input type="text" class="form-control" id="inputFechaNac" placeholder="{{colab.fecha_nac}}" value="{{colab.fecha_nac}}">
+                    <label for="inputFechaNac" class="form-label">Fecha Nacimiento<span id="fnac_span" class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="fecha" oninput="val_fechanac()" placeholder="{{colab.fecha_nac}}" value="{{colab.fecha_nac}}" minlength="8" maxlength="10" readonly required>
                 </div>
             </div>
             <div class="row mt-3">
@@ -106,13 +106,13 @@
                     </select>
                 </div>
                 <div class="col-md-4">
-                    <label for="inputTelefono" class="form-label">Teléfono</label>
+                    <label for="inputTelefono" class="form-label">Teléfono<span id="tel_span" class="text-danger">*</span></label>
                     {% if cantidad > 0%}
                         {% for y in telefonos %}
-                            <input type="text" class="form-control" id="inputTelefono" placeholder="{{y}}" value="{{y}}">
+                            <input type="number" class="form-control" id="inputFono" oninput="val_telefono()" placeholder="{{y}}" value="{{y}}" minlength="5" maxlength="12" required>
                         {% endfor %}  
                     {% else%}
-                    <input type="text" class="form-control" id="inputTelefono" placeholder="Sin Teléfono Registrado" value="Sin Teléfono Registrado">
+                    <input type="number" class="form-control" id="inputFono" oninput="val_telefono()" placeholder="Sin Teléfono Registrado" value="Sin Teléfono Registrado" minlength="5" maxlength="12" required>
                     {% endif%}  
                 </div>
             </div>
@@ -123,40 +123,40 @@
                     {% if colab.id_perfil_id == 1 %}
                         <div class="row mt-3">
                           <div class="col-lg-3">
-                            <label for="inputFechaIngreso" class="form-label">Fecha Ingreso Colaborador</label>
-                            <input type="text" class="form-control" id="inputFechaIngreso" placeholder="{{colab.administrador.fecha_ingreso}}" value="{{colab.administrador.fecha_ingreso}}">
+                            <label for="inputFechaIngreso" class="form-label">Fecha Ingreso Colaborador<span id="fing_span" class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="inputFechaIngreso" oninput="val_fechaing()" placeholder="{{colab.administrador.fecha_ingreso}}" value="{{colab.administrador.fecha_ingreso}}" minlength="8" maxlength="10" readonly required>
                           </div>
                           <div class="col-lg-3">
-                            <label for="inputSueldo" class="form-label">Sueldo ($)</label>
-                            <input type="number" class="form-control" id="inputSueldo" placeholder="{{colab.administrador.sueldo}}" value="{{colab.administrador.sueldo}}">
+                            <label for="inputSueldo" class="form-label">Sueldo ($)<span id="sueldo_span" class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="inputSueldo" oninput="val_sueldo()" placeholder="{{colab.administrador.sueldo}}" value="{{colab.administrador.sueldo}}" minlength="1" maxlength="9" required>
                           </div>
                         </div>  
 
                     {% elif colab.id_perfil_id == 2 %}
                         <div class="row mt-3">
                             <div class="col-lg-3">
-                                <label for="inputFechaIngreso" class="form-label">Fecha Ingreso Colaborador</label>
-                                <input type="text" class="form-control" id="inputFechaIngreso" placeholder="{{colab.medico.fecha_ingreso}}" value="{{colab.medico.fecha_ingreso}}">
+                                <label for="inputFechaIngreso" class="form-label">Fecha Ingreso Colaborador<span id="fing_span" class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="inputFechaIngreso" oninput="val_fechaing()" placeholder="{{colab.medico.fecha_ingreso}}" value="{{colab.medico.fecha_ingreso}}" minlength="8" maxlength="10" readonly required>
                             </div>
                             <div class="col-lg-3">
-                                <label for="inputSueldo" class="form-label">Sueldo ($)</label>
-                                <input type="number" class="form-control" id="inputSueldo" placeholder="{{colab.medico.sueldo}}" value="{{colab.medico.sueldo}}">
+                                <label for="inputSueldo" class="form-label">Sueldo ($)<span id="sueldo_span" class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="inputSueldo" oninput="val_sueldo()" placeholder="{{colab.medico.sueldo}}" value="{{colab.medico.sueldo}}" minlength="1" maxlength="9" required>
                             </div>
                             <div class="col-lg-3">
-                                <label for="inputRegimenHrs" class="form-label">Horas Diarias de Trabajo</label>
-                                <input type="number" class="form-control" id="inputRegimenHrs" placeholder="{{colab.medico.regimen_hrs}}" value="{{colab.medico.regimen_hrs}}">
+                                <label for="inputRegimenHrs" class="form-label">Horas Diarias de Trabajo<span id="hrs_span" class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="inputRegimenHrs" oninput="val_hrs()" placeholder="{{colab.medico.regimen_hrs}}" value="{{colab.medico.regimen_hrs}}" minlength="1" maxlength="3" required>
                             </div>
                         </div>
 
                     {% elif colab.id_perfil_id == 3 %}
                         <div class="row mt-3">
                             <div class="col-lg-3">
-                              <label for="inputFechaIngreso" class="form-label">Fecha Ingreso Colaborador</label>
-                              <input type="text" class="form-control" id="inputFechaIngreso" placeholder="{{colab.recepcionista.fecha_ingreso}}" value="{{colab.recepcionista.fecha_ingreso}}">
+                              <label for="inputFechaIngreso" class="form-label">Fecha Ingreso Colaborador<span id="fing_span" class="text-danger">*</span></label>
+                              <input type="text" class="form-control" id="inputFechaIngreso" oninput="val_fechaing()" placeholder="{{colab.recepcionista.fecha_ingreso}}" value="{{colab.recepcionista.fecha_ingreso}}" minlength="8" maxlength="10" readonly required>
                             </div>
                             <div class="col-lg-3">
-                              <label for="inputSueldo" class="form-label">Sueldo ($)</label>
-                              <input type="number" class="form-control" id="inputSueldo" placeholder="{{colab.recepcionista.sueldo}}" value="{{colab.recepcionista.sueldo}}">
+                              <label for="inputSueldo" class="form-label">Sueldo ($)<span id="sueldo_span" class="text-danger">*</span></label>
+                              <input type="number" class="form-control" id="inputSueldo" oninput="val_sueldo()" placeholder="{{colab.recepcionista.sueldo}}" value="{{colab.recepcionista.sueldo}}" minlength="1" maxlength="9" required>
                             </div>
                           </div> 
                     {% endif %} 
@@ -174,3 +174,53 @@
     <!-- Contenido de los tab de cada tabla -->
 </main>
 {% endblock contenido %}
+
+{% block js1 %}
+<script src="{% static 'js/drag_drop.js' %}"></script>
+<script>
+    $.datepicker.regional['es'] = {
+        closeText: 'Cerrar',
+        prevText: '< Ant',
+        nextText: 'Sig >',
+        currentText: 'Hoy',
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+        weekHeader: 'Sm',
+        dateFormat: 'M dd, yy',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ''
+    };
+    $.datepicker.setDefaults($.datepicker.regional['es']);
+    $(function () {
+        $("#fecha").datepicker();
+    });
+</script>
+<script>
+    $.datepicker.regional['es'] = {
+        closeText: 'Cerrar',
+        prevText: '< Ant',
+        nextText: 'Sig >',
+        currentText: 'Hoy',
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+        weekHeader: 'Sm',
+        dateFormat: 'M dd, yy',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ''
+    };
+    $.datepicker.setDefaults($.datepicker.regional['es']);
+    $(function () {
+        $("#inputFechaIngreso").datepicker();
+    });
+</script>
+{% endblock js1%}

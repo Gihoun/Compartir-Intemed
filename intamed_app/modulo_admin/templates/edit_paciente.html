@@ -12,7 +12,7 @@
             <!-- Datos Básicos del Paciente -->
             <div class="col-lg-2">
                 <label for="inputRutPaciente" class="form-label">RUT<span id="rut_span" class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="inputRut" oninput="val_rut()" placeholder="{{paciente.run}}" value="{{paciente.run}}" minlength="6" maxlength="8" required>
+                <input type="text" class="form-control" id="inputRut" oninput="val_rut()" placeholder="{{paciente.run}}" value="{{paciente.run}}" minlength="7" maxlength="8" required>
             </div>
             <div class="col-lg-1">
                 <label for="inputDVPaciente" class="form-label">DV<span id="dv_span" class="text-danger">*</span></label>
@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-lg-4">
                     <label for="inputNombreSocialPac" class="form-label">Nombre Social<span id="nomsoc_span" class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="inputNomSoc" oninput="val_nomsoc()" placeholder="{{paciente.nombre_social}}" value="{{paciente.nombre_social}}"  maxlength="100" >
+                    <input type="text" class="form-control" id="inputNomSoc" oninput="val_nomsoc()" placeholder="{{paciente.nombre_social}}" value="{{paciente.nombre_social}}"  maxlength="100">
                 </div>
                 <div class="col-lg-4">
                     <label for="inputApellidoPaPac" class="form-label">Apellido Paterno<span id="ap_span" class="text-danger">*</span></label>
@@ -186,6 +186,7 @@
     <!-- Contenido de los tab de cada tabla -->
 </main>
 {% endblock contenido %}
+
 {% block js1 %}
 <script src="{% static 'js/drag_drop.js' %}"></script>
 <script>
@@ -212,4 +213,3 @@
     });
 </script>
 {% endblock js1%}
-

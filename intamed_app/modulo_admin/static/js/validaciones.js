@@ -62,16 +62,16 @@ function val_nom_per(){
     return true;
 }
 
-// Validaciones para Usuario
+// Validaciones para Usuario & Paciente
 function val_rut(){
     var inf = document.getElementById('inputRut').value.trim();
     if (inf.length <= 6){
         console.log(inf.length)
-        document.getElementById('rut_span').innerText = "* Campo Run debe tener 7 dígitos como mínimo";
+        document.getElementById('rut_span').innerText = "* 7 Dígitos Mínimo";
         return false; 
     }else if (inf.length > 8){
         console.log(inf.length)
-        document.getElementById('rut_span').innerText = "* Campo Run posee un máximo de 8 dígitos";  
+        document.getElementById('rut_span').innerText = "* Máximo de 8 Dígitos";  
         return false;
     }
     document.getElementById('rut_span').innerText = "*"; 
@@ -112,7 +112,7 @@ function val_segn(){
     var inf = document.getElementById('inputSNom').value.trim();
     if (inf.length < 2){
         console.log(inf.length)
-        document.getElementById('segn_span').innerText = "* Mínimo 2";
+        document.getElementById('segn_span').innerText = "* Mínimo 2 caracteres";
         return false; 
     }else if (inf.length > 99){
         console.log(inf.length)
@@ -138,7 +138,7 @@ function val_apPaterno(){
     var inf = document.getElementById('inputAp').value.trim();
     if (inf.length < 2){
         console.log(inf.length)
-        document.getElementById('ap_span').innerText = "* Mínimo 2";
+        document.getElementById('ap_span').innerText = "* Mínimo 2 caracteres";
         return false; 
     }else if (inf.length > 99){
         console.log(inf.length)
@@ -153,7 +153,7 @@ function val_apMaterno(){
     var inf = document.getElementById('inputAM').value.trim();
     if (inf.length < 2){
         console.log(inf.length)
-        document.getElementById('am_span').innerText = "* Mínimo 2";
+        document.getElementById('am_span').innerText = "* Mínimo 2 caracteres";
         return false; 
     }else if (inf.length > 99){
         console.log(inf.length)
@@ -168,7 +168,7 @@ function val_direccion(){
     var inf = document.getElementById('inputDir').value.trim();
     if (inf.length < 5){
         console.log(inf.length)
-        document.getElementById('dir_span').innerText = "* Mínimo 5";
+        document.getElementById('dir_span').innerText = "* Mínimo 5 caracteres";
         return false; 
     }else if (inf.length > 99){
         console.log(inf.length)
@@ -179,34 +179,28 @@ function val_direccion(){
     console.log(inf.length)
     return true;
 }
-
 function ValidateEmail() {
     var email = document.getElementById('inputCorreo').value;
     var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-  
     if (email.match(validRegex)) {
         document.getElementById('correo_span').innerText = "*";
       document.form1.text1.focus();
       return true;
-  
     } else {
-      document.getElementById('correo_span').innerText = "* correo invalido";
+      document.getElementById('correo_span').innerText = "* Correo No Válido";
       document.form1.text1.focus();
-  
       return false;
-  
     }
-  
   }
 function val_fechanac(){
-    var inf = document.getElementById('FechaNac').value;
+    var inf = document.getElementById('fecha').value;
     if (inf.length < 12){
         console.log(inf.length)
-        document.getElementById('fnac_span').innerText = "* fecha invalida";
+        document.getElementById('fnac_span').innerText = "* Fecha Inválida";
         return false; 
     }else if (inf.length > 12){
         console.log(inf.length)
-        document.getElementById('fnac_span').innerText = "* fecha invalida";  
+        document.getElementById('fnac_span').innerText = "* Fecha Inválida";  
         return false;
     }
     document.getElementById('fnac_span').innerText = "*"; 
@@ -217,21 +211,59 @@ function val_telefono(){
     var inf = document.getElementById('inputFono').value.trim();
     if (inf.length < 5){
         console.log(inf.length)
-        document.getElementById('tel_span').innerText = "* Mínimo 5";
+        document.getElementById('tel_span').innerText = "* Mínimo 5 Dígitos";
         return false; 
     }else if (inf.length > 12){
         console.log(inf.length)
-        document.getElementById('tel_span').innerText = "*máximo 12 caracteres";  
+        document.getElementById('tel_span').innerText = "*Máximo 12 Dígitos";  
         return false;
     }
     document.getElementById('tel_span').innerText = "*"; 
     console.log(inf.length)
     return true;
 }
-
-
-
-
-
-
-
+function val_fechaing(){
+    var inf = document.getElementById('inputFechaIngreso').value;
+    if (inf.length < 12){
+        console.log(inf.length)
+        document.getElementById('fing_span').innerText = "* Fecha Inválida";
+        return false; 
+    }else if (inf.length > 12){
+        console.log(inf.length)
+        document.getElementById('fing_span').innerText = "* Fecha Inválida";  
+        return false;
+    }
+    document.getElementById('fing_span').innerText = "*"; 
+    console.log(inf.length)
+    return true;
+}
+function val_sueldo(){
+    var inf = document.getElementById('inputSueldo').value.trim();
+    if (inf.length < 1){
+        console.log(inf.length)
+        document.getElementById('sueldo_span').innerText = "* 1 Dígito Mínimo";
+        return false; 
+    }else if (inf.length > 9){
+        console.log(inf.length)
+        document.getElementById('sueldo_span').innerText = "* Máximo de 9 Dígitos";  
+        return false;
+    }
+    document.getElementById('sueldo_span').innerText = "*"; 
+    console.log(inf.length)
+    return true;
+}
+function val_hrs(){
+    var inf = document.getElementById('inputRegimenHrs').value.trim();
+    if (inf.length < 1){
+        console.log(inf.length)
+        document.getElementById('hrs_span').innerText = "* 1 Dígito Mínimo";
+        return false; 
+    }else if (inf.length > 3){
+        console.log(inf.length)
+        document.getElementById('hrs_span').innerText = "* Máximo de 3 Dígitos";  
+        return false;
+    }
+    document.getElementById('hrs_span').innerText = "*"; 
+    console.log(inf.length)
+    return true;
+}
