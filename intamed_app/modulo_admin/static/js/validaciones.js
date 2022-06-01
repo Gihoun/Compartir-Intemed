@@ -62,7 +62,7 @@ function val_nom_per(){
     return true;
 }
 
-// Validaciones para Usuario & Paciente
+// Validaciones para Colaboradores (Usuarios) & Pacientes
 function val_rut(){
     var inf = document.getElementById('inputRut').value.trim();
     if (inf.length <= 6){

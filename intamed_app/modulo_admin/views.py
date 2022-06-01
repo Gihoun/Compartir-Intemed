@@ -13,6 +13,7 @@ from django.contrib import messages
 import requests
 import logging
 from django.http import JsonResponse
+import datetime
 
 def administrator(request):
     #Dash por defecto
@@ -140,8 +141,8 @@ def edit_farmaco(request,id):
         contraind = request.POST.get("contra_ind")
         tipo_farm = request.POST.get("tipo_farma")
         try:
-            t_farm= TipoFarmaco.objects.get(tipo_farma=tipo_farm)
             farma= Farmaco.objects.get(id_farmaco=id)
+            t_farm= TipoFarmaco.objects.get(tipo_farma=tipo_farm)
             
             farma.id_tipo_farma = t_farm
             if n_farm is not None and contraind is not None and v_adm is not None :
@@ -183,12 +184,38 @@ def vista_perfil(request):
     return render(request, 'perfiles.html', contexto)
 
 def edit_perfil(request,id):
+    logger = logging.getLogger(__name__)
     perfiles = PerfilUsuario.objects.get(id_perfil=id)
-    contexto = {"perfil": perfiles}
+    mensaje=''
+    if request.POST:
+        n_perfil = request.POST.get("nom_prefil")
+        try:
+            perfil = PerfilUsuario.objects.get(id_perfil=id)
+            if n_perfil is not None:
+                if n_perfil.strip() !='':
+                    perfil.nombre_perfil = n_perfil
+                    perfil.save()
+                    flag=True
+                    mensaje="Perfil de Usuario Modificado con Éxito"
+            else:
+                mensaje="Edición de Perfil Inválida"
+                flag=False 
+            contexto = {"perfil": perfil,"mensaje": mensaje}
+            messages.info(request, mensaje)
+            logger.warning(mensaje)
+        except:
+            flag=False
+            mensaje="Perfil de Usuario No Modificado"
+            messages.info(request, mensaje)
+            logger.warning(mensaje)
+            contexto = {"perfil": perfiles,"mensaje": perfil}
+    else:
+        contexto = {"perfil": perfiles,"mensaje": mensaje}
     return render(request, 'edit_perfil.html', contexto)
 
 def edit_colab(request,id):
-    colabs = Usuario.objects.get(run=id)
+    logger = logging.getLogger(__name__)
+    colab1 = Usuario.objects.get(run=id)
     tel_users = TelefonoUsuario.objects.filter(run_usuario=id).values_list('id_telefono', flat=True)
     cant_tel = tel_users.count()    
     num_tel = Telefono.objects.all().filter(id_telefono__in=tel_users).values_list('num_telefono', flat=True)
@@ -197,6 +224,75 @@ def edit_colab(request,id):
     estados = EstadoCivil.objects.all()
     generos = Genero.objects.all()
 
-    contexto = {"colab": colabs, "telefonos": num_tel, "cantidad": cant_tel, "comuna": comunas, 
-                "nacionalidad":nacionalidades, "estado":estados, "genero":generos}
+    mensaje=''
+    if request.POST:
+        p_nom = request.POST.get("inputPNom")
+        s_nom = request.POST.get("inputSNom")
+        nom_soc = request.POST.get("inputNomSoc")
+        ap_pa = request.POST.get("inputAp")
+        ap_ma = request.POST.get("inputAM")
+        com_colab = request.POST.get("inputComuna")
+        dir_colab = request.POST.get("inputDir")
+        correo_colab = request.POST.get("inputCorreo")
+        nac_colab = request.POST.get("inputNac")
+        fec_nac_colab = request.POST.get("inputFechaNac")
+        est_colab = request.POST.get("inputEstado")
+        gen_colab = request.POST.get("inputGenero")
+        tel_colab = request.POST.get("inputFono")
+        fec_ing_colab = request.POST.get("inputFechaIngreso")
+        sueldo = request.POST.get("inputSueldo")
+        reg_hrs = request.POST.get("inputRegimenHrs")
+
+        comuna = Comuna.objects.get(nombre_comuna=com_colab)
+        nacionalidad = Nacionalidad.objects.get(nombre_nac=nac_colab)
+        estado = EstadoCivil.objects.get(nombre_estado=est_colab)
+        genero = Genero.objects.get(nombre_genero=gen_colab)
+
+        try:
+            colab = Usuario.objects.get(run=id)
+            telefono = Telefono.objects.get(id_telefono__in=tel_users)
+
+            #admin = Administrador.objects.get(run_admin=id)
+            #medico = Medico.objects.get(run_medico=id)
+            #recep = Recepcionista.objects.get(run_recepcionista=id)
+
+            colab.fecha_nac = fec_nac_colab
+            colab.id_estado = estado
+            colab.id_genero = genero
+            colab.id_nacionalidad = nacionalidad
+            colab.id_comuna = comuna
+            telefono.num_telefono = tel_colab
+            #logger.warning(tel_users)
+            
+            if p_nom is not None and s_nom is not None and ap_pa is not None and ap_ma is not None and dir_colab is not None and correo_colab is not None:
+                if p_nom.strip() !='' and s_nom.strip() !='' and ap_pa.strip() !='' and ap_ma.strip() !='' and dir_colab.strip() !='' and correo_colab.strip() !='':
+                    colab.p_nombre = p_nom
+                    colab.nombre_social = nom_soc
+                    colab.s_nombre = s_nom
+                    colab.apellido_pa = ap_pa
+                    colab.apellido_ma = ap_ma
+                    colab.direccion = dir_colab
+                    colab.correo = correo_colab
+                    colab.save()
+                    telefono.save()
+                    flag=True
+                    mensaje="Colaborador Modificado con Éxito"
+            else:
+                mensaje="Campos No Válidos"
+                flag=False 
+            messages.info(request, mensaje)
+            logger.warning(mensaje)
+            contexto = {"colab": colab, "telefonos": num_tel, "cantidad": cant_tel, "comuna": comunas, 
+                    "nacionalidad":nacionalidades, "estado":estados, "genero":generos, "mensaje": mensaje}
+        except:
+            flag=False
+            mensaje="Colaborador No Modificado"
+            messages.info(request, mensaje)
+            logger.warning(mensaje)
+            contexto = {"colab": colab, "telefonos": num_tel, "cantidad": cant_tel, "comuna": comunas, 
+                        "nacionalidad":nacionalidades, "estado":estados, "genero":generos,"mensaje": mensaje}
+    else:
+        contexto = {"colab": colab1, "telefonos": num_tel, "cantidad": cant_tel, "comuna": comunas, 
+                    "nacionalidad":nacionalidades, "estado":estados, "genero":generos, "mensaje": mensaje}
+
     return render(request, 'edit_usuario.html', contexto)
