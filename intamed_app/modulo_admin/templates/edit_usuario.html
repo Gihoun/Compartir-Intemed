@@ -8,16 +8,16 @@
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <h2>Colaborador: {{colab.p_nombre}} {{colab.s_nombre}} {{colab.apellido_pa}} {{colab.apellido_ma}}</h2>
     <div>
-        <form class="row " action="{% url 'edit_colab' colab.run %}" method="POST" enctype="multipart/form-data" onsubmit=" ">
+        <form class="row " action="{% url 'edit_colab' colab.run %}" method="POST" enctype="multipart/form-data" onsubmit="val_modificacion()">
             {% csrf_token %}
             <!-- Datos del Colaborador del Sistema -->
             <div class="col-lg-2">
-                <label for="inputRutColab" class="form-label">RUT<span id="rut_span" class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="inputRut" name="inputRut" oninput="val_rut()" placeholder="{{colab.run}}" value="{{colab.run}}" minlength="7" maxlength="8" required>
+                <label for="inputRutColab" class="form-label">RUT<span id="rut_span" class="text-danger"></span></label>
+                <input type="text" class="form-control" id="inputRut" name="inputRut" oninput="val_rut()" placeholder="{{colab.run}}" value="{{colab.run}}" minlength="7" maxlength="8" readonly required>
             </div>
             <div class="col-lg-1">
-                <label for="inputDV" class="form-label">DV<span id="dv_span" class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="inputDV" name="inputDV" oninput="val_dv()" placeholder="{{colab.dv}}" value="{{colab.dv}}" minlength="1" maxlength="1" required>
+                <label for="inputDV" class="form-label">DV<span id="dv_span" class="text-danger"></span></label>
+                <input type="text" class="form-control" id="inputDV" name="inputDV" oninput="val_dv()" placeholder="{{colab.dv}}" value="{{colab.dv}}" minlength="1" maxlength="1" readonly required>
             </div>
              <div class="row mt-3">
                 <div class="col-lg-4">
@@ -29,7 +29,7 @@
                     <input type="text" class="form-control" id="inputSNom" name="inputSNom" oninput="val_segn()" placeholder="{{colab.s_nombre}}" value="{{colab.s_nombre}}" minlength="2" maxlength="100" required>
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputNombreSocial" class="form-label">Nombre Social<span id="nomsoc_span" class="text-danger">*</span></label>
+                    <label for="inputNombreSocial" class="form-label">Nombre Social<span id="nomsoc_span" class="text-danger"></span></label>
                     <input type="text" class="form-control" id="inputNomSoc" name="inputNomSoc" oninput="val_nomsoc()" placeholder="{{colab.nombre_social}}" value="{{colab.nombre_social}}" maxlength="100">
                 </div>
                 <div class="col-lg-4">
@@ -41,7 +41,6 @@
                     <input type="text" class="form-control" id="inputAM" name="inputAM" oninput="val_apMaterno()" placeholder="{{colab.apellido_ma}}" value="{{colab.apellido_ma}}" minlength="2" maxlength="100" required>
                 </div>
             </div>
-
             <div class="row mt-3">
                 <hr>
                 <div class="col-md-4">
@@ -117,7 +116,7 @@
                     {% endif%}  
                 </div>
             </div>
-                
+
             <div class="row mt-3">
                 <div>
                     <hr>
@@ -170,17 +169,18 @@
                 <label></label>
             </div>          
             </div>
-            {% if mensaje %}
-                <ul class="mensaje">
-                    <li>{{ mensaje }}</li>
+            {% if messages %}
+                <ul class="messages">
+                    <li>{{ messages }}</li>
                 </ul>
             {% endif %}
         </form>
     </div>
-    <!-- Contenido de los tab de cada tabla -->
 </main>
 {% endblock contenido %}
+{% block js%}
 
+{% endblock js%}
 {% block js1 %}
 <script src="{% static 'js/drag_drop.js' %}"></script>
 <script>
@@ -229,4 +229,24 @@
         $("#inputFechaIngreso").datepicker();
     });
 </script>
+<script>
+    function val_modificacion(){
+        var pn = val_primn();
+        var sn = val_segn();
+        var apa = val_apPaterno();
+        var ama = val_apMaterno();
+        var dir = val_direccion();
+        var ce = ValidateEmail();
+        var fn = val_fechanac();
+        var tu = val_telefono();
+        var fi = val_fechaing();
+        var sc = val_sueldo();
+        var rh = val_hrs();
+    }
+</script>
 {% endblock js1%}
+
+
+
+<!-- REVISAR LINEA 11 VALIDACION DEL SUBMIT ON CLICK  
+/*Validacion modificaciones*/ En el Final del Script de edit_usuario html -->

@@ -2,8 +2,9 @@ from multiprocessing.sharedctypes import Array
 from select import select
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from .models import Comuna, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono
-from .models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato, Alergia, DetalleAlergia
+from .models import Comuna, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, Usuario, Atencion, Farmaco
+from .models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato, Alergia
+from .models import Prevision, TelefonoUsuario, Telefono, DetalleAlergia
 from django.contrib.auth import authenticate,logout,login
 from django.contrib.auth.decorators import login_required,permission_required
 from django.views.decorators.csrf import csrf_protect
@@ -16,7 +17,7 @@ from django.http import JsonResponse
 import datetime
 
 def administrator(request):
-    #Dash por defecto
+    #Dash por Defecto
     logger = logging.getLogger(__name__)
     users_all = Usuario.objects.all().count()
     
@@ -152,9 +153,9 @@ def edit_farmaco(request,id):
                     farma.contraindicacion = contraind.strip()
                     farma.save()
                     flag=True
-                    mensaje="Farmaco modificado con exito"
+                    mensaje="Fármaco Modificado con Éxito"
             else:
-                mensaje="Farmaco con campos no validos"
+                mensaje="Fármaco con Campos No Válidos"
                 flag=False 
             
             contexto = {"farmaco": farma,"tipos": tipo_farmacos,"mensaje": mensaje}
@@ -162,7 +163,7 @@ def edit_farmaco(request,id):
             logger.warning(mensaje)
         except:
             flag=False
-            mensaje="El Farmaco no ha podido ser modificado"
+            mensaje="El Fármaco no ha Podido ser Modificado"
             messages.info(request, mensaje)
             logger.warning(mensaje)
             contexto = {"farmaco": farmaco_todos,"tipos": tipo_farmacos,"mensaje": farma}
@@ -215,7 +216,7 @@ def edit_perfil(request,id):
 
 def edit_colab(request,id):
     logger = logging.getLogger(__name__)
-    colab1 = Usuario.objects.get(run=id)
+    colab = Usuario.objects.get(run=id)
     tel_users = TelefonoUsuario.objects.filter(run_usuario=id).values_list('id_telefono', flat=True)
     cant_tel = tel_users.count()    
     num_tel = Telefono.objects.all().filter(id_telefono__in=tel_users).values_list('num_telefono', flat=True)
@@ -226,6 +227,7 @@ def edit_colab(request,id):
 
     mensaje=''
     if request.POST:
+        # Campos a Modificar propios de la Tabla Usuario:
         p_nom = request.POST.get("inputPNom")
         s_nom = request.POST.get("inputSNom")
         nom_soc = request.POST.get("inputNomSoc")
@@ -239,22 +241,41 @@ def edit_colab(request,id):
         est_colab = request.POST.get("inputEstado")
         gen_colab = request.POST.get("inputGenero")
         tel_colab = request.POST.get("inputFono")
-        fec_ing_colab = request.POST.get("inputFechaIngreso")
-        sueldo = request.POST.get("inputSueldo")
-        reg_hrs = request.POST.get("inputRegimenHrs")
-
         comuna = Comuna.objects.get(nombre_comuna=com_colab)
         nacionalidad = Nacionalidad.objects.get(nombre_nac=nac_colab)
         estado = EstadoCivil.objects.get(nombre_estado=est_colab)
         genero = Genero.objects.get(nombre_genero=gen_colab)
 
+        # Campos a Modificar propios de la Tabla Administrador, Médico y Recepcionista:
+        if colab.id_perfil == 1:
+            fec_ing_colab = request.POST.get("inputFechaIngreso")
+            sueldo = request.POST.get("inputSueldo")
+        elif colab.id_perfil == 2:
+            fec_ing_colab = request.POST.get("inputFechaIngreso")
+            sueldo = request.POST.get("inputSueldo")
+            reg_hrs = request.POST.get("inputRegimenHrs")
+        elif colab.id_perfil == 3:
+            fec_ing_colab = request.POST.get("inputFechaIngreso")
+            sueldo = request.POST.get("inputSueldo")        
+
+        # Proceso de Modificación de los Campos
         try:
             colab = Usuario.objects.get(run=id)
             telefono = Telefono.objects.get(id_telefono__in=tel_users)
+            admin = Administrador.objects.get(run_admin=id)
+            medico = Medico.objects.get(run_medico=id)
+            recep = Recepcionista.objects.get(run_recepcionista=id)
 
-            #admin = Administrador.objects.get(run_admin=id)
-            #medico = Medico.objects.get(run_medico=id)
-            #recep = Recepcionista.objects.get(run_recepcionista=id)
+            if colab.id_perfil == 1:
+                admin.fecha_ingreso = fec_ing_colab
+                admin.sueldo = sueldo
+            elif colab.id_perfil == 2:
+                medico.fecha_ingreso = fec_ing_colab
+                medico.sueldo = sueldo
+                medico.regimen_hrs = reg_hrs
+            elif colab.id_perfil == 3:
+                recep.fec_ing_colab = fec_ing_colab
+                recep.sueldo = sueldo
 
             colab.fecha_nac = fec_nac_colab
             colab.id_estado = estado
@@ -262,37 +283,68 @@ def edit_colab(request,id):
             colab.id_nacionalidad = nacionalidad
             colab.id_comuna = comuna
             telefono.num_telefono = tel_colab
-            #logger.warning(tel_users)
+            #logger.warning(tel_users) 
             
-            if p_nom is not None and s_nom is not None and ap_pa is not None and ap_ma is not None and dir_colab is not None and correo_colab is not None:
-                if p_nom.strip() !='' and s_nom.strip() !='' and ap_pa.strip() !='' and ap_ma.strip() !='' and dir_colab.strip() !='' and correo_colab.strip() !='':
-                    colab.p_nombre = p_nom
-                    colab.nombre_social = nom_soc
-                    colab.s_nombre = s_nom
-                    colab.apellido_pa = ap_pa
-                    colab.apellido_ma = ap_ma
-                    colab.direccion = dir_colab
-                    colab.correo = correo_colab
-                    colab.save()
-                    telefono.save()
-                    flag=True
-                    mensaje="Colaborador Modificado con Éxito"
-            else:
-                mensaje="Campos No Válidos"
-                flag=False 
-            messages.info(request, mensaje)
-            logger.warning(mensaje)
-            contexto = {"colab": colab, "telefonos": num_tel, "cantidad": cant_tel, "comuna": comunas, 
-                    "nacionalidad":nacionalidades, "estado":estados, "genero":generos, "mensaje": mensaje}
+            if colab.id_perfil == 1 or colab.id_perfil == 3:
+                if p_nom is not None and s_nom is not None and ap_pa is not None and ap_ma is not None and dir_colab is not None and correo_colab is not None and sueldo is not None:
+                    if p_nom.strip() !='' and s_nom.strip() !='' and ap_pa.strip() !='' and ap_ma.strip() !='' and dir_colab.strip() !='' and correo_colab.strip() !='' and sueldo.strip() !='':
+                        colab.p_nombre = p_nom
+                        colab.nombre_social = nom_soc
+                        colab.s_nombre = s_nom
+                        colab.apellido_pa = ap_pa
+                        colab.apellido_ma = ap_ma
+                        colab.direccion = dir_colab
+                        colab.correo = correo_colab
+                        if colab.id_perfil == 1:
+                            admin.sueldo = sueldo
+                            admin.save()
+                        elif colab.id_perfil == 3:
+                            recep.sueldo = sueldo
+                            recep.save()
+                        colab.save()
+                        telefono.save()
+                        flag=True
+                        mensaje="Colaborador Modificado con Éxito"
+                else:
+                    mensaje="Campos No Válidos"
+                    flag=False 
+                messages.info(request, mensaje)
+                logger.warning(mensaje)
+                contexto = {"colab": colab, "telefonos": num_tel, "cantidad": cant_tel, "comuna": comunas, 
+                        "nacionalidad":nacionalidades, "estado":estados, "genero":generos, "mensaje": mensaje}
+
+            if colab.id_perfil == 2:
+                if p_nom is not None and s_nom is not None and ap_pa is not None and ap_ma is not None and dir_colab is not None and correo_colab is not None and sueldo is not None and reg_hrs is not None:
+                    if p_nom.strip() !='' and s_nom.strip() !='' and ap_pa.strip() !='' and ap_ma.strip() !='' and dir_colab.strip() !='' and correo_colab.strip() !='' and sueldo.strip() !='' and reg_hrs.strip() !='':
+                        colab.p_nombre = p_nom
+                        colab.nombre_social = nom_soc
+                        colab.s_nombre = s_nom
+                        colab.apellido_pa = ap_pa
+                        colab.apellido_ma = ap_ma
+                        colab.direccion = dir_colab
+                        colab.correo = correo_colab
+                        medico.regimen_hrs = reg_hrs
+                        colab.save()
+                        telefono.save()
+                        medico.save()
+                        flag=True
+                        mensaje="Colaborador Modificado con Éxito"
+                else:
+                    mensaje="Campos No Válidos"
+                    flag=False 
+                messages.info(request, mensaje)
+                logger.warning(mensaje)
+                contexto = {"colab": colab, "telefonos": num_tel, "cantidad": cant_tel, "comuna": comunas, 
+                        "nacionalidad":nacionalidades, "estado":estados, "genero":generos, "mensaje": mensaje}
+            
         except:
             flag=False
             mensaje="Colaborador No Modificado"
             messages.info(request, mensaje)
             logger.warning(mensaje)
             contexto = {"colab": colab, "telefonos": num_tel, "cantidad": cant_tel, "comuna": comunas, 
-                        "nacionalidad":nacionalidades, "estado":estados, "genero":generos,"mensaje": mensaje}
+                        "nacionalidad":nacionalidades, "estado":estados, "genero":generos,"mensaje": colab}
     else:
-        contexto = {"colab": colab1, "telefonos": num_tel, "cantidad": cant_tel, "comuna": comunas, 
+        contexto = {"colab": colab, "telefonos": num_tel, "cantidad": cant_tel, "comuna": comunas, 
                     "nacionalidad":nacionalidades, "estado":estados, "genero":generos, "mensaje": mensaje}
-
     return render(request, 'edit_usuario.html', contexto)

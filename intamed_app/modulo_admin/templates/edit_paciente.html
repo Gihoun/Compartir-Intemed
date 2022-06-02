@@ -11,12 +11,12 @@
         <form class="row ">
             <!-- Datos Básicos del Paciente -->
             <div class="col-lg-2">
-                <label for="inputRutPaciente" class="form-label">RUT<span id="rut_span" class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="inputRut" oninput="val_rut()" placeholder="{{paciente.run}}" value="{{paciente.run}}" minlength="7" maxlength="8" required>
+                <label for="inputRutPaciente" class="form-label">RUT<span id="rut_span" class="text-danger"></span></label>
+                <input type="text" class="form-control" id="inputRut" oninput="val_rut()" placeholder="{{paciente.run}}" value="{{paciente.run}}" minlength="7" maxlength="8" readonly required>
             </div>
             <div class="col-lg-1">
-                <label for="inputDVPaciente" class="form-label">DV<span id="dv_span" class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="inputDV" oninput="val_dv()" placeholder="{{paciente.dv}}" value="{{paciente.dv}}" minlength="1" maxlength="1" required>
+                <label for="inputDVPaciente" class="form-label">DV<span id="dv_span" class="text-danger"></span></label>
+                <input type="text" class="form-control" id="inputDV" oninput="val_dv()" placeholder="{{paciente.dv}}" value="{{paciente.dv}}" minlength="1" maxlength="1" readonly required>
             </div>
             <div class="row mt-3">
                 <div class="col-lg-4">
@@ -28,7 +28,7 @@
                     <input type="text" class="form-control" id="inputSNom"  oninput="val_segn()" placeholder="{{paciente.s_nombre}}" value="{{paciente.s_nombre}}" minlength="2" maxlength="100" required>
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputNombreSocialPac" class="form-label">Nombre Social<span id="nomsoc_span" class="text-danger">*</span></label>
+                    <label for="inputNombreSocialPac" class="form-label">Nombre Social<span id="nomsoc_span" class="text-danger"></span></label>
                     <input type="text" class="form-control" id="inputNomSoc" oninput="val_nomsoc()" placeholder="{{paciente.nombre_social}}" value="{{paciente.nombre_social}}"  maxlength="100">
                 </div>
                 <div class="col-lg-4">
