@@ -230,6 +230,7 @@
     });
 </script>
 <script>
+    /*Validacion modificaciones*/
     function val_modificacion(){
         var pn = val_primn();
         var sn = val_segn();
@@ -242,6 +243,26 @@
         var fi = val_fechaing();
         var sc = val_sueldo();
         var rh = val_hrs();
+        if (pn == true && sn == true && apa == true && apa == true && apa == true && apa == true && apa == true && apa == true && apa == true && apa == true && apa == true) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: 'Colaborador Modificado',
+                showConfirmButton: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.edit_usuario.submit();
+                    return true;
+                }
+            })
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Formulario Con Errores',
+                text: 'Favor Revisar los Formatos Establecidos'
+            })
+            return false;
+        }
     }
 </script>
 {% endblock js1%}
