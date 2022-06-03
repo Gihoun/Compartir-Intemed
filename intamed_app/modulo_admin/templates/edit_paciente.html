@@ -8,43 +8,44 @@
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <h2>Paciente: {{paciente.p_nombre}} {{paciente.s_nombre}} {{paciente.apellido_pa}} {{paciente.apellido_ma}}</h2>
     <div>
-        <form class="row ">
+        <form class="row " action="{% url 'edit_pac' paciente.run %}" method="POST" enctype="multipart/form-data" onsubmit="">
             <!-- Datos Básicos del Paciente -->
+            {% csrf_token %}
             <div class="col-lg-2">
                 <label for="inputRutPaciente" class="form-label">RUT<span id="rut_span" class="text-danger"></span></label>
-                <input type="text" class="form-control" id="inputRut" oninput="val_rut()" placeholder="{{paciente.run}}" value="{{paciente.run}}" minlength="7" maxlength="8" readonly required>
+                <input type="text" class="form-control" name="inputRut" oninput="val_rut()" placeholder="{{paciente.run}}" value="{{paciente.run}}" minlength="7" maxlength="8" readonly required>
             </div>
             <div class="col-lg-1">
                 <label for="inputDVPaciente" class="form-label">DV<span id="dv_span" class="text-danger"></span></label>
-                <input type="text" class="form-control" id="inputDV" oninput="val_dv()" placeholder="{{paciente.dv}}" value="{{paciente.dv}}" minlength="1" maxlength="1" readonly required>
+                <input type="text" class="form-control" name="inputDV" oninput="val_dv()" placeholder="{{paciente.dv}}" value="{{paciente.dv}}" minlength="1" maxlength="1" readonly required>
             </div>
             <div class="row mt-3">
                 <div class="col-lg-4">
                     <label for="inputPrimerNombrePac" class="form-label">Primer Nombre<span id="primn_span" class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="inputPNom" oninput="val_primn()" placeholder="{{paciente.p_nombre}}" value="{{paciente.p_nombre}}" minlength="2" maxlength="100" required>
+                    <input type="text" class="form-control" name="inputPNom" oninput="val_primn()" placeholder="{{paciente.p_nombre}}" value="{{paciente.p_nombre}}" minlength="2" maxlength="100" required>
                 </div>
                 <div class="col-lg-4">
                     <label for="inputSegundoNombrePac" class="form-label">Segundo Nombre<span id="segn_span" class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="inputSNom"  oninput="val_segn()" placeholder="{{paciente.s_nombre}}" value="{{paciente.s_nombre}}" minlength="2" maxlength="100" required>
+                    <input type="text" class="form-control" name="inputSNom"  oninput="val_segn()" placeholder="{{paciente.s_nombre}}" value="{{paciente.s_nombre}}" minlength="2" maxlength="100" required>
                 </div>
                 <div class="col-lg-4">
                     <label for="inputNombreSocialPac" class="form-label">Nombre Social<span id="nomsoc_span" class="text-danger"></span></label>
-                    <input type="text" class="form-control" id="inputNomSoc" oninput="val_nomsoc()" placeholder="{{paciente.nombre_social}}" value="{{paciente.nombre_social}}"  maxlength="100">
+                    <input type="text" class="form-control" name="inputNomSoc" oninput="val_nomsoc()" placeholder="{{paciente.nombre_social}}" value="{{paciente.nombre_social}}"  maxlength="100">
                 </div>
                 <div class="col-lg-4">
                     <label for="inputApellidoPaPac" class="form-label">Apellido Paterno<span id="ap_span" class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="inputAp" oninput="val_apPaterno()" placeholder="{{paciente.apellido_pa}}" value="{{paciente.apellido_pa}}"  minlength="2" maxlength="100" required>
+                    <input type="text" class="form-control" name="inputAp" oninput="val_apPaterno()" placeholder="{{paciente.apellido_pa}}" value="{{paciente.apellido_pa}}"  minlength="2" maxlength="100" required>
                 </div>
                 <div class="col-lg-4">
                     <label for="inputApellidoMaPac" class="form-label">Apellido Materno<span id="am_span" class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="inputAM"  oninput="val_apMaterno()" placeholder="{{paciente.apellido_ma}}" value="{{paciente.apellido_ma}}"  minlength="2" maxlength="100" required>
+                    <input type="text" class="form-control" name="inputAM"  oninput="val_apMaterno()" placeholder="{{paciente.apellido_ma}}" value="{{paciente.apellido_ma}}"  minlength="2" maxlength="100" required>
                 </div>
             </div>
             <div class="row mt-3">
                 <hr>
                 <div class="col-md-4">
-                    <label for="inputComunaPac" class="form-label">Comuna</label>
-                    <select id="inputComunaPac" class="form-select ">
+                    <label for="inputComPac" class="form-label">Comuna</label>
+                    <select name="inputComPac" class="form-select ">
                     {% for x in comuna %}
                         {% if x.nombre_comuna == paciente.id_comuna.nombre_comuna %}
                             <option selected>{{x.nombre_comuna}}</option>
@@ -55,16 +56,16 @@
                     </select>
                 </div>
                 <div class="col-lg-8">
-                    <label for="inputDireccionPac" class="form-label">Dirección<span id="dir_span" class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="inputDir" oninput="val_direccion()" placeholder="{{paciente.direccion}}" value="{{paciente.direccion}}"  minlength="5" maxlength="100" required>
+                    <label for="inputDirPac" class="form-label">Dirección<span id="dir_span" class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="inputDir" oninput="val_direccion()" placeholder="{{paciente.direccion}}" value="{{paciente.direccion}}"  minlength="5" maxlength="100" required>
                 </div>
                 <div class=" col-lg-4">
-                    <label for="inputCorreoPac" class="form-label">Correo Electrónico<span id="correo_span" class="text-danger">*</span></label>
-                    <input type="email" class="form-control" id="inputCorreo" oninput="ValidateEmail()" placeholder="{{paciente.correo}}" value="{{paciente.correo}}"  minlength="5" maxlength="100" required>
+                    <label for="inputCorreoP" class="form-label">Correo Electrónico<span id="correo_span" class="text-danger">*</span></label>
+                    <input type="email" class="form-control" name="inputCorreo" oninput="ValidateEmail()" placeholder="{{paciente.correo}}" value="{{paciente.correo}}"  minlength="5" maxlength="100" required>
                 </div>
                 <div class="col-lg-5">
                     <label for="inputNacPac" class="form-label">Nacionalidad</label>
-                    <select id="inputNacPac" class="form-select ">
+                    <select name="inputNacPac" class="form-select ">
                     {% for x in nacionalidad %}
                         {% if x.nombre_nac == paciente.id_nacionalidad.nombre_nac %}
                             <option selected>{{x.nombre_nac}}</option>
@@ -76,13 +77,13 @@
                 </div>
                 <div class="col-lg-3">
                     <label for="FechaNacPac" class="form-label">Fecha Nacimiento<span id="fnac_span" class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="fecha" oninput="val_fechanac()" value="{{paciente.fecha_nac}}" placeholder="{{paciente.fecha_nac}}" minlength="8" maxlength="10" readonly required/>
+                    <input type="text" class="form-control" name="fecha" oninput="val_fechanac()" value="{{paciente.fecha_nac}}" placeholder="{{paciente.fecha_nac}}" minlength="8" maxlength="10" readonly required/>
                 </div>
             </div>
             <div class="row mt-3">
                 <div class="col-lg-4">
                     <label for="inputEstadoPac" class="form-label">Estado Civil</label>
-                    <select id="inputEstadoPac" class="form-select ">
+                    <select name="inputEstadoPac" class="form-select ">
                     {% for x in estado %}
                         {% if x.nombre_estado == paciente.id_estado.nombre_estado %}
                             <option selected>{{x.nombre_estado}}</option>
@@ -94,7 +95,7 @@
                 </div>
                 <div class="col-lg-4">
                     <label for="inputGeneroPac" class="form-label">Género</label>
-                    <select id="inputGeneroPac" class="form-select ">
+                    <select name="inputGeneroPac" class="form-select ">
                     {% for x in genero %}
                         {% if x.nombre_genero == paciente.id_genero.nombre_genero %}
                             <option selected>{{x.nombre_genero}}</option>
@@ -106,23 +107,23 @@
                 </div>
                 <div class="col-lg-2">
                     <label for="inputTalla" class="form-label">Talla (mts)</label>
-                    <input type="number" class="form-control" id="inputTalla" placeholder="{{paciente.paciente.talla}}" value="{{paciente.paciente.talla}}">
+                    <input type="number" class="form-control" name="inputTalla" placeholder="{{paciente.paciente.talla}}" value="{{paciente.paciente.talla}}">
                 </div>
                 <div class="col-lg-2">
                     <label for="inputPeso" class="form-label">Peso (kgs)</label>
-                    <input type="number" class="form-control" id="inputPeso" placeholder="{{paciente.paciente.peso}}" value="{{paciente.paciente.peso}}">
+                    <input type="number" class="form-control" name="inputPeso" placeholder="{{paciente.paciente.peso}}" value="{{paciente.paciente.peso}}">
                 </div>  
             </div>
             <div class="row mt-3">
                 <div class="col-md-4">
                     <label for="inputFonoPac" class="form-label">Teléfono<span id="tel_span" class="text-danger">*</span></label>
                         {% for y in telefonos %}
-                            <input type="number" class="form-control" id="inputFono" oninput="val_telefono()" placeholder="{{y}}" value="{{y}}"  minlength="5" maxlength="12" required>
+                            <input type="number" class="form-control" name="inputFono" oninput="val_telefono()" placeholder="{{y}}" value="{{y}}"  minlength="5" maxlength="12" required>
                         {% endfor %}    
                 </div>
                 <div class="col-md-4">
                     <label for="inputPrev" class="form-label">Previsión</label>
-                    <select id="inputPrev" class="form-select ">
+                    <select name="inputPrev" class="form-select ">
                     {% for x in prevision %}
                         {% if x.nombre_prevision == paciente.paciente.id_prevision.nombre_prevision %}
                             <option selected>{{x.nombre_prevision}}</option>
@@ -150,11 +151,11 @@
             <div class="container">
                 <hr>
                 <p class="form-label">Alergias</p>
-                <form role="form">
-                  <div class="form-group">
+                <div >
+                  <div >
                     <input class="form-control" type="text" name="inputNuevaAlergia" placeholder="Ingrese Nueva Alergia" />
                   </div>
-                </form>
+                </div>
                 <div class="row">
                   <div class="col-sm-6 ">
                     <div id="modules" class="d-flex flex-wrap overflow-auto" style="max-height: 300px">
@@ -175,7 +176,7 @@
                 </div>
               </div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end" class="row mt-3">
-                <button type="button" class="btn btn-outline-primary">Guardar</button>
+                <button type="submit" class="btn btn-outline-primary">Guardar</button>
             </div>
             <div>
                 <label></label>

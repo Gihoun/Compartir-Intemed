@@ -94,15 +94,45 @@ def filtro_pacientes(request):
         contexto = {"usuarios":users_pac,"cantidad":userp_cant}
     return render(request, 'pacientes_s.html', contexto)
 
+def editar_usuario_gral(id_user,p_nom,s_nom,nom_soc,ap,am,com,dire,correo,nac,fech,est,gen):
+    # recoge un request
+    usr = Usuario.objects.get(run=id_user)
+    comuna = Comuna.objects.get(nombre_comuna=com)
+    nacionalidad = Nacionalidad.objects.get(nombre_nac=nac)
+    estado = EstadoCivil.objects.get(nombre_estado=est)
+    genero = Genero.objects.get(nombre_genero=gen)
+    try:
+        usr.p_nombre = p_nom
+        usr.s_nombre = s_nom
+        usr.nombre_social = nom_soc
+        usr.apellido_pa = ap
+        usr.apellido_ma = am
+        usr.direccion = dire
+        usr.correo = correo
+        usr.fecha_nac = fech
+
+        usr.id_estado = estado
+        usr.id_genero = genero
+        usr.id_nacionalidad = nacionalidad
+        usr.id_comuna = comuna
+        usr.save()
+        return True , usr
+    except:
+        return False
+        
+    
+
 def edit_paciente(request,id):
+    logger = logging.getLogger(__name__)
+    mensaje = ''
+
     prevision = Prevision.objects.all()
-    tel_users = TelefonoUsuario.objects.filter(run_usuario=id).values_list('id_telefono', flat=True)
-       
+    tel_users = TelefonoUsuario.objects.filter(run_usuario=id).values_list('id_telefono', flat=True) 
     num_tel = Telefono.objects.all().filter(id_telefono__in=tel_users).values_list('num_telefono', flat=True)
     cant_tel = tel_users.count() 
     cant = num_tel.count()
-    
     paciente = Usuario.objects.get(run=id)
+    paciente_real = Paciente.objects.get(run_paciente=id)
     comunas = Comuna.objects.all()
     nacionalidades = Nacionalidad.objects.all()
     estados = EstadoCivil.objects.all()
@@ -112,10 +142,50 @@ def edit_paciente(request,id):
     aler_user = DetalleAlergia.objects.filter(run_paciente=id).values_list('id_alergia',flat=True)
     alergias = Alergia.objects.all().filter(id_alergia__in=aler_user).values_list('nombre_alergia', flat=True)
 
+    if request.POST:
+        ## CAMPOS INCLUSIVOS DE USUARIO
+        p_nom = request.POST.get("inputPNom")
+        s_nom = request.POST.get("inputSNom")
+        nom_soc = request.POST.get("inputNomSoc")
+        ap_pa = request.POST.get("inputAp")
+        ap_ma = request.POST.get("inputAM")
+        com_p = request.POST.get("inputComPac")
+        dir_p = request.POST.get("inputDir")
+        correo_p = request.POST.get("inputCorreo")
+        nac_p = request.POST.get("inputNacPac")
+        fec_nacP = request.POST.get("fecha")
+        est_p = request.POST.get("inputEstadoPac")
+        gen_p = request.POST.get("inputGeneroPac")
+        tel_p = request.POST.get("inputFono")## OJO CON EL TELEFONO
+        
+        ## CAMPOS EXCLUSIVOS DE PACIENTE
+        talla = request.POST.get("inputTalla")
+        peso = request.POST.get("inputPeso")
+        prev = request.POST.get("inputPrev")
+        
+        
+        flag , userr = editar_usuario_gral(id, p_nom, s_nom, nom_soc, ap_pa, ap_ma, com_p, dir_p, correo_p, nac_p, fec_nacP, est_p, gen_p)
+        if flag:
+            try:##FALTA ALERGIAS Y TELEFONOS
+                prevP = Prevision.objects.get(nombre_prevision=prev)
+                paciente_real.id_prevision = prevP
+                paciente_real.talla = talla
+                paciente_real.peso = peso
+                paciente_real.save()
+                mensaje="paciente guardado exitosamente"
+                contexto = {"paciente": userr, "prevision": prevision, "telefonos": num_tel, "cantidad": cant_tel,
+                "comuna": comunas, "nacionalidad": nacionalidades, "estado": estados, "genero": generos, "alergias": alergias,"alers":todo_alergias}
+            except:
+                mensaje="usuario base guardado problemas en paciente"
+        else:
+            mensaje="problemas al guardar usuario base"
+    
+    logger.warning(mensaje)
+   
+
     contexto = {"paciente": paciente, "prevision": prevision, "telefonos": num_tel, "cantidad": cant_tel,
                 "comuna": comunas, "nacionalidad": nacionalidades, "estado": estados, "genero": generos, "alergias": alergias,"alers":todo_alergias}
-    ##if request.POST:
-    ##    print("holi")
+   
     return render(request, 'edit_paciente.html',contexto)
 
 def vista_farmaco(request):
