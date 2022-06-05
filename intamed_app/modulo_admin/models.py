@@ -305,7 +305,7 @@ class ResultadoExamen(models.Model):
 
 
 class Telefono(models.Model):
-    id_telefono = models.BigIntegerField(primary_key=True)
+    id_telefono = models.BigAutoField(primary_key=True)
     num_telefono = models.BigIntegerField()
     id_tipo_tel = models.ForeignKey('TipoTelefono', models.DO_NOTHING, db_column='id_tipo_tel')
 

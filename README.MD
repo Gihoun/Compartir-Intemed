@@ -10,10 +10,18 @@ Realizados:
 ----------------------------------------------------------------------------------------------------------------
 
 Por Hacer:
-1. edicion medico (pendiente)
-2. edicion recepcionista (pendiente)
-3. pantalla crear perfil usuario (pendiente)
-4. edicion mi propio perfil de admin
+
+3. pantalla crear perfil (pendiente)
 5. mejorar dashboard estadisticas como respaldo de BBDD
-6. pensar en un par de tipos de reportes por defecto
+6. pensar en un par de tipos de reportes por defecto() el cliente menciono reporte segun diagnostico
 7. Sacar RUT y DV de las graficas de Editar Paciente y Colaborador?? (Pensando en que son LLaves Primarias)
+8. LIMPIAR CODIGO DE AARON
+9. ATENCIONES
+10. REPORTES
+
+
+
+YAYITAS:
+1. solo se podra editar prevision de paciente
+2. Sacar RUT y DV de las graficas de Editar Paciente y Colaborador?? (Pensando en que son LLaves Primarias)
+3. repensar reglas de negocio roles en equipo

@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from .models import Comuna, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, Usuario, Atencion, Farmaco
 from .models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato, Alergia
-from .models import Prevision, TelefonoUsuario, Telefono, DetalleAlergia
+from .models import Prevision, TelefonoUsuario, Telefono, DetalleAlergia, TipoTelefono
 from django.contrib.auth import authenticate,logout,login
 from django.contrib.auth.decorators import login_required,permission_required
 from django.views.decorators.csrf import csrf_protect
@@ -94,6 +94,7 @@ def filtro_pacientes(request):
         contexto = {"usuarios":users_pac,"cantidad":userp_cant}
     return render(request, 'pacientes_s.html', contexto)
 
+#FUNCION PARA GUADAR HACIA TABLA USUARIO------------------
 def editar_usuario_gral(id_user,p_nom,s_nom,nom_soc,ap,am,com,dire,correo,nac,fech,est,gen):
     # recoge un request
     usr = Usuario.objects.get(run=id_user)
@@ -101,26 +102,70 @@ def editar_usuario_gral(id_user,p_nom,s_nom,nom_soc,ap,am,com,dire,correo,nac,fe
     nacionalidad = Nacionalidad.objects.get(nombre_nac=nac)
     estado = EstadoCivil.objects.get(nombre_estado=est)
     genero = Genero.objects.get(nombre_genero=gen)
-    try:
-        usr.p_nombre = p_nom
-        usr.s_nombre = s_nom
-        usr.nombre_social = nom_soc
-        usr.apellido_pa = ap
-        usr.apellido_ma = am
-        usr.direccion = dire
-        usr.correo = correo
-        usr.fecha_nac = fech
+    if p_nom is not None and s_nom is not None and ap is not None and am is not None and dire is not None and correo is not None:
+        if p_nom.strip() !='' and s_nom.strip() !='' and ap.strip() !='' and am.strip() !='' and dire.strip() !='' and correo.strip() !='':
+            try:
+                usr.p_nombre = p_nom
+                usr.s_nombre = s_nom
+                usr.nombre_social = nom_soc
+                usr.apellido_pa = ap
+                usr.apellido_ma = am
+                usr.direccion = dire
+                usr.correo = correo
+                usr.fecha_nac = fech
 
-        usr.id_estado = estado
-        usr.id_genero = genero
-        usr.id_nacionalidad = nacionalidad
-        usr.id_comuna = comuna
-        usr.save()
-        return True , usr
-    except:
+                usr.id_estado = estado
+                usr.id_genero = genero
+                usr.id_nacionalidad = nacionalidad
+                usr.id_comuna = comuna
+                usr.save()
+                return True , usr
+            except:
+                return False
+    else:
         return False
+
+# LOGICA PARA GUARDAR HACIA TABLA TELEFONO y TELEFONO USUARIO
+def save_tel(id_user,new_tel):
+    usr=Usuario.objects.get(run=id_user)
+    msg=''
+    # si ya tiene telefonos
+    try:
         
-    
+        tel_users = TelefonoUsuario.objects.filter(run_usuario=id_user).values_list('id_telefono', flat=True) 
+        numeros = Telefono.objects.all().filter(id_telefono__in=tel_users).values_list('num_telefono', flat=True)
+        obj_num = Telefono.objects.all().filter(id_telefono__in=tel_users)
+        cant_tel = tel_users.count()
+        if cant_tel != 0:
+            for x in range(len(tel_users)):
+                if arr_new_tel[x].strip() !='':
+                    try:
+                        telf = Telefono.objects.get(id_telefono=tel_users[x])
+                        telf.num_telefono = arr_new_tel[x]
+                        telf.save()
+                    except:
+                        msg="error alterando telefonos existentes" 
+                        return msg
+            msg="Exito telefonos alterados"
+            return msg
+    #si no tiene telefonos
+    except:
+        try:
+            id_obj = Telefono.objects.last().id_telefono + 1   
+            tip_tel = TipoTelefono.objects.get(id_tipo_tel=6)   
+            print(f"id de objeto ultimo mas uno  {id_obj}" )    
+            newT = Telefono.objects.create(num_telefono=t,id_telefono=id_obj,id_tipo_tel=tip_tel)
+            tel_obj = TelefonoUsuario.objects.create(run_usuario=id_user,id_telefono=newT)
+            newT.save()
+            tel_obj.save()
+        
+            msg="Exito agregando nuevo telefono"
+            return msg    
+        except:
+            msg="error agregando nuevo telefono"
+            return msg
+                    
+       
 
 def edit_paciente(request,id):
     logger = logging.getLogger(__name__)
@@ -266,16 +311,16 @@ def edit_perfil(request,id):
                 if n_perfil.strip() !='':
                     perfil.nombre_perfil = n_perfil
                     perfil.save()
-                    flag=True
+                    
                     mensaje="Perfil de Usuario Modificado con Éxito"
             else:
                 mensaje="Edición de Perfil Inválida"
-                flag=False 
+                 
             contexto = {"perfil": perfil,"mensaje": mensaje}
             messages.info(request, mensaje)
             logger.warning(mensaje)
         except:
-            flag=False
+            
             mensaje="Perfil de Usuario No Modificado"
             messages.info(request, mensaje)
             logger.warning(mensaje)
@@ -287,6 +332,7 @@ def edit_perfil(request,id):
 def edit_colab(request,id):
     logger = logging.getLogger(__name__)
     colab = Usuario.objects.get(run=id)
+    id_perfil = colab.id_perfil_id
     tel_users = TelefonoUsuario.objects.filter(run_usuario=id).values_list('id_telefono', flat=True)
     cant_tel = tel_users.count()    
     num_tel = Telefono.objects.all().filter(id_telefono__in=tel_users).values_list('num_telefono', flat=True)
@@ -296,6 +342,8 @@ def edit_colab(request,id):
     generos = Genero.objects.all()
 
     mensaje=''
+    arr_tel=[]
+
     if request.POST:
         # Campos a Modificar propios de la Tabla Usuario:
         p_nom = request.POST.get("inputPNom")
@@ -311,109 +359,82 @@ def edit_colab(request,id):
         est_colab = request.POST.get("inputEstado")
         gen_colab = request.POST.get("inputGenero")
         tel_colab = request.POST.get("inputFono")
-        comuna = Comuna.objects.get(nombre_comuna=com_colab)
-        nacionalidad = Nacionalidad.objects.get(nombre_nac=nac_colab)
-        estado = EstadoCivil.objects.get(nombre_estado=est_colab)
-        genero = Genero.objects.get(nombre_genero=gen_colab)
-
         # Campos a Modificar propios de la Tabla Administrador, Médico y Recepcionista:
-        if colab.id_perfil == 1:
+        arr_tel.append(tel_colab)
+
+        if id_perfil == 1:
             fec_ing_colab = request.POST.get("inputFechaIngreso")
             sueldo = request.POST.get("inputSueldo")
-        elif colab.id_perfil == 2:
+        elif id_perfil == 2:
             fec_ing_colab = request.POST.get("inputFechaIngreso")
             sueldo = request.POST.get("inputSueldo")
             reg_hrs = request.POST.get("inputRegimenHrs")
-        elif colab.id_perfil == 3:
+        elif id_perfil == 3:
             fec_ing_colab = request.POST.get("inputFechaIngreso")
             sueldo = request.POST.get("inputSueldo")        
-
         # Proceso de Modificación de los Campos
-        try:
-            colab = Usuario.objects.get(run=id)
-            telefono = Telefono.objects.get(id_telefono__in=tel_users)
-            admin = Administrador.objects.get(run_admin=id)
-            medico = Medico.objects.get(run_medico=id)
-            recep = Recepcionista.objects.get(run_recepcionista=id)
-
-            if colab.id_perfil == 1:
-                admin.fecha_ingreso = fec_ing_colab
-                admin.sueldo = sueldo
-            elif colab.id_perfil == 2:
-                medico.fecha_ingreso = fec_ing_colab
-                medico.sueldo = sueldo
-                medico.regimen_hrs = reg_hrs
-            elif colab.id_perfil == 3:
-                recep.fec_ing_colab = fec_ing_colab
-                recep.sueldo = sueldo
-
-            colab.fecha_nac = fec_nac_colab
-            colab.id_estado = estado
-            colab.id_genero = genero
-            colab.id_nacionalidad = nacionalidad
-            colab.id_comuna = comuna
-            telefono.num_telefono = tel_colab
-            #logger.warning(tel_users) 
+        flag ,usr = editar_usuario_gral(id, p_nom, s_nom, nom_soc, ap_pa, ap_ma, com_colab, dir_colab, correo_colab, nac_colab, fec_nac_colab, est_colab, gen_colab)
+        if flag:
             
-            if colab.id_perfil == 1 or colab.id_perfil == 3:
-                if p_nom is not None and s_nom is not None and ap_pa is not None and ap_ma is not None and dir_colab is not None and correo_colab is not None and sueldo is not None:
-                    if p_nom.strip() !='' and s_nom.strip() !='' and ap_pa.strip() !='' and ap_ma.strip() !='' and dir_colab.strip() !='' and correo_colab.strip() !='' and sueldo.strip() !='':
-                        colab.p_nombre = p_nom
-                        colab.nombre_social = nom_soc
-                        colab.s_nombre = s_nom
-                        colab.apellido_pa = ap_pa
-                        colab.apellido_ma = ap_ma
-                        colab.direccion = dir_colab
-                        colab.correo = correo_colab
-                        if colab.id_perfil == 1:
-                            admin.sueldo = sueldo
-                            admin.save()
-                        elif colab.id_perfil == 3:
-                            recep.sueldo = sueldo
-                            recep.save()
-                        colab.save()
-                        telefono.save()
-                        flag=True
-                        mensaje="Colaborador Modificado con Éxito"
-                else:
-                    mensaje="Campos No Válidos"
-                    flag=False 
-                messages.info(request, mensaje)
+            for t in arr_tel:
+                #mensaje = save_tel(id,t)
+                ## secuencia creacion de nuevo telefono NO BORRAR  
+                # id_obj = Telefono.objects.last().id_telefono + 1   
+                # tip_tel = TipoTelefono.objects.get(id_tipo_tel=6)   
+                # print(f"id de objeto ultimo mas uno  {id_obj}" )    
+                # newT = Telefono.objects.create(num_telefono=t,id_telefono=id_obj,id_tipo_tel=tip_tel)
+                # tel_obj = TelefonoUsuario.objects.create(run_usuario=usr,id_telefono=newT)
+                # newT.save()
+                # tel_obj.save()
                 logger.warning(mensaje)
-                contexto = {"colab": colab, "telefonos": num_tel, "cantidad": cant_tel, "comuna": comunas, 
-                        "nacionalidad":nacionalidades, "estado":estados, "genero":generos, "mensaje": mensaje}
-
-            if colab.id_perfil == 2:
-                if p_nom is not None and s_nom is not None and ap_pa is not None and ap_ma is not None and dir_colab is not None and correo_colab is not None and sueldo is not None and reg_hrs is not None:
-                    if p_nom.strip() !='' and s_nom.strip() !='' and ap_pa.strip() !='' and ap_ma.strip() !='' and dir_colab.strip() !='' and correo_colab.strip() !='' and sueldo.strip() !='' and reg_hrs.strip() !='':
-                        colab.p_nombre = p_nom
-                        colab.nombre_social = nom_soc
-                        colab.s_nombre = s_nom
-                        colab.apellido_pa = ap_pa
-                        colab.apellido_ma = ap_ma
-                        colab.direccion = dir_colab
-                        colab.correo = correo_colab
-                        medico.regimen_hrs = reg_hrs
-                        colab.save()
-                        telefono.save()
-                        medico.save()
-                        flag=True
-                        mensaje="Colaborador Modificado con Éxito"
-                else:
-                    mensaje="Campos No Válidos"
-                    flag=False 
-                messages.info(request, mensaje)
+            try:
+                
+                if id_perfil == 1:
+                    admin = Administrador.objects.get(run_admin=id)
+                    admin.fecha_ingreso = fec_ing_colab
+                    admin.sueldo = sueldo
+                    admin.save()
+                    logger.warning("admin guardado")
+                    mensaje="Administrador Modificado con Éxito"
+                    
+                elif id_perfil == 2:
+                    medico = Medico.objects.get(run_medico=id)
+                    medico.fecha_ingreso = fec_ing_colab
+                    medico.sueldo = sueldo
+                    medico.regimen_hrs = reg_hrs
+                    medico.save()
+                    mensaje="Medico Modificado con Éxito"
+                    
+                elif id_perfil == 3:
+                    recep = Recepcionista.objects.get(run_recepcionista=id)
+                    recep.fec_ing_colab = fec_ing_colab
+                    recep.sueldo = sueldo
+                    recep.save()
+                    mensaje="Recepcionista Modificado con Éxito"
+                    
+                
+                #if tel_colab.strip() !='':
+                #    try:
+                #        
+                #        telefono = Telefono.objects.get(id_telefono__in=tel_users)
+                #        logger.warning(telefono)
+                #        telefono.num_telefono = tel_colab
+                #        telefono.save()
+                #    except:
+                #        logger.warning("Problemas en telefono, usuario no tiene telefono registrado")
+                #        mensaje="Problemas en telefono, usuario no tiene telefono registrado"        
+                
+                contexto = {"colab": usr, "telefonos": num_tel, "cantidad": cant_tel, "comuna": comunas, 
+                            "nacionalidad":nacionalidades, "estado":estados, "genero":generos,"mensaje": mensaje}
+            except:
+                mensaje="usuario base guardado pero hay error en campos especificos del perfil"
                 logger.warning(mensaje)
-                contexto = {"colab": colab, "telefonos": num_tel, "cantidad": cant_tel, "comuna": comunas, 
-                        "nacionalidad":nacionalidades, "estado":estados, "genero":generos, "mensaje": mensaje}
-            
-        except:
-            flag=False
-            mensaje="Colaborador No Modificado"
-            messages.info(request, mensaje)
-            logger.warning(mensaje)
-            contexto = {"colab": colab, "telefonos": num_tel, "cantidad": cant_tel, "comuna": comunas, 
-                        "nacionalidad":nacionalidades, "estado":estados, "genero":generos,"mensaje": colab}
+                contexto = {"colab": usr, "telefonos": num_tel, "cantidad": cant_tel, "comuna": comunas, 
+                            "nacionalidad":nacionalidades, "estado":estados, "genero":generos,"mensaje": mensaje}
+        else:
+            mensaje="Error en los campos basicos del usuario "
+             
+    # SIN POST
     else:
         contexto = {"colab": colab, "telefonos": num_tel, "cantidad": cant_tel, "comuna": comunas, 
                     "nacionalidad":nacionalidades, "estado":estados, "genero":generos, "mensaje": mensaje}
