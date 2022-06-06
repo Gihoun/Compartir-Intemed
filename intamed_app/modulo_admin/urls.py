@@ -13,5 +13,5 @@ urlpatterns = [
     path('panel/perfil',vista_perfil,name="perfilg"),
     path('panel/editar_perfil/<id>',edit_perfil,name="edit_perfil"),
     path('panel/editar_colaborador/<id>',edit_colab,name="edit_colab"),
-    path('panel/atenciones',vista_atenciones,name="ateng")
+    path('panel/atenciones/<id>',vista_atenciones,name="ateng")
 ]
