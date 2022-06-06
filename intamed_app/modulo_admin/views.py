@@ -2,9 +2,9 @@ from multiprocessing.sharedctypes import Array
 from select import select
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from .models import Comuna, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, Usuario, Atencion, Farmaco
+from .models import Comuna, DetalleAtencion, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, Usuario
 from .models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato, Alergia
-from .models import Prevision, TelefonoUsuario, Telefono, DetalleAlergia, TipoTelefono
+from .models import Prevision, TelefonoUsuario, Telefono, DetalleAlergia, TipoTelefono, Atencion, Farmaco
 from django.contrib.auth import authenticate,logout,login
 from django.contrib.auth.decorators import login_required,permission_required
 from django.views.decorators.csrf import csrf_protect
@@ -245,7 +245,6 @@ def vista_farmaco(request):
     farmaco_cant = farmacos.count()
     if request.POST:
         busqueda = request.POST.get("txbusqueda")
-
         farma_selected = Farmaco.objects.filter(nombre_farmaco__startswith=busqueda)
         farma_cant = farma_selected.count()
         contexto = {"farmacos":farma_selected,"cantidad":farma_cant}
@@ -433,3 +432,16 @@ def edit_colab(request,id):
         contexto = {"colab": colab, "telefonos": num_tel, "cantidad": cant_tel, "comuna": comunas, 
                     "nacionalidad":nacionalidades, "estado":estados, "genero":generos, "mensaje": mensaje}
     return render(request, 'edit_usuario.html', contexto)
+
+def vista_atenciones(request):
+    atenciones = Atencion.objects.all()
+    atenciones_cant = atenciones.count()
+    if request.POST:
+        busqueda = request.POST.get("txbusqueda")
+        atencion_selected = Atencion.objects.filter(id_atencion__startswith=busqueda)
+        #det_at_selected = DetalleAtencion.objects.filter(id_atencion__startswith=busqueda)
+        atenciones_cant = atencion_selected.count()
+        contexto = {"atencion":atencion_selected,"cantidad":atenciones_cant} #,"detalle":det_at_selected}
+    else:
+        contexto = {"atencion":atenciones,"cantidad":atenciones_cant} #,"detalle":det_at_selected}
+    return render(request, 'atenciones.html', contexto)
