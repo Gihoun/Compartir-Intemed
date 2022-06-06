@@ -126,12 +126,11 @@ def editar_usuario_gral(id_user,p_nom,s_nom,nom_soc,ap,am,com,dire,correo,nac,fe
         return False
 
 # LOGICA PARA GUARDAR HACIA TABLA TELEFONO y TELEFONO USUARIO
-def save_tel(id_user,new_tel):
+def save_tel_varios(id_user,arr_new_tel):
     usr=Usuario.objects.get(run=id_user)
     msg=''
     # si ya tiene telefonos
     try:
-        
         tel_users = TelefonoUsuario.objects.filter(run_usuario=id_user).values_list('id_telefono', flat=True) 
         numeros = Telefono.objects.all().filter(id_telefono__in=tel_users).values_list('num_telefono', flat=True)
         obj_num = Telefono.objects.all().filter(id_telefono__in=tel_users)
@@ -145,26 +144,34 @@ def save_tel(id_user,new_tel):
                         telf.save()
                     except:
                         msg="error alterando telefonos existentes" 
-                        return msg
+                        return 1 , msg
             msg="Exito telefonos alterados"
-            return msg
+            return 2, msg
+        else:
+            msg="usuario no tiene telefonos registrados"
+            return 3 , msg
     #si no tiene telefonos
     except:
-        try:
-            id_obj = Telefono.objects.last().id_telefono + 1   
-            tip_tel = TipoTelefono.objects.get(id_tipo_tel=6)   
-            print(f"id de objeto ultimo mas uno  {id_obj}" )    
-            newT = Telefono.objects.create(num_telefono=t,id_telefono=id_obj,id_tipo_tel=tip_tel)
-            tel_obj = TelefonoUsuario.objects.create(run_usuario=id_user,id_telefono=newT)
-            newT.save()
-            tel_obj.save()
+        msg="error buscando usuarios y telefono"
+        return 3 , msg
+
+def save_tel_unico(id_user,new_tel):
+    try:
+        usr=Usuario.objects.get(run=id_user)
+        id_obj = Telefono.objects.last().id_telefono + 1   
+        tip_tel = TipoTelefono.objects.get(id_tipo_tel=6)   
+        print(f"id de objeto ultimo mas uno  {id_obj}" )    
+        newT = Telefono.objects.create(num_telefono=new_tel,id_telefono=id_obj,id_tipo_tel=tip_tel)
+        tel_obj = TelefonoUsuario.objects.create(run_usuario=usr,id_telefono=newT)
+        newT.save()
+        tel_obj.save()
         
-            msg="Exito agregando nuevo telefono"
-            return msg    
-        except:
-            msg="error agregando nuevo telefono"
-            return msg
-                    
+        msg="Exito agregando nuevo telefono"
+        return msg 
+    except:   
+        msg="error agregando nuevo telefono"
+        return msg
+
        
 
 def edit_paciente(request,id):
@@ -375,19 +382,17 @@ def edit_colab(request,id):
         # Proceso de Modificación de los Campos
         flag ,usr = editar_usuario_gral(id, p_nom, s_nom, nom_soc, ap_pa, ap_ma, com_colab, dir_colab, correo_colab, nac_colab, fec_nac_colab, est_colab, gen_colab)
         if flag:
-            
-            for t in arr_tel:
-                #mensaje = save_tel(id,t)
-                ## secuencia creacion de nuevo telefono NO BORRAR  
-                # id_obj = Telefono.objects.last().id_telefono + 1   
-                # tip_tel = TipoTelefono.objects.get(id_tipo_tel=6)   
-                # print(f"id de objeto ultimo mas uno  {id_obj}" )    
-                # newT = Telefono.objects.create(num_telefono=t,id_telefono=id_obj,id_tipo_tel=tip_tel)
-                # tel_obj = TelefonoUsuario.objects.create(run_usuario=usr,id_telefono=newT)
-                # newT.save()
-                # tel_obj.save()
-                logger.warning(mensaje)
+            # despues del registro del usuario base
+            # se aplica logica para guardar su telefono en el caso de que tenga o que no tenga
+            flag2 , mensaje = save_tel_varios(id,arr_tel)
+            print(f" la bandera segunda {flag2}")
+            if flag2 == 3:
+                for t in arr_tel:
+                    if t.strip() != '' and t is not None:
+                        mensaje = save_tel_unico(id,t)
+                        logger.warning(mensaje)
             try:
+
                 
                 if id_perfil == 1:
                     admin = Administrador.objects.get(run_admin=id)
@@ -412,17 +417,6 @@ def edit_colab(request,id):
                     recep.save()
                     mensaje="Recepcionista Modificado con Éxito"
                     
-                
-                #if tel_colab.strip() !='':
-                #    try:
-                #        
-                #        telefono = Telefono.objects.get(id_telefono__in=tel_users)
-                #        logger.warning(telefono)
-                #        telefono.num_telefono = tel_colab
-                #        telefono.save()
-                #    except:
-                #        logger.warning("Problemas en telefono, usuario no tiene telefono registrado")
-                #        mensaje="Problemas en telefono, usuario no tiene telefono registrado"        
                 
                 contexto = {"colab": usr, "telefonos": num_tel, "cantidad": cant_tel, "comuna": comunas, 
                             "nacionalidad":nacionalidades, "estado":estados, "genero":generos,"mensaje": mensaje}

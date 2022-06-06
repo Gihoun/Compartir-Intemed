@@ -83,7 +83,7 @@ DATABASES = {
         'NAME': 'XE',
         'USER': 'USUARIO_ADMIN',
         'PASSWORD': 'ADMIN_INTEMED',
-        'HOST': '172.17.0.2',
+        'HOST': '10.42.0.1',
         'PORT': '1521',
     }
 }
