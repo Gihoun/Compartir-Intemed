@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from .models import Comuna, DetalleAtencion, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, Usuario
 from .models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato, Alergia
 from .models import Prevision, TelefonoUsuario, Telefono, DetalleAlergia, TipoTelefono, Atencion, Farmaco
+from .models import Reporte
 from django.contrib.auth import authenticate,logout,login
 from django.contrib.auth.decorators import login_required,permission_required
 from django.views.decorators.csrf import csrf_protect
@@ -369,15 +370,17 @@ def vista_atenciones(request,id):
     print(arr_annios.sort())
 
     if request.POST:
-        
         annio = request.POST.get("year")
-        ate_year = Atencion.objects.filter(fecha_atencion__year=annio)
-#       atencion_selected = Atencion.objects.filter(id_atencion__startswith=busqueda)
-#       det_at_selected = DetalleAtencion.objects.filter(id_atencion__contains=busqueda)
-
+        ate_year = Atencion.objects.select_related('detalle_atencion').filter(fecha_atencion__year=annio)
+        ids = ate_year.values_list("id_atencion")
         atenciones_cant = ate_year.count()
+        det_at_selected = DetalleAtencion.objects.filter(id_atencion__in=ids)
         contexto = {"atencion":ate_year,"cantidad":atenciones_cant,"detalle":det_at_selected, "annios":arr_annios, "fecha":year}
     else:
         det_at_selected=''
         contexto = {"atencion":ate_year,"cantidad":atenciones_cant,"detalle":det_at_selected,"annios":arr_annios,"fecha":id}
     return render(request, 'atenciones.html', contexto)
+
+def vista_reportes(request):
+
+    return render(request, 'reportes.html')
