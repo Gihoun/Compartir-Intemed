@@ -382,5 +382,14 @@ def vista_atenciones(request,id):
     return render(request, 'atenciones.html', contexto)
 
 def vista_reportes(request):
+    reportes = Reporte.objects.all()
+    report_cant = reportes.count()
+    if request.POST:
+        busqueda = request.POST.get("txbusqueda")
 
-    return render(request, 'reportes.html')
+        report_selected = Reporte.objects.filter(id_reporte__startswith=busqueda)
+        report_cant = report_selected.count()
+        contexto = {"reportes":report_selected,"cantidad":report_cant}
+    else:
+        contexto = {"reportes":reportes,"cantidad":report_cant}
+    return render(request, 'reportes.html', contexto)
