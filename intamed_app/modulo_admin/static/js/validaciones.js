@@ -108,7 +108,7 @@ function val_primn(){
     console.log(inf.length)
     return true;
 }
-function val_segn(){
+/* function val_segn(){
     var inf = document.getElementById('inputSNom').value.trim();
     if (inf.length < 2){
         console.log(inf.length)
@@ -133,7 +133,7 @@ function val_nomsoc(){
     document.getElementById('nomsoc_span').innerText = "*"; 
     console.log(inf.length)
     return true;
-}
+} */
 function val_apPaterno(){
     var inf = document.getElementById('inputAp').value.trim();
     if (inf.length < 2){

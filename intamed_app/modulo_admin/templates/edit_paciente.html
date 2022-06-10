@@ -25,12 +25,12 @@
                     <input type="text" class="form-control" name="inputPNom" oninput="val_primn()" placeholder="{{paciente.p_nombre}}" value="{{paciente.p_nombre}}" minlength="2" maxlength="100" required>
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputSegundoNombrePac" class="form-label">Segundo Nombre<span id="segn_span" class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="inputSNom"  oninput="val_segn()" placeholder="{{paciente.s_nombre}}" value="{{paciente.s_nombre}}" minlength="2" maxlength="100" required>
+                    <label for="inputSegundoNombrePac" class="form-label">Segundo Nombre</label>
+                    <input type="text" class="form-control" name="inputSNom" placeholder="{{paciente.s_nombre}}" value="{{paciente.s_nombre}}" maxlength="100">
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputNombreSocialPac" class="form-label">Nombre Social<span id="nomsoc_span" class="text-danger"></span></label>
-                    <input type="text" class="form-control" name="inputNomSoc" oninput="val_nomsoc()" placeholder="{{paciente.nombre_social}}" value="{{paciente.nombre_social}}"  maxlength="100">
+                    <label for="inputNombreSocialPac" class="form-label">Nombre Social</label>
+                    <input type="text" class="form-control" name="inputNomSoc" placeholder="{{paciente.nombre_social}}" value="{{paciente.nombre_social}}"  maxlength="100">
                 </div>
                 <div class="col-lg-4">
                     <label for="inputApellidoPaPac" class="form-label">Apellido Paterno<span id="ap_span" class="text-danger">*</span></label>
@@ -132,20 +132,7 @@
                         {% endif %}
                     {% endfor %}
                     </select>
-                </div>
-               
-
-                <!--Me falta realizar el cálculo del IMC del paciente (No sé si en los metodos, o aca mismo)
-                <div class="col-md-4">
-                    <label for="inputIMC" class="form-label">IMC Paciente</label>
-                    <input type="number" class="form-control" id="inputIMC"
-                     placeholder="{{paciente.paciente.peso}}" 
-                     value="{{paciente.paciente.talla}}">
-                     <br>
-                </div>
-                -->
-                
-                        
+                </div>                        
             </div>
             
             <div class="container">
@@ -187,7 +174,9 @@
     <!-- Contenido de los tab de cada tabla -->
 </main>
 {% endblock contenido %}
+{% block js%}
 
+{% endblock js%}
 {% block js1 %}
 <script src="{% static 'js/drag_drop.js' %}"></script>
 <script>
@@ -212,5 +201,40 @@
     $(function () {
         $("#fecha").datepicker();
     });
+</script>
+<script>
+    /*Validacion modificaciones*/
+    function val_modificacion(){
+        var pn = val_primn();
+        var apa = val_apPaterno();
+        var ama = val_apMaterno();
+        var dir = val_direccion();
+        var ce = ValidateEmail();
+        var fn = val_fechanac();
+        var tu = val_telefono();
+        var fi = val_fechaing();
+        var sc = val_sueldo();
+        var rh = val_hrs();
+        if (pn == true && apa == true && ama == true && dir == true && ce == true && fn == true && tu == true && fi == true && sc == true && apa == true) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: 'Colaborador Modificado',
+                showConfirmButton: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.edit_usuario.submit();
+                    return true;
+                }
+            })
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Formulario Con Errores',
+                text: 'Favor Revisar los Formatos Establecidos'
+            })
+            return false;
+        }
+    }
 </script>
 {% endblock js1%}

@@ -25,12 +25,12 @@
                     <input type="text" class="form-control" id="inputPNom" name="inputPNom" oninput="val_primn()" placeholder="{{colab.p_nombre}}" value="{{colab.p_nombre}}" minlength="2" maxlength="100" required>
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputSegundoNombre" class="form-label">Segundo Nombre<span id="segn_span" class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="inputSNom" name="inputSNom" oninput="val_segn()" placeholder="{{colab.s_nombre}}" value="{{colab.s_nombre}}" minlength="2" maxlength="100" required>
+                    <label for="inputSegundoNombre" class="form-label">Segundo Nombre</label>
+                    <input type="text" class="form-control" id="inputSNom" name="inputSNom" placeholder="{{colab.s_nombre}}" value="{{colab.s_nombre}}" maxlength="100">
                 </div>
                 <div class="col-lg-4">
-                    <label for="inputNombreSocial" class="form-label">Nombre Social<span id="nomsoc_span" class="text-danger"></span></label>
-                    <input type="text" class="form-control" id="inputNomSoc" name="inputNomSoc" oninput="val_nomsoc()" placeholder="{{colab.nombre_social}}" value="{{colab.nombre_social}}" maxlength="100">
+                    <label for="inputNombreSocial" class="form-label">Nombre Social</label>
+                    <input type="text" class="form-control" id="inputNomSoc" name="inputNomSoc" placeholder="{{colab.nombre_social}}" value="{{colab.nombre_social}}" maxlength="100">
                 </div>
                 <div class="col-lg-4">
                     <label for="inputApellidoPaterno" class="form-label">Apellido Paterno<span id="ap_span" class="text-danger">*</span></label>
@@ -233,21 +233,17 @@
     /*Validacion modificaciones*/
     function val_modificacion(){
         var pn = val_primn();
-        var sn = val_segn();
         var apa = val_apPaterno();
         var ama = val_apMaterno();
         var dir = val_direccion();
         var ce = ValidateEmail();
         var fn = val_fechanac();
         var tu = val_telefono();
-        var fi = val_fechaing();
-        var sc = val_sueldo();
-        var rh = val_hrs();
-        if (pn == true && sn == true && apa == true && apa == true && apa == true && apa == true && apa == true && apa == true && apa == true && apa == true && apa == true) {
+        if (pn == true && apa == true && ama == true && dir == true && ce == true && fn == true && tu == true) {
             Swal.fire({
                 icon: 'success',
                 title: 'Éxito',
-                text: 'Colaborador Modificado',
+                text: 'Paciente Modificado',
                 showConfirmButton: true,
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -266,8 +262,3 @@
     }
 </script>
 {% endblock js1%}
-
-
-
-<!-- REVISAR LINEA 11 VALIDACION DEL SUBMIT ON CLICK  
-/*Validacion modificaciones*/ En el Final del Script de edit_usuario html -->

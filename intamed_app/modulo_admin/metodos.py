@@ -8,8 +8,8 @@ def editar_usuario_gral(id_user,p_nom,s_nom,nom_soc,ap,am,com,dire,correo,nac,fe
     nacionalidad = Nacionalidad.objects.get(nombre_nac=nac)
     estado = EstadoCivil.objects.get(nombre_estado=est)
     genero = Genero.objects.get(nombre_genero=gen)
-    if p_nom is not None and s_nom is not None and ap is not None and am is not None and dire is not None and correo is not None:
-        if p_nom.strip() !='' and s_nom.strip() !='' and ap.strip() !='' and am.strip() !='' and dire.strip() !='' and correo.strip() !='':
+    if p_nom is not None and ap is not None and am is not None and dire is not None and correo is not None:
+        if p_nom.strip() !='' and ap.strip() !='' and am.strip() !='' and dire.strip() !='' and correo.strip() !='':
             try:
                 usr.p_nombre = p_nom
                 usr.s_nombre = s_nom
@@ -76,5 +76,3 @@ def save_tel_unico(id_user,new_tel):
     except:   
         msg="error agregando nuevo telefono"
         return msg
-
-       

@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path
+
 from .views import administrator, filtro_usuarios, vista_farmaco, filtro_pacientes, edit_paciente, edit_farmaco
 from .views import vista_perfil, edit_perfil, edit_colab, vista_atenciones, vista_reportes
 
