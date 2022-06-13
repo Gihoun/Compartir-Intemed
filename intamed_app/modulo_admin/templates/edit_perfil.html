@@ -1,0 +1,90 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+{% block titulo %}
+<title>Editar Perfil</title>
+{% endblock titulo %}
+
+{% block contenido %}  
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <h2>Edición Perfiles Usuarios del Sistema</h2>
+    <div>
+        <form class="row " action="{% url 'edit_perfil' perfil.id_perfil %}" method="POST" enctype="multipart/form-data" onsubmit="val_modificacion()" >
+            {% csrf_token %}
+            <!-- Datos del Perfil-->
+            <div class="col-lg-4">
+                <label for="inputNombrePerfil" class="form-label">Nombre del Perfil de Usuario<span id="nom_span" class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="nom_prefil" id="inputNombrePerfil" oninput="val_nom_per()" placeholder="{{perfil.nombre_perfil}}" value="{{perfil.nombre_perfil}}" minlength="3" maxlength="100" required>
+            </div>   
+            <div class="row mt-3">
+                <label for="inputInfoPerfil" class="form-label">Permisos y Privilegios de Sistema</label>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                      Permiso para Crear, Ver, Modificar y Eliminar a Pacientes.
+                    </li>
+                    <li class="list-group-item">
+                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                      Permiso para Crear, Ver, Modificar y Eliminar a Colaboradores.
+                    </li>
+                    <li class="list-group-item">
+                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                      Permiso para Crear, Ver, Modificar y Eliminar a Fármacos.
+                    </li>
+                    <li class="list-group-item">
+                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                      Permiso para Crear, Ver, Modificar y Eliminar a Perfiles.
+                    </li>
+                    <li class="list-group-item">
+                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                      Permiso para Crear, Ver, Modificar y Eliminar a Agendas.
+                    </li>
+                  </ul>
+            </div>      
+            <label><br></label>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end" class="row mt-3">
+                <button type="submit" class="btn btn-outline-primary">Guardar</button>
+            </div>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </form>
+    </div>
+</main>
+
+{% endblock contenido %}
+
+{% block js%}
+
+{% endblock js%}
+{% block js1%}
+<script>
+    /*Validacion modificaciones*/
+    function val_modificacion() {           
+        var rn = val_nom_per();
+        if (rn == true){
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: 'Perfil de Usuario Modificado',
+                showConfirmButton: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.edit_perfil.submit();
+                    return true;
+                }
+            })
+        } else {
+            Swal.fire({
+                icon: 'Error',
+                title: 'Formulario de Edición Inválido',
+                text: 'Favor Revisar Formato'
+            })
+            return false;
+        }
+    }
+</script>
+{% endblock js1%}

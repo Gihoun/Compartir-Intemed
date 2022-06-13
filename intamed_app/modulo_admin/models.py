@@ -8,6 +8,7 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
+
 class Administrador(models.Model):
     run_admin = models.OneToOneField('Usuario', models.DO_NOTHING, db_column='run_admin', primary_key=True)
     fecha_ingreso = models.DateField()
@@ -109,8 +110,8 @@ class DetalleAlergia(models.Model):
 
 
 class DetalleAtencion(models.Model):
-    run_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='run_paciente')
-    id_atencion = models.ForeignKey(Atencion, models.DO_NOTHING, db_column='id_atencion')
+    run_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='run_paciente',related_name='pac')
+    id_atencion = models.ForeignKey(Atencion, models.DO_NOTHING, db_column='id_atencion', related_name='ate')
 
     class Meta:
         managed = False
@@ -218,14 +219,6 @@ class Nacionalidad(models.Model):
         managed = False
         db_table = 'nacionalidad'
 
-class Prevision(models.Model):
-    id_prevision = models.BigIntegerField(primary_key=True)
-    nombre_prevision = models.CharField(max_length=100)
-    id_tipo_prev = models.ForeignKey('TipoPrevision', models.DO_NOTHING, db_column='id_tipo_prev')
-
-    class Meta:
-        managed = False
-        db_table = 'prevision'
 
 class Paciente(models.Model):
     run_paciente = models.OneToOneField('Usuario', models.DO_NOTHING, db_column='run_paciente', primary_key=True)
@@ -239,7 +232,7 @@ class Paciente(models.Model):
     imc = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'paciente'
 
 
@@ -251,6 +244,15 @@ class PerfilUsuario(models.Model):
         managed = False
         db_table = 'perfil_usuario'
 
+
+class Prevision(models.Model):
+    id_prevision = models.BigIntegerField(primary_key=True)
+    nombre_prevision = models.CharField(max_length=100)
+    id_tipo_prev = models.ForeignKey('TipoPrevision', models.DO_NOTHING, db_column='id_tipo_prev')
+
+    class Meta:
+        managed = False
+        db_table = 'prevision'
 
 
 class Recepcionista(models.Model):
@@ -303,7 +305,7 @@ class ResultadoExamen(models.Model):
 
 
 class Telefono(models.Model):
-    id_telefono = models.BigIntegerField(primary_key=True)
+    id_telefono = models.BigAutoField(primary_key=True)
     num_telefono = models.BigIntegerField()
     id_tipo_tel = models.ForeignKey('TipoTelefono', models.DO_NOTHING, db_column='id_tipo_tel')
 

@@ -1,0 +1,65 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+{% block titulo %}
+<title>Perfiles del Sistema</title>
+{% endblock titulo %}
+
+{% block contenido %}  
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <h2>Perfiles de Usuarios: {{cantidad}}</h2>
+    <div class="tab-content  container-fluid" id="v-pills-tabContent">
+        <div class="tab-pane fade show active container-fluid" id="v-pills-agenda" role="tabpanel"
+            aria-labelledby="v-pills-agenda-tab">
+            <form class="d-flex" method="POST" action="{% url 'perfilg' %}">
+                {% csrf_token %}
+                    <input class="form-control me-2" type="search" placeholder="Introduzca Nombre del Perfil" name="txbusqueda" aria-label="Search">
+                    <button id="boton" class="btn btn-outline" type="submit">Buscar</button>
+            </form>
+            <div></div>
+            
+        </div>
+    </div>  
+    <div class="table-responsive" style="min-height: 500px;">
+      <table class="table table-striped table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre Perfil</th>
+            <th scope="col">--</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% if cantidad >= 1 %}
+                {% for perfil in perfiles %}
+                  <tr>
+                    <td>{{perfil.id_perfil}}</td>
+                    <td>{{perfil.nombre_perfil}}</td>
+                    <td>
+                      <div class="btn-group">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Acción
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                          <li><a id="1"  class="dropdown-item" href="{% url 'edit_perfil' perfil.id_perfil %}" value="editar">Editar</a></li>
+                          <li><a id="2"  class="dropdown-item" href="#" value="eliminar">Eliminar</a></li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                {% endfor %} 
+            {% elif cantidad < 1 %}
+          <tr>
+            <td>No Encontrado</td>
+            <td>No Encontrado</td>
+            <td>No Encontrado</td>
+          </tr>
+          
+          {% endif %} 
+        </tbody>
+      </table>
+    </div>
+    <!-- Contenido de los tab de cada tabla -->
+          
+    </div>
+</main>
+{% endblock contenido %}
