@@ -14,33 +14,58 @@
         </div>
     </div>
     <div class="row mt-3">
-        <div class="col-lg-4">
-            <label for="inputNombre" class="form-label fw-bolder">Nombres</label>
-            <input type="text" class="form-control" id="inputNombre" placeholder="Nombre Paciente">
+        <div class="col-md-3">
+            <label for="inputNombre" class="form-label fw-bolder">P. Nombre</label>
+            <input type="text" class="form-control" id="inputNombre" placeholder="Primer Nombre Paciente">
         </div>
-        <div class="col-lg-4">
+        <div class="col-md-3">
+            <label for="inputSNombre" class="form-label fw-bolder">S. Nombre</label>
+            <input type="text" class="form-control" id="inputSNombre" placeholder="Segundo Nombre Paciente">
+        </div>
+        <div class="col-md-3">
             <label for="inputApellidop" class="form-label fw-bolder">Apellido P.</label>
             <input type="text" class="form-control" id="inputApellidop" placeholder="Apellido Paterno">
         </div>
-        <div class="col-lg-4">
+        <div class="col-md-3">
             <label for="inputApellidom" class="form-label fw-bolder">Apellido M.</label>
             <input type="text" class="form-control" id="inputApellidom" placeholder="Apellido Materno">
         </div>
     </div>
     <div class="row mt-3">
-        <div class=" col-lg-4">
+        <div class=" col-lg-3">
             <label for="inputcorreo" class="form-label fw-bolder">Correo Electrónico</label>
             <input type="email" class="form-control" id="inputcorreo" placeholder="Ejemplo@correo.paciente">
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-3">
             <label for="inputDireccion" class="form-label fw-bolder">Dirección</label>
             <input type="text" class="form-control" id="inputDireccion" placeholder="Dirección">
         </div>
+        <div class="col-lg-3">
+            <label for="inputcomuna" class="form-label fw-bolder">Comuna</label>
+            <input type="text" list="comunas" class="form-control" id="inputcomuna" placeholder="Comuna">
+            <datalist id="comunas">
+                {% for x in comunas %}
+                <option value="{{x.nombre_comuna}}"></option>
+                {% endfor %}
+            </datalist>
+        </div>
+        <div class="col-md-3">
+            <label for="inputEstado" class="form-label fw-bolder">Estado civil</label>
+            <select id="inputEstado" class="form-select ">
+                {% for x in ECivil %}
+                <option>{{x.nombre_estado}}</option>
+                {% endfor %}
+            </select>
+        </div>
     </div>
     <div class="row mt-3">
-        <div class=" col-lg-4">
+        <div class=" col-lg-2">
             <label for="inputNac" class="form-label fw-bolder">Nacionalidad</label>
-            <input type="text" class="form-control" id="inputNac" placeholder="Nacionalidad Paciente">
+            <input type="text" class="form-control" id="inputNac" placeholder="Nacionalidad">
+        </div>
+        <div class="col-lg-2">
+            <label for="inputNac" class="form-label fw-bolder">Fecha Nacimiento</label>
+            <input type="date" class="form-control" id="inputNac" placeholder="Fecha Nacimiento">
         </div>
         <div class="col-lg-2">
             <label for="inputEdad" class="form-label fw-bolder">Edad</label>
@@ -127,11 +152,9 @@
         <div class="col-md-3">
             <label for="inputPrev" class="form-label fw-bolder">Previsión</label>
             <select id="inputPrev" class="form-select ">
-                <option selected>FONASA</option>
-                <option>Colmena</option>
-                <option>Cruz Blanca</option>
-                <option>Codelco</option>
-                <option>ETC</option>
+                {% for x in prevision %}
+                <option>{{x.nombre_prevision}}</option>
+                {% endfor %}
             </select>
         </div>
     </div>
@@ -180,9 +203,9 @@
                         <td><input type="string" id="dosisfarmaco" placeholder="Ingrese Dosis"></td>
                         <td>
                             <select class="form-select" aria-label="Default select example" id="viafarmaco">
-                                <option selected>Enteral</option>
-                                <option value="1">Parenteral</option>
-                                <option value="2">Tópica</option>
+                                {% for x in via_admin %}
+                                <option>{{x.via_administracion}}</option>
+                                {% endfor %}
                             </select>
                         </td>
                         <td>

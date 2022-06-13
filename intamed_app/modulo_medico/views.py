@@ -17,8 +17,18 @@ import datetime
 # Create your views here.
 
 def inicio(request):
-    user= Medico.Object.all()
-    return render(request,"base_medico.html")
+    comunas = Comuna.objects.all()
+    cat_prevision = Prevision.objects.all()
+    estadoCivil = EstadoCivil.objects.all()
+    admin_farmaco = Farmaco.objects.all()
+    paciente = Usuario.objects.filter()
+
+
+
+
+
+    contexto = {"prevision":cat_prevision,"ECivil":estadoCivil,"comunas":comunas,"via_admin":admin_farmaco,}
+    return render(request,"base_medico.html",contexto)
 
   
 

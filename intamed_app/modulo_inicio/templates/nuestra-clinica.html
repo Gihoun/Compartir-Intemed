@@ -3,71 +3,105 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Inicio Consulta Medica</title>
-    <link type="text/css" rel="stylesheet" href="{% static 'css/estilo.css' %}" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inicio Consulta Medica</title>
+  <link type="text/css" rel="stylesheet" href="{% static 'css/estilo.css' %}" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
 
-    <style>
-        .banner {
-            background-size: cover;
-            height: 500px;
-        }
-        .div-pad-pass{
-            padding: 5px;
-        }
-        .div-pad{
-            padding: 40px; 
-        }
-    </style>
+  <style>
+    .banner {
+      background-size: cover;
+      height: 500px;
+    }
+
+    .div-pad-pass {
+      padding: 5px;
+    }
+
+    .div-pad {
+      padding: 40px;
+    }
+  </style>
 </head>
 
 <body>
-    <!-- navbar clasica -->
-    {% include "navbar_medico.html" %}
-    <!-- Banner -->
-    <div class="d-flex justify-content-center align-items-center">
-        <img class="banner w-100" src="{% static 'img/nuestra_clinica.jpg' %}" alt="" />
+  <!-- navbar clasica -->
+  {% include "navbar_medico.html" %}
+  <!-- Banner -->
+<!-- Banner -->
+<div class=" justify-content-center align-items-center p-5" id="banner_container">
+  <div id="carouselMedico" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner ">
+        <div class="carousel-item active" data-bs-interval="10000">
+          <img src="{% static 'img/inicio/nuestra_clinica.jpg' %}" class="banner w-100 img-responsive" alt="...">
+        </div>
+        <div class="carousel-item" data-bs-interval="10000">
+          <img src="{% static 'img/inicio/utero.png' %}" class="banner w-100 img-responsive" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="{% static 'img/inicio/consula.png' %}" class="banner w-100 img-responsive" alt="...">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselMedico" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselMedico" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+      </button>
     </div>
+</div>
+  <!-- La linea -->
+  <div id="bienvenida_usuario">
+    <hr class="mx-auto" style="color: grey" />
     <!-- La linea -->
     <hr class="mx-auto" style="color: grey" />
-  
-    <main class="p-5">
-        <div class="container-fluid">
-            <div class="row row-cols-2">
-              <div class="col">
-                <h3 style="text-align: center;">Quiénes Somos &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-person-hearts" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M11.5 1.246c.832-.855 2.913.642 0 2.566-2.913-1.924-.832-3.421 0-2.566ZM9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4Zm13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276ZM15 2.165c.555-.57 1.942.428 0 1.711-1.942-1.283-.555-2.281 0-1.71Z"/>
-                  </svg></h3>
-                <p style="text-align: center;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-              </div>
-              <div class="col">
-                <h3 style="text-align: center;">Nuestra visión &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
-                    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
-                  </svg></h3>
-                <p style="text-align: center;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-              </div>
-              <div class="col">
-                <h3 style="text-align: center;">Nuestra Misión &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="49" height="40" fill="currentColor" class="bi bi-heart-pulse-fill" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M1.475 9C2.702 10.84 4.779 12.871 8 15c3.221-2.129 5.298-4.16 6.525-6H12a.5.5 0 0 1-.464-.314l-1.457-3.642-1.598 5.593a.5.5 0 0 1-.945.049L5.889 6.568l-1.473 2.21A.5.5 0 0 1 4 9H1.475ZM.879 8C-2.426 1.68 4.41-2 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C11.59-2 18.426 1.68 15.12 8h-2.783l-1.874-4.686a.5.5 0 0 0-.945.049L7.921 8.956 6.464 5.314a.5.5 0 0 0-.88-.091L3.732 8H.88Z"/>
-                  </svg></h3>
-                <p style="text-align: center;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-              </div>
-              <div class="col"></div>
-            </div>
-          </div>
-    </main>
-    
+</div>
+
+  <main class="p-5">
+    <div class="container-fluid row">
+      <div class="col-lg-4">
+        <svg class="bd-placeholder-img rounded-circle"  width="140" height="140" xmlns="http://www.w3.org/2000/svg"
+          role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
+          <rect width="100%" height="100%" fill="#777" /><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
+        </svg>
+        <h2 class="fw-normal text-center">Quienes Somos</h2>
+        <p style="text-align: justify;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores beatae, blanditiis, asperiores ex ipsum perferendis dolore vel eius amet ipsam reiciendis? A consectetur ab ipsam aut quasi explicabo nemo? Autem non inventore est cum sint fugit velit facere labore dolorem modi? Commodi qui numquam, reiciendis obcaecati inventore rerum et laborum voluptates ipsa. Iste alias dolorum quae autem nisi modi tempore perspiciatis dolorem id praesentium accusamus harum voluptatum quidem cumque blanditiis neque, sapiente doloribus. Alias quas necessitatibus fuga quasi ratione similique, dolor quod quo qui, ipsa eos autem minus consequatur repudiandae praesentium aspernatur! Laudantium id necessitatibus repellendus nemo recusandae, maxime quaerat illo, aliquid eaque architecto rem quae soluta, mollitia aut incidunt quis. Placeat neque et recusandae illum sequi reprehenderit perspiciatis nesciunt iure ipsam saepe blanditiis, a tempore, dolore dolor, debitis delectus dignissimos enim! Sequi distinctio tempore eaque tenetur mollitia, laborum quaerat molestiae velit voluptate minima quas natus veritatis quidem accusantium quam ratione consectetur rerum nam perferendis aspernatur assumenda animi explicabo! Deleniti doloribus ea, repellendus quas quidem quis natus esse ab tempora corporis minima corrupti temporibus architecto alias laborum mollitia cum! Numquam totam quidem odit libero labore nobis vero, quisquam velit sint molestias qui tempora quibusdam obcaecati recusandae repellat repellendus laudantium ipsum culpa, tempore sed omnis ut? Dolores alias, eum tempore, exercitationem nisi magnam adipisci, quae dolorem fugit recusandae ex possimus dignissimos culpa aliquam quas iure corrupti! Consequatur rerum aliquam fugiat beatae perferendis unde doloribus nemo pariatur, illum facere autem delectus iste possimus et quidem ipsam ut ab ex dolor praesentium officiis veritatis porro. Esse fuga eos earum accusantium aperiam architecto fugiat possimus omnis doloremque libero? Repellendus dolore hic consequatur dolores ab natus, voluptate nulla voluptates corrupti quae expedita accusamus vitae excepturi doloremque! Aliquid quasi veniam fugiat consequatur aut soluta dicta reprehenderit velit? Sed fuga vel temporibus quae, reprehenderit itaque eum tenetur..</p>
+
+      </div>
+      <div class="col-lg-4">
+        <svg class="bd-placeholder-img rounded-circle align-items-center" width="140" height="140" xmlns="http://www.w3.org/2000/svg"
+          role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
+          <title>Placeholder</title>
+          <rect width="100%" height="100%" fill="#777" /><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
+        </svg>
+
+        <h2 class="fw-normal text-center">Nuestra Misión</h2>
+        <p style="text-align: justify;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi impedit tempore dolorum rem exercitationem, nulla veritatis! Officiis saepe quisquam sapiente earum magnam, incidunt debitis enim officia nostrum optio corrupti quae a reiciendis quo itaque! Deserunt ex nemo amet quia beatae ad animi distinctio optio mollitia repellendus id facilis aliquam consequatur quod, cum quidem. Expedita culpa odio, deserunt harum repellendus minus similique error voluptatibus, libero ducimus asperiores, eos quia. Harum maiores temporibus aperiam maxime architecto necessitatibus ad rerum incidunt asperiores fuga repellat ipsam accusamus illo numquam debitis at saepe corporis iure, modi aliquam. Sapiente magnam sunt, odit reiciendis est quo nulla ipsum, pariatur blanditiis soluta similique quae quas repellendus quod libero! Qui expedita eius ullam suscipit? Harum soluta quam exercitationem a expedita beatae recusandae perspiciatis minus ipsum corporis facere iusto, repudiandae molestias suscipit enim amet consequatur magnam tempora earum eos quae officiis ut provident. Veritatis officiis optio, nostrum excepturi perspiciatis magnam fugiat sequi incidunt aspernatur enim fuga nemo molestias facere dolore assumenda neque maxime, perferendis at dolor. Quidem ullam amet earum voluptates incidunt. Optio nobis possimus ut maxime aliquam, eos officia aspernatur asperiores cumque eaque esse quia debitis quibusdam error ad odio totam quam praesentium aliquid veritatis odit tenetur ipsum vel. Facilis ipsum, delectus quo pariatur at necessitatibus natus quis a voluptates exercitationem quam excepturi adipisci nisi aliquid, porro explicabo. Iusto soluta, atque, nostrum veniam pariatur laborum dolore illum iure quam, eos nemo quisquam impedit! Accusamus cupiditate, laudantium suscipit harum enim iste consectetur similique non aliquid, placeat sequi alias veritatis, est nihil qui repellendus facere corporis quam voluptate libero magni quia consequuntur. Ex numquam architecto nulla consequuntur, adipisci dicta, laborum quod fuga corporis nesciunt officiis sit, iste voluptas rem quasi cupiditate tempora quae veniam consequatur eaque. Nostrum necessitatibus, atque iste ex, tenetur, veritatis fugit officia magni inventore reprehenderit soluta eius illo?
+        </p>
+
+      </div>
+      <div class="col-lg-4">
+        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"
+          role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
+          <title>Placeholder</title>
+          <rect width="100%" height="100%" fill="#777" /><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
+        </svg>
+        <h2 class="fw-normal text-center">Nuestra Visión</h2>
+        <p style="text-align: justify;">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Praesentium accusantium ut laboriosam. Repellendus expedita sit suscipit repudiandae ab pariatur reiciendis possimus consectetur dolores quas eos quaerat hic dolorum, corrupti voluptatibus enim labore debitis a quibusdam modi unde! Ducimus cupiditate eveniet consequuntur commodi. Harum quo animi aliquam sint enim architecto repellat officia, ipsam corporis ab velit quidem sed reprehenderit accusantium? Voluptate consectetur possimus, iusto, suscipit, quos autem veniam sequi sapiente voluptates ea porro quod nihil nulla quam harum minus perferendis! Architecto nobis sunt dolores expedita odio, ipsum minima vitae iste beatae, debitis sint aliquid autem ipsam qui suscipit consequatur nemo ea dolor! Natus eius sit commodi quo aut officiis nihil id numquam in reprehenderit architecto cumque odio quam eligendi, deleniti illo maxime sequi iste est dolorum at placeat facere, consequuntur nisi. Beatae modi nesciunt repellendus nisi in quod aspernatur qui voluptatibus odio dicta facilis ullam nulla est eligendi asperiores, sit sapiente vitae unde porro? Dolorum similique cumque assumenda ullam architecto eveniet dolor tempora nam, quo eligendi doloremque inventore! Quidem autem ex nostrum eligendi quia? Quod distinctio qui in cumque omnis libero rerum debitis harum dolor! Voluptatem provident ea distinctio quis cum quidem tempora quod, at tempore laborum blanditiis vitae deserunt odit perspiciatis labore saepe, iure molestias facere! Possimus odio dicta incidunt eum esse, minima tenetur molestiae quidem cumque ex recusandae ipsum laudantium necessitatibus exercitationem sint vitae totam, harum alias nostrum nesciunt eveniet enim corrupti id sunt! Ab aspernatur quod rerum possimus! Voluptatum blanditiis quibusdam corporis, officiis aspernatur eveniet maiores consequatur reiciendis magnam minima ducimus cumque veniam asperiores commodi quod! Expedita, optio doloribus aspernatur itaque accusamus culpa eaque iusto vitae, voluptatem asperiores voluptates iure sit repudiandae atque quisquam recusandae iste tempora dolore adipisci. Accusamus repudiandae unde quaerat minus! Voluptatum, consectetur doloribus nisi repellat corporis quisquam dolor excepturi magni? Accusamus sit illum assumenda?</p>
+      </div>
+    </div>
+  </main>
+
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-    crossorigin="anonymous"></script>
+  integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 
 </html>
