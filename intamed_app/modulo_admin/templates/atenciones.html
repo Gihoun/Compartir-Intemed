@@ -6,9 +6,8 @@
 
 {% block contenido %}  
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <h2>&nbsp;|&nbsp;&nbsp;Año: {{fecha}} &nbsp;&nbsp;|&nbsp;&nbsp;Atenciones Realizadas: {{cantidad}}&nbsp;&nbsp;|</h2>
-    <form type="submit" method="POST" action="{% url 'ateng' fecha %}" >
-      {% csrf_token %}
+	<h4>&nbsp;|&nbsp;&nbsp;Año: {{fecha}} &nbsp;&nbsp;|&nbsp;&nbsp;Atenciones Realizadas: {{cantidad}} de {{c_total}}&nbsp;&nbsp;|</h4>
+  
       <button  class="btn btn-sm btn-outline-secondary dropdown-toggle dropdown-toggle-split" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
         <span class="sr-only" data-feather="calendar"></span>
         Año
@@ -18,6 +17,10 @@
         <li><a id="1"  class="dropdown-item" href="{% url 'ateng' year %}" value="{{year}}">{{year}}</a></li>
         {% endfor %}
       </ul>
+    <form type="submit" method="POST" action="{% url 'ateng' 2010 %}" >
+        {% csrf_token %}
+        <input class="form-control me-6" type="number" placeholder="RUT" name="input_run" aria-label="Search">
+        <button id="boton" class="btn btn-outline" type="submit">Buscar</button>
     </form>
 
     <div class="tab-content  container-fluid" id="v-pills-tabContent">
@@ -26,6 +29,12 @@
         </div>
     </div>  
     <div class="table-responsive" style="min-height: 500px;">
+	    <p>{{detalle.run_paciente.run_paciente}}</p>
+	    {% for d in detalle.run_paciente %}
+
+	    <p> {{d.run_paciente}}</p>  
+
+	    {% endfor %} 
       <table class="table table-striped table-sm">
         <thead>
           <tr>
@@ -38,19 +47,32 @@
         </thead>
         <tbody>
             {% if cantidad >= 1 %}
+            
                 {% for x in atencion %}
                   <tr>
-                    <td>{{x.id_atencion}}</td>
-                    <td>{{x.detalle_atencion.id_atencion.run_paciente}}
-                    <td>{{x.fecha_atencion}}</td>
+                    <td>{{x.id_atencion}}</td>  
+                    {% for s in selc %}
+                      {% if s.1 == x.id_atencion %}
+		      <td><form type="submit" method="POST" action="{% url 'ateng' 2010 %}">
+            {% csrf_token %}<button type=submit class="btn btn-info" value="{{s.0}}" name="btn_run" >{{s.0}}</button>
+          </form>
+          </td>
+                      {% endif %}
+                    {% endfor %}
+		    <td>{{x.fecha_atencion}}{{x.id_atencion.run_paciente}}</td>
+                    {% if diag %}
+                    <td>{{diag}}</td>
+                    {%else%}
                     <td>{{x.id_diagnostico.nombre_diag.upper}}</td>
+                    {% endif %}
+
                     <td>
                       <div class="btn-group">
                         <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                           Acción
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
-                          <li><a id="1"  class="dropdown-item" href="#" value="editar">Editar</a></li>
+                          <li><a id="1"  class="dropdown-item" href="#" value="editar">Ver diagnostico</a></li>
                           <li><a id="2"  class="dropdown-item" href="#" value="eliminar">Eliminar</a></li>
                         </ul>
                       </div>

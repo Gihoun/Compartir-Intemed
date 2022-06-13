@@ -110,8 +110,8 @@ class DetalleAlergia(models.Model):
 
 
 class DetalleAtencion(models.Model):
-    run_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='run_paciente')
-    id_atencion = models.ForeignKey(Atencion, models.DO_NOTHING, db_column='id_atencion')
+    run_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='run_paciente',related_name='pac')
+    id_atencion = models.ForeignKey(Atencion, models.DO_NOTHING, db_column='id_atencion', related_name='ate')
 
     class Meta:
         managed = False
