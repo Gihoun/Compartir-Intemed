@@ -358,27 +358,74 @@ def edit_colab(request,id):
     return render(request, 'edit_usuario.html', contexto)
 
 def vista_atenciones(request,id):
+    usrs = Usuario.objects.all()
     atenciones = Atencion.objects.all()
-    ate_year = Atencion.objects.filter(fecha_atencion__year=id)
+    cant_tot= Atencion.objects.filter(fecha_atencion__year=id).count()
+
+    ate_year = Atencion.objects.filter(fecha_atencion__year=id)[:16]
     atenciones_cant = ate_year.count()
+    
     annios = list(Atencion.objects.values_list("fecha_atencion__year"))
     
     arr_annios=[]
+    arr_ids=[]
+    #print(ate_year.values_list("id_atencion"))
+    
     for a in annios:
         if a[0] not in arr_annios:
             arr_annios.append(a[0])
-    print(arr_annios.sort())
+    #print(arr_annios.sort())
+    ids = ate_year.values_list("id_atencion")
+    
+    for e in ids:
+        arr_ids.append(e[0])
+    
+    
 
     if request.POST:
-        annio = request.POST.get("year")
-        ate_year = Atencion.objects.select_related('detalle_atencion').filter(fecha_atencion__year=annio)
-        ids = ate_year.values_list("id_atencion")
-        atenciones_cant = ate_year.count()
-        det_at_selected = DetalleAtencion.objects.filter(id_atencion__in=ids)
-        contexto = {"atencion":ate_year,"cantidad":atenciones_cant,"detalle":det_at_selected, "annios":arr_annios, "fecha":year}
+        arr_2=[]
+        arr_f=[]
+        run_b = request.POST.get("btn_run")
+        run_i= request.POST.get("input_run")
+        if run_i is not None: 
+            if run_i.strip()!= '':
+                ru = run_i
+            else:
+                ru = 0
+        else:
+            ru = run_b
+        det_at_selected = DetalleAtencion.objects.filter(run_paciente=ru)
+        cant_pac= det_at_selected.count()
+        id_at= list(det_at_selected.values_list("id_atencion"))
+        for f in id_at:
+            arr_2.append(f[0])
+        ate_pac= Atencion.objects.filter(id_atencion__in=arr_2).order_by('fecha_atencion__year')
+        for t in ate_pac:
+            annio = t.fecha_atencion.year
+            if annio not in arr_f:
+                arr_f.append(annio) 
+        if len(arr_f) != 0:
+            an = f" {min(arr_f)} -- {max(arr_f)} "
+            sel= det_at_selected.values_list("run_paciente","id_atencion")
+        else:
+            an = id
+            ate_pac=0
+            cant_pac=0
+            det_at_selected=''
+            sel=0
+            r=0
+        r="reservado"
+        #ate_year = Atencion.objects.select_related('DetalleAtencion').filter(fecha_atencion__year=annio)
+        contexto = {"atencion":ate_pac,"cantidad":cant_pac,"detalle":det_at_selected, "annios":arr_annios, "fecha":an,"selc": sel, "diag": r}
     else:
-        det_at_selected=''
-        contexto = {"atencion":ate_year,"cantidad":atenciones_cant,"detalle":det_at_selected,"annios":arr_annios,"fecha":id}
+        #det_at_selected=''
+        det_at_selected = DetalleAtencion.objects.filter(id_atencion__in=arr_ids).select_related('run_paciente')
+        sel= det_at_selected.values_list("run_paciente","id_atencion")
+        #for x in ate_year:
+        #    for y in sel:
+        #        if y[1] == x.id_atencion:
+        #            print(x.id_atencion , y[0])
+        contexto = {"atencion":ate_year,"cantidad":atenciones_cant,"c_total":cant_tot, "detalle":det_at_selected,"annios":arr_annios,"fecha":id,"selc": sel}
     return render(request, 'atenciones.html', contexto)
 
 def vista_reportes(request):
