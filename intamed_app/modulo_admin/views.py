@@ -77,7 +77,8 @@ def filtro_usuarios(request):
         if eliminar is not None:
             usu = Usuario.objects.get(run=eliminar)
             usu.delete()
-            print("usuario borrado")
+            print("Colaborador Eliminado Exitosamente")
+            messages.success(request, "Colaborador Eliminado Exitosamente")
             users_ret = Usuario.objects.filter(id_perfil__in = arr_id)
             users_cant = users_ret.count()
         elif busqueda is not None:
@@ -100,6 +101,7 @@ def filtro_pacientes(request):
             paciente = Usuario.objects.get(run=eliminar)
             paciente.delete()
             print("Paciente Eliminado Exitosamente")
+            messages.success(request, "Paciente Eliminado Exitosamente")
             users_ret = Usuario.objects.filter(id_perfil=4)[:25]
             users_cant = users_ret.count()
         elif busqueda is not None:
@@ -187,12 +189,31 @@ def vista_farmaco(request):
     farmaco_cant = farmacos.count()
     if request.POST:
         busqueda = request.POST.get("txbusqueda")
-        farma_selected = Farmaco.objects.filter(nombre_farmaco__startswith=busqueda)
-        farma_cant = farma_selected.count()
-        contexto = {"farmacos":farma_selected,"cantidad":farma_cant}
+        eliminar = request.POST.get("eliminar")
+
+        if eliminar is not None:
+            far = Farmaco.objects.get(id_farmaco=eliminar)
+            far.delete()
+            print("Fármaco Eliminado Exitosamente")
+            messages.success(request, "Fármaco Eliminado Exitosamente")
+            farmacos = Farmaco.objects.all()
+            farmaco_cant = farmacos.count()
+            contexto = {"farmacos":farmacos,"cantidad":farmaco_cant}
+        elif busqueda is not None:
+            farmacos = Farmaco.objects.filter(nombre_farmaco__startswith=busqueda)
+            farmaco_cant = farmacos.count()
+        else:
+            farmacos = Farmaco.objects.all()
+            farmaco_cant = farmacos.count()
+        contexto = {"farmacos":farmacos,"cantidad":farmaco_cant}
+        if farmaco_cant>=1:
+            contexto = {"farmacos":farmacos,"cantidad":farmaco_cant}
+        else:
+            contexto = {"farmacos":0,"cantidad":0}
     else:
         contexto = {"farmacos":farmacos,"cantidad":farmaco_cant}
     return render(request, 'farmacos.html', contexto)
+
 
 def edit_farmaco(request,id):
     logger = logging.getLogger(__name__)
@@ -239,10 +260,27 @@ def vista_perfil(request):
     perfiles_cant = perfiles.count()
     if request.POST:
         busqueda = request.POST.get("txbusqueda")
+        eliminar = request.POST.get("eliminar")
 
-        perfil_selected = PerfilUsuario.objects.filter(nombre_perfil__startswith=busqueda)
-        perfiles_cant = perfil_selected.count()
-        contexto = {"perfiles":perfil_selected,"cantidad":perfiles_cant}
+        if eliminar is not None:
+            per = PerfilUsuario.objects.get(id_perfil=eliminar)
+            per.delete()
+            print("Perfil Eliminado Exitosamente")
+            messages.success(request, "Perfil de Usuario Eliminado Exitosamente")
+            perfiles = PerfilUsuario.objects.all()
+            perfiles_cant = perfiles.count()
+            contexto = {"perfiles":perfiles,"cantidad":perfiles_cant}
+        elif busqueda is not None:
+            perfiles = PerfilUsuario.objects.filter(nombre_perfil__startswith=busqueda)
+            perfiles_cant = perfiles.count()
+        else:
+            perfiles = PerfilUsuario.objects.all()
+            perfiles_cant = perfiles.count()
+        contexto = {"perfiles":perfiles,"cantidad":perfiles_cant}
+        if perfiles_cant>=1:
+            contexto = {"perfiles":perfiles,"cantidad":perfiles_cant}
+        else:
+            contexto = {"perfiles":0,"cantidad":0}
     else:
         contexto = {"perfiles":perfiles,"cantidad":perfiles_cant}
     return render(request, 'perfiles.html', contexto)

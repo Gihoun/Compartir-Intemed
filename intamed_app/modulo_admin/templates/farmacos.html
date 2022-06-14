@@ -4,8 +4,33 @@
 <title>Fármacos</title>
 {% endblock titulo %}
 
-{% block contenido %}  
+{% block contenido %} 
+<!-- Script para utilizar los Mensajes del SweetAlert -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+  {% block js %}
+  <script>
+    function eliminarFarmaco(id_farmaco){
+      Swal.fire({
+        "title": "¿Esta Seguro?",
+        "text": "Esta Acción es Irreversible",
+        "icon": "question",
+        "showCancelButton": true,
+        "cancelButtonText": "No, Cancelar",
+        "confirmButtonText": "Si, seguro",
+        "reverseButtons": true,
+        "confirmButtonColor": "#dc3545"
+      })
+      .then(function(result){
+        if(result.isConfirmed){
+          window.location.href = "/panel/farmacos/"
+        }
+      })
+    }
+  </script>
+  {% endblock %}
+
     <h2>Fármacos: {{cantidad}}</h2>
     <div class="tab-content  container-fluid" id="v-pills-tabContent">
         <div class="tab-pane fade show active container-fluid" id="v-pills-agenda" role="tabpanel"
@@ -43,7 +68,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
                           <li><a id="1"  class="dropdown-item" href="{% url 'edit_farma' farma.id_farmaco %}" value="editar">Editar</a></li>
-                          <li><a id="2"  class="dropdown-item" href="#" value="eliminar">Eliminar</a></li>
+                          <li><form type="submit" method="POST" action="{% url 'farmag' %}">{% csrf_token%}<button type=submit href="#" onclick="eliminarFarmaco({{farma.id_farmaco}})" class="btn dropdown-item" name="eliminar" value="{{farma.id_farmaco}}">Eliminar</button></form></li>
                         </ul>
                       </div>
                     </td>
@@ -61,7 +86,17 @@
       </table>
     </div>
     <!-- Contenido de los tab de cada tabla -->
-          
+    {% if messages %}
+      {% for m in messages%}
+        <script>
+          Swal.fire({
+            "title": "Realizado",
+            "text": "{{m}}",
+            "icon": "success"
+          })
+        </script>
+      {% endfor %}
+    {% endif %}     
     </div>
 </main>
 {% endblock contenido %}

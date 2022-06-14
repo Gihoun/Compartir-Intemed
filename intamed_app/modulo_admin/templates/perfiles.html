@@ -41,7 +41,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
                           <li><a id="1"  class="dropdown-item" href="{% url 'edit_perfil' perfil.id_perfil %}" value="editar">Editar</a></li>
-                          <li><a id="2"  class="dropdown-item" href="#" value="eliminar">Eliminar</a></li>
+                          <li><form type="submit" method="POST" action="{% url 'perfilg' %}">{% csrf_token%}<button type=submit class="btn dropdown-item" name="eliminar" value="{{perfil.id_perfil}}">Eliminar</button></form></li>
                         </ul>
                       </div>
                     </td>

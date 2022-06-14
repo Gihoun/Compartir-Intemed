@@ -5,7 +5,32 @@
 {% endblock titulo %}
 
 {% block contenido %}  
+<!-- Script para utilizar los Mensajes del SweetAlert -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+  {% block js %}
+  <script>
+    function eliminarPaciente(run){
+      Swal.fire({
+        "title": "¿Esta Seguro?",
+        "text": "Esta Acción es Irreversible",
+        "icon": "question",
+        "showCancelButton": true,
+        "cancelButtonText": "No, Cancelar",
+        "confirmButtonText": "Si, seguro",
+        "reverseButtons": true,
+        "confirmButtonColor": "#dc3545"
+      })
+      .then(function(result){
+        if(result.isConfirmed){
+          window.location.href = "/panel/pacientes/"
+        }
+      })
+    }
+  </script>
+  {% endblock %}
+
     <h2>Lista de Pacientes: {{cantidad}}</h2>
     <div class="tab-content  container-fluid" id="v-pills-tabContent">
         <div class="tab-pane fade show active container-fluid" id="v-pills-agenda" role="tabpanel"
@@ -47,7 +72,7 @@
                           </button>
                           <ul class="dropdown-menu dropdown-menu-dark">    
                             <li><a id="1"  class="dropdown-item" name="runpac" value="editar" href="{% url 'edit_pac' usu.run %}">Editar</a></li> 
-                            <li><form type="submit" method="POST" action="{% url 'pac' %}">{% csrf_token%}<button type=submit class="btn dropdown-item" name="eliminar" value="{{usu.run}}">Eliminar</button></form></li>                           
+                            <li><form type="submit" method="POST" action="{% url 'pac' %}">{% csrf_token%}<button type=submit href="#" onclick="eliminarPaciente({{usu.run}})" class="btn dropdown-item" name="eliminar" value="{{usu.run}}">Eliminar</button></form></li>                           
                           </ul>
                         </div>
                       </td>
@@ -67,5 +92,16 @@
     </div>
     <!-- Contenido de los tab de cada tabla -->    
     </div>
+    {% if messages %}
+      {% for m in messages%}
+        <script>
+          Swal.fire({
+            "title": "Realizado",
+            "text": "{{m}}",
+            "icon": "success"
+          })
+        </script>
+      {% endfor %}
+    {% endif %}
 </main>
 {% endblock contenido %}

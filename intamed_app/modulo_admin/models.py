@@ -120,7 +120,7 @@ class DetalleAtencion(models.Model):
 
 class DetalleFarmaco(models.Model):
     id_receta = models.ForeignKey('Receta', models.DO_NOTHING, db_column='id_receta')
-    id_farmaco = models.ForeignKey('Farmaco', models.DO_NOTHING, db_column='id_farmaco')
+    id_farmaco = models.ForeignKey('Farmaco', on_delete=models.CASCADE, db_column='id_farmaco')
 
     class Meta:
         managed = False
