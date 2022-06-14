@@ -1,3 +1,4 @@
+from cProfile import run
 from multiprocessing.sharedctypes import Array
 from select import select
 from .metodos import *
@@ -72,8 +73,19 @@ def filtro_usuarios(request):
     users_cant = users_all.count()
     if request.POST:
         busqueda = request.POST.get("txbusqueda")
-        users_ret = Usuario.objects.filter(run__startswith=busqueda, id_perfil__in = arr_id)
-        users_cant = users_ret.count()
+        eliminar = request.POST.get("eliminar")
+        if eliminar is not None:
+            usu = Usuario.objects.get(run=eliminar)
+            usu.delete()
+            print("usuario borrado")
+            users_ret = Usuario.objects.filter(id_perfil__in = arr_id)
+            users_cant = users_ret.count()
+        elif busqueda is not None:
+            users_ret = Usuario.objects.filter(run__startswith=busqueda, id_perfil__in = arr_id)
+            users_cant = users_ret.count()
+        else:
+            users_ret = Usuario.objects.all()
+            users_cant = users_ret.count()
         contexto = {"usuarios":users_ret,"cantidad":users_cant}
     else:
         users_all = Usuario.objects.all().filter(id_perfil__in = arr_id)
@@ -81,13 +93,25 @@ def filtro_usuarios(request):
     return render(request, 'usuarios_s.html', contexto)
 
 def filtro_pacientes(request):
-    users_all = Usuario.objects.all()
     if request.POST:
         busqueda = request.POST.get("txbusqueda")
-        pac_ret = Usuario.objects.all().select_related('paciente').filter(run__startswith=busqueda, id_perfil=4)
-        cant_p = pac_ret.count()
-        if cant_p>=1:
-            contexto = {"usuarios":pac_ret,"cantidad":cant_p}
+        eliminar = request.POST.get("eliminar")
+        if eliminar is not None:
+            paciente = Usuario.objects.get(run=eliminar)
+            paciente.delete()
+            print("Paciente Eliminado Exitosamente")
+            users_ret = Usuario.objects.filter(id_perfil=4)[:25]
+            users_cant = users_ret.count()
+        elif busqueda is not None:
+            users_ret = Usuario.objects.filter(run__startswith=busqueda,id_perfil=4)
+            users_cant = users_ret.count()
+        else:
+            users_ret = Usuario.objects.all()
+            users_cant = users_ret.count()
+        contexto = {"usuarios":users_ret,"cantidad":users_cant}
+
+        if users_cant>=1:
+            contexto = {"usuarios":users_ret,"cantidad":users_cant}
         else:
             contexto = {"usuarios":0,"cantidad":0}
     else:
@@ -95,8 +119,6 @@ def filtro_pacientes(request):
         userp_cant = users_pac.count()
         contexto = {"usuarios":users_pac,"cantidad":userp_cant}
     return render(request, 'pacientes_s.html', contexto)
-
-
 
 def edit_paciente(request,id):
     logger = logging.getLogger(__name__)
@@ -155,13 +177,9 @@ def edit_paciente(request,id):
                 mensaje="usuario base guardado problemas en paciente"
         else:
             mensaje="problemas al guardar usuario base"
-    
     logger.warning(mensaje)
-   
-
     contexto = {"paciente": paciente, "prevision": prevision, "telefonos": num_tel, "cantidad": cant_tel,
                 "comuna": comunas, "nacionalidad": nacionalidades, "estado": estados, "genero": generos, "alergias": alergias,"alers":todo_alergias}
-   
     return render(request, 'edit_paciente.html',contexto)
 
 def vista_farmaco(request):
@@ -370,18 +388,13 @@ def vista_atenciones(request,id):
     arr_annios=[]
     arr_ids=[]
     #print(ate_year.values_list("id_atencion"))
-    
     for a in annios:
         if a[0] not in arr_annios:
             arr_annios.append(a[0])
     #print(arr_annios.sort())
     ids = ate_year.values_list("id_atencion")
-    
     for e in ids:
         arr_ids.append(e[0])
-    
-    
-
     if request.POST:
         arr_2=[]
         arr_f=[]
@@ -414,7 +427,7 @@ def vista_atenciones(request,id):
             det_at_selected=''
             sel=0
             r=0
-        r="reservado"
+        r="Reservado"
         #ate_year = Atencion.objects.select_related('DetalleAtencion').filter(fecha_atencion__year=annio)
         contexto = {"atencion":ate_pac,"cantidad":cant_pac,"detalle":det_at_selected, "annios":arr_annios, "fecha":an,"selc": sel, "diag": r}
     else:
@@ -433,7 +446,6 @@ def vista_reportes(request):
     report_cant = reportes.count()
     if request.POST:
         busqueda = request.POST.get("txbusqueda")
-
         report_selected = Reporte.objects.filter(id_reporte__startswith=busqueda)
         report_cant = report_selected.count()
         contexto = {"reportes":report_selected,"cantidad":report_cant}

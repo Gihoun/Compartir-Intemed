@@ -45,7 +45,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark" style="padding-bottom: 10%;">
                           <li><a id="1"  class="dropdown-item" href="{% url 'edit_colab' usu.run %}" value="editar">Editar</a></li>
-                          <li><a id="2"  class="dropdown-item" href="#" value="eliminar">Eliminar</a></li>
+                          <li><form type="submit" method="POST" action="{% url 'userg' %}">{% csrf_token%}<button type=submit class="btn dropdown-item" name="eliminar" value="{{usu.run}}">Eliminar</button></form></li>
                         </ul>
                       </div>
                     </td>
