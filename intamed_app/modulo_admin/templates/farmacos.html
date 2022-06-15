@@ -9,8 +9,6 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-  
-
     <h2>Fármacos: {{cantidad}}</h2>
     <div class="tab-content  container-fluid" id="v-pills-tabContent">
         <div class="tab-pane fade show active container-fluid" id="v-pills-agenda" role="tabpanel"
@@ -60,7 +58,6 @@
             <td>No Encontrado</td>
             <td>No Encontrado</td>
           </tr>
-          
           {% endif %} 
         </tbody>
       </table>
@@ -75,9 +72,9 @@
           "icon": "success"
         })
       </script>
-        
       {% endfor %}
-    {% endif %}     
+    {% endif %}   
+
     </div>
     {% block js %}
     <script>
@@ -108,7 +105,7 @@
            });
            Swal.fire({
             "title": "Realizado",
-            "text": "{{m}}",
+            "text": "Fármaco Eliminado Exitosamente",
             "icon": "success"
           })
           .then(function(result){
@@ -122,5 +119,6 @@
       }
     </script>
 {% endblock js %}
+
 </main>
 {% endblock contenido %}

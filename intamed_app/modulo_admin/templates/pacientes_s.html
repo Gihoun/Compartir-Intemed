@@ -9,28 +9,6 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-  {% block js %}
-  <script>
-    function eliminarPaciente(run){
-      Swal.fire({
-        "title": "¿Esta Seguro?",
-        "text": "Esta Acción es Irreversible",
-        "icon": "question",
-        "showCancelButton": true,
-        "cancelButtonText": "No, Cancelar",
-        "confirmButtonText": "Si, seguro",
-        "reverseButtons": true,
-        "confirmButtonColor": "#dc3545"
-      })
-      .then(function(result){
-        if(result.isConfirmed){
-          window.location.href = "/panel/pacientes/"
-        }
-      })
-    }
-  </script>
-  {% endblock %}
-
     <h2>Lista de Pacientes: {{cantidad}}</h2>
     <div class="tab-content  container-fluid" id="v-pills-tabContent">
         <div class="tab-pane fade show active container-fluid" id="v-pills-agenda" role="tabpanel"
@@ -72,7 +50,7 @@
                           </button>
                           <ul class="dropdown-menu dropdown-menu-dark">    
                             <li><a id="1"  class="dropdown-item" name="runpac" value="editar" href="{% url 'edit_pac' usu.run %}">Editar</a></li> 
-                            <li><form type="submit" method="POST" action="{% url 'pac' %}">{% csrf_token%}<button type=submit href="#" onclick="eliminarPaciente({{usu.run}})" class="btn dropdown-item" name="eliminar" value="{{usu.run}}">Eliminar</button></form></li>                           
+                            <li><button href="#" class="btn dropdown-item" name="eliminar" onclick="eliminarPaciente({{usu.run}})" value="{{usu.run}}">Eliminar</button></li>                         
                           </ul>
                         </div>
                       </td>
@@ -103,5 +81,51 @@
         </script>
       {% endfor %}
     {% endif %}
+
+  </div>
+  {% block js %}
+  <script>
+    function eliminarPaciente(id){
+      
+      Swal.fire({
+        "title": "¿Esta Seguro?",
+        "text": "Esta Acción es Irreversible",
+        "icon": "question",
+        "showCancelButton": true,
+        "cancelButtonText": "No, Cancelar",
+        "confirmButtonText": "Si, seguro",
+        "reverseButtons": true,
+        "confirmButtonColor": "#dc3545"
+      })
+      .then(function(result){
+        if(result.isConfirmed){
+          const data = new FormData();
+          var csrftoken = '{{ csrf_token }}';
+          data.append('eliminar',id);
+          console.log(id);
+          fetch('{% url 'pac' %}', {
+            method: 'POST',
+            body: data ,
+            headers: {
+              'X-CSRFToken': csrftoken ,
+            }
+         });
+         Swal.fire({
+          "title": "Realizado",
+          "text": "Paciente Eliminado Exitosamente",
+          "icon": "success"
+        })
+        .then(function(result){
+          if(result.isConfirmed){
+          window.location.href = "{% url 'pac' %}";
+          }
+        });
+        
+      }
+    })   
+    }
+  </script>
+{% endblock js %}
+
 </main>
 {% endblock contenido %}

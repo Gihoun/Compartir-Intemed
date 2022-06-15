@@ -5,6 +5,9 @@
 {% endblock titulo %}
 
 {% block contenido %}  
+<!-- Script para utilizar los Mensajes del SweetAlert -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <h2>Paciente: {{paciente.p_nombre}} {{paciente.s_nombre}} {{paciente.apellido_pa}} {{paciente.apellido_ma}}</h2>
     <div>
