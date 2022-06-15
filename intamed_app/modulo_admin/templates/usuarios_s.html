@@ -13,13 +13,12 @@
     <div class="tab-content  container-fluid" id="v-pills-tabContent">
         <div class="tab-pane fade show active container-fluid" id="v-pills-agenda" role="tabpanel"
             aria-labelledby="v-pills-agenda-tab">
-            <form class="d-flex" method="POST" action="{% url 'userg' %}">
-                {% csrf_token %}
-                    <input class="form-control me-2" type="search" placeholder="RUT Colaborador" name="txbusqueda" aria-label="Search">
-                    <button id="boton" class="btn btn-outline" type="submit">Buscar</button>
-            </form>
+              <form class="d-flex" method="POST" action="{% url 'userg' %}">
+                  {% csrf_token %}
+                      <input class="form-control me-2" type="search" placeholder="RUT Colaborador" name="txbusqueda" aria-label="Search">
+                      <button id="boton" class="btn btn-outline-primary" type="submit">Buscar</button>
+              </form>
             <div></div>
-            
         </div>
     </div>  
     <div class="table-responsive" style="min-height: 500px;" >

@@ -166,7 +166,7 @@
                 </div>
               </div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end" class="row mt-3">
-                <button type="submit" class="btn btn-outline-primary">Guardar</button>
+                <button type="submit" class="btn btn-outline-primary">Editar</button>
             </div>
             <div>
                 <label></label>
@@ -175,6 +175,19 @@
         </form>
     </div>
     <!-- Contenido de los tab de cada tabla -->
+    <div>
+        {% if messages %}
+            {% for m in menssages %}
+                <script>
+                    Swal.fire({
+                        "title": "Realizado"
+                        "text": "{{m}}"
+                        "icon": "success"
+                    })
+                </script>
+            {% endfor %}
+        {% endif %}
+    </div>
 </main>
 {% endblock contenido %}
 {% block js%}

@@ -8,7 +8,7 @@
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 	<h4>&nbsp;|&nbsp;&nbsp;Año: {{fecha}} &nbsp;&nbsp;|&nbsp;&nbsp;Atenciones Realizadas: {{cantidad}} de {{c_total}}&nbsp;&nbsp;|</h4>
   
-      <button  class="btn btn-sm btn-outline-secondary dropdown-toggle dropdown-toggle-split" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+      <button class="btn btn-sm btn-outline-secondary dropdown-toggle dropdown-toggle-split" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
         <span class="sr-only" data-feather="calendar"></span>
         Año
       </button>
@@ -19,8 +19,14 @@
       </ul>
     <form type="submit" method="POST" action="{% url 'ateng' 2010 %}" >
         {% csrf_token %}
-        <input class="form-control me-6" type="number" placeholder="RUT" name="input_run" aria-label="Search">
-        <button id="boton" class="btn btn-outline" type="submit">Buscar</button>
+        <div class="row mt-2">
+          <div class="col-lg-8">
+            <input class="form-control me-6" type="number" placeholder="RUT" name="input_run" aria-label="Search">
+          </div>
+          <div class="col-lg-4">
+            <button id="boton" class="btn btn-outline-primary" type="submit">Buscar</button>
+          </div>
+        </div>
     </form>
 
     <div class="tab-content  container-fluid" id="v-pills-tabContent">

@@ -172,6 +172,7 @@ def edit_paciente(request,id):
                 paciente_real.talla = talla
                 paciente_real.peso = peso
                 paciente_real.save()
+                messages.success(request, "Paciente Editado Exitosamente")
                 mensaje="paciente guardado exitosamente"
                 contexto = {"paciente": userr, "prevision": prevision, "telefonos": num_tel, "cantidad": cant_tel,
                 "comuna": comunas, "nacionalidad": nacionalidades, "estado": estados, "genero": generos, "alergias": alergias,"alers":todo_alergias}
