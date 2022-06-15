@@ -1,0 +1,108 @@
+{%extends "base_recepcion.html"%}
+{% load static %}
+{% block contenido %}  
+<section class="p-4">
+    <h3 class="text-center mb-5">Ingreso paciente </h3>
+    <form class="row" method="POST" enctype="multipart/form-data" onsubmit="">
+        {% csrf_token %}
+        <div class="row mt-3">
+            <div class="col-lg-3">
+                <label for="inputRutPaciente" class="form-label">Rut paciente<span id="rut_span" class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="inputRut" name="inputRut" oninput="val_rut()" minlength="7" maxlength="8" required>
+                
+            </div>
+            <div class="col-lg-1">
+                <label for="inputDVPaciente" class="form-label">Dv<span id="dv_span" class="text-danger"></span></label>
+                <input type="text" class="form-control" id="inputDV" name="inputDV" oninput="val_dv()" minlength="1" maxlength="1" required>
+            </div>
+            <div class="col-lg-4">
+                <label for="fecha" class="form-label"> Seleccione una fecha:</label>
+                <input type="text" class="form-control" id="fecha" value="" onchange="selectdia()" placeholder="Seleccione fecha" />
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-lg-4">
+                <label for="inputNombrePaciente" class="form-label">Primer Nombre<span id="primn_span" class="text-danger"></span></label>
+                <input type="text" class="form-control" id="inputPNom" name="inputPNom" oninput="val_primn()" minlength="2" maxlength="100" required>
+            </div>
+            <div class="col-lg-4">
+                <label for="inputSegundoNombrePac" class="form-label">Segundo Nombre<span id="segn_span" class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="inputSNom" name="inputSNom"  oninput="val_segn()" minlength="2" maxlength="100" required>
+            </div>
+            <div class="col-lg-4">
+                <label for="inputNombreSocial" class="form-label">Nombre Social<span id="nomsoc_span" class="text-danger"></span></label>
+                <input type="text" class="form-control" id="inputNomSoc" name="inputNomSoc" oninput="val_nomsoc()"  maxlength="100">
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-lg-4">
+                <label for="inputApellidoPaciente" class="form-label">Apellido P.<span id="ap_span" class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="inputAp" name="inputAp" oninput="val_apPaterno()" minlength="2" maxlength="100" required>
+            </div>
+            <div class="col-lg-4">
+                <label for="inputApellidomPaciente" class="form-label">Apellido M.<span id="am_span" class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="inputAM" name="inputAM" oninput="val_apMaterno()" minlength="2" maxlength="100" required>
+            </div>
+            <div class="col-lg-4">
+                <label for="inputNacPac" class="form-label">Nacionalidad</label>
+                <select name="inputNacPac" class="form-select ">
+                    {% for x in nacionalidad %}
+                            <option>{{x.nombre_nac}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-lg-4">
+                <label for="inputEstadoCivil" class="form-label">Estado Civil</label>
+                <select name="inputEstadoCivil" class="form-select ">
+                    {% for x in estadoCivil %}
+                            <option>{{x.nombre_estado}}</option>
+                    {% endfor %}
+                
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <label for="inputGenero" class="form-label">Género</label>
+                <select name="inputGenero" class="form-select ">
+                    {% for x in genero %}
+                            <option>{{x.nombre_genero}}</option>
+                    {% endfor %}
+
+
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <label for="inputTelefono" class="form-label">Fono<span id="tel_span" class="text-danger">*</span></label>
+                <input type="number" class="form-control" id="inputFono" name="inputFono" oninput="val_telefono()" minlength="5" maxlength="12" required>
+            </div>
+            
+        </div>
+        <div class="row mt-3">
+            <div class="col-lg-4">
+                <label for="inputDireccion" class="form-label">Dirección<span id="dir_span" class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="inputDir" name="inputDir" oninput="val_direccion()" minlength="5" maxlength="100" required>
+            </div>
+            <div class="col-md-4">
+                <label for="inputComuna" class="form-label">Comuna</label>
+                <select name="inputComPac" class="form-select ">
+                    {% for x in comuna %}
+                            <option>{{x.nombre_comuna}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class=" col-lg-4">
+                <label for="inputcorreo" class="form-label">Correo Electrónico<span id="correo_span" class="text-danger">*</span></label>
+                <input type="email" class="form-control" id="inputCorreo" name="inputCorreo" oninput="ValidateEmail()" minlength="5" maxlength="100" required>
+            </div>
+        </div>
+    
+        <div class="col-12 mt-5">
+            <button type="submit" class="btn btn-primary">Ingresar Paciente</button>
+            <button type="reset"  class="btn btn-primary">Limpiar</button>
+        </div>
+    </form >
+</section>            
+{% endblock contenido %}  

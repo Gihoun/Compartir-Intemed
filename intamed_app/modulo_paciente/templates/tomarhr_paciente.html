@@ -1,72 +1,106 @@
 
 {% load static %}
 <section class="p-4">
+    <h3 class="text-center mb-5">Tomar hora</h3>
     <form class="row g-3">
-        <div class="col-lg-2">
-            <label for="testing" class="visually-hidden"></label>
-            <input type="text" readonly class="form-control-plaintext" id="testing" value="Seleccione médico">
-        </div>
-        <div class="col-lg-4">
-            <select class="form-select" aria-label="">
-                <option selected>Seleccione</option>
-                <option value="1">Rick</option>
-                <option value="2">and</option>
-                <option value="3">Morty</option>
-            </select>
-        </div>  
-        <div class="col-lg-4">
-            <select class="form-select" aria-label="">
-                <option selected>Especialidad</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-            </select>
-        </div>
-    </form>
-    <div class="container table-responsive left border" style="width: 50%; float: left;"> 
-        <form action="">
         <div class="row mt-3">
-
-            <h5>Seleccionar día</h5>
-            <div id="datepicker"></div>
-            
-            <div class="col-sm-4 mt-3">
-                <button type="submit" class="btn btn-primary ">Confirmar</button>
+            <div class="col-lg-3">
+                <input type="text" readonly class="form-control-plaintext"  value="Seleccione una Fecha ">
+            </div>
+            <div class="col-lg-4">
+                <input type="text" class="form-control" id="fecha" placeholder="Seleccione fecha" />
             </div>
         </div>
-        </form>
-    </div>
-    <div class="container table-responsive border" style="width: 50%; float: right;"> 
-        <h3 class="text-center mb-5">Horas Registradas día</h3>
-        <table class="table is-fullwidth is-striped is-bordered table-hover">
-            <thead>
-            <tr>
-                <th>Hora</th>
-                <th>Estado hora</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <th>10:30-11:30</th>
-                <th>Reservada</th>
-            </tr>
-            <tr>
-                <th>11:30-12:30</th>
-                <th>Reservada</th>
-            </tr>
-            <tr>
-                <th>12:30-13:30</th>
-                <th>Reservada</th>
-            </tr>
-            <tr>
-                <th>13:30-14:30</th>
-                <th>Reservada</th>
-            </tr>
-            <tr>
-                <th>14:30-15:30</th>
-                <th>Reservada</th>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+        <div class="row mt-3">
+            <div class="col-lg-3">
+                <input type="text" readonly class="form-control-plaintext"  value="Seleccione Especialidad: ">
+            </div>
+            <div class="col-lg-4">
+                <select class="form-select" aria-label="">
+                    <option selected>Especialidad</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>  
+        </div>
+        <div class="row mt-3">
+            <div class="col-lg-3">
+                <input type="text" readonly class="form-control-plaintext" value="Seleccione médico: ">
+            </div>
+            <div class="col-lg-4">
+                <select class="form-select" aria-label="">
+                    <option selected>Seleccione</option>
+                    <option value="1">Rick</option>
+                    <option value="2">and</option>
+                    <option value="3">Morty</option>
+                </select>
+            </div>
+            <!--
+            <div class="col-lg-2">
+                <button type="Submit" class="btn btn-primary mb-2" >Buscar</button>
+            </div>
+            -->
+            <div class="col-lg-2">
+                <button type="button" class="btn btn-primary mb-2" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Buscar</button>
+            </div>
+        </div>
+        <!--Si no funciona desplegar menu al apretar el boton y buscar, mover la tabla fuera del collapse-->
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <div class="row mt-3">
+                    <h3 class="text-center mb-5">Horas disponibles para $ médico $ especialidad $</h3>
+                    <table class="table is-fullwidth is-striped is-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Estado hora</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th>11</th>
+                            <th>12-06-2022</th>
+                            <th>10:30-11:30</th>
+                            <th>Disponible</th>
+                            <td style="text-align: center;">
+                                <button  type="button" class="btn btn-info m-1 text-white"
+                                    onclick="">
+                                    Seleccionar Hora
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>22</th>
+                            <th>12-06-2022</th>
+                            <th>11:30-12:30</th>
+                            <th>Disponible</th>
+                            <td style="text-align: center;">
+                                <button  type="button" class="btn btn-info m-1 text-white"
+                                    onclick="">
+                                    Seleccionar Hora
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>33</th>
+                            <th>12-06-2022</th>
+                            <th>12:30-13:30</th>
+                            <th>Disponible</th>
+                            <td style="text-align: center;">
+                                <button  type="button" class="btn btn-info m-1 text-white"
+                                    onclick="">
+                                    Seleccionar Hora
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+        
 </section>

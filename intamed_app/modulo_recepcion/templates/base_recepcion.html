@@ -10,350 +10,72 @@
     <link rel="stylesheet" href="{% static 'css/estilo.css'%}">
 </head>
 
+<header class="fixed-top">
+    <nav class="navbar navbar-expand-xl navbar-light border p-md-3">
+        <div class="container">
+            <a class="navbar-brand" href="#">Intemed</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <div class="mx-auto"></div>
+                <ul class="navbar-nav hstack gap-3">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'ingresarPac' %}">Inicio</a>
+                    </li>
+                    <div class="vr"></div>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Nuestra Clinica</a>
+                    </li>
+                    <div class="vr"></div>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Mi Cuenta</a>
+                    </li>
+                    <div class="vr"></div>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Cerrar Sesión</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav> 
+</header>
 <body>
-    <!-- Navbar recepcion -->
-    {% include "navbar_recepcion.html" %}
-    <!-- Navbar recepcion -->
+
     {% include "banner_recepcion.html" %}
     <main class="p-5">
         <div class="d-flex">
             <!-- Tabla de navegacion vertical  -->
             <div class="nav flex-column nav-pills me-5" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <button class="nav-link active border m-3  btn btn-primary" id="v-pills-ingresarP-tab"
-                    data-bs-toggle="pill" data-bs-target="#v-pills-ingresarP" type="button" role="tab"
-                    aria-controls="v-pills-ingresarP" aria-selected="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-hospital" viewBox="0 0 16 16">
-                        <path
-                            d="M8.5 5.034v1.1l.953-.55.5.867L9 7l.953.55-.5.866-.953-.55v1.1h-1v-1.1l-.953.55-.5-.866L7 7l-.953-.55.5-.866.953.55v-1.1h1ZM13.25 9a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5ZM13 11.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5Zm.25 1.75a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5Zm-11-4a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 3 9.75v-.5A.25.25 0 0 0 2.75 9h-.5Zm0 2a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5ZM2 13.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5Z" />
-                        <path
-                            d="M5 1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1a1 1 0 0 1 1 1v4h3a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h3V3a1 1 0 0 1 1-1V1Zm2 14h2v-3H7v3Zm3 0h1V3H5v12h1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3Zm0-14H6v1h4V1Zm2 7v7h3V8h-3Zm-8 7V8H1v7h3Z" />
-                    </svg>
-                    Ingresar Paciente
+                <button class="nav-link border m-3  btn btn-primary" id="v-pills-ingresarP-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ingresarP" type="button" role="tab" aria-controls="v-pills-ingresarP" aria-selected="false">
+                    <a class="nav-link" href="{% url 'ingresarPac' %}">Ingresar Pago</a>
                 </button>
-                <button class="nav-link border m-3 btn btn-primary" id="v-pills-buscarP-tab" data-bs-toggle="pill"
-                    data-bs-target="#v-pills-buscarP" type="button" role="tab" aria-controls="v-pills-buscarP"
-                    aria-selected="false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-search-heart" viewBox="0 0 16 16">
-                        <path d="M6.5 4.482c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.69 0-5.018Z" />
-                        <path
-                            d="M13 6.5a6.471 6.471 0 0 1-1.258 3.844c.04.03.078.062.115.098l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1.007 1.007 0 0 1-.1-.115h.002A6.5 6.5 0 1 1 13 6.5ZM6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11Z" />
-                    </svg>Buscar Paciente
+                <button class="nav-link border m-3 btn btn-primary" id="v-pills-buscarP-tab" data-bs-toggle="pill" data-bs-target="#v-pills-buscarP" type="button" role="tab" aria-controls="v-pills-buscarP" aria-selected="false">
+
+                    <a class="nav-link" href="{% url 'buscarPac' %}"> Buscar Paciente</a>
                 </button>
-                <button class="nav-link border m-3 btn btn-primary" id="v-pills-ingresarPago-tab" data-bs-toggle="pill"
-                    data-bs-target="#v-pills-ingresarPago" type="button" role="tab" aria-controls="v-pills-ingresarPago"
-                    aria-selected="false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-cash-stack" viewBox="0 0 16 16">
-                        <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
-                        <path
-                            d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2H3z" />
-                    </svg>
-                    Ingresar Pago
+                <button class="nav-link border m-3 btn btn-primary" id="v-pills-ingresarPago-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ingresarPago" type="button" role="tab" aria-controls="v-pills-ingresarPago" aria-selected="false">
+
+                    <a class="nav-link" href="{% url 'ingresarPag' %}">Ingresar Pago</a>
                 </button>
             </div>
             <!-- Contenido de los tab de cada tabla -->
             <div class="tab-content  container-fluid" id="v-pills-tabContent">
-                <!-- Ingresar hora paciente -->
-                <div class="tab-pane fade show active container-fluid p-4" id="v-pills-ingresarP" role="tabpanel" aria-labelledby="v-pills-ingresarP-tab">
-                    <h3 class="text-center mb-5">Ingreso paciente </h3>
-                    <form class="row" action="">
-                        <div class="col-lg-2">
-                            <label for="inputRutpaciente" class="form-label">Rut Paciente</label>
-                            <input type="text" class="form-control" id="inputRutpaciente" placeholder="Ingrese Rut">
-                        </div>
-                        <div class="col-lg-1">
-                            <label for="inputDV" class="form-label">Dv</label>
-                            <input type="text" class="form-control" id="inputDV" placeholder="Dv">
-                        </div>
-                        <div class="col-lg-4">
-                            <label for="fecha" class="form-label"> Seleccione una fecha:</label>
-                            <input type="text" class="form-control" id="fecha" value="" onchange="selectdia()"
-                                placeholder="Seleccione fecha" />
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-lg-3">
-                                <label for="inputNombre" class="form-label">Nombres</label>
-                                <input type="text" class="form-control" id="inputNombre" placeholder="Nombre Paciente">
-                            </div>
-                            <div class="col-lg-3">
-                                <label for="inputApellidop" class="form-label">Apellido P.</label>
-                                <input type="text" class="form-control" id="inputApellidop"
-                                    placeholder="Apellido Paterno">
-                            </div>
-                            <div class="col-lg-3">
-                                <label for="inputApellidom" class="form-label">Apellido M.</label>
-                                <input type="text" class="form-control" id="inputApellidom"
-                                    placeholder="Apellido Materno">
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class=" col-lg-4">
-                                <label for="inputcorreo" class="form-label">Correo Electrónico</label>
-                                <input type="email" class="form-control" id="inputcorreo"
-                                    placeholder="Ejemplo@correo.paciente">
-                            </div>
-                            <div class="col-lg-4">
-                                <label for="inputDireccion" class="form-label">Dirección</label>
-                                <input type="text" class="form-control" id="inputDireccion" placeholder="Dirección">
-                            </div>
-                            <div class="col-md-3">
-                                <label for="inputFono" class="form-label">Fono</label>
-                                <input type="text" class="form-control" id="inputFono" placeholder="Teléfono Paciente">
-                            </div>
-                        </div>
-                        <div class="accordion col-lg-4 mx-auto mt-5" id="accordion_recep_ingreso" hidden>
-                            <h4 class="text-center mb-2">Horario disponible.</h4>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button" id="titulo_fecha" type="button"
-                                        data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
-                                        aria-controls="collapseOne">
-                                    </button>
-                                </h2>
-                                <div id="collapseOne" class="accordion-collapse collapse show"
-                                    aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <ul class="list-group">
-                                            <li class="list-group-item">
-                                                <input class="form-check-input me-1" type="checkbox" value=""
-                                                    aria-label="...">
-                                                Horario disponible
-                                            </li>
-                                            <li class="list-group-item">
-                                                <input class="form-check-input me-1" type="checkbox" value=""
-                                                    aria-label="...">
-                                                Horario disponible
-                                            </li>
-                                            <li class="list-group-item">
-                                                <input class="form-check-input me-1" type="checkbox" value=""
-                                                    aria-label="... " disabled>
-                                                Horario no disponible
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 mt-5">
-                            <button type="submit" class="btn btn-primary">Ingresar Paciente</button>
-                            <button type="reset"  class="btn btn-primary">Limpiar</button>
-                        </div>
-                    </form>
+                <div class="tab-pane fade show active container-fluid p-4" id="v-pills-ingresarP" role="tabpanel" aria-labelledby="v-pills-ingresarP-tab">  
                 </div>
                 <!-- Modificar y anular hora paciente -->
                 <div class="tab-pane fade container-fluid p-4" id="v-pills-buscarP" role="tabpanel" aria-labelledby="v-pills-buscarP-tab">
-                    <ul class="nav nav-tabs mt-3" id="tabsObs" role="tablist">
-                      <li class="nav-item" role="presentation">
-                          <button class="nav-link active" id="modificarpaciente-tab" data-bs-toggle="tab" data-bs-target="#modificarpaciente"
-                              type="button" role="tab" aria-controls="modificarpaciente" aria-selected="true">Modificar Paciente</button>
-                      </li>
-                      <li class="nav-item" role="presentation">
-                          <button class="nav-link" id="anularhora-tab" data-bs-toggle="tab" data-bs-target="#anularhora" 
-                              type="button" role="tab" aria-controls="anularhora" aria-selected="false">Anular Hora</button>
-                      </li>
-                    </ul>
-                    <div class="tab-content" id="tabcontenidobs">
-                        <div class="tab-pane fade show active" id="modificarpaciente" role="tabpanel" aria-labelledby="modificarpaciente-tab">
-                            <div class="container m-1 table-responsive  border">
-                                <!-- Datos Basicos del Paciente -->
-                               <form class="row mt-3">
-                                    <div class="col-sm-4">
-                                        <label for="inputRutPaciente" class="form-label">Rut Paciente</label>
-                                        <input type="text" class="form-control" id="inputRutPaciente" placeholder="Ingrese Rut">
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <label for="inputDV" class="form-label">Dv</label>
-                                        <input type="text" class="form-control" id="inputDV" placeholder="Dv">
-                                    </div>
-                                    <div class="col-sm-4" style="margin-top: 32px;">
-                                        <button type="submit" class="btn btn-primary mb-3">Buscar</button>
-                                    </div>
-                                </form>
-                                <form action="">
-                                    <div class="row mt-3">
-                                        <div class="col-lg-4">
-                                            <label for="inputNombre" class="form-label">Nombres</label>
-                                            <input type="text" class="form-control" id="inputNombre" placeholder="Nombre Paciente">
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <label for="inputApellidoPaciente" class="form-label">Apellido P.</label>
-                                            <input type="text" class="form-control" id="inputApellidoPaciente"
-                                                placeholder="Apellido Paterno">
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <label for="inputApellidomPaciente" class="form-label">Apellido M.</label>
-                                            <input type="text" class="form-control" id="inputApellidomPaciente"
-                                                placeholder="Apellido Materno">
-                                        </div>
-                                    </div>
-                                    <div class="row mt-3">
-                                        <div class=" col-lg-4">
-                                            <label for="inputcorreo" class="form-label">Correo Electrónico</label>
-                                            <input type="email" class="form-control" id="inputcorreo"
-                                                placeholder="Ejemplo@correo.Paciente">
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <label for="inputDireccion" class="form-label">Dirección</label>
-                                            <input type="text" class="form-control" id="inputDireccion" placeholder="Dirección">
-                                        </div>
-                                            <div class="col-lg-4">
-                                                <label for="inputFono" class="form-label">Fono</label>
-                                                <input type="text" class="form-control" id="inputFono" placeholder="Teléfono Paciente">
-                                            </div>
-                                        <div class="row mt-3"> 
-                                            <div class="col-sm-4">
-                                                <button type="submit" class="btn btn-primary ">Modificar</button>
-                                            </div>
-                                        </div>    
-                                    </div>
-                                </form>
-                        </div>
-                        
-                    </div>
-                    <div class="tab-pane fade" id="anularhora" role="tabpanel" aria-labelledby="anularhora-tab">
-                        <div class="container table-responsive border left" style="width: 50%; float: left;"> 
-                            <form >
-                                    <div class="row mt-3">
-                                        <div class="col-sm-4">
-                                            <label for="inputRutPaciente" class="form-label">Rut Paciente</label>
-                                            <input type="text" class="form-control" id="inputRutPaciente" placeholder="Ingrese Rut">
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <label for="inputDV" class="form-label">Dv</label>
-                                            <input type="text" class="form-control" id="inputDV" placeholder="Dv">
-                                        </div>
-                                        <div class="col-sm-4" style="margin-top: 32px;">
-                                            <button type="submit" class="btn btn-primary mb-3">Buscar</button>
-                                        </div>
-                                    
-                                        <div class="col-sm-8">
-                                            <label for="inputNombre" class="form-label">Nombres</label>
-                                            <input type="text" class="form-control" id="inputNombre" placeholder="Nombre Paciente">
-                                        </div>
-                                        <div class="col-sm-8">
-                                            <label for="inputApellidoPaciente" class="form-label">Apellido P.</label>
-                                            <input type="text" class="form-control" id="inputApellidoPaciente"
-                                                placeholder="Apellido Paterno">
-                                        </div>
-                                        <div class="col-sm-8">
-                                            <label for="inputApellidomPaciente" class="form-label">Apellido M.</label>
-                                            <input type="text" class="form-control" id="inputApellidomPaciente"
-                                                placeholder="Apellido Materno">
-                                        </div>
-                                        <div class="col-12 mt-3">
-                                            <button type="submit" class="btn btn-primary mb-4">Buscar</button>
-                                            <button type="submit" class="btn btn-primary mb-4">Anular</button>
-                                        </div>
-                                    </div>
-                            </form>
-                        </div>
-                        <div class="container table-responsive" style="width: 50%; float: right;"> 
-                            <h3 class="text-center mb-5">Horas Registradas</h3>
-                            <table class="table is-fullwidth is-striped is-bordered table-hover">
-                                <thead>
-                                  <tr>
-                                    <th>Nombre paciente</th>
-                                    <th>Dìa</th>
-                                    <th>Hora</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <th>Andrea Verdugo</th>
-                                    <td>Lunes</td>
-                                    <td>12:00</td>
-                                  </tr>
-                                    <tr>
-                                    <th>Andrea Verdugo</th>
-                                    <td>Martes</td>
-                                    <td>13:00</td>
-                                  </tr>
-                                    <tr>
-                                    <th>Andrea Verdugo</th>
-                                    <td>Martes</td>
-                                    <td>14:00</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                        </div>
-                    </div>
-                    
                 </div>
                 
                 <!-- Ingresar pago del paciente -->
-                
-            </div>
-            <div class="tab-pane fade container-fluid p-4 " id="v-pills-ingresarPago" role="tabpanel" aria-labelledby="v-pills-ingresarPago-tab">
-                <form>
-                    <h3 class="text-center mb-5">Ingresar Pago paciente</h3>
-                        <div class="row mt-3">
-                            <div class="col-sm-3">
-                                <label for="inputRutPaciente" class="form-label">Rut Paciente</label>
-                                <input type="text" class="form-control" id="inputRutPaciente" placeholder="Ingrese Rut">
-                            </div>
-                            <div class="col-sm-1">
-                                <label for="inputDV" class="form-label">Dv</label>
-                                <input type="text" class="form-control" id="inputDV" placeholder="Dv">
-                            </div>
-                            <div class="col-sm-4" style="margin-top: 32px;">
-                                <button type="submit" class="btn btn-primary mb-3">Buscar</button>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-sm-4 mt-1">
-                                <label for="inputNombre" class="form-label">Nombres</label>
-                                <input type="text" class="form-control" id="inputNombre" placeholder="Nombre Paciente">
-                            </div>
-                            <div class="col-sm-4">
-                                <label for="inputApellidoPaciente" class="form-label">Apellido P.</label>
-                                <input type="text" class="form-control" id="inputApellidoPaciente"
-                                    placeholder="Apellido Paterno">
-                            </div>
-                            <div class="col-sm-4">
-                                <label for="inputApellidomPaciente" class="form-label">Apellido M.</label>
-                                <input type="text" class="form-control" id="inputApellidomPaciente"
-                                    placeholder="Apellido Materno">
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class=" col-sm-4">
-                                <label for="inputcorreo" class="form-label">Correo Electrónico</label>
-                                <input type="email" class="form-control" id="inputcorreo" placeholder="Ejemplo@correo.paciente">
-                            </div>
-                            <div class="col-sm-4">
-                                <label for="inputPrev" class="form-label">Previsión</label>
-                                <select id="inputPrev" class="form-select ">
-                                    <option selected>Fonasa</option>
-                                    <option>Colmena</option>
-                                    <option>Cruz Blanca</option>
-                                    <option>Codelco</option>
-                                    <option>ETC</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        
-                        <div class="container table-responsive border mt-5">
-                            <h3 class="text-center mb-5">Atención</h3>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">Hora de Atención </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                                <label class="form-check-label" for="flexRadioDefault2"> Exámenes </label>
-                            </div> 
-                        </div>
-                        <div class="col-12 mt-5">
-                            <button type="submit" class="btn btn-primary mb-4">Cancelar</button>
-                            <button type="submit" class="btn btn-primary mb-4">Imprimir Bono</button>
-                        </div> 
-                </form>
-            </div>
+                <div class="tab-pane fade container-fluid p-4 " id="v-pills-ingresarPago" role="tabpanel" aria-labelledby="v-pills-ingresarPago-tab">
+                </div>
+            {% block contenido %}  
+            {% endblock contenido %}  
         </div>
+
     </main>
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
@@ -372,7 +94,7 @@
             dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
             dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
             weekHeader: 'Sm',
-            dateFormat: 'dd/mm/yy',
+            dateFormat: 'yy-mm-dd',
             firstDay: 1,
             isRTL: false,
             showMonthAfterYear: false,
@@ -393,6 +115,15 @@
             }
         }
     </script>
+    {% block js %}  
+
+    {% endblock js %}   
+
 </body>
+<script src="{% static 'js/validaciones.js' %}"></script>
+{% block js1 %}
+
+
+{% endblock js1 %} 
 
 </html>
