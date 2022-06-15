@@ -394,7 +394,7 @@ class Usuario(models.Model):
     id_genero = models.ForeignKey(Genero, models.DO_NOTHING, db_column='id_genero')
     id_nacionalidad = models.ForeignKey(Nacionalidad, models.DO_NOTHING, db_column='id_nacionalidad')
     id_comuna = models.ForeignKey(Comuna, models.DO_NOTHING, db_column='id_comuna')
-    id_perfil = models.ForeignKey(PerfilUsuario, models.DO_NOTHING, db_column='id_perfil')
+    id_perfil = models.ForeignKey(PerfilUsuario, models.DO_NOTHING, db_column='id_perfil', null=True)
 
     class Meta:
         managed = True
