@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'modulo_paciente',
     'modulo_inicio',
     'modulo_admin',
+    'login',
 ]
 
 MIDDLEWARE = [
