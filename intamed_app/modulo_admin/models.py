@@ -8,6 +8,27 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
+class Usuario(models.Model):
+    run = models.BigIntegerField(primary_key=True)
+    dv = models.CharField(max_length=1)
+    p_nombre = models.CharField(max_length=100)
+    nombre_social = models.CharField(max_length=100, blank=True, null=True)
+    s_nombre = models.CharField(max_length=100, blank=True, null=True)
+    apellido_pa = models.CharField(max_length=100)
+    apellido_ma = models.CharField(max_length=100)
+    direccion = models.CharField(max_length=100)
+    correo = models.CharField(max_length=100)
+    fecha_nac = models.DateField()
+    contrasena = models.CharField(max_length=32)
+    id_estado = models.ForeignKey('EstadoCivil', models.DO_NOTHING, db_column='id_estado')
+    id_genero = models.ForeignKey('Genero', models.DO_NOTHING, db_column='id_genero')
+    id_nacionalidad = models.ForeignKey('Nacionalidad', models.DO_NOTHING, db_column='id_nacionalidad')
+    id_comuna = models.ForeignKey('Comuna', models.DO_NOTHING, db_column='id_comuna')
+    id_perfil = models.ForeignKey('PerfilUsuario', models.DO_NOTHING, db_column='id_perfil')
+
+    class Meta:
+        managed = True
+        db_table = 'usuario'
 
 class Administrador(models.Model):
     run_admin = models.OneToOneField('Usuario', models.DO_NOTHING, db_column='run_admin', primary_key=True)
@@ -78,7 +99,6 @@ class Comuna(models.Model):
         managed = False
         db_table = 'comuna'
 
-
 class Contrato(models.Model):
     id_contrato = models.BigIntegerField(primary_key=True)
     fecha_ini_cont = models.DateField()
@@ -90,7 +110,6 @@ class Contrato(models.Model):
         managed = False
         db_table = 'contrato'
 
-
 class DetalleAgenda(models.Model):
     id_agenda = models.ForeignKey(Agenda, models.DO_NOTHING, db_column='id_agenda')
     run_recepcionista = models.ForeignKey('Recepcionista', models.DO_NOTHING, db_column='run_recepcionista')
@@ -98,7 +117,6 @@ class DetalleAgenda(models.Model):
     class Meta:
         managed = False
         db_table = 'detalle_agenda'
-
 
 class DetalleAlergia(models.Model):
     run_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='run_paciente')
@@ -108,7 +126,6 @@ class DetalleAlergia(models.Model):
         managed = False
         db_table = 'detalle_alergia'
 
-
 class DetalleAtencion(models.Model):
     run_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='run_paciente',related_name='pac')
     id_atencion = models.ForeignKey(Atencion, models.DO_NOTHING, db_column='id_atencion', related_name='ate')
@@ -117,7 +134,6 @@ class DetalleAtencion(models.Model):
         managed = False
         db_table = 'detalle_atencion'
 
-
 class DetalleFarmaco(models.Model):
     id_receta = models.ForeignKey('Receta', models.DO_NOTHING, db_column='id_receta')
     id_farmaco = models.ForeignKey('Farmaco', models.DO_NOTHING, db_column='id_farmaco')
@@ -125,7 +141,6 @@ class DetalleFarmaco(models.Model):
     class Meta:
         managed = False
         db_table = 'detalle_farmaco'
-
 
 class Diagnostico(models.Model):
     id_diagnostico = models.BigIntegerField(primary_key=True)
@@ -136,7 +151,6 @@ class Diagnostico(models.Model):
         managed = False
         db_table = 'diagnostico'
 
-
 class Especialidad(models.Model):
     id_espec = models.BigIntegerField(primary_key=True)
     nombre_espec = models.CharField(max_length=100)
@@ -144,7 +158,6 @@ class Especialidad(models.Model):
     class Meta:
         managed = False
         db_table = 'especialidad'
-
 
 class EstadoCivil(models.Model):
     id_estado = models.BigIntegerField(primary_key=True)
@@ -154,7 +167,6 @@ class EstadoCivil(models.Model):
         managed = False
         db_table = 'estado_civil'
 
-
 class Examen(models.Model):
     id_examen = models.BigIntegerField(primary_key=True)
     nombre_examen = models.CharField(max_length=100)
@@ -163,7 +175,6 @@ class Examen(models.Model):
     class Meta:
         managed = False
         db_table = 'examen'
-
 
 class Farmaco(models.Model):
     id_farmaco = models.BigIntegerField(primary_key=True)
@@ -176,7 +187,6 @@ class Farmaco(models.Model):
         managed = False
         db_table = 'farmaco'
 
-
 class Genero(models.Model):
     id_genero = models.BigIntegerField(primary_key=True)
     nombre_genero = models.CharField(max_length=100)
@@ -184,7 +194,6 @@ class Genero(models.Model):
     class Meta:
         managed = False
         db_table = 'genero'
-
 
 class Licencia(models.Model):
     id_licencia = models.BigIntegerField(primary_key=True)
@@ -195,7 +204,6 @@ class Licencia(models.Model):
     class Meta:
         managed = False
         db_table = 'licencia'
-
 
 class Medico(models.Model):
     run_medico = models.OneToOneField('Usuario', models.DO_NOTHING, db_column='run_medico', primary_key=True)
@@ -210,7 +218,6 @@ class Medico(models.Model):
         managed = False
         db_table = 'medico'
 
-
 class Nacionalidad(models.Model):
     id_nacionalidad = models.BigIntegerField(primary_key=True)
     nombre_nac = models.CharField(max_length=100)
@@ -219,22 +226,29 @@ class Nacionalidad(models.Model):
         managed = False
         db_table = 'nacionalidad'
 
+class Prevision(models.Model):
+    id_prevision = models.BigIntegerField(primary_key=True)
+    nombre_prevision = models.CharField(max_length=100)
+    id_tipo_prev = models.ForeignKey('TipoPrevision', models.DO_NOTHING, db_column='id_tipo_prev')
+
+    class Meta:
+        managed = True
+        db_table = 'prevision'
 
 class Paciente(models.Model):
-    run_paciente = models.OneToOneField('Usuario', models.DO_NOTHING, db_column='run_paciente', primary_key=True)
+    run_paciente = models.OneToOneField(Usuario, models.DO_NOTHING, db_column='run_paciente', primary_key=True)
     peso = models.DecimalField(max_digits=4, decimal_places=1, blank=True, null=True)
     talla = models.DecimalField(max_digits=4, decimal_places=1, blank=True, null=True)
     enfermedades = models.CharField(max_length=250, blank=True, null=True)
     medicacion_habitual = models.CharField(max_length=250, blank=True, null=True)
     cirugias = models.CharField(max_length=250, blank=True, null=True)
     observaciones = models.CharField(max_length=250, blank=True, null=True)
-    id_prevision = models.ForeignKey('Prevision', models.DO_NOTHING, db_column='id_prevision')
+    id_prevision = models.ForeignKey(Prevision, models.DO_NOTHING, db_column='id_prevision')
     imc = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
 
     class Meta:
         managed = True
         db_table = 'paciente'
-
 
 class PerfilUsuario(models.Model):
     id_perfil = models.BigIntegerField(primary_key=True)
@@ -244,19 +258,8 @@ class PerfilUsuario(models.Model):
         managed = False
         db_table = 'perfil_usuario'
 
-
-class Prevision(models.Model):
-    id_prevision = models.BigIntegerField(primary_key=True)
-    nombre_prevision = models.CharField(max_length=100)
-    id_tipo_prev = models.ForeignKey('TipoPrevision', models.DO_NOTHING, db_column='id_tipo_prev')
-
-    class Meta:
-        managed = False
-        db_table = 'prevision'
-
-
 class Recepcionista(models.Model):
-    run_recepcionista = models.OneToOneField('Usuario', models.DO_NOTHING, db_column='run_recepcionista', primary_key=True)
+    run_recepcionista = models.OneToOneField(Usuario, models.DO_NOTHING, db_column='run_recepcionista', primary_key=True)
     fecha_ingreso = models.DateField()
     
     sueldo = models.BigIntegerField()
@@ -276,7 +279,6 @@ class Receta(models.Model):
         managed = False
         db_table = 'receta'
 
-
 class Region(models.Model):
     id_region = models.BigIntegerField(primary_key=True)
     nombre_region = models.CharField(max_length=100)
@@ -284,7 +286,6 @@ class Region(models.Model):
     class Meta:
         managed = False
         db_table = 'region'
-
 
 class Reporte(models.Model):
     id_reporte = models.BigIntegerField(primary_key=True)
@@ -294,7 +295,6 @@ class Reporte(models.Model):
         managed = False
         db_table = 'reporte'
 
-
 class ResultadoExamen(models.Model):
     run_paciente = models.ForeignKey(Paciente, models.DO_NOTHING, db_column='run_paciente', blank=True, null=True)
     archivo = models.TextField()
@@ -302,7 +302,6 @@ class ResultadoExamen(models.Model):
     class Meta:
         managed = False
         db_table = 'resultado_examen'
-
 
 class Telefono(models.Model):
     id_telefono = models.BigAutoField(primary_key=True)
@@ -312,7 +311,6 @@ class Telefono(models.Model):
     class Meta:
         managed = False
         db_table = 'telefono'
-
 
 class TelefonoUsuario(models.Model):
     id_telefono = models.OneToOneField('Telefono', models.DO_NOTHING, db_column='id_telefono', primary_key=True)
@@ -377,25 +375,3 @@ class TipoTelefono(models.Model):
         managed = False
         db_table = 'tipo_telefono'
 
-
-class Usuario(models.Model):
-    run = models.BigIntegerField(primary_key=True)
-    dv = models.CharField(max_length=1)
-    p_nombre = models.CharField(max_length=100)
-    nombre_social = models.CharField(max_length=100, blank=True, null=True)
-    s_nombre = models.CharField(max_length=100, blank=True, null=True)
-    apellido_pa = models.CharField(max_length=100)
-    apellido_ma = models.CharField(max_length=100)
-    direccion = models.CharField(max_length=100)
-    correo = models.CharField(max_length=100)
-    fecha_nac = models.DateField()
-    contrasena = models.CharField(max_length=32)
-    id_estado = models.ForeignKey(EstadoCivil, models.DO_NOTHING, db_column='id_estado')
-    id_genero = models.ForeignKey(Genero, models.DO_NOTHING, db_column='id_genero')
-    id_nacionalidad = models.ForeignKey(Nacionalidad, models.DO_NOTHING, db_column='id_nacionalidad')
-    id_comuna = models.ForeignKey(Comuna, models.DO_NOTHING, db_column='id_comuna')
-    id_perfil = models.ForeignKey(PerfilUsuario, models.DO_NOTHING, db_column='id_perfil')
-
-    class Meta:
-        managed = True
-        db_table = 'usuario'

@@ -23,7 +23,7 @@ urlpatterns = [
     path('medico/',include('modulo_medico.urls')),
     path('recepcion/',include('modulo_recepcion.urls')),
     path('paciente/',include('modulo_paciente.urls')),
-    path('inicio/',include('modulo_inicio.urls'))
+    path('inicio/',include('modulo_inicio.urls')),
     path('administracion/',include('modulo_admin.urls')),
 ]
 if settings.DEBUG:

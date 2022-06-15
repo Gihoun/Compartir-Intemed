@@ -3,8 +3,8 @@ from multiprocessing.sharedctypes import Array
 from select import select
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from .models import Comuna, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono
-from .models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato, Alergia, DetalleAlergia
+from modulo_admin.models import Comuna, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono
+from modulo_admin.models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato, Alergia, DetalleAlergia
 from django.contrib.auth import authenticate,logout,login
 from django.contrib.auth.decorators import login_required,permission_required
 from django.views.decorators.csrf import csrf_protect
