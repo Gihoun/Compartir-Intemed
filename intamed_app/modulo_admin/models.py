@@ -7,8 +7,13 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class Usuario(models.Model):
+    
     run = models.BigIntegerField(primary_key=True)
     dv = models.CharField(max_length=1)
     p_nombre = models.CharField(max_length=100)
@@ -25,10 +30,13 @@ class Usuario(models.Model):
     id_nacionalidad = models.ForeignKey('Nacionalidad', models.DO_NOTHING, db_column='id_nacionalidad')
     id_comuna = models.ForeignKey('Comuna', models.DO_NOTHING, db_column='id_comuna')
     id_perfil = models.ForeignKey('PerfilUsuario', models.DO_NOTHING, db_column='id_perfil')
-
+    
     class Meta:
+        
         managed = True
         db_table = 'usuario'
+        
+
 
 class Administrador(models.Model):
     run_admin = models.OneToOneField('Usuario', models.DO_NOTHING, db_column='run_admin', primary_key=True)
