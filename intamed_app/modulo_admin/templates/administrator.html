@@ -21,13 +21,10 @@
         </button>
         {% csrf_token %}
           <ul id="select1" class="dropdown-menu"  >
-            <li><a id="1"  class="dropdown-item" href="#" value="2010">2010</a></li>
-            <li><a id="2" class="dropdown-item" href="#" value="2011"  >2011</a></li>
-            <li><a id="3" class="dropdown-item" href="#" value="2013" >2013</a></li>
-            <li><a id="4" class="dropdown-item" href="#" value="2014" >2014</a></li>
-            <li><a id="5" class="dropdown-item" href="#" value="2015" >2015</a></li>
-            <li><a id="6" class="dropdown-item" href="#" value="2016" >2016</a></li>
-            <li><a id="7" class="dropdown-item" href="#" value="2017" >2017</a></li>
+            {% for ye in annios %}
+            <li><a id="1"  class="dropdown-item" href="#" value="{{ye}}">{{ye}}</a></li>
+            {% endfor %}
+            
           </ul>
         </form>
       </div>
@@ -170,13 +167,18 @@
     var ma = "{{may}}";
     var jn = "{{jun}}";
     var ju = "{{jul}}";
+    var ago = "{{ago}}";
+    var sep = "{{sep}}";
+    var oct = "{{oct}}";
+    var nov = "{{nov}}";
+    var dic = "{{dic}}";
     var myLineChart = new Chart(ctxL, {
       type: 'line',
       data: {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
         datasets: [{
           label: "Atenciones concertadas",
-          data: [en, fe, ma, ab, ma, jn, ju],
+          data: [en, fe, ma, ab, ma, jn, ju, ago, sep, oct, nov, dic],
           backgroundColor: [
             'rgba(105, 0, 132, .2)',
           ],
@@ -187,7 +189,7 @@
         },
         {
           label: "Atenciones canceladas",
-          data: [0, 5, 20, 19, 13, 3, 22],
+          data: [0, 5, 20, 19, 13, 3, 22, 4, 7,8 ,9 , 6],
           backgroundColor: [
             'rgba(0, 137, 132, .2)',
           ],
@@ -223,10 +225,10 @@
             var myLineChart = new Chart(ctxL, {
                 type: 'line',
                 data: {
-                  labels: ["January", "February", "March", "April", "May", "June", "July"],
+                  labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
                   datasets: [{
                     label: "Atenciones concertadas",
-                    data: [response.ene, response.feb, response.mar, response.abr, response.may, response.jun, response.jul],
+                    data: [response.ene, response.feb, response.mar, response.abr, response.may, response.jun, response.jul, response.ago, response.sep, response.oct, response.nov, response.dic],
                     backgroundColor: [
                       'rgba(105, 0, 132, .2)',
                     ],
@@ -237,7 +239,7 @@
                   },
                   {
                     label: "Atenciones canceladas",
-                    data: [0, 5, 20, 19, 13, 3, 22],
+                    data: [0, 5, 20, 19, 13, 3, 22, 4, 7,8 ,9 , 6],
                     backgroundColor: [
                       'rgba(0, 137, 132, .2)',
                     ],

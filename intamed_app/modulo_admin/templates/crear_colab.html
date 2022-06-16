@@ -63,7 +63,11 @@
                     <label for="inputNac" class="form-label">Nacionalidad</label>
                     <select id="inputNac" name="inputNac" class="form-select ">
                     {% for x in nacionalidad %}
-                        <option  value="{{x.id_nacionalidad}}" selected>{{x.nombre_nac}}</option>
+                        {% if x.id_nacionalidad == 39 %}
+                            <option  value="{{x.id_nacionalidad}}" selected >{{x.nombre_nac}}</option>
+                        {% else %}
+                            <option  value="{{x.id_nacionalidad}}" >{{x.nombre_nac}}</option>
+                        {% endif %}
                     {% endfor %}
                     </select>
                 </div>

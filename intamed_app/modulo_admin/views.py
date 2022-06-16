@@ -4,10 +4,7 @@ from select import select
 from .metodos import *
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from .models import Comuna, DetalleAtencion, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, Usuario
-from .models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato, Alergia
-from .models import Prevision, TelefonoUsuario, Telefono, DetalleAlergia, TipoTelefono, Atencion, Farmaco
-from .models import Reporte
+from .models import *
 from django.contrib.auth import authenticate,logout,login
 from django.contrib.auth.decorators import login_required,permission_required
 from django.views.decorators.csrf import csrf_protect
@@ -23,7 +20,14 @@ def administrator(request):
     #Dash por Defecto
     logger = logging.getLogger(__name__)
     users_all = Usuario.objects.all().count()
+    annios = list(Atencion.objects.values_list("fecha_atencion__year"))
     
+    arr_annios=[]
+    
+    for a in annios:
+        if a[0] not in arr_annios:
+            arr_annios.append(a[0])
+    arr_annios.sort()
     if request.POST:
         annio = request.POST.get("annio")
         logger.warning(annio)
@@ -36,14 +40,25 @@ def administrator(request):
         ate_mes5 = ate_year.filter(fecha_atencion__month=5).count()
         ate_mes6 = ate_year.filter(fecha_atencion__month=6).count()
         ate_mes7 = ate_year.filter(fecha_atencion__month=7).count()
+        ate_mes8 = ate_year.filter(fecha_atencion__month=8).count()
+        ate_mes9 = ate_year.filter(fecha_atencion__month=9).count()
+        ate_mes10 = ate_year.filter(fecha_atencion__month=10).count()
+        ate_mes11 = ate_year.filter(fecha_atencion__month=11).count()
+        ate_mes12 = ate_year.filter(fecha_atencion__month=12).count()
         contexto1 = {"cant":users_all,
+                "annios":arr_annios,
                 "ene":ate_mes1,
                 "feb":ate_mes2,
                 "mar":ate_mes3,
                 "abr":ate_mes4,
                 "may":ate_mes5,
                 "jun":ate_mes6,
-                "jul":ate_mes7
+                "jul":ate_mes7,
+                "ago":ate_mes8,
+                "sep":ate_mes9,
+                "oct":ate_mes10,
+                "nov":ate_mes11,
+                "dic":ate_mes12
                 }
         return JsonResponse(contexto1, status=200)
         
@@ -56,14 +71,25 @@ def administrator(request):
         ate_mes5 = ate_year.filter(fecha_atencion__month=5).count()
         ate_mes6 = ate_year.filter(fecha_atencion__month=6).count()
         ate_mes7 = ate_year.filter(fecha_atencion__month=7).count()
+        ate_mes8 = ate_year.filter(fecha_atencion__month=8).count()
+        ate_mes9 = ate_year.filter(fecha_atencion__month=9).count()
+        ate_mes10 = ate_year.filter(fecha_atencion__month=10).count()
+        ate_mes11 = ate_year.filter(fecha_atencion__month=11).count()
+        ate_mes12 = ate_year.filter(fecha_atencion__month=12).count()
         contexto = {"cant":users_all,
+                    "annios":arr_annios,
                     "ene":ate_mes1,
                     "feb":ate_mes2,
                     "mar":ate_mes3,
                     "abr":ate_mes4,
                     "may":ate_mes5,
                     "jun":ate_mes6,
-                    "jul":ate_mes7
+                    "jul":ate_mes7,
+                    "ago":ate_mes8,
+                    "sep":ate_mes9,
+                    "oct":ate_mes10,
+                    "nov":ate_mes11,
+                    "dic":ate_mes12
                     }
     return render(request,"administrator.html",contexto)
 
@@ -362,8 +388,7 @@ def edit_colab(request,id):
         # Proceso de Modificación de los Campos
         flag ,usr = editar_usuario_gral(id, p_nom, s_nom, nom_soc, ap_pa, ap_ma, com_colab, dir_colab, correo_colab, nac_colab, fec_nac_colab, est_colab, gen_colab)
         if flag:
-            # despues del registro del usuario base
-            # se aplica logica para guardar su telefono en el caso de que tenga o que no tenga
+            
             flag2 , mensaje = save_tel_varios(id,arr_tel)
             print(f" la bandera segunda {flag2}")
             if flag2 == 3:
@@ -426,11 +451,11 @@ def vista_atenciones(request,id):
     
     arr_annios=[]
     arr_ids=[]
-    #print(ate_year.values_list("id_atencion"))
+    
     for a in annios:
         if a[0] not in arr_annios:
             arr_annios.append(a[0])
-    #print(arr_annios.sort())
+    
     ids = ate_year.values_list("id_atencion")
     for e in ids:
         arr_ids.append(e[0])
@@ -467,16 +492,10 @@ def vista_atenciones(request,id):
             sel=0
             r=0
         r="Reservado"
-        #ate_year = Atencion.objects.select_related('DetalleAtencion').filter(fecha_atencion__year=annio)
         contexto = {"atencion":ate_pac,"cantidad":cant_pac,"detalle":det_at_selected, "annios":arr_annios, "fecha":an,"selc": sel, "diag": r}
     else:
-        #det_at_selected=''
         det_at_selected = DetalleAtencion.objects.filter(id_atencion__in=arr_ids).select_related('run_paciente')
         sel= det_at_selected.values_list("run_paciente","id_atencion")
-        #for x in ate_year:
-        #    for y in sel:
-        #        if y[1] == x.id_atencion:
-        #            print(x.id_atencion , y[0])
         contexto = {"atencion":ate_year,"cantidad":atenciones_cant,"c_total":cant_tot, "detalle":det_at_selected,"annios":arr_annios,"fecha":id,"selc": sel}
     return render(request, 'atenciones.html', contexto)
 
@@ -499,6 +518,7 @@ def vista_newcolab(request):
     generos = Genero.objects.all()
     nacionalidades = Nacionalidad.objects.all()
     perfil = PerfilUsuario.objects.filter(id_perfil__in= arr_id)
+
     if request.POST:
         x = Usuario()
         y = Administrador()
@@ -516,60 +536,81 @@ def vista_newcolab(request):
         x.fecha_nac = request.POST.get('fechaNac')  
         x.contrasena = "temporal123"
         
-        pperfil = PerfilUsuario() 
-        pperfil.id_perfil = request.POST.get('inputPerfil')
+        # LLAMADA AL OBJETO PERFIL
+        id_p = request.POST.get('inputPerfil')
+        pperfil = PerfilUsuario.objects.get(id_perfil=id_p)
         x.id_perfil = pperfil
+        
+        # LLAMADA AL OBJETO NACIONALIDAD
+        id_nnac = request.POST.get('inputNac') 
+        nnacionalidad = Nacionalidad.objects.get(id_nacionalidad=id_nnac)
+        x.id_nacionalidad = nnacionalidad
 
-        if x.id_perfil == 1:
+        # LLAMADA AL OBJETO ESTADO CIVIL
+        id_estC = request.POST.get('inputEstadoCivil')
+        eestado = EstadoCivil.objects.get(id_estado=id_estC) 
+        x.id_estado = eestado
+
+        # LLAMADA AL OBJETO GENERO
+        id_ggen = request.POST.get('inputGenero')
+        ggenero = Genero.objects.get(id_genero=id_ggen)
+        x.id_genero = ggenero
+
+        # LLAMADA AL OBJETO COMUNA
+        id_ccom = request.POST.get('inputComuna')
+        ccomuna = Comuna.objects.get(id_comuna=id_ccom)
+        x.id_comuna = ccomuna
+
+        # LLAMADA AL OBJETO CONTRATO por defecto
+        contra = Contrato.objects.get(id_contrato=990)
+
+        if x.id_perfil_id == 1: ## admin
+
             y.fecha_ingreso = request.POST.get('fechaIng')
             y.sueldo = request.POST.get('inputSueldo')
-            y.id_contrato = 990
-        elif x.id_perfil == 2:
+            y.id_contrato = contra
+
+        elif x.id_perfil_id == 2: ## MEDICO
+            ag = Agenda.objects.get(id_agenda=999) ## por defecto
+            esp = Especialidad.objects.get(id_espec=1) ## por defecto
             w.fecha_ingreso = request.POST.get('fechaIng')
             w.sueldo = request.POST.get('inputSueldo')
             w.regimen_hrs = request.POST.get('inputRegimenHrs')
-            w.id_contrato = 990
-        elif x.id_perfil == 3:
+            w.id_contrato = contra
+            w.id_agenda = ag
+            w.id_espec = esp
+
+        elif x.id_perfil_id == 3: ## recepcion
+            
             z.fecha_ingreso = request.POST.get('fechaIng')
             z.sueldo = request.POST.get('inputSueldo')
-            z.id_contrato = 990
+            z.id_contrato = contra
 
-        nnacionalidad = Nacionalidad() 
-        nnacionalidad.id_nacionalidad = request.POST.get('inputNac')
-        x.id_nacionalidad = nnacionalidad
+        
 
-        eestado = EstadoCivil()
-        eestado.id_estado = request.POST.get('inputEstadoCivil')
-        x.id_estado = eestado
-
-        ggenero = Genero()
-        ggenero.id_genero = request.POST.get('inputGenero')
-        x.id_genero = ggenero
-
-        ccomuna = Comuna()
-        ccomuna.id_comuna = request.POST.get('inputComuna')
-        x.id_comuna = ccomuna
         if x.run is not None and x.dv is not None and x.p_nombre is not None and x.apellido_pa is not None and x.apellido_ma is not None and x.direccion is not None and x.correo is not None and x.contrasena:
             if x.run.strip() !='' and x.dv.strip() !='' and x.p_nombre.strip() !='' and x.apellido_pa.strip() !='' and x.apellido_ma.strip() !='' and x.direccion.strip() !='' and x.correo.strip() !='' and x.contrasena.strip() !='':
                 try:
-                    if x.id_perfil == 1:
-                        x.save()
-                        print("Colaborador Registrado")
+                    x.save()
+                    print("Colaborador Registrado")
+                    # SE CREA EL OBJETO USUARIO LISTO PARA SER VINCULADO
+                    user_obj = Usuario.objects.get(run=x.run)
+
+                    if x.id_perfil_id == 1:
+                        y.run_admin = user_obj
                         y.save()
                         print("Administrador Registrado")
-                    elif x.id_perfil == 2:
-                        x.save()
-                        print("Colaborador Registrado")
+                    elif x.id_perfil_id == 2:
+                        w.run_medico = user_obj
                         w.save()
                         print("Médico Registrado")
-                    elif x.id_perfil == 3:
-                        x.save()
-                        print("Colaborador Registrado")
+                    elif x.id_perfil_id == 3:
+                        z.run_recepcionista = user_obj
                         z.save()
                         print("Recepcionista Registrado")
                     else:
                         print("Colaborador Mal Registrado")
-                        print("Caiste dentro del Elseee")
+
                     contexto = {"estadoCivil":estado, "perfiles": perfil, "comuna":comunas, "genero": generos, "nacionalidad": nacionalidades}
                     return render(request,"crear_colab.html",contexto)
                 except:
