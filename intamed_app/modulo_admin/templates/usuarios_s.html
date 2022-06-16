@@ -17,6 +17,8 @@
                   {% csrf_token %}
                       <input class="form-control me-2" type="search" placeholder="RUT Colaborador" name="txbusqueda" aria-label="Search">
                       <button id="boton" class="btn btn-outline-primary" type="submit">Buscar</button>
+                      &nbsp;
+                      <button class="btn btn-outline-info" href="{% url 'crear_colab' %}" value="crear_colab">Nuevo</button>
               </form>
             <div></div>
         </div>

@@ -491,3 +491,92 @@ def vista_reportes(request):
     else:
         contexto = {"reportes":reportes,"cantidad":report_cant}
     return render(request, 'reportes.html', contexto)
+
+def vista_newcolab(request):
+    arr_id=[1,2,3]
+    comunas = Comuna.objects.all()
+    estado = EstadoCivil.objects.all()
+    generos = Genero.objects.all()
+    nacionalidades = Nacionalidad.objects.all()
+    perfil = PerfilUsuario.objects.filter(id_perfil__in= arr_id)
+    if request.POST:
+        x = Usuario()
+        y = Administrador()
+        w = Medico()
+        z = Recepcionista()
+        x.run = request.POST.get('inputRut')
+        x.dv = request.POST.get('inputDV')
+        x.p_nombre = request.POST.get('inputPNom')
+        x.nombre_social = request.POST.get('inputNomSoc')
+        x.s_nombre = request.POST.get('inputSNom')
+        x.apellido_pa = request.POST.get('inputAp')
+        x.apellido_ma = request.POST.get('inputAM')
+        x.direccion = request.POST.get('inputDir')
+        x.correo = request.POST.get('inputCorreo')
+        x.fecha_nac = request.POST.get('fechaNac')  
+        x.contrasena = "temporal123"
+        
+        pperfil = PerfilUsuario() 
+        pperfil.id_perfil = request.POST.get('inputPerfil')
+        x.id_perfil = pperfil
+
+        if x.id_perfil == 1:
+            y.fecha_ingreso = request.POST.get('fechaIng')
+            y.sueldo = request.POST.get('inputSueldo')
+            y.id_contrato = 990
+        elif x.id_perfil == 2:
+            w.fecha_ingreso = request.POST.get('fechaIng')
+            w.sueldo = request.POST.get('inputSueldo')
+            w.regimen_hrs = request.POST.get('inputRegimenHrs')
+            w.id_contrato = 990
+        elif x.id_perfil == 3:
+            z.fecha_ingreso = request.POST.get('fechaIng')
+            z.sueldo = request.POST.get('inputSueldo')
+            z.id_contrato = 990
+
+        nnacionalidad = Nacionalidad() 
+        nnacionalidad.id_nacionalidad = request.POST.get('inputNac')
+        x.id_nacionalidad = nnacionalidad
+
+        eestado = EstadoCivil()
+        eestado.id_estado = request.POST.get('inputEstadoCivil')
+        x.id_estado = eestado
+
+        ggenero = Genero()
+        ggenero.id_genero = request.POST.get('inputGenero')
+        x.id_genero = ggenero
+
+        ccomuna = Comuna()
+        ccomuna.id_comuna = request.POST.get('inputComuna')
+        x.id_comuna = ccomuna
+        if x.run is not None and x.dv is not None and x.p_nombre is not None and x.apellido_pa is not None and x.apellido_ma is not None and x.direccion is not None and x.correo is not None and x.contrasena:
+            if x.run.strip() !='' and x.dv.strip() !='' and x.p_nombre.strip() !='' and x.apellido_pa.strip() !='' and x.apellido_ma.strip() !='' and x.direccion.strip() !='' and x.correo.strip() !='' and x.contrasena.strip() !='':
+                try:
+                    if x.id_perfil == 1:
+                        x.save()
+                        print("Colaborador Registrado")
+                        y.save()
+                        print("Administrador Registrado")
+                    elif x.id_perfil == 2:
+                        x.save()
+                        print("Colaborador Registrado")
+                        w.save()
+                        print("Médico Registrado")
+                    elif x.id_perfil == 3:
+                        x.save()
+                        print("Colaborador Registrado")
+                        z.save()
+                        print("Recepcionista Registrado")
+                    else:
+                        print("Colaborador Mal Registrado")
+                        print("Caiste dentro del Elseee")
+                    contexto = {"estadoCivil":estado, "perfiles": perfil, "comuna":comunas, "genero": generos, "nacionalidad": nacionalidades}
+                    return render(request,"crear_colab.html",contexto)
+                except:
+                    print("Excepción 1")
+                    contexto = {"estadoCivil":estado, "perfiles": perfil, "comuna":comunas, "genero": generos, "nacionalidad": nacionalidades}
+                    return render(request,"crear_colab.html",contexto)
+    else:
+        print("Excepción 2")
+        contexto = {"estadoCivil":estado, "perfiles": perfil, "comuna":comunas, "genero": generos, "nacionalidad": nacionalidades}
+        return render(request,"crear_colab.html",contexto)
