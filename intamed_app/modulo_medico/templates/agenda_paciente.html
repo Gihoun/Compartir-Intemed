@@ -1,5 +1,7 @@
+{% extends "base_medico.html" %}
 {% load static %}
-<div class="row">
+{% block contenido %}
+ <div class="row">
   <div class="col-lg-11">
     <h2 class="text-center">Agenda Paciente</h2>
   </div>
@@ -35,18 +37,27 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th>Andrea Verdugo</th>
-            <td>29</td>
-            <td>12:00</td>
-            <td>NEW</td>
-          </tr>
-          <tr>
-            <th>Mauricio Candia</th>
-            <td>33</td>
-            <td>13:00</td>
-            <td>OLD</td>
-          </tr>
+          {% for pac in pacientes %}
+            <tr>
+              <th>{{pac.p_nombre}} {{pac.apellido_pa}} {{pac.apellido_ma}}</th>
+              <td class="edadPaciente text-start">{{pac.fecha_nac}}</td>
+              <td>horariomedico</td>
+              <td><a href={% url 'atePaciente' pac.run %}>Nuevo</a></td>
+            </tr>
+          {% endfor %}
+          <script>
+            edadP = document.getElementsByClassName('edadPaciente');
+            [...edadP].map(
+            e => e.textContent= calcularEdad (e.textContent) +' años');
+
+            function calcularEdad(cumple){
+              var cumple = new Date(cumple)
+              var fecha_Presente= Date.now() - cumple;
+              var ageDate = new Date(fecha_Presente); 
+              return Math.abs(ageDate.getUTCFullYear() - 1970);
+            }
+
+          </script>
         </tbody>
       </table>
     </div>
@@ -248,4 +259,5 @@
       </div>
     </div>
   </div>
-</div>
+</div> 
+{% endblock contenido %}

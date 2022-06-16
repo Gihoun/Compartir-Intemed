@@ -1,59 +1,73 @@
+{% extends "base_medico.html" %}
 {% load static %}
+{% block contenido %}
 <!-- Primera Atencion Paciente -->
 <h2 class="text-center fw-bolder mb-5">Atención Pacientes Nuevos</h2>
-<form class="row ">
+<form class="row">
+    {% csrf_token %}
     <!-- Datos Basicos del Paciente -->
     <div class="row mt-3">
         <div class="col-lg-2">
             <label for="inputRutpaciente" class="form-label fw-bolder">Rut Paciente</label>
-            <input type="text" class="form-control" id="inputRutpaciente" placeholder="Ingrese Rut">
+            <input type="text" class="form-control" id="inputRutpaciente" name="inputRutpaciente" placeholder="Ingrese Rut" value="{{paciente.run}}"  minlength="7" maxlength="8" readonly disabled>
         </div>
         <div class="col-lg-1">
             <label for="inputDV" class="form-label fw-bolder">DV</label>
-            <input type="text" class="form-control" id="inputDV" placeholder="Dv">
+            <input type="text" class="form-control" id="inputDV" name="inputDV" placeholder="Dv" value="{{paciente.dv}}" minlength="1" maxlength="1" readonly  disabled>
+        </div>
+        <div class="col-lg-3">
+            <label for="inputNsocial" class="form-label fw-bolder">N. Social</label>
+            <input type="text" class="form-control" id="inputNsocial" name="inputNsocial" placeholder="Nombre Social" minlength="2" maxlength="100" disabled>
         </div>
     </div>
     <div class="row mt-3">
         <div class="col-md-3">
             <label for="inputNombre" class="form-label fw-bolder">P. Nombre</label>
-            <input type="text" class="form-control" id="inputNombre" placeholder="Primer Nombre Paciente">
+            <input type="text" class="form-control" id="inputNombre" name="inputNombre" placeholder="Primer Nombre Paciente" value="{{paciente.p_nombre}}" minlength="2" maxlength="100" readonly disabled>
         </div>
         <div class="col-md-3">
             <label for="inputSNombre" class="form-label fw-bolder">S. Nombre</label>
-            <input type="text" class="form-control" id="inputSNombre" placeholder="Segundo Nombre Paciente">
+            <input type="text" class="form-control" id="inputSNombre" name="inputSNombre" placeholder="Segundo Nombre Paciente" value="{{paciente.s_nombre}}" maxlength="100" readonly disabled>
         </div>
         <div class="col-md-3">
             <label for="inputApellidop" class="form-label fw-bolder">Apellido P.</label>
-            <input type="text" class="form-control" id="inputApellidop" placeholder="Apellido Paterno">
+            <input type="text" class="form-control" id="inputApellidop" name="inputApellidop" placeholder="Apellido Paterno" value="{{paciente.apellido_pa}}" minlength="2" maxlength="100" readonly disabled>
         </div>
         <div class="col-md-3">
             <label for="inputApellidom" class="form-label fw-bolder">Apellido M.</label>
-            <input type="text" class="form-control" id="inputApellidom" placeholder="Apellido Materno">
+            <input type="text" class="form-control" id="inputApellidom" name="inputApellidom" placeholder="Apellido Materno" value="{{paciente.apellido_ma}}" minlength="2" maxlength="100" readonly disabled>
         </div>
     </div>
     <div class="row mt-3">
         <div class=" col-lg-3">
             <label for="inputcorreo" class="form-label fw-bolder">Correo Electrónico</label>
-            <input type="email" class="form-control" id="inputcorreo" placeholder="Ejemplo@correo.paciente">
+            <input type="email" class="form-control" id="inputcorreo" name="inputcorreo" placeholder="Ejemplo@correo.paciente" value="{{paciente.correo}}" minlength="5" maxlength="100" disabled>
         </div>
         <div class="col-lg-3">
             <label for="inputDireccion" class="form-label fw-bolder">Dirección</label>
-            <input type="text" class="form-control" id="inputDireccion" placeholder="Dirección">
+            <input type="text" class="form-control" id="inputDireccion" name="inputDireccion" placeholder="Dirección" value="{{paciente.direccion}}">
         </div>
         <div class="col-lg-3">
             <label for="inputcomuna" class="form-label fw-bolder">Comuna</label>
-            <input type="text" list="comunas" class="form-control" id="inputcomuna" placeholder="Comuna">
-            <datalist id="comunas">
+            <select id="inputComuna" name="inputComuna" class="form-select ">
                 {% for x in comunas %}
-                <option value="{{x.nombre_comuna}}"></option>
+                    {% if x.nombre_comuna == paciente.id_comuna.nombre_comuna %}
+                        <option selected>{{x.nombre_comuna}}</option>
+                    {% else %}
+                        <option>{{x.nombre_comuna}}</option>
+                    {% endif %}
                 {% endfor %}
-            </datalist>
+            </select>
         </div>
         <div class="col-md-3">
             <label for="inputEstado" class="form-label fw-bolder">Estado civil</label>
-            <select id="inputEstado" class="form-select ">
+            <select id="inputEstado" name="inputEstado" class="form-select">
                 {% for x in ECivil %}
-                <option>{{x.nombre_estado}}</option>
+                    {% if x.nombre_estado == paciente.id_estado.nombre_estado %}
+                    <option selected>{{x.nombre_estado}}</option>
+                    {% else %}
+                    <option>{{x.nombre_estado}}</option>
+                    {% endif %}
                 {% endfor %}
             </select>
         </div>
@@ -61,33 +75,33 @@
     <div class="row mt-3">
         <div class=" col-lg-2">
             <label for="inputNac" class="form-label fw-bolder">Nacionalidad</label>
-            <input type="text" class="form-control" id="inputNac" placeholder="Nacionalidad">
+            <input type="text" class="form-control" id="inputNac" name="inpucNac" placeholder="Nacionalidad" value="{{paciente.id_nacionalidad.nombre_nac}}" disabled>
         </div>
         <div class="col-lg-2">
-            <label for="inputNac" class="form-label fw-bolder">Fecha Nacimiento</label>
-            <input type="date" class="form-control" id="inputNac" placeholder="Fecha Nacimiento">
+            <label for="inputNac" class="form-label fw-bolder">Fecha Nac.</label>
+            <input type="date" class="form-control" id="inputFNac" name="inputFNac" placeholder="Fecha Nacimiento" value="{{paciente.fecha_nac}}" disabled>
         </div>
         <div class="col-lg-2">
             <label for="inputEdad" class="form-label fw-bolder">Edad</label>
-            <input type="number" class="form-control" id="inputEdad" placeholder="Edad Paciente">
+            <input type="number" class="form-control" id="inputEdad" name="inputEdad" placeholder="Edad Paciente" disabled>
         </div>
         <div class="col-lg-2">
             <label for="inputTalla" class="form-label fw-bolder">Talla</label>
-            <input type="number" class="form-control" id="inputTalla" placeholder="Talla Paciente (cm)">
+            <input type="number" class="form-control" id="inputTalla" name="inputTalla" placeholder="Talla Paciente (cm)">
         </div>
         <div class="col-lg-2">
             <label for="inputPeso" class="form-label fw-bolder">Peso</label>
-            <input type="number" class="form-control" id="inputPeso" placeholder="Peso Paciente (Kg)">
+            <input type="number" class="form-control" id="inputPeso" name="inputPeso" placeholder="Peso Paciente (Kg)">
         </div>
         <div class="col-lg-2">
             <label for="inputIMC" class="form-label fw-bolder">IMC</label>
-            <input type="number" class="form-control" id="inputIMC" placeholder="IMC Paciente" disabled>
+            <input type="number" class="form-control" id="inputIMC" name="inputIMC" placeholder="IMC Paciente">
         </div>
     </div>
     <div class="row mt-3">
         <div class="col-md-4">
             <label for="inputFono" class="form-label fw-bolder">Fono</label>
-            <input type="tel" class="form-control" id="inputFono" placeholder="Teléfono Paciente">
+            <input type="tel" class="form-control" id="inputFono" placeholder="Teléfono Paciente" value="{{telePac.id_telefono.num_telefono}}">
         </div>
         <div class="col-md-4">
             <label for="inputAlergia" class="form-label fw-bolder">Alergia</label>
@@ -151,10 +165,8 @@
         </div>
         <div class="col-md-3">
             <label for="inputPrev" class="form-label fw-bolder">Previsión</label>
-            <select id="inputPrev" class="form-select ">
-                {% for x in prevision %}
-                <option>{{x.nombre_prevision}}</option>
-                {% endfor %}
+            <select id="inputPrev" class="form-select " disabled>
+                <option>{{prevPaciente.id_prevision.nombre_prevision}}</option>
             </select>
         </div>
     </div>
@@ -265,4 +277,7 @@
             </svg>
         </button>
     </div>
-</form>
+</form>                    
+  
+{% endblock contenido %}
+

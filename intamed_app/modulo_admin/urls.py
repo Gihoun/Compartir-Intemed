@@ -16,4 +16,5 @@ urlpatterns = [
     path('panel/perfil',vista_perfil,name="perfilg"),
     path('panel/editar_perfil/<id>',edit_perfil,name="edit_perfil"),
     path('panel/reportes',vista_reportes,name="reportg")
+    
 ]
