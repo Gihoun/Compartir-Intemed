@@ -84,14 +84,14 @@ def filtro_pacientes(request):
     users_all = Usuario.objects.all()
     if request.POST:
         busqueda = request.POST.get("txbusqueda")
-        pac_ret = Usuario.objects.all().filter(run__startswith=busqueda, id_perfil=4)
+        pac_ret = Usuario.objects.all().filter(run__startswith=busqueda, id_perfil=4).select_related('paciente')
         cant_p = pac_ret.count()
         if cant_p>=1:
             contexto = {"usuarios":pac_ret,"cantidad":cant_p}
         else:
             contexto = {"usuarios":0,"cantidad":0}
     else:
-        users_pac = Usuario.objects.all().filter(id_perfil=4)[:25]
+        users_pac = Usuario.objects.all().filter(id_perfil=4).select_related('paciente')[:25]
         userp_cant = users_pac.count()
         contexto = {"usuarios":users_pac,"cantidad":userp_cant}
     return render(request, 'pacientes_s.html', contexto)
