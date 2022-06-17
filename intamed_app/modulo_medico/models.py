@@ -366,7 +366,6 @@ class TipoPrevision(models.Model):
         managed = False
         db_table = 'tipo_prevision'
 
-
 class TipoTelefono(models.Model):
     id_tipo_tel = models.BigIntegerField(primary_key=True)
     tipo_tel = models.CharField(max_length=100)

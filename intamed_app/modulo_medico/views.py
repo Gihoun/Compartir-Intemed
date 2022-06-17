@@ -1,6 +1,6 @@
+from array import array
 from multiprocessing import context
 from multiprocessing.sharedctypes import Array
-import re
 from select import select
 from django.shortcuts import render
 from django.contrib.auth.models import User
@@ -40,12 +40,18 @@ def inicio(request):
                 "nacionalidad": nacionalidades,
                 }
 
-    return render(request, "base_medico.html", contexto)
+    return render(request,"base_medico.html", contexto)
 
 def agenda(request):
-    pacientes = Usuario.objects.filter(id_perfil = 4)[:10]
+    array_paciente=[]
+    pacientes = Usuario.objects.filter(id_perfil = 4)[:20]
+    for x in pacientes:
+        array_paciente.append(x.run)
+
+
     contexto = {
         "pacientes":pacientes,
+        "antiguo":array_paciente
     }
     return render(request,"agenda_paciente.html",contexto)
 
