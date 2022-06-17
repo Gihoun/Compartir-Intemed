@@ -44,14 +44,21 @@ def inicio(request):
 
 def agenda(request):
     array_paciente=[]
+    array_antiguedad=[]
     pacientes = Usuario.objects.filter(id_perfil = 4)[:20]
     for x in pacientes:
         array_paciente.append(x.run)
-
-
+    for x in array_paciente:
+        ateExiste = DetalleAtencion.objects.filter(run_paciente=x)
+        cant = ateExiste.count()
+        if cant > 0:
+            array_antiguedad.append("Antiguo")          
+        else:
+            array_antiguedad.append("Nuevo")
+    zip(pacientes,array_antiguedad)
     contexto = {
         "pacientes":pacientes,
-        "antiguo":array_paciente
+        "antiguo":zip(pacientes,array_antiguedad),
     }
     return render(request,"agenda_paciente.html",contexto)
 
@@ -90,3 +97,10 @@ def atePaciente(request,id):
         
     }
     return render(request,"atencion_paciente.html",contexto)
+
+def consultaV(request):
+    return render(request,"consulta_paciente.html")
+def consultaP(request,id):
+    return render(request,"consulta_paciente.html")
+def examenesP(request):
+    return render(request,"examenes_paciente.html")    

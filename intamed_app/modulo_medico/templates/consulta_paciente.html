@@ -1,5 +1,6 @@
+{% extends "base_medico.html" %}
 {% load static %}
-<!-- Datos Basicos del Paciente consulta antigua -->
+{% block contenido %}
 <h2 class="text-center mb-5 fw-bolder">Consulta Pacientes</h2>
 <form class="row ">
     <!-- Datos Basicos del Paciente -->
@@ -67,7 +68,7 @@
         </div>
         <div class="col-lg-2">
             <label for="inputNac2" class="form-label fw-bolder">Fecha Nacimiento</label>
-            <input type="datetime-local"  class="form-control" id="inputNac2" placeholder="Fecha Nacimiento">
+            <input type="datetime-local" class="form-control" id="inputNac2" placeholder="Fecha Nacimiento">
         </div>
         <div class="col-lg-2">
             <label for="inputEdad2" class="form-label fw-bolder">Edad</label>
@@ -117,23 +118,29 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                    <div class="d-grid gap-2 d-md-block">
-                                        <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder" id="tipo_alergia1" 
-                                            onclick="validar_Alergia2(this.id)" value="Alergia 1">Alergia 1</button>
-                                        <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder" id="tipo_alergia2" 
-                                            onclick="validar_Alergia2(this.id)" value="Alergia 2">Alergia 2</button>
-                                        <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder" id="tipo_alergia3" 
-                                            onclick="validar_Alergia2(this.id)" value="Alergia 3">Alergia 3</button>
-                                        <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder" id="tipo_alergia4" 
-                                            onclick="validar_Alergia2(this.id)" value="Alergia 6">Alergia 6</button>
-                                        <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder" id="tipo_alergia5" 
-                                            onclick="validar_Alergia2(this.id)" value="Alergia 5">Alergia 5</button>
-                                        <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder" id="tipo_alergia_otro" 
-                                            onclick="desplegar_alergia2()">Otra Alergia</button>
-                                        <div class="m-2" id="auto_completar2" hidden>
-                                            <input type="text" class="form-control " id="auto_alergia2" placeholder="Ingrese una Alergia" oninput="validar_Alergia2(this.id)">
-                                        </div>
+                                <div class="d-grid gap-2 d-md-block">
+                                    <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder"
+                                        id="tipo_alergia1" onclick="validar_Alergia2(this.id)" value="Alergia 1">Alergia
+                                        1</button>
+                                    <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder"
+                                        id="tipo_alergia2" onclick="validar_Alergia2(this.id)" value="Alergia 2">Alergia
+                                        2</button>
+                                    <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder"
+                                        id="tipo_alergia3" onclick="validar_Alergia2(this.id)" value="Alergia 3">Alergia
+                                        3</button>
+                                    <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder"
+                                        id="tipo_alergia4" onclick="validar_Alergia2(this.id)" value="Alergia 6">Alergia
+                                        6</button>
+                                    <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder"
+                                        id="tipo_alergia5" onclick="validar_Alergia2(this.id)" value="Alergia 5">Alergia
+                                        5</button>
+                                    <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder"
+                                        id="tipo_alergia_otro" onclick="desplegar_alergia2()">Otra Alergia</button>
+                                    <div class="m-2" id="auto_completar2" hidden>
+                                        <input type="text" class="form-control " id="auto_alergia2"
+                                            placeholder="Ingrese una Alergia" oninput="validar_Alergia2(this.id)">
                                     </div>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar
@@ -150,31 +157,33 @@
         </div>
         <div class="col-md-3">
             <label for="inputPrev2" class="form-label fw-bolder">Previsión</label>
-            
+
             <select id="inputPrev2" class="form-select ">
                 {% for x in prevision %}
                 <option>{{x.nombre_prevision}}</option>
                 {% endfor %}
             </select>
-            
+
         </div>
     </div>
     <hr class="mt-5" style="color: grey" />
     <!-- Observaciones Receta y mas Modificaciones -->
     <ul class="nav nav-tabs mt-3" id="tabsObs2" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active fw-bolder" id="antecedente-tab" data-bs-toggle="tab" data-bs-target="#antecedente"
-                type="button" role="tab" aria-controls="antecedente" aria-selected="false">Antecedentes
+            <button class="nav-link active fw-bolder" id="antecedente-tab" data-bs-toggle="tab"
+                data-bs-target="#antecedente" type="button" role="tab" aria-controls="antecedente"
+                aria-selected="false">Antecedentes
                 Paciente</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link fw-bolder" id="observaciones2-tab" data-bs-toggle="tab" data-bs-target="#observaciones2"
-                type="button" role="tab" aria-controls="observaciones2" aria-selected="true">Nuevas
+            <button class="nav-link fw-bolder" id="observaciones2-tab" data-bs-toggle="tab"
+                data-bs-target="#observaciones2" type="button" role="tab" aria-controls="observaciones2"
+                aria-selected="true">Nuevas
                 Observaciones</button>
         </li>
         <li class="nav-item " role="presentation">
-            <button class="nav-link fw-bolder" id="farmaco2-tab" data-bs-toggle="tab" data-bs-target="#farmaco2" type="button"
-                role="tab" aria-controls="farmaco2" aria-selected="false">Fármacos</button>
+            <button class="nav-link fw-bolder" id="farmaco2-tab" data-bs-toggle="tab" data-bs-target="#farmaco2"
+                type="button" role="tab" aria-controls="farmaco2" aria-selected="false">Fármacos</button>
         </li>
         <li class="nav-item " role="presentation">
             <button class="nav-link fw-bolder" id="diagnotico2-tab" data-bs-toggle="tab" data-bs-target="#diagnostico2"
@@ -209,10 +218,10 @@
                             </td>
                             <td>
                                 <textarea name="hst_clinico" id="hst_clinico" cols="30" rows="3" disabled
-                                style="resize: none;"></textarea>
+                                    style="resize: none;"></textarea>
                             </td>
                         </tr>
-                       
+
                     </tbody>
                 </table>
             </div>
@@ -248,7 +257,7 @@
                             </select>
                         </td>
                         <td>
-                            <button class="mt-1" type="button" id="eliminarFar2" onclick="delete_row2()" ><svg
+                            <button class="mt-1" type="button" id="eliminarFar2" onclick="delete_row2()"><svg
                                     xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-trash3" viewBox="0 0 16 16">
                                     <path
@@ -323,18 +332,30 @@
         </div>
     </div>
     <div class="col-12 mt-5 text-end">
-        <button type="submit" class="btn btn-success fs-6"> Registrar Nueva Atención <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-          </svg>
+        <button type="submit" class="btn btn-success fs-6"> Registrar Nueva Atención <svg
+                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                <path
+                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+            </svg>
         </button>
-        <button type="button" class="btn btn-secondary fs-6"> Generar Certificado <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
-            <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0z"/>
-          </svg>
+        <button type="button" class="btn btn-secondary fs-6"> Generar Certificado <svg
+                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
+                <path
+                    d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0z" />
+            </svg>
         </button>
-        <button type="button" class="btn btn-secondary fs-6">Generar Orden de Exámen <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-pdf-fill" viewBox="0 0 16 16">
-            <path d="M5.523 12.424c.14-.082.293-.162.459-.238a7.878 7.878 0 0 1-.45.606c-.28.337-.498.516-.635.572a.266.266 0 0 1-.035.012.282.282 0 0 1-.026-.044c-.056-.11-.054-.216.04-.36.106-.165.319-.354.647-.548zm2.455-1.647c-.119.025-.237.05-.356.078a21.148 21.148 0 0 0 .5-1.05 12.045 12.045 0 0 0 .51.858c-.217.032-.436.07-.654.114zm2.525.939a3.881 3.881 0 0 1-.435-.41c.228.005.434.022.612.054.317.057.466.147.518.209a.095.095 0 0 1 .026.064.436.436 0 0 1-.06.2.307.307 0 0 1-.094.124.107.107 0 0 1-.069.015c-.09-.003-.258-.066-.498-.256zM8.278 6.97c-.04.244-.108.524-.2.829a4.86 4.86 0 0 1-.089-.346c-.076-.353-.087-.63-.046-.822.038-.177.11-.248.196-.283a.517.517 0 0 1 .145-.04c.013.03.028.092.032.198.005.122-.007.277-.038.465z"/>
-            <path fill-rule="evenodd" d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm5.5 1.5v2a1 1 0 0 0 1 1h2l-3-3zM4.165 13.668c.09.18.23.343.438.419.207.075.412.04.58-.03.318-.13.635-.436.926-.786.333-.401.683-.927 1.021-1.51a11.651 11.651 0 0 1 1.997-.406c.3.383.61.713.91.95.28.22.603.403.934.417a.856.856 0 0 0 .51-.138c.155-.101.27-.247.354-.416.09-.181.145-.37.138-.563a.844.844 0 0 0-.2-.518c-.226-.27-.596-.4-.96-.465a5.76 5.76 0 0 0-1.335-.05 10.954 10.954 0 0 1-.98-1.686c.25-.66.437-1.284.52-1.794.036-.218.055-.426.048-.614a1.238 1.238 0 0 0-.127-.538.7.7 0 0 0-.477-.365c-.202-.043-.41 0-.601.077-.377.15-.576.47-.651.823-.073.34-.04.736.046 1.136.088.406.238.848.43 1.295a19.697 19.697 0 0 1-1.062 2.227 7.662 7.662 0 0 0-1.482.645c-.37.22-.699.48-.897.787-.21.326-.275.714-.08 1.103z"/>
-          </svg>
+        <button type="button" class="btn btn-secondary fs-6">Generar Orden de Exámen <svg
+                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-file-earmark-pdf-fill" viewBox="0 0 16 16">
+                <path
+                    d="M5.523 12.424c.14-.082.293-.162.459-.238a7.878 7.878 0 0 1-.45.606c-.28.337-.498.516-.635.572a.266.266 0 0 1-.035.012.282.282 0 0 1-.026-.044c-.056-.11-.054-.216.04-.36.106-.165.319-.354.647-.548zm2.455-1.647c-.119.025-.237.05-.356.078a21.148 21.148 0 0 0 .5-1.05 12.045 12.045 0 0 0 .51.858c-.217.032-.436.07-.654.114zm2.525.939a3.881 3.881 0 0 1-.435-.41c.228.005.434.022.612.054.317.057.466.147.518.209a.095.095 0 0 1 .026.064.436.436 0 0 1-.06.2.307.307 0 0 1-.094.124.107.107 0 0 1-.069.015c-.09-.003-.258-.066-.498-.256zM8.278 6.97c-.04.244-.108.524-.2.829a4.86 4.86 0 0 1-.089-.346c-.076-.353-.087-.63-.046-.822.038-.177.11-.248.196-.283a.517.517 0 0 1 .145-.04c.013.03.028.092.032.198.005.122-.007.277-.038.465z" />
+                <path fill-rule="evenodd"
+                    d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm5.5 1.5v2a1 1 0 0 0 1 1h2l-3-3zM4.165 13.668c.09.18.23.343.438.419.207.075.412.04.58-.03.318-.13.635-.436.926-.786.333-.401.683-.927 1.021-1.51a11.651 11.651 0 0 1 1.997-.406c.3.383.61.713.91.95.28.22.603.403.934.417a.856.856 0 0 0 .51-.138c.155-.101.27-.247.354-.416.09-.181.145-.37.138-.563a.844.844 0 0 0-.2-.518c-.226-.27-.596-.4-.96-.465a5.76 5.76 0 0 0-1.335-.05 10.954 10.954 0 0 1-.98-1.686c.25-.66.437-1.284.52-1.794.036-.218.055-.426.048-.614a1.238 1.238 0 0 0-.127-.538.7.7 0 0 0-.477-.365c-.202-.043-.41 0-.601.077-.377.15-.576.47-.651.823-.073.34-.04.736.046 1.136.088.406.238.848.43 1.295a19.697 19.697 0 0 1-1.062 2.227 7.662 7.662 0 0 0-1.482.645c-.37.22-.699.48-.897.787-.21.326-.275.714-.08 1.103z" />
+            </svg>
         </button>
     </div>
 </form>
+{% endblock contenido %}
+<!-- Datos Basicos del Paciente consulta antigua -->

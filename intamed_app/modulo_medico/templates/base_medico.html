@@ -19,10 +19,12 @@
         <nav class="navbar navbar-expand-xl navbar-light border p-md-3">
             <div class="container">
                 <a class="navbar-brand" href="#">Intemed</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                    aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-    
+
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <div class="mx-auto"></div>
                     <ul class="navbar-nav hstack gap-3">
@@ -45,7 +47,7 @@
                 </div>
             </div>
         </nav>
-    </header>  
+    </header>
     <!-- Banner -->
     {% include "banner_medico.html" %}
     <!-- Contenido del medico -->
@@ -53,85 +55,90 @@
         <div class="d-flex">
             <!-- Tabla de navegacion vertical  -->
             <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <a href="{% url 'agenda_pa' %}" style="text-decoration: none;"><button class="nav-link active border m-3  btn btn-primary fw-semibold fst-italic" id="v-pills-agenda-tab"
-                    data-bs-toggle="pill" data-bs-target="#v-pills-agenda" type="button" role="tab"
-                    aria-controls="v-pills-agenda" aria-selected="true">
+                <a href="{% url 'agenda_pa' %}" style="text-decoration: none;"><button
+                        class="nav-link border m-3  btn btn-primary fw-semibold fst-italic"
+                        id="v-pills-agenda-tab" data-bs-toggle="pill" data-bs-target="#v-pills-agenda" type="button"
+                        role="tab" aria-controls="v-pills-agenda" aria-selected="true">
+                        <div class="row align-items-center">
+                            <div class="col-3 ">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    class="bi bi-calendar-event-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zm-3.5-7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z" />
+                                </svg>
+                            </div>
+                            <div class="col-9 text-center overflow-hidden">
+                                Agenda Médica
+                            </div>
+                        </div>
+                    </button>
+                </a>
+                <button class="nav-link border m-3 btn btn-info fw-semibold fst-italic" id="v-pills-atencion-tab"
+                    data-bs-toggle="pill" data-bs-target="#v-pills-atencion" type="button" role="tab"
+                    aria-controls="v-pills-atencion" aria-selected="false" hidden>
                     <div class="row align-items-center">
                         <div class="col-3 ">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-calendar-event-fill" viewBox="0 0 16 16">
-                                <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zm-3.5-7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z"/>
-                              </svg>
-                        </div>
-                        <div class="col-9 text-center overflow-hidden">
-                            Agenda Médica
-                        </div>
-                    </div>
-                </button></a>
-                <button class="nav-link border m-3 btn btn-info fw-semibold fst-italic" id="v-pills-atencion-tab" data-bs-toggle="pill"
-                    data-bs-target="#v-pills-atencion" type="button" role="tab" aria-controls="v-pills-atencion"
-                    aria-selected="false" hidden>
-                    <div class="row align-items-center">
-                        <div class="col-3 ">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
-                                <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                                <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
-                              </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+                                <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                <path fill-rule="evenodd"
+                                    d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
+                            </svg>
                         </div>
                         <div class="col-9 text-center overflow-hidden">
                             Atención Paciente
                         </div>
-                    </div>                  
-                </button>
-                <button class="nav-link border m-3 btn btn-primary fw-semibold fst-italic" id="v-pills-buscarpac-tab" data-bs-toggle="pill"
-                    data-bs-target="#v-pills-buscarpac" type="button" role="tab" aria-controls="v-pills-buscarpac"
-                    aria-selected="false">
-                    <div class="row align-items-center">
-                        <div class="col-3 ">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
-                                <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"/>
-                              </svg>
-                        </div>
-                        <div class="col-9 text-center overflow-hidden">
-                            Consulta Paciente
-                        </div>
                     </div>
                 </button>
-                <button class="nav-link border m-3 btn btn-primary fw-semibold fst-italic" id="v-pills-examen-tab" data-bs-toggle="pill"
-                    data-bs-target="#v-pills-examen" type="button" role="tab" aria-controls="v-pills-examen"
-                    aria-selected="false">
-                    <div class="row align-items-center">
-                        <div class="col-3 ">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-file-pdf-fill" viewBox="0 0 16 16">
-                                <path d="M5.523 10.424c.14-.082.293-.162.459-.238a7.878 7.878 0 0 1-.45.606c-.28.337-.498.516-.635.572a.266.266 0 0 1-.035.012.282.282 0 0 1-.026-.044c-.056-.11-.054-.216.04-.36.106-.165.319-.354.647-.548zm2.455-1.647c-.119.025-.237.05-.356.078a21.035 21.035 0 0 0 .5-1.05 11.96 11.96 0 0 0 .51.858c-.217.032-.436.07-.654.114zm2.525.939a3.888 3.888 0 0 1-.435-.41c.228.005.434.022.612.054.317.057.466.147.518.209a.095.095 0 0 1 .026.064.436.436 0 0 1-.06.2.307.307 0 0 1-.094.124.107.107 0 0 1-.069.015c-.09-.003-.258-.066-.498-.256zM8.278 4.97c-.04.244-.108.524-.2.829a4.86 4.86 0 0 1-.089-.346c-.076-.353-.087-.63-.046-.822.038-.177.11-.248.196-.283a.517.517 0 0 1 .145-.04c.013.03.028.092.032.198.005.122-.007.277-.038.465z"/>
-                                <path fill-rule="evenodd" d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm.165 11.668c.09.18.23.343.438.419.207.075.412.04.58-.03.318-.13.635-.436.926-.786.333-.401.683-.927 1.021-1.51a11.64 11.64 0 0 1 1.997-.406c.3.383.61.713.91.95.28.22.603.403.934.417a.856.856 0 0 0 .51-.138c.155-.101.27-.247.354-.416.09-.181.145-.37.138-.563a.844.844 0 0 0-.2-.518c-.226-.27-.596-.4-.96-.465a5.76 5.76 0 0 0-1.335-.05 10.954 10.954 0 0 1-.98-1.686c.25-.66.437-1.284.52-1.794.036-.218.055-.426.048-.614a1.238 1.238 0 0 0-.127-.538.7.7 0 0 0-.477-.365c-.202-.043-.41 0-.601.077-.377.15-.576.47-.651.823-.073.34-.04.736.046 1.136.088.406.238.848.43 1.295a19.707 19.707 0 0 1-1.062 2.227 7.662 7.662 0 0 0-1.482.645c-.37.22-.699.48-.897.787-.21.326-.275.714-.08 1.103z"/>
-                              </svg>
+                <a href="{% url 'consulta' %}" style="text-decoration: none;">
+                    <button class="nav-link border m-3 btn btn-primary fw-semibold fst-italic"
+                        id="v-pills-buscarpac-tab" data-bs-toggle="pill" data-bs-target="#v-pills-buscarpac"
+                        type="button" role="tab" aria-controls="v-pills-buscarpac" aria-selected="false">
+                        <div class="row align-items-center">
+                            <div class="col-3 ">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z" />
+                                </svg>
+                            </div>
+                            <div class="col-9 text-center overflow-hidden">
+                                Consulta Paciente
+                            </div>
                         </div>
-                        <div class="col-9 text-center overflow-hidden">
-                            Exámenes
+                    </button>
+                </a>
+                <a href="{% url 'examenesP' %}" style="text-decoration: none;">
+                    <button class="nav-link border m-3 btn btn-primary fw-semibold fst-italic" id="v-pills-examen-tab"
+                        data-bs-toggle="pill" data-bs-target="#v-pills-examen" type="button" role="tab"
+                        aria-controls="v-pills-examen" aria-selected="false">
+                        <div class="row align-items-center">
+                            <div class="col-3 ">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    class="bi bi-file-pdf-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M5.523 10.424c.14-.082.293-.162.459-.238a7.878 7.878 0 0 1-.45.606c-.28.337-.498.516-.635.572a.266.266 0 0 1-.035.012.282.282 0 0 1-.026-.044c-.056-.11-.054-.216.04-.36.106-.165.319-.354.647-.548zm2.455-1.647c-.119.025-.237.05-.356.078a21.035 21.035 0 0 0 .5-1.05 11.96 11.96 0 0 0 .51.858c-.217.032-.436.07-.654.114zm2.525.939a3.888 3.888 0 0 1-.435-.41c.228.005.434.022.612.054.317.057.466.147.518.209a.095.095 0 0 1 .026.064.436.436 0 0 1-.06.2.307.307 0 0 1-.094.124.107.107 0 0 1-.069.015c-.09-.003-.258-.066-.498-.256zM8.278 4.97c-.04.244-.108.524-.2.829a4.86 4.86 0 0 1-.089-.346c-.076-.353-.087-.63-.046-.822.038-.177.11-.248.196-.283a.517.517 0 0 1 .145-.04c.013.03.028.092.032.198.005.122-.007.277-.038.465z" />
+                                    <path fill-rule="evenodd"
+                                        d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm.165 11.668c.09.18.23.343.438.419.207.075.412.04.58-.03.318-.13.635-.436.926-.786.333-.401.683-.927 1.021-1.51a11.64 11.64 0 0 1 1.997-.406c.3.383.61.713.91.95.28.22.603.403.934.417a.856.856 0 0 0 .51-.138c.155-.101.27-.247.354-.416.09-.181.145-.37.138-.563a.844.844 0 0 0-.2-.518c-.226-.27-.596-.4-.96-.465a5.76 5.76 0 0 0-1.335-.05 10.954 10.954 0 0 1-.98-1.686c.25-.66.437-1.284.52-1.794.036-.218.055-.426.048-.614a1.238 1.238 0 0 0-.127-.538.7.7 0 0 0-.477-.365c-.202-.043-.41 0-.601.077-.377.15-.576.47-.651.823-.073.34-.04.736.046 1.136.088.406.238.848.43 1.295a19.707 19.707 0 0 1-1.062 2.227 7.662 7.662 0 0 0-1.482.645c-.37.22-.699.48-.897.787-.21.326-.275.714-.08 1.103z" />
+                                </svg>
+                            </div>
+                            <div class="col-9 text-center overflow-hidden">
+                                Exámenes
+                            </div>
                         </div>
-                    </div>
-                </button>
+                    </button>
+                    </a>
+
             </div>
             <!-- Contenido de los tab de cada tabla -->
             <div class="tab-content  container-fluid p-4" id="v-pills-tabContent">
                 <div class="tab-pane fade show active container-fluid" id="v-pills-agenda" role="tabpanel"
                     aria-labelledby="v-pills-agenda-tab">
                     {% block contenido %}
-                      
+
                     {% endblock contenido %}
                 </div>
-                <!-- Primera Atencion Paciente -->
-                <!-- Datos Basicos del Paciente consulta antigua -->
-                <div class="tab-pane fade container-fluid p-4" id="v-pills-buscarpac" role="tabpanel"
-                    aria-labelledby="v-pills-buscarpac-tab">
-                   
-                </div>
-                <!-- Lista de Examenes por Paciente -->
-                <div class="tab-pane fade" id="v-pills-examen" role="tabpanel" aria-labelledby="v-pills-examen-tab">
-                  
-                </div>
             </div>
-        </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"

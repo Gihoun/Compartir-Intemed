@@ -10,7 +10,7 @@
       <img class="w-100" src="{% static 'img/calendario.jpg' %}" alt="" height="300px">
     </div>
     <div class="col-6">
-      <div id="fecha"></div>
+      <div name="fechaAgenda" id="fecha" ></div>
     </div>
   </div>
 </div>
@@ -37,14 +37,18 @@
           </tr>
         </thead>
         <tbody>
-          {% for pac in pacientes %}
-            <tr>
-              <th>{{pac.p_nombre}} {{pac.apellido_pa}} {{pac.apellido_ma}}</th>
-              <td class="edadPaciente text-start">{{pac.fecha_nac}}</td>
-              <td>horariomedico</td>
-              <td><a href={% url 'atePaciente' pac.run %}>Nuevo</a></td>
-            </tr>
-          {% endfor %}
+          {% for pac,x in antiguo %}       
+              <tr>
+                <th>{{pac.p_nombre}} {{pac.apellido_pa}} {{pac.apellido_ma}}</th>
+                <td class="edadPaciente text-start">{{pac.fecha_nac}}</td>
+                <td>Work in Porgress</td>
+                {% if x == "Nuevo"  %}
+                <td><a href="{% url 'atePaciente' pac.run %}">{{x}}</a></td>                
+                {% else %}
+                <td><a href="{% url 'consultaP' pac.run %}">{{x}}</a></td>              
+                {% endif %}
+              </tr> 
+            {% endfor %}
           <script>
             edadP = document.getElementsByClassName('edadPaciente');
             [...edadP].map(
@@ -56,7 +60,6 @@
               var ageDate = new Date(fecha_Presente); 
               return Math.abs(ageDate.getUTCFullYear() - 1970);
             }
-
           </script>
         </tbody>
       </table>
@@ -82,22 +85,6 @@
                 <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
                 10:30 - 11:30
               </li>
-              <li class="list-group-item">
-                <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                11:30 - 12:30
-              </li>
-              <li class="list-group-item">
-                <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                13:30 - 14:30
-              </li>
-              <li class="list-group-item">
-                <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                16:30 - 17:30
-              </li>
-              <li class="list-group-item">
-                <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                18:30 - 19:30
-              </li>
             </ul>
           </div>
         </div>
@@ -118,22 +105,6 @@
                 <li class="list-group-item">
                   <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
                   10:30 - 11:30
-                </li>
-                <li class="list-group-item">
-                  <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                  11:30 - 12:30
-                </li>
-                <li class="list-group-item">
-                  <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                  13:30 - 14:30
-                </li>
-                <li class="list-group-item">
-                  <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                  16:30 - 17:30
-                </li>
-                <li class="list-group-item">
-                  <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                  18:30 - 19:30
                 </li>
               </ul>
             </div>
@@ -157,22 +128,6 @@
                     <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
                     10:30 - 11:30
                   </li>
-                  <li class="list-group-item">
-                    <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                    11:30 - 12:30
-                  </li>
-                  <li class="list-group-item">
-                    <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                    13:30 - 14:30
-                  </li>
-                  <li class="list-group-item">
-                    <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                    16:30 - 17:30
-                  </li>
-                  <li class="list-group-item">
-                    <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                    18:30 - 19:30
-                  </li>
                 </ul>
               </div>
             </div>
@@ -195,22 +150,6 @@
                       <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
                       10:30 - 11:30
                     </li>
-                    <li class="list-group-item">
-                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                      11:30 - 12:30
-                    </li>
-                    <li class="list-group-item">
-                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                      13:30 - 14:30
-                    </li>
-                    <li class="list-group-item">
-                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                      16:30 - 17:30
-                    </li>
-                    <li class="list-group-item">
-                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                      18:30 - 19:30
-                    </li>
                   </ul>
                 </div>
               </div>
@@ -232,22 +171,6 @@
                       <li class="list-group-item">
                         <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
                         10:30 - 11:30
-                      </li>
-                      <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                        11:30 - 12:30
-                      </li>
-                      <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                        13:30 - 14:30
-                      </li>
-                      <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                        16:30 - 17:30
-                      </li>
-                      <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                        18:30 - 19:30
                       </li>
                     </ul>
                   </div>

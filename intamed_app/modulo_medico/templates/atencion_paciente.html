@@ -83,7 +83,20 @@
         </div>
         <div class="col-lg-2">
             <label for="inputEdad" class="form-label fw-bolder">Edad</label>
-            <input type="number" class="form-control" id="inputEdad" name="inputEdad" placeholder="Edad Paciente" disabled>
+            <input type="number" class="form-control" id="inputEdad" name="inputEdad" placeholder="Edad Paciente" value="" disabled>
+            <script>
+                edadP = document.getElementsByClassName('inputFNac');
+                
+                [edadP].map(
+                e => e.textContent= calcularEdad (e.textContent) +' años');
+    
+                function calcularEdad(cumple){
+                  var cumple = new Date(cumple)
+                  var fecha_Presente= Date.now() - cumple;
+                  var ageDate = new Date(fecha_Presente); 
+                  return Math.abs(ageDate.getUTCFullYear() - 1970);
+                }
+              </script>
         </div>
         <div class="col-lg-2">
             <label for="inputTalla" class="form-label fw-bolder">Talla</label>
