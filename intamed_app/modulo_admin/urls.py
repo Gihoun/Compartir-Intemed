@@ -3,6 +3,7 @@ from django.urls import path
 
 from .views import administrator, filtro_usuarios, vista_farmaco, filtro_pacientes, edit_paciente, edit_farmaco
 from .views import vista_perfil, edit_perfil, edit_colab, vista_atenciones, vista_reportes, vista_newcolab
+from .views import vista_newdrug, vista_newperfil, vista_newpac
 
 urlpatterns = [   
     path('panel/',administrator,name="Dash"),
@@ -16,5 +17,8 @@ urlpatterns = [
     path('panel/perfil',vista_perfil,name="perfilg"),
     path('panel/editar_perfil/<id>',edit_perfil,name="edit_perfil"),
     path('panel/reportes',vista_reportes,name="reportg"),
-    path('panel/crear_colab',vista_newcolab , name="crear_colab")
+    path('panel/crear_colab',vista_newcolab , name="crear_colab"),
+    path('panel/crear_farma',vista_newdrug , name="crear_farma"),
+    path('panel/crear_perfil',vista_newperfil , name="crear_perfil"),
+    path('panel/crear_pac',vista_newpac , name="crear_pac")
 ]

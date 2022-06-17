@@ -11,7 +11,7 @@
         <form class="row " action="{% url 'edit_farma' farmaco.id_farmaco %}" method="POST" enctype="multipart/form-data" onsubmit="val_modificacion()" >
             {% csrf_token %}
             <!-- Datos de farmaco-->
-            <div class="col-lg-2">
+            <div class="col-lg-4">
                 <label class="form-label">Nombre Fármaco<span id="nom_span" class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="inputNF" name="nombre_farma" oninput="valida_nom()" placeholder="{{farmaco.nombre_farmaco}}" value="{{farmaco.nombre_farmaco}}" minlength="3" maxlength="100" required>
             </div>

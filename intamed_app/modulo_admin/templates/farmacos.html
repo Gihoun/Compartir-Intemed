@@ -17,6 +17,8 @@
                 {% csrf_token %}
                     <input class="form-control me-2" type="search" placeholder="Introduzca Nombre del Fármaco" name="txbusqueda" aria-label="Search">
                     <button id="boton" class="btn btn-outline-primary" type="submit">Buscar</button>
+                    &nbsp;
+                    <a class="btn btn-outline-info" href= "{% url 'crear_farma' %}" >Nuevo</a>
             </form>
             <div></div>
             

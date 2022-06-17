@@ -1,4 +1,5 @@
 from cProfile import run
+from multiprocessing import context
 from multiprocessing.sharedctypes import Array
 from select import select
 from .metodos import *
@@ -586,9 +587,7 @@ def vista_newcolab(request):
             z.sueldo = request.POST.get('inputSueldo')
             z.id_contrato = contra
 
-        
-
-        if x.run is not None and x.dv is not None and x.p_nombre is not None and x.apellido_pa is not None and x.apellido_ma is not None and x.direccion is not None and x.correo is not None and x.contrasena:
+        if x.run is not None and x.dv is not None and x.p_nombre is not None and x.apellido_pa is not None and x.apellido_ma is not None and x.direccion is not None and x.correo is not None and x.contrasena is not None:
             if x.run.strip() !='' and x.dv.strip() !='' and x.p_nombre.strip() !='' and x.apellido_pa.strip() !='' and x.apellido_ma.strip() !='' and x.direccion.strip() !='' and x.correo.strip() !='' and x.contrasena.strip() !='':
                 try:
                     x.save()
@@ -621,3 +620,130 @@ def vista_newcolab(request):
         print("Excepción 2")
         contexto = {"estadoCivil":estado, "perfiles": perfil, "comuna":comunas, "genero": generos, "nacionalidad": nacionalidades}
         return render(request,"crear_colab.html",contexto)
+
+def vista_newdrug(request):
+    tipos = TipoFarmaco.objects.all()
+    if request.POST:
+        x = Farmaco()
+        x.nombre_farmaco = request.POST.get('inputNF')
+        x.via_administracion = request.POST.get('inputVia')
+        x.contraindicacion = request.POST.get('inputContra')
+
+        id_tf = request.POST.get('inputTF')
+        tipo_farmaco = TipoFarmaco.objects.get(id_tipo_farma=id_tf) 
+        x.id_tipo_farma = tipo_farmaco
+
+        num_id = Farmaco.objects.all().prefetch_related().order_by("id_farmaco")
+        x.id_farmaco = id(num_id)
+
+        if x.nombre_farmaco is not None and x.via_administracion is not None and x.contraindicacion is not None:
+            if x.nombre_farmaco.strip() !='' and x.via_administracion.strip() !='' and x.contraindicacion.strip() !='':
+                x.save()
+                print("Fármaco Registrado")
+            else:
+                print("Cayó en el Else")
+            contexto = {"tipos": tipos}
+            return render(request, "crear_farma.html", contexto)
+        contexto = {"tipos": tipos}
+        return render(request, "crear_farma.html", contexto)
+    else:
+        contexto = {"tipos": tipos}
+        return render(request, "crear_farma.html", contexto)
+
+def vista_newperfil(request):
+    if request.POST:
+        p = PerfilUsuario()
+        p.nombre_perfil = request.POST.get('inputNombrePerfil')
+
+        num_id = PerfilUsuario.objects.all().prefetch_related().order_by("id_perfil")
+        p.id_perfil = id(num_id)
+
+        if p.nombre_perfil is not None:
+            if p.nombre_perfil.strip() !='':
+                p.save()
+                print("Perfil Registrado")
+            else:
+                print("Perfil dentro del Else")
+            return render(request, "crear_perfil.html")
+        return render(request, "crear_perfil.html")
+    else:
+        return render(request, "crear_perfil.html")
+
+def vista_newpac(request):
+    comunas = Comuna.objects.all()
+    nacionalidades = Nacionalidad.objects.all()
+    estados = EstadoCivil.objects.all()
+    generos = Genero.objects.all()
+    previsiones = Prevision.objects.all()
+
+    if request.POST:
+        x = Usuario()
+        y = Paciente()
+
+        new_run_pac = request.POST.get('inputRutPaciente')
+        #x.run = request.POST.get('inputRutPaciente')
+        x.dv = request.POST.get('inputDVPaciente')
+        x.p_nombre = request.POST.get('inputPrimerNombrePac')
+        x.nombre_social = request.POST.get('inputNombreSocialPac')
+        x.s_nombre = request.POST.get('inputSegundoNombrePac')
+        x.apellido_pa = request.POST.get('inputApellidoPaPac')
+        x.apellido_ma = request.POST.get('inputApellidoMaPac')
+        x.direccion = request.POST.get('inputDirPac')
+        x.correo = request.POST.get('inputCorreoP')
+        x.fecha_nac = request.POST.get('FechaNacPac')  
+        x.contrasena = "temporal123"
+
+        id_estC = request.POST.get('inputEstadoPac')
+        eestado = EstadoCivil.objects.get(id_estado=id_estC) 
+        x.id_estado = eestado
+
+        id_ggen = request.POST.get('inputGeneroPac')
+        ggenero = Genero.objects.get(id_genero=id_ggen)
+        x.id_genero = ggenero
+
+        id_nnac = request.POST.get('inputNacPac') 
+        nnacionalidad = Nacionalidad.objects.get(id_nacionalidad=id_nnac)
+        x.id_nacionalidad = nnacionalidad
+
+        id_ccom = request.POST.get('inputComPac')
+        ccomuna = Comuna.objects.get(id_comuna=id_ccom)
+        x.id_comuna = ccomuna
+
+        perfilu = PerfilUsuario.objects.get(id_perfil=4)
+        x.id_perfil = perfilu
+
+        y.peso = request.POST.get('inputPeso')
+        y.talla = request.POST.get('inputTalla')
+
+        id_previ = request.POST.get('inputPrev')
+        pprev = Prevision.objects.get(id_prevision=id_previ)
+        y.id_prevision = pprev
+
+        try:
+            user = Usuario.objects.get(run=new_run_pac)
+            print("RUT ya Existe")
+            print(user.run)
+        except:
+            x.run = new_run_pac
+            if x.run is not None and x.dv is not None and x.p_nombre is not None and x.apellido_pa is not None and x.apellido_ma is not None and x.direccion is not None and x.correo is not None and x.contrasena is not None and y.peso is not None and y.talla is not None:
+                if x.run.strip() !='' and x.dv.strip() !='' and x.p_nombre.strip() !='' and x.apellido_pa.strip() !='' and x.apellido_ma.strip() !='' and x.direccion.strip() !='' and x.correo.strip() !='' and x.contrasena.strip() !='' and y.peso.strip() !='' and y.talla.strip() !='': 
+                    try:
+                        x.save()
+                        print("Usuario Paciente Registrado")
+
+                        runpac = request.POST.get('inputRutPaciente')
+                        newrun = Usuario.objects.get(run=runpac)
+                        y.run_paciente = newrun
+
+                        y.save()
+                        print("Paciente 100% Registrado")
+                    except:
+                        print("Error, RUT Repetido")
+                else:
+                    print("Error, Campos con caracter de espaciador")
+            else:
+                print("Error, Campos Nulos")
+    else:
+        print("Error, Sin retorno del Formulario")
+    contexto = {"estados":estados, "comunas":comunas, "generos": generos, "nacionalidades": nacionalidades, "previsiones": previsiones}
+    return render(request, "crear_pac.html", contexto)
