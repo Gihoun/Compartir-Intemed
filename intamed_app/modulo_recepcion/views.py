@@ -16,7 +16,6 @@ import requests
 import logging
 from django.http import JsonResponse
 import datetime
-
 from django.http import HttpRequest
 
 # Create your views here.
@@ -33,7 +32,6 @@ def inicio(request):
         y = Paciente()
 
         new_run_pac = request.POST.get('inputRut')
-        #x.run = request.POST.get('inputRutPaciente')
         x.dv = request.POST.get('inputDV')
         x.p_nombre = request.POST.get('inputPNom')
         x.nombre_social = request.POST.get('inputNomSoc')
@@ -86,6 +84,7 @@ def inicio(request):
 
                         y.save()
                         print("Paciente 100% Registrado")
+
                     except:
                         print("Error, RUT Repetido")
                 else:
@@ -99,11 +98,6 @@ def inicio(request):
 
 
 
-
-
-
-def edit_paciente(request):
-    return render(request,"edit_paciente.html")
 
 def ingresarPago(request):
     return render(request,"ingresar_pago.html")
