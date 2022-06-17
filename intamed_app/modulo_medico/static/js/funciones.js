@@ -29,10 +29,10 @@ function validar_Alergia(id) {
 function detalle_Alergia() {
     var detalle = document.getElementById('select_alergia').value;
     var agregado = document.getElementById('inputDetalleA').value;
-    if (detalle=='' && agregado == ''){
+    if (detalle == '' && agregado == ''){
         alert('No ha seleccionado una alergia.')
     }else{
-        document.getElementById('inputDetalleA').value = detalle+ ', '+ agregado;
+        document.getElementById('inputDetalleA').value = detalle+ ' ' + agregado;
     }
 }
 function borrar_Alergia() {

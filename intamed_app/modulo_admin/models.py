@@ -10,7 +10,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
-from django.dispatch import receiver
+from datetime import date
 
 class Usuario(models.Model):
     
@@ -31,12 +31,23 @@ class Usuario(models.Model):
     id_comuna = models.ForeignKey('Comuna', models.DO_NOTHING, db_column='id_comuna')
     id_perfil = models.ForeignKey('PerfilUsuario', models.DO_NOTHING, db_column='id_perfil')
     
+    @property
+    def edad_actual(self):
+        if self.fecha_nac:
+            # Obtener fecha de hoy
+            today = date.today()
+            # Calcular Edad
+            age = today.year - self.fecha_nac.year - (
+                    (today.month, today.day) < (self.fecha_nac.month, self.fecha_nac.day))
+            return age
+
+        # Si no tiene fecha su edad es 0
+        return 0
+    
     class Meta:
         
         managed = True
         db_table = 'usuario'
-        
-
 
 class Administrador(models.Model):
     run_admin = models.OneToOneField('Usuario', on_delete=models.CASCADE, db_column='run_admin', primary_key=True)
