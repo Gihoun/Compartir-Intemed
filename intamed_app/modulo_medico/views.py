@@ -1,6 +1,7 @@
 from array import array
 from multiprocessing import context
 from multiprocessing.sharedctypes import Array
+from re import A
 from select import select
 from django.shortcuts import render
 from django.contrib.auth.models import User
@@ -71,21 +72,45 @@ def atePaciente(request,id):
     cat_prevision = Prevision.objects.all()
     estadoCivil = EstadoCivil.objects.all()
     nacionalidades = Nacionalidad.objects.all()
-    atencion = DetalleAtencion.objects.filter(run_paciente=id)
-
-
+    mostrarAlergia = Alergia.objects.all()
+    alergiaPac = DetalleAlergia.objects.filter(run_paciente = id)    
+    
     if request.POST:        
+        userPaciente = Paciente()
+        
+        userPaciente.id_prevision = pacientePrev.id_prevision
+        userPaciente.run_paciente = usuario
+        
+        #### valores de input para paciente##
 
         talla = request.POST.get("inputTalla")
+        userPaciente.talla = talla
         peso = request.POST.get("inputPeso")
+        userPaciente.peso = peso
         imc = request.POST.get("inputIMC")
+        userPaciente.imc = imc
         observacion = request.POST.get("inputObservacion")
+        userPaciente.observaciones = observacion
         cirugia = request.POST.get("inputHClinico")
+        userPaciente.cirugias = cirugia
         diagnostico = request.POST.get("inputDiagnostico")
-        
+        userPaciente.enfermedad = diagnostico
+        medicamento = request.POST.get("inputHabmed")
+        userPaciente.medicacion_habitual = medicamento
 
-        
-    
+
+        if userPaciente.talla is not None and userPaciente.peso is not None and userPaciente.imc is not None and userPaciente.observaciones is not None and userPaciente.cirugias is not None and userPaciente.enfermedad is not None and userPaciente.medicacion_habitual:
+            if userPaciente.talla.strip() !='' and userPaciente.peso.strip() !='' and userPaciente.imc.strip() !='' and userPaciente.observaciones.strip() !='' and userPaciente.cirugias.strip() !='' and userPaciente.enfermedad.strip() !='' and userPaciente.medicacion_habitual:
+                try:          
+                    userPaciente.save()
+                except:
+                    print("Error Prueba de REGISTRO datos PACIENTE")
+            else:
+                print("Error, Campos con Espacio")
+        else:
+                print("Error, Campos Nulos")        
+ 
+
     contexto = {
         "prevision": cat_prevision,
         "ECivil": estadoCivil, 
@@ -93,8 +118,8 @@ def atePaciente(request,id):
         "nacionalidad": nacionalidades,
         "paciente":usuario,
         "telePac":tel_users,
-        "prevPaciente": pacientePrev
-        
+        "prevPaciente": pacientePrev,
+        "selectAlergia": mostrarAlergia,
     }
     return render(request,"atencion_paciente.html",contexto)
 

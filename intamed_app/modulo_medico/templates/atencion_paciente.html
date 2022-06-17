@@ -3,59 +3,72 @@
 {% block contenido %}
 <!-- Primera Atencion Paciente -->
 <h2 class="text-center fw-bolder mb-5">Atención Pacientes Nuevos</h2>
-<form class="row">
+<form class="row" ction="{% url 'consultaP' paciente.run %}"method="POST" enctype="multipart/form-data" onsubmit="">
     {% csrf_token %}
     <!-- Datos Basicos del Paciente -->
     <div class="row mt-3">
         <div class="col-lg-2">
             <label for="inputRutpaciente" class="form-label fw-bolder">Rut Paciente</label>
-            <input type="text" class="form-control" id="inputRutpaciente" name="inputRutpaciente" placeholder="Ingrese Rut" value="{{paciente.run}}"  minlength="7" maxlength="8" readonly disabled>
+            <input type="text" class="form-control" id="inputRutpaciente" name="inputRutpaciente"
+                placeholder="Ingrese Rut" value="{{paciente.run}}" minlength="7" maxlength="8" readonly disabled>
         </div>
         <div class="col-lg-1">
             <label for="inputDV" class="form-label fw-bolder">DV</label>
-            <input type="text" class="form-control" id="inputDV" name="inputDV" placeholder="Dv" value="{{paciente.dv}}" minlength="1" maxlength="1" readonly  disabled>
+            <input type="text" class="form-control" id="inputDV" name="inputDV" placeholder="Dv" value="{{paciente.dv}}"
+                minlength="1" maxlength="1" readonly disabled>
         </div>
         <div class="col-lg-3">
             <label for="inputNsocial" class="form-label fw-bolder">N. Social</label>
-            <input type="text" class="form-control" id="inputNsocial" name="inputNsocial" placeholder="Nombre Social" minlength="2" maxlength="100" disabled>
+            <input type="text" class="form-control" id="inputNsocial" name="inputNsocial" placeholder="Nombre Social"
+                minlength="2" maxlength="100" disabled>
         </div>
     </div>
     <div class="row mt-3">
         <div class="col-md-3">
             <label for="inputNombre" class="form-label fw-bolder">P. Nombre</label>
-            <input type="text" class="form-control" id="inputNombre" name="inputNombre" placeholder="Primer Nombre Paciente" value="{{paciente.p_nombre}}" minlength="2" maxlength="100" readonly disabled>
+            <input type="text" class="form-control" id="inputNombre" name="inputNombre"
+                placeholder="Primer Nombre Paciente" value="{{paciente.p_nombre}}" minlength="2" maxlength="100"
+                readonly disabled>
         </div>
         <div class="col-md-3">
             <label for="inputSNombre" class="form-label fw-bolder">S. Nombre</label>
-            <input type="text" class="form-control" id="inputSNombre" name="inputSNombre" placeholder="Segundo Nombre Paciente" value="{{paciente.s_nombre}}" maxlength="100" readonly disabled>
+            <input type="text" class="form-control" id="inputSNombre" name="inputSNombre"
+                placeholder="Segundo Nombre Paciente" value="{{paciente.s_nombre}}" maxlength="100" readonly disabled>
         </div>
         <div class="col-md-3">
             <label for="inputApellidop" class="form-label fw-bolder">Apellido P.</label>
-            <input type="text" class="form-control" id="inputApellidop" name="inputApellidop" placeholder="Apellido Paterno" value="{{paciente.apellido_pa}}" minlength="2" maxlength="100" readonly disabled>
+            <input type="text" class="form-control" id="inputApellidop" name="inputApellidop"
+                placeholder="Apellido Paterno" value="{{paciente.apellido_pa}}" minlength="2" maxlength="100" readonly
+                disabled>
         </div>
         <div class="col-md-3">
             <label for="inputApellidom" class="form-label fw-bolder">Apellido M.</label>
-            <input type="text" class="form-control" id="inputApellidom" name="inputApellidom" placeholder="Apellido Materno" value="{{paciente.apellido_ma}}" minlength="2" maxlength="100" readonly disabled>
+            <input type="text" class="form-control" id="inputApellidom" name="inputApellidom"
+                placeholder="Apellido Materno" value="{{paciente.apellido_ma}}" minlength="2" maxlength="100" readonly
+                disabled>
         </div>
     </div>
     <div class="row mt-3">
         <div class=" col-lg-3">
             <label for="inputcorreo" class="form-label fw-bolder">Correo Electrónico</label>
-            <input type="email" class="form-control" id="inputcorreo" name="inputcorreo" placeholder="Ejemplo@correo.paciente" value="{{paciente.correo}}" minlength="5" maxlength="100" disabled>
+            <input type="email" class="form-control" id="inputcorreo" name="inputcorreo"
+                placeholder="Ejemplo@correo.paciente" value="{{paciente.correo}}" minlength="5" maxlength="100"
+                disabled>
         </div>
         <div class="col-lg-3">
             <label for="inputDireccion" class="form-label fw-bolder">Dirección</label>
-            <input type="text" class="form-control" id="inputDireccion" name="inputDireccion" placeholder="Dirección" value="{{paciente.direccion}}">
+            <input type="text" class="form-control" id="inputDireccion" name="inputDireccion" placeholder="Dirección"
+                value="{{paciente.direccion}}">
         </div>
         <div class="col-lg-3">
             <label for="inputcomuna" class="form-label fw-bolder">Comuna</label>
             <select id="inputComuna" name="inputComuna" class="form-select ">
                 {% for x in comunas %}
-                    {% if x.nombre_comuna == paciente.id_comuna.nombre_comuna %}
-                        <option selected>{{x.nombre_comuna}}</option>
-                    {% else %}
-                        <option>{{x.nombre_comuna}}</option>
-                    {% endif %}
+                {% if x.nombre_comuna == paciente.id_comuna.nombre_comuna %}
+                <option selected>{{x.nombre_comuna}}</option>
+                {% else %}
+                <option>{{x.nombre_comuna}}</option>
+                {% endif %}
                 {% endfor %}
             </select>
         </div>
@@ -63,11 +76,11 @@
             <label for="inputEstado" class="form-label fw-bolder">Estado civil</label>
             <select id="inputEstado" name="inputEstado" class="form-select">
                 {% for x in ECivil %}
-                    {% if x.nombre_estado == paciente.id_estado.nombre_estado %}
-                    <option selected>{{x.nombre_estado}}</option>
-                    {% else %}
-                    <option>{{x.nombre_estado}}</option>
-                    {% endif %}
+                {% if x.nombre_estado == paciente.id_estado.nombre_estado %}
+                <option selected>{{x.nombre_estado}}</option>
+                {% else %}
+                <option>{{x.nombre_estado}}</option>
+                {% endif %}
                 {% endfor %}
             </select>
         </div>
@@ -75,46 +88,51 @@
     <div class="row mt-3">
         <div class=" col-lg-2">
             <label for="inputNac" class="form-label fw-bolder">Nacionalidad</label>
-            <input type="text" class="form-control" id="inputNac" name="inpucNac" placeholder="Nacionalidad" value="{{paciente.id_nacionalidad.nombre_nac}}" disabled>
+            <input type="text" class="form-control" id="inputNac" name="inpucNac" placeholder="Nacionalidad"
+                value="{{paciente.id_nacionalidad.nombre_nac}}" disabled>
         </div>
         <div class="col-lg-2">
             <label for="inputNac" class="form-label fw-bolder">Fecha Nac.</label>
-            <input type="date" class="form-control" id="inputFNac" name="inputFNac" placeholder="Fecha Nacimiento" value="{{paciente.fecha_nac}}" disabled>
+            <input type="date" class="form-control" id="inputFNac" name="inputFNac" placeholder="Fecha Nacimiento"
+                value="{{paciente.fecha_nac}}" disabled>
         </div>
         <div class="col-lg-2">
             <label for="inputEdad" class="form-label fw-bolder">Edad</label>
-            <input type="number" class="form-control" id="inputEdad" name="inputEdad" placeholder="Edad Paciente" value="" disabled>
-            <script>
-                edadP = document.getElementsByClassName('inputFNac');
-                
-                [edadP].map(
-                e => e.textContent= calcularEdad (e.textContent) +' años');
-    
-                function calcularEdad(cumple){
-                  var cumple = new Date(cumple)
-                  var fecha_Presente= Date.now() - cumple;
-                  var ageDate = new Date(fecha_Presente); 
-                  return Math.abs(ageDate.getUTCFullYear() - 1970);
-                }
-              </script>
+            <input type="text" class="form-control" id="inputEdad" name="inputEdad" placeholder="Edad Paciente"
+                value="{{paciente.edad_actual}} años" disabled>
         </div>
         <div class="col-lg-2">
             <label for="inputTalla" class="form-label fw-bolder">Talla</label>
-            <input type="number" class="form-control" id="inputTalla" name="inputTalla" placeholder="Talla Paciente (cm)">
+            <input type="number" class="form-control" id="inputTalla" oninput="cal_imc()" name="inputTalla"
+                placeholder="Talla Paciente (cm)">
         </div>
         <div class="col-lg-2">
             <label for="inputPeso" class="form-label fw-bolder">Peso</label>
-            <input type="number" class="form-control" id="inputPeso" name="inputPeso" placeholder="Peso Paciente (Kg)">
+            <input type="number" class="form-control" id="inputPeso" oninput="cal_imc()" name="inputPeso" placeholder="Peso Paciente (Kg)">
         </div>
         <div class="col-lg-2">
             <label for="inputIMC" class="form-label fw-bolder">IMC</label>
-            <input type="number" class="form-control" id="inputIMC" name="inputIMC" placeholder="IMC Paciente">
+            <input type="number" class="form-control" id="inputIMC" name="inputIMC"  placeholder="IMC Paciente"
+                value="" disabled>
+            <script>
+                function cal_imc() {
+                    var peso = document.getElementById("inputPeso").value
+                    var talla = document.getElementById("inputTalla").value 
+                    console.log(talla)              
+                    if (talla > 0 && peso > 0) {
+                        var imc = (peso)/((talla/100)*(talla/100))
+                        document.getElementById("inputIMC").value = Math.round(imc)
+                    } else
+                        document.getElementById("inputIMC").value = 0
+                }
+            </script>
         </div>
     </div>
     <div class="row mt-3">
         <div class="col-md-4">
             <label for="inputFono" class="form-label fw-bolder">Fono</label>
-            <input type="tel" class="form-control" id="inputFono" placeholder="Teléfono Paciente" value="{{telePac.id_telefono.num_telefono}}">
+            <input type="tel" class="form-control" id="inputFono" placeholder="Teléfono Paciente"
+                value="{{telePac.id_telefono.num_telefono}}" disabled>
         </div>
         <div class="col-md-4">
             <label for="inputAlergia" class="form-label fw-bolder">Alergia</label>
@@ -141,26 +159,22 @@
                             </div>
                             <div class="modal-body">
                                 <div class="d-grid gap-2 d-md-block">
-                                    <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder"
-                                        id="tipo_alergia1" onclick="validar_Alergia(this.id)" value="Alergia 1">Alergia
-                                        1</button>
-                                    <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder"
-                                        id="tipo_alergia2" onclick="validar_Alergia(this.id)" value="Alergia 2">Alergia
-                                        2</button>
-                                    <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder"
-                                        id="tipo_alergia3" onclick="validar_Alergia(this.id)" value="Alergia 3">Alergia
-                                        3</button>
-                                    <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder"
-                                        id="tipo_alergia4" onclick="validar_Alergia(this.id)" value="Alergia 6">Alergia
-                                        6</button>
-                                    <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder"
-                                        id="tipo_alergia5" onclick="validar_Alergia(this.id)" value="Alergia 5">Alergia
-                                        5</button>
+                                    {% for x in selectAlergia %}
+                                        {% if forloop.counter <= 5 %}
+                                        <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder"
+                                        id="tipo_alergia1" onclick="validar_Alergia(this.id)" value="{{x.nombre_alergia}}">{{x.nombre_alergia}}</button>
+                                        {% endif %} 
+                                    {% endfor %}     
                                     <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder"
                                         id="tipo_alergia_otro" onclick="desplegar_alergia()">Otra Alergia</button>
                                     <div class="m-2" id="auto_completar" hidden>
                                         <input type="text" class="form-control " id="auto_alergia"
-                                            placeholder="Ingrese una Alergia" oninput="validar_Alergia(this.id)">
+                                            placeholder="Ingrese una Alergia" oninput="validar_Alergia(this.id)" list="dataAlergia">
+                                        <datalist id="dataAlergia">
+                                            {% for x  in selectAlergia  %}
+                                              <option value="{{x.nombre_alergia}}"></option>
+                                            {% endfor %}
+                                        </datalist>        
                                     </div>
                                 </div>
                             </div>
@@ -202,6 +216,10 @@
         <li class="nav-item text-center" role="presentation">
             <button class="nav-link fw-bolder" id="ant-clinico-tab" data-bs-toggle="tab" data-bs-target="#ant-clinico"
                 type="button" role="tab" aria-controls="ant-clinico" aria-selected="false">Historial Clínico</button>
+        </li>
+        <li class="nav-item text-center" role="presentation">
+            <button class="nav-link fw-bolder" id="ant-med_hab-tab" data-bs-toggle="tab" data-bs-target="#ant-med_hab"
+                type="button" role="tab" aria-controls="ant-med_hab" aria-selected="false">Medicamento Habitual</button>
         </li>
     </ul>
     <div class="tab-content" id="tabcontenidobs">
@@ -264,6 +282,12 @@
                 <textarea class="form-control" id="inputHClinico" name="inputHClinico" rows="3"></textarea>
             </div>
         </div>
+        <div class="tab-pane fade" id="ant-med_hab" role="tabpanel" aria-labelledby="ant-med_hab">
+            <div class="mb-3 mt-5">
+                <label for="inputHabmed" class="form-label">Medicamentos Habituales</label>
+                <textarea class="form-control" id="inputHabmed" name="inputHabmed" rows="3"></textarea>
+            </div>
+        </div>
     </div>
     <div class="col-12 mt-5 text-end">
         <button type="submit" class="btn btn-success fs-6 m-2"> Registrar Nueva Atención <svg
@@ -290,7 +314,6 @@
             </svg>
         </button>
     </div>
-</form>                    
-  
-{% endblock contenido %}
+</form>
 
+{% endblock contenido %}
