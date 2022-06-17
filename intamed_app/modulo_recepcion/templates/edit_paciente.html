@@ -1,0 +1,134 @@
+{% extends "base_recepcion.html" %}
+{% load static %}
+{% block contenido %}  
+<section>
+    <form class="row " action="{% url 'editarPac' paciente.run %}" method="POST" enctype="multipart/form-data" onsubmit="">
+        <!-- Datos Básicos del Paciente -->
+        {% csrf_token %}
+        <div class="col-lg-2">
+            <label for="inputRutPaciente" class="form-label">RUT<span id="rut_span" class="text-danger"></span></label>
+            <input type="text" class="form-control" name="inputRut" oninput="val_rut()" placeholder="{{paciente.run}}" value="{{paciente.run}}" minlength="7" maxlength="8" readonly required>
+        </div>
+        <div class="col-lg-1">
+            <label for="inputDVPaciente" class="form-label">DV<span id="dv_span" class="text-danger"></span></label>
+            <input type="text" class="form-control" name="inputDV" oninput="val_dv()" placeholder="{{paciente.dv}}" value="{{paciente.dv}}" minlength="1" maxlength="1" readonly required>
+        </div>
+        <div class="row mt-3">
+            <div class="col-lg-4">
+                <label for="inputPrimerNombrePac" class="form-label">Primer Nombre<span id="primn_span" class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="inputPNom" oninput="val_primn()" placeholder="{{paciente.p_nombre}}" value="{{paciente.p_nombre}}" minlength="2" maxlength="100" required>
+            </div>
+            <div class="col-lg-4">
+                <label for="inputSegundoNombrePac" class="form-label">Segundo Nombre</label>
+                <input type="text" class="form-control" name="inputSNom" placeholder="{{paciente.s_nombre}}" value="{{paciente.s_nombre}}" maxlength="100">
+            </div>
+            <div class="col-lg-4">
+                <label for="inputNombreSocialPac" class="form-label">Nombre Social</label>
+                <input type="text" class="form-control" name="inputNomSoc" placeholder="{{paciente.nombre_social}}" value="{{paciente.nombre_social}}"  maxlength="100">
+            </div>
+            <div class="col-lg-4">
+                <label for="inputApellidoPaPac" class="form-label">Apellido Paterno<span id="ap_span" class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="inputAp" oninput="val_apPaterno()" placeholder="{{paciente.apellido_pa}}" value="{{paciente.apellido_pa}}"  minlength="2" maxlength="100" required>
+            </div>
+            <div class="col-lg-4">
+                <label for="inputApellidoMaPac" class="form-label">Apellido Materno<span id="am_span" class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="inputAM"  oninput="val_apMaterno()" placeholder="{{paciente.apellido_ma}}" value="{{paciente.apellido_ma}}"  minlength="2" maxlength="100" required>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <hr>
+            <div class="col-md-4">
+                <label for="inputComuna" class="form-label">Comuna</label>
+                <select name="inputComuna" class="form-select ">
+                {% for x in comuna %}
+                    {% if x.nombre_comuna == paciente.id_comuna.nombre_comuna %}
+                        <option selected>{{x.nombre_comuna}}</option>
+                    {% else %}
+                        <option>{{x.nombre_comuna}}</option>
+                    {% endif %}
+                {% endfor %}
+                </select>
+            </div>
+            <div class="col-lg-8">
+                <label for="inputDirPac" class="form-label">Dirección<span id="dir_span" class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="inputDir" oninput="val_direccion()" placeholder="{{paciente.direccion}}" value="{{paciente.direccion}}"  minlength="5" maxlength="100" required>
+            </div>
+            <div class=" col-lg-4">
+                <label for="inputCorreoP" class="form-label">Correo Electrónico<span id="correo_span" class="text-danger">*</span></label>
+                <input type="email" class="form-control" name="inputCorreo" oninput="ValidateEmail()" placeholder="{{paciente.correo}}" value="{{paciente.correo}}"  minlength="5" maxlength="100" required>
+            </div>
+            <div class="col-lg-5">
+                <label for="inputNac" class="form-label">Nacionalidad</label>
+                <select name="inputNac" class="form-select">
+                {% for x in nacionalidad %}
+                    {% if x.nombre_nac == paciente.id_nacionalidad.nombre_nac %}
+                        <option selected>{{x.nombre_nac}}</option>
+                    {% else %}
+                        <option>{{x.nombre_nac}}</option>
+                    {% endif %}
+                {% endfor %}
+                </select>
+            </div>
+            <div class="col-lg-3">
+                <label for="FechaNac" class="form-label">Fecha Nacimiento<span id="fnac_span" class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="fecha" oninput="val_fechanac()" value="{{paciente.fecha_nac}}" placeholder="{{paciente.fecha_nac}}" minlength="8" maxlength="10" readonly required/>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-lg-4">
+                <label for="inputEstadoCivil" class="form-label">Estado Civil</label>
+                <select name="inputEstadoCivil" class="form-select ">
+                {% for x in estado %}
+                    {% if x.nombre_estado == paciente.id_estado.nombre_estado %}
+                        <option selected>{{x.nombre_estado}}</option>
+                    {% else %}
+                        <option>{{x.nombre_estado}}</option>
+                    {% endif %}
+                {% endfor %}
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <label for="inputGenero" class="form-label">Género</label>
+                <select name="inputGenero" class="form-select ">
+                {% for x in genero %}
+                    {% if x.nombre_genero == paciente.id_genero.nombre_genero %}
+                        <option selected>{{x.nombre_genero}}</option>
+                    {% else %}
+                        <option>{{x.nombre_genero}}</option>
+                    {% endif %}
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label for="inputFonoPac" class="form-label">Teléfono<span id="tel_span" class="text-danger">*</span></label>
+                    {% for y in telefonos %}
+                        <input type="number" class="form-control" name="inputFono" oninput="val_telefono()" placeholder="{{y}}" value="{{y}}"  minlength="5" maxlength="12" required>
+                    {% endfor %}    
+            </div>
+            <div class="col-md-4">
+                <label for="inputPrev" class="form-label">Previsión</label>
+                <select name="inputPrev" class="form-select ">
+                {% for x in prevision %}
+                    {% if x.nombre_prevision == paciente.paciente.id_prevision.nombre_prevision %}
+                        <option selected>{{x.nombre_prevision}}</option>
+                    {% else %}
+                        <option>{{x.nombre_prevision}}</option>
+                    {% endif %}
+                {% endfor %}
+                </select>
+            </div>                        
+        </div>
+        
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end" class="row mt-3">
+            <button type="submit" class="btn btn-outline-primary">Guardar</button>
+        </div>
+        <div>
+            <label></label>
+            <label></label>
+        </div>  
+    </form>
+
+</section>
+{% endblock contenido %}  

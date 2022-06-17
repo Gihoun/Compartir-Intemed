@@ -15,110 +15,58 @@
         <div class="tab-content" id="tabcontenidobs">
             <div class="tab-pane fade show active" id="modificarpaciente" role="tabpanel" aria-labelledby="modificarpaciente-tab">
                 <div class="container m-1 table-responsive  border">
-                  <!-- Datos Basicos del Paciente -->
-                    <form class="row mt-3" method="POST" enctype="multipart/form-data" onsubmit="">
-                      <div class="col-sm-4">
-                          <label for="inputRutPaciente" class="form-label">Rut paciente<span id="rut_span" class="text-danger">*</span></label>
-                          <input type="text" class="form-control" id="inputRut" name="inputRut" oninput="val_rut()" minlength="7" maxlength="8" required>
-                      </div>
-                      <div class="col-sm-4" style="margin-top: 32px;">
-                          <button id="boton" type="submit" class="btn btn-primary mb-3">Buscar</button>
-                      </div>
-                  
-                        <div class="row mt-3" method="POST" enctype="multipart/form-data" onsubmit="">
-                        <div class="col-lg-4">
-                            <label for="inputNombrePaciente" class="form-label">Primer Nombre<span id="primn_span" class="text-danger"></span></label>
-                            <input type="text" class="form-control" id="inputPNom" name="inputPNom" oninput="val_primn()" minlength="2" maxlength="100" required>
-                        </div>
-                        <div class="col-lg-4">
-                            <label for="inputSegundoNombrePac" class="form-label">Segundo Nombre<span id="segn_span" class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="inputSNom" name="inputSNom"  oninput="val_segn()" minlength="2" maxlength="100" required>
-                        </div>
-                        <div class="col-lg-4">
-                            <label for="inputNombreSocial" class="form-label">Nombre Social<span id="nomsoc_span" class="text-danger"></span></label>
-                            <input type="text" class="form-control" id="inputNomSoc" name="inputNomSoc" oninput="val_nomsoc()"  maxlength="100">
-                        </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-lg-4">
-                                <label for="inputApellidoPaciente" class="form-label">Apellido P.<span id="ap_span" class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="inputAp" name="inputAp" oninput="val_apPaterno()" minlength="2" maxlength="100" required>
+                    <h2>Lista de Pacientes: {{cantidad}}</h2>
+                            <div class="tab-pane fade show active container-fluid" id="v-pills-agenda" role="tabpanel" aria-labelledby="v-pills-agenda-tab">
+                                <form class="d-flex" method="POST" action="{% url 'buscarPac' %}">
+                                    {% csrf_token %}
+                                        <input class="form-control me-2" type="search" placeholder="RUT Paciente" name="txbusqueda" aria-label="Search">
+                                        <button id="boton" class="btn btn-primary" type="submit">Buscar</button>
+                                </form>     
                             </div>
-                            <div class="col-lg-4">
-                                <label for="inputApellidomPaciente" class="form-label">Apellido M.<span id="am_span" class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="inputAM" name="inputAM" oninput="val_apMaterno()" minlength="2" maxlength="100" required>
-                            </div>
-                            <div class="col-lg-4">
-                                <label for="inputNacPac" class="form-label">Nacionalidad</label>
-                                <select name="inputNacPac" class="form-select ">
-                                    {% for x in nacionalidad %}
-                                        {% if x.nombre_nac == paciente.id_nacionalidad.nombre_nac %}
-                                            <option selected>{{x.nombre_nac}}</option>
-                                        {% else %}
-                                            <option>{{x.nombre_nac}}</option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-lg-4">
-                                <label for="inputEstadoCivil" class="form-label">Estado Civil</label>
-                                <select name="inputEstadoCivil" class="form-select ">
-                                    {% for x in estado %}
-                                        {% if x.nombre_estado == paciente.id_estado.nombre_estado %}
-                                            <option selected>{{x.nombre_estado}}</option>
-                                        {% else %}
-                                            <option>{{x.nombre_estado}}</option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="col-lg-4">
-                                <label for="inputGenero" class="form-label">Género</label>
-                                <select name="inputGenero" class="form-select ">
-                                    {% for x in genero %}
-                                        {% if x.nombre_genero == paciente.id_genero.nombre_genero %}
-                                            <option selected>{{x.nombre_genero}}</option>
-                                        {% else %}
-                                            <option>{{x.nombre_genero}}</option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="col-lg-4">
-                                <label for="inputTelefono" class="form-label">Fono<span id="tel_span" class="text-danger">*</span></label>
-                                <input type="number" class="form-control" id="inputFono" name="inputFono" oninput="val_telefono()" minlength="5" maxlength="12" required>
-                            </div>
-                            
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-lg-4">
-                                <label for="inputDireccion" class="form-label">Dirección<span id="dir_span" class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="inputDir" name="inputDir" oninput="val_direccion()" minlength="5" maxlength="100" required>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="inputComuna" class="form-label">Comuna</label>
-                                <select name="inputComPac" class="form-select ">
-                                
-                
-                                    {% for x in comuna %}
-                                        {% if x.nombre_comuna == paciente.id_comuna.nombre_comuna %}
-                                        <option selected>{{x.nombre_comuna}}</option>
-                                        {% else %}
-                                        <option>{{x.nombre_comuna}}</option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class=" col-lg-4">
-                                <label for="inputcorreo" class="form-label">Correo Electrónico<span id="correo_span" class="text-danger">*</span></label>
-                                <input type="email" class="form-control" id="inputCorreo" name="inputCorreo" oninput="ValidateEmail()" minlength="5" maxlength="100" required>
-                            </div>
-                        </div>
-                    </form>
+                    <div class="table-responsive" style="min-height: 500px;">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                                <tr>           
+                                    <th scope="col">RUT</th>
+                                    <th scope="col">Nombre Completo</th>
+                                    <th scope="col">Fecha Nacimiento</th>
+                                    <th scope="col">Correo</th>
+                                    <th scope="col">Previsión</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if cantidad >= 1 %}              
+                                    {% for usu in usuarios %}  
+                                        <tr>
+                                        <td>{{usu.run}}</td>
+                                        <td>{{usu.p_nombre}} {{usu.s_nombre}} {{usu.apellido_pa}} {{usu.apellido_ma}}</td>
+                                        <td>{{usu.fecha_nac}}</td>
+                                        <td>{{usu.correo}}</td>
+                                        <td>{{usu.paciente.id_prevision.nombre_prevision}}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Acción
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-dark">    
+                                                <li><a id="1"  class="dropdown-item" name="runpac" value="editar" href="{% url 'editarPac' usu.run %}">Editar</a></li>                            
+                                            </ul>
+                                            </div>
+                                        </td>
+                                        </tr>                 
+                                    {% endfor %}           
+                                {% elif cantidad < 1 %}
+                                    <tr>
+                                        <td>00000</td>
+                                        <td>No Encontrado</td>
+                                        <td>No Encontrado</td>
+                                        <td>No Encontrado</td>
+                                        <td>No Encontrado</td>
+                                    </tr>
+                                {% endif %} 
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="tab-pane fade" id="anularhora" role="tabpanel" aria-labelledby="anularhora-tab">

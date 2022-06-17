@@ -36,3 +36,4 @@ def mi_cuenta(request, id):
     contexto = {"paciente": paciente, "prevision": prevision, "telefonos": num_tel, "cantidad": cant_tel,
                 "comuna": comunas, "nacionalidad": nacionalidades, "estado": estados, "genero": generos, "alergias": alergias,"alers":todo_alergias}
     return render(request,"micuenta.html",contexto)
+
