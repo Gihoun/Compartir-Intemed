@@ -39,7 +39,7 @@ class Usuario(models.Model):
 
 
 class Administrador(models.Model):
-    run_admin = models.OneToOneField('Usuario', models.DO_NOTHING, db_column='run_admin', primary_key=True)
+    run_admin = models.OneToOneField('Usuario', on_delete=models.CASCADE, db_column='run_admin', primary_key=True)
     fecha_ingreso = models.DateField()
     sueldo = models.BigIntegerField()
     id_contrato = models.ForeignKey('Contrato', models.DO_NOTHING, db_column='id_contrato')
@@ -120,14 +120,14 @@ class Contrato(models.Model):
 
 class DetalleAgenda(models.Model):
     id_agenda = models.ForeignKey(Agenda, models.DO_NOTHING, db_column='id_agenda')
-    run_recepcionista = models.ForeignKey('Recepcionista', models.DO_NOTHING, db_column='run_recepcionista')
+    run_recepcionista = models.ForeignKey('Recepcionista', on_delete=models.CASCADE, db_column='run_recepcionista')
 
     class Meta:
         managed = False
         db_table = 'detalle_agenda'
 
 class DetalleAlergia(models.Model):
-    run_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='run_paciente')
+    run_paciente = models.ForeignKey('Paciente', on_delete=models.CASCADE, db_column='run_paciente')
     id_alergia = models.ForeignKey(Alergia, models.DO_NOTHING, db_column='id_alergia')
 
     class Meta:
@@ -135,7 +135,7 @@ class DetalleAlergia(models.Model):
         db_table = 'detalle_alergia'
 
 class DetalleAtencion(models.Model):
-    run_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='run_paciente',related_name='pac')
+    run_paciente = models.ForeignKey('Paciente', on_delete=models.CASCADE, db_column='run_paciente')
     id_atencion = models.ForeignKey(Atencion, models.DO_NOTHING, db_column='id_atencion', related_name='ate')
 
     class Meta:
@@ -144,7 +144,7 @@ class DetalleAtencion(models.Model):
 
 class DetalleFarmaco(models.Model):
     id_receta = models.ForeignKey('Receta', models.DO_NOTHING, db_column='id_receta')
-    id_farmaco = models.ForeignKey('Farmaco', models.DO_NOTHING, db_column='id_farmaco')
+    id_farmaco = models.ForeignKey('Farmaco', on_delete=models.CASCADE, db_column='id_farmaco')
 
     class Meta:
         managed = False
@@ -214,7 +214,7 @@ class Licencia(models.Model):
         db_table = 'licencia'
 
 class Medico(models.Model):
-    run_medico = models.OneToOneField('Usuario', models.DO_NOTHING, db_column='run_medico', primary_key=True)
+    run_medico = models.OneToOneField('Usuario', on_delete=models.CASCADE, db_column='run_medico', primary_key=True)
     fecha_ingreso = models.DateField()
     sueldo = models.BigIntegerField()
     regimen_hrs = models.DecimalField(max_digits=2, decimal_places=1)
@@ -244,7 +244,7 @@ class Prevision(models.Model):
         db_table = 'prevision'
 
 class Paciente(models.Model):
-    run_paciente = models.OneToOneField(Usuario, models.DO_NOTHING, db_column='run_paciente', primary_key=True)
+    run_paciente = models.OneToOneField('Usuario', on_delete=models.CASCADE, db_column='run_paciente', primary_key=True)
     peso = models.DecimalField(max_digits=4, decimal_places=1, blank=True, null=True)
     talla = models.DecimalField(max_digits=4, decimal_places=1, blank=True, null=True)
     enfermedades = models.CharField(max_length=250, blank=True, null=True)
@@ -267,7 +267,7 @@ class PerfilUsuario(models.Model):
         db_table = 'perfil_usuario'
 
 class Recepcionista(models.Model):
-    run_recepcionista = models.OneToOneField(Usuario, models.DO_NOTHING, db_column='run_recepcionista', primary_key=True)
+    run_recepcionista = models.OneToOneField('Usuario', on_delete=models.CASCADE, db_column='run_recepcionista', primary_key=True)
     fecha_ingreso = models.DateField()
     
     sueldo = models.BigIntegerField()
@@ -304,7 +304,7 @@ class Reporte(models.Model):
         db_table = 'reporte'
 
 class ResultadoExamen(models.Model):
-    run_paciente = models.ForeignKey(Paciente, models.DO_NOTHING, db_column='run_paciente', blank=True, null=True)
+    run_paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, db_column='run_paciente', blank=True, null=True)
     archivo = models.TextField()
 
     class Meta:
@@ -322,7 +322,7 @@ class Telefono(models.Model):
 
 class TelefonoUsuario(models.Model):
     id_telefono = models.OneToOneField('Telefono', models.DO_NOTHING, db_column='id_telefono', primary_key=True)
-    run_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='run_usuario')
+    run_usuario = models.ForeignKey('Usuario', on_delete=models.CASCADE, db_column='run_usuario')
 
     class Meta:
         managed = False

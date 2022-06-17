@@ -5,6 +5,9 @@
 {% endblock titulo %}
 
 {% block contenido %}  
+<!-- Script para utilizar los Mensajes del SweetAlert -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <h2>Lista de Pacientes: {{cantidad}}</h2>
     <div class="tab-content  container-fluid" id="v-pills-tabContent">
@@ -13,7 +16,9 @@
             <form class="d-flex" method="POST" action="{% url 'pac' %}">
                 {% csrf_token %}
                     <input class="form-control me-2" type="search" placeholder="RUT Paciente" name="txbusqueda" aria-label="Search">
-                    <button id="boton" class="btn btn-outline" type="submit">Buscar</button>
+                    <button id="boton" class="btn btn-outline-primary" type="submit">Buscar</button>
+                    &nbsp;
+                    <a class="btn btn-outline-info" href= "{% url 'crear_pac' %}" >Nuevo</a>
             </form>
             <div></div>      
         </div>
@@ -46,8 +51,8 @@
                             Acción
                           </button>
                           <ul class="dropdown-menu dropdown-menu-dark">    
-                            <li><a id="1"  class="dropdown-item" name="runpac" value="editar" href="{% url 'edit_pac' usu.run %}">Editar</a></li>                            
-                            <li><a id="2"  class="dropdown-item" href="#" value="eliminar">Eliminar</a></li>
+                            <li><a id="1"  class="dropdown-item" name="runpac" value="editar" href="{% url 'edit_pac' usu.run %}">Editar</a></li> 
+                            <li><button href="#" class="btn dropdown-item" name="eliminar" onclick="eliminarPaciente({{usu.run}})" value="{{usu.run}}">Eliminar</button></li>                         
                           </ul>
                         </div>
                       </td>
@@ -67,5 +72,62 @@
     </div>
     <!-- Contenido de los tab de cada tabla -->    
     </div>
+    {% if messages %}
+      {% for m in messages%}
+        <script>
+          Swal.fire({
+            "title": "Realizado",
+            "text": "{{m}}",
+            "icon": "success"
+          })
+        </script>
+      {% endfor %}
+    {% endif %}
+
+  </div>
+  {% block js %}
+  <script>
+    function eliminarPaciente(id){
+      
+      Swal.fire({
+        "title": "¿Esta Seguro?",
+        "text": "Esta Acción es Irreversible",
+        "icon": "question",
+        "showCancelButton": true,
+        "cancelButtonText": "No, Cancelar",
+        "confirmButtonText": "Si, seguro",
+        "reverseButtons": true,
+        "confirmButtonColor": "#dc3545"
+      })
+      .then(function(result){
+        if(result.isConfirmed){
+          const data = new FormData();
+          var csrftoken = '{{ csrf_token }}';
+          data.append('eliminar',id);
+          console.log(id);
+          fetch('{% url 'pac' %}', {
+            method: 'POST',
+            body: data ,
+            headers: {
+              'X-CSRFToken': csrftoken ,
+            }
+         });
+         Swal.fire({
+          "title": "Realizado",
+          "text": "Paciente Eliminado Exitosamente",
+          "icon": "success"
+        })
+        .then(function(result){
+          if(result.isConfirmed){
+          window.location.href = "{% url 'pac' %}";
+          }
+        });
+        
+      }
+    })   
+    }
+  </script>
+{% endblock js %}
+
 </main>
 {% endblock contenido %}

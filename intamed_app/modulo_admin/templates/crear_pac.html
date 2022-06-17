@@ -1,0 +1,154 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+{% block titulo %}
+<title>Nuevo Paciente</title>
+{% endblock titulo %}
+
+{% block contenido %}  
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <h2>Crear Nuevo Paciente</h2>
+    <div>
+        <form class="row " action="" method="POST" enctype="multipart/form-data">
+            <!-- Datos Básicos del Paciente -->
+            {% csrf_token %}
+            <div class="col-lg-3">
+                <label for="inputRutPaciente" class="form-label">RUT Paciente</label>
+                <input type="number" class="form-control" name="inputRutPaciente" placeholder="Ingrese RUT Paciente" minlength="7" maxlength="8" required>
+            </div>
+            <div class="col-lg-1">
+                <label for="inputDVPaciente" class="form-label">DV</label>
+                <input type="text" class="form-control" name="inputDVPaciente" placeholder="DV" minlength="1" maxlength="1" required>
+            </div>
+            <div class="row mt-3">
+                <div class="col-lg-4">
+                    <label for="inputPrimerNombrePac" class="form-label">Primer Nombre</label>
+                    <input type="text" class="form-control" name="inputPrimerNombrePac" placeholder="Ingrese Nombre" minlength="2" maxlength="100" required>
+                </div>
+                <div class="col-lg-4">
+                    <label for="inputSegundoNombrePac" class="form-label">Segundo Nombre (Opcional)</label>
+                    <input type="text" class="form-control" name="inputSegundoNombrePac" placeholder="Ingrese 2° Nombre" maxlength="100">
+                </div>
+                <div class="col-lg-4">
+                    <label for="inputNombreSocialPac" class="form-label">Nombre Social (Opcional)</label>
+                    <input type="text" class="form-control" name="inputNombreSocialPac" placeholder="Ingrese Nombre Social" maxlength="100">
+                </div>
+                <div class="col-lg-4">
+                    <label for="inputApellidoPaPac" class="form-label">Apellido Paterno</label>
+                    <input type="text" class="form-control" name="inputApellidoPaPac" placeholder="Ingrese Apellido Paterno" minlength="2" maxlength="100" required>
+                </div>
+                <div class="col-lg-4">
+                    <label for="inputApellidoMaPac" class="form-label">Apellido Materno</label>
+                    <input type="text" class="form-control" name="inputApellidoMaPac"  placeholder="Ingrese Apellido Materno" minlength="2" maxlength="100" required>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <hr>
+                <div class="col-md-4">
+                    <label for="inputComPac" class="form-label">Comuna</label>
+                    <select name="inputComPac" class="form-select ">
+                    {% for x in comunas %}
+                        <option value="{{x.id_comuna}}" selected>{{x.nombre_comuna}}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-8">
+                    <label for="inputDirPac" class="form-label">Dirección</label>
+                    <input type="text" class="form-control" name="inputDirPac" placeholder="Ingrese Dirección" minlength="5" maxlength="100" required>
+                </div>
+                <div class=" col-lg-4">
+                    <label for="inputCorreoP" class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-control" name="inputCorreoP" placeholder="Ingrese Correo" minlength="5" maxlength="100" required>
+                </div>
+                <div class="col-lg-5">
+                    <label for="inputNacPac" class="form-label">Nacionalidad</label>
+                    <select name="inputNacPac" class="form-select ">
+                    {% for x in nacionalidades %}
+                        {% if x.id_nacionalidad == 39 %}
+                            <option  value="{{x.id_nacionalidad}}" selected >{{x.nombre_nac}}</option>
+                        {% else %}
+                            <option  value="{{x.id_nacionalidad}}" >{{x.nombre_nac}}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <label for="FechaNacPac" class="form-label">Fecha Nacimiento</label>
+                    <input type="text" class="form-control" id="FechaNacPac" name="FechaNacPac" placeholder="Ingrese Fecha" minlength="8" maxlength="10" readonly required/>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-lg-4">
+                    <label for="inputEstadoPac" class="form-label">Estado Civil</label>
+                    <select name="inputEstadoPac" class="form-select ">
+                    {% for x in estados %}
+                        <option value="{{x.id_estado}}" selected>{{x.nombre_estado}}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-4">
+                    <label for="inputGeneroPac" class="form-label">Género</label>
+                    <select name="inputGeneroPac" class="form-select ">
+                    {% for x in generos %}
+                        <option value="{{x.id_genero}}" selected>{{x.nombre_genero}}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <label for="inputTalla" class="form-label">Talla (mts)</label>
+                    <input type="text" class="form-control" name="inputTalla" placeholder="0 mt">
+                </div>
+                <div class="col-lg-2">
+                    <label for="inputPeso" class="form-label">Peso (kgs)</label>
+                    <input type="number" class="form-control" name="inputPeso" placeholder="0 kgs">
+                </div>  
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <label for="inputPrev" class="form-label">Previsión</label>
+                    <select name="inputPrev" class="form-select ">
+                    {% for x in previsiones %}
+                        <option value="{{x.id_prevision}}" selected>{{x.nombre_prevision}}</option>
+                    {% endfor %}
+                    </select>
+                </div>                        
+            </div>
+            
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end" class="row mt-3">
+                <button type="submit" class="btn btn-outline-primary">Registrar</button>
+            </div>
+            <div>
+                <label></label>
+                <label></label>
+            </div>  
+        </form>
+    </div>
+    <!-- Contenido de los tab de cada tabla -->
+</main>
+{% endblock contenido %}
+
+{% block js1 %}
+<script src="{% static 'js/drag_drop.js' %}"></script>
+<script>
+    $.datepicker.regional['es'] = {
+        closeText: 'Cerrar',
+        prevText: '< Ant',
+        nextText: 'Sig >',
+        currentText: 'Hoy',
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+        weekHeader: 'Sm',
+        dateFormat: 'yy-mm-dd',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ''
+    };
+    $.datepicker.setDefaults($.datepicker.regional['es']);
+    $(function () {
+        $("#FechaNacPac").datepicker();
+    });
+</script>
+{% endblock js1 %}

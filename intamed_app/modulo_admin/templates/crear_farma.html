@@ -1,0 +1,43 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+{% block titulo %}
+<title>Nuevo Fármaco</title>
+{% endblock titulo %}
+
+{% block contenido %}  
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <h2>Crear Nuevo Fármaco</h2>
+    <div>
+        <form class="row " action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- Datos de farmaco-->
+            <div class="col-lg-4">
+                <label class="form-label">Nombre Fármaco</label>
+                <input type="text" class="form-control" id="inputNF" name="inputNF" placeholder="Ingrese Nombre Fármaco" minlength="3" maxlength="100" required>
+            </div>
+            <div class="col-lg-3">
+                <label class="form-label">Vía de Administración</label>
+                <input type="text" class="form-control" id="inputVia" name="inputVia" placeholder="Ingrese Formato" minlength="3" maxlength="100" required >
+            </div>
+            <div class="row mt-3">
+                <label class="form-label">Contraindicación</label>   
+                <div class="form-outline">
+                    <textarea class="form-control" id="inputContra" name="inputContra" rows="4" placeholder="Ingrese Formato" maxlength="500" required></textarea>
+                    <label class="form-label" for="textAreaExample"></label>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <label for="inputTF" class="form-label">Tipo Fármaco</label>
+                <select id="inputTF" name="inputTF" class="form-select" >
+                {% for x in tipos %}
+                    <option value="{{x.id_tipo_farma}}" selected>{{x.tipo_farma}}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end" class="row mt-3">
+                <button type="submit" class="btn btn-outline-primary">Registrar</button>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock contenido %}

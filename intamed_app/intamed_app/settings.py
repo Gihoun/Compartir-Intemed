@@ -28,6 +28,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+# Variable creada para activar el FrameWork de Mensajeria de Django (SweetAlert)
+MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
+
 
 # Application definition
 
@@ -81,6 +84,7 @@ WSGI_APPLICATION = 'intamed_app.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
@@ -91,7 +95,6 @@ DATABASES = {
         'PORT': '1521',
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 

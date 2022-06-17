@@ -4,7 +4,10 @@
 <title>Fármacos</title>
 {% endblock titulo %}
 
-{% block contenido %}  
+{% block contenido %} 
+<!-- Script para utilizar los Mensajes del SweetAlert -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <h2>Fármacos: {{cantidad}}</h2>
     <div class="tab-content  container-fluid" id="v-pills-tabContent">
@@ -13,7 +16,9 @@
             <form class="d-flex" method="POST" action="{% url 'farmag' %}">
                 {% csrf_token %}
                     <input class="form-control me-2" type="search" placeholder="Introduzca Nombre del Fármaco" name="txbusqueda" aria-label="Search">
-                    <button id="boton" class="btn btn-outline" type="submit">Buscar</button>
+                    <button id="boton" class="btn btn-outline-primary" type="submit">Buscar</button>
+                    &nbsp;
+                    <a class="btn btn-outline-info" href= "{% url 'crear_farma' %}" >Nuevo</a>
             </form>
             <div></div>
             
@@ -43,7 +48,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
                           <li><a id="1"  class="dropdown-item" href="{% url 'edit_farma' farma.id_farmaco %}" value="editar">Editar</a></li>
-                          <li><a id="2"  class="dropdown-item" href="#" value="eliminar">Eliminar</a></li>
+                          <li><button href="#" class="btn dropdown-item" name="eliminar" onclick="eliminarFarmaco({{farma.id_farmaco}})" value="{{farma.id_farmaco}}">Eliminar</button></li>
                         </ul>
                       </div>
                     </td>
@@ -55,13 +60,67 @@
             <td>No Encontrado</td>
             <td>No Encontrado</td>
           </tr>
-          
           {% endif %} 
         </tbody>
       </table>
     </div>
     <!-- Contenido de los tab de cada tabla -->
-          
+    {% if messages %}
+      {% for m in messages%}
+      <script>
+        Swal.fire({
+          "title": "Realizado",
+          "text": "{{m}}",
+          "icon": "success"
+        })
+      </script>
+      {% endfor %}
+    {% endif %}   
+
     </div>
+    {% block js %}
+    <script>
+      function eliminarFarmaco(id){
+        
+        Swal.fire({
+          "title": "¿Esta Seguro?",
+          "text": "Esta Acción es Irreversible",
+          "icon": "question",
+          "showCancelButton": true,
+          "cancelButtonText": "No, Cancelar",
+          "confirmButtonText": "Si, seguro",
+          "reverseButtons": true,
+          "confirmButtonColor": "#dc3545"
+        })
+        .then(function(result){
+          if(result.isConfirmed){
+            const data = new FormData();
+            var csrftoken = '{{ csrf_token }}';
+            data.append('eliminar',id);
+            console.log(id);
+            fetch('{% url 'farmag' %}', {
+              method: 'POST',
+              body: data ,
+              headers: {
+                'X-CSRFToken': csrftoken ,
+              }
+           });
+           Swal.fire({
+            "title": "Realizado",
+            "text": "Fármaco Eliminado Exitosamente",
+            "icon": "success"
+          })
+          .then(function(result){
+            if(result.isConfirmed){
+            window.location.href = "{% url 'farmag' %}";
+            }
+          });
+          
+        }
+      })   
+      }
+    </script>
+{% endblock js %}
+
 </main>
 {% endblock contenido %}

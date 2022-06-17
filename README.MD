@@ -7,6 +7,8 @@ Realizados:
 6. Panel de Usuario: Solo muestre los Usuarios Trabajadores del sistema, o sea, al admin, medicos, recepcionistas. Solo a los Usuarios cuyos "id_perfil" sea distinto a 4 (id_perfil != 4)
 7.  Diseño botones edicion y eliminar (aceptado)
 8. edicion farmacos (validaciones listas)
+9. swalfire farmacos arreglado
+10. atenciones ready
 ----------------------------------------------------------------------------------------------------------------
 
 Por Hacer:
@@ -15,9 +17,8 @@ Por Hacer:
 5. mejorar dashboard estadisticas como respaldo de BBDD
 6. pensar en un par de tipos de reportes por defecto() el cliente menciono reporte segun diagnostico
 7. Sacar RUT y DV de las graficas de Editar Paciente y Colaborador?? (Pensando en que son LLaves Primarias)
-8. LIMPIAR CODIGO DE AARON
-9. ATENCIONES
 10. REPORTES
+11. metodos CREAR para paciente, usuario, farmaco, perfil
 
 
 

@@ -1,0 +1,26 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+{% block titulo %}
+<title>Nuevo Perfil</title>
+{% endblock titulo %}
+
+{% block contenido %}  
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <h2>Crear Nuevo Perfil de Usuario del Sistema</h2>
+    <div>
+        <form class="row " action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- Datos del Perfil-->
+            <div class="col-lg-4">
+                <label for="inputNombrePerfil" class="form-label">Nombre del Perfil de Usuario</label>
+                <input type="text" class="form-control" name="inputNombrePerfil" id="inputNombrePerfil" placeholder="Ingrese Nombre Perfil" minlength="3" maxlength="100" required>
+            </div>        
+            <label><br></label>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end" class="row mt-3">
+                <button type="submit" class="btn btn-outline-primary">Registrar</button>
+            </div>
+        </form>
+    </div>
+</main>
+
+{% endblock contenido %}

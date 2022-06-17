@@ -71,8 +71,8 @@ def save_tel_unico(id_user,new_tel):
         newT.save()
         tel_obj.save()
         
-        msg="Exito agregando nuevo telefono"
+        msg="Éxito, Agregando Nuevo Teléfono"
         return msg 
     except:   
-        msg="error agregando nuevo telefono"
+        msg="Error al Agregar Nuevo Teléfono"
         return msg

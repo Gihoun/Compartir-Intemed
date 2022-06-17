@@ -5,18 +5,23 @@
 {% endblock titulo %}
 
 {% block contenido %}  
+<!-- Script para utilizar los Mensajes del SweetAlert -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <h2>Colaboradores: {{cantidad}}</h2>
     <div class="tab-content  container-fluid" id="v-pills-tabContent">
         <div class="tab-pane fade show active container-fluid" id="v-pills-agenda" role="tabpanel"
             aria-labelledby="v-pills-agenda-tab">
-            <form class="d-flex" method="POST" action="{% url 'userg' %}">
-                {% csrf_token %}
-                    <input class="form-control me-2" type="search" placeholder="RUT Colaborador" name="txbusqueda" aria-label="Search">
-                    <button id="boton" class="btn btn-outline" type="submit">Buscar</button>
-            </form>
+              <form class="d-flex" method="POST" action="{% url 'userg' %}">
+                  {% csrf_token %}
+                      <input class="form-control me-2" type="search" placeholder="RUT Colaborador" name="txbusqueda" aria-label="Search">
+                      <button id="boton" class="btn btn-outline-primary" type="submit">Buscar</button>
+                      &nbsp;
+                      <a class="btn btn-outline-info" href= "{% url 'crear_colab' %}" >Nuevo</a>
+              </form>
+              
             <div></div>
-            
         </div>
     </div>  
     <div class="table-responsive" style="min-height: 500px;" >
@@ -45,7 +50,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark" style="padding-bottom: 10%;">
                           <li><a id="1"  class="dropdown-item" href="{% url 'edit_colab' usu.run %}" value="editar">Editar</a></li>
-                          <li><a id="2"  class="dropdown-item" href="#" value="eliminar">Eliminar</a></li>
+                          <li><button href="#" class="btn dropdown-item" name="eliminar" onclick="eliminarColab({{usu.run}})" value="{{usu.run}}">Eliminar</button></li>  
                         </ul>
                       </div>
                     </td>
@@ -53,7 +58,7 @@
                 {% endfor %} 
             {% elif cantidad < 1 %}
           <tr>
-            <td>00000</td>
+            <td>--</td>
             <td>No Encontrado</td>
             <td>No Encontrado</td>
             <td>No Encontrado</td>
@@ -64,8 +69,62 @@
         </tbody>
       </table>
     </div>
-    <!-- Contenido de los tab de cada tabla -->
-          
+    <!-- Contenido de los tab de cada tabla --> 
     </div>
+    {% if messages %}
+      {% for m in messages%}
+        <script>
+          Swal.fire({
+            "title": "Realizado",
+            "text": "{{m}}",
+            "icon": "success"
+          })
+        </script>
+      {% endfor %}
+    {% endif %}
+
+  </div>
+  {% block js %}
+  <script>
+    function eliminarColab(id){
+      Swal.fire({
+        "title": "¿Esta Seguro?",
+        "text": "Esta Acción es Irreversible",
+        "icon": "question",
+        "showCancelButton": true,
+        "cancelButtonText": "No, Cancelar",
+        "confirmButtonText": "Si, seguro",
+        "reverseButtons": true,
+        "confirmButtonColor": "#dc3545"
+      })
+      .then(function(result){
+        if(result.isConfirmed){
+          const data = new FormData();
+          var csrftoken = '{{ csrf_token }}';
+          data.append('eliminar',id);
+          console.log(id);
+          fetch('{% url 'userg' %}', {
+            method: 'POST',
+            body: data ,
+            headers: {
+              'X-CSRFToken': csrftoken ,
+            }
+         });
+         Swal.fire({
+          "title": "Realizado",
+          "text": "Colaborador Eliminado Exitosamente",
+          "icon": "success"
+        })
+        .then(function(result){
+          if(result.isConfirmed){
+          window.location.href = "{% url 'userg' %}";
+          }
+        });
+      }
+    })   
+    }
+  </script>
+{% endblock js %}
+
 </main>
 {% endblock contenido %}
