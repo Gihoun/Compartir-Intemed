@@ -1,0 +1,236 @@
+{% extends 'base_paciente.html' %}
+{% load static %}
+
+
+{% block contenido %}  
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <h2>Paciente: {{paciente.p_nombre}} {{paciente.s_nombre}} {{paciente.apellido_pa}} {{paciente.apellido_ma}}</h2>
+    <div>
+        <form class="row " action="{% url 'edit_pac' paciente.run %}" method="POST" enctype="multipart/form-data" onsubmit="">
+            <!-- Datos Básicos del Paciente -->
+            {% csrf_token %}
+            <div class="col-lg-2">
+                <label for="inputRutPaciente" class="form-label">RUT<span id="rut_span" class="text-danger"></span></label>
+                <input type="text" class="form-control" name="inputRut" oninput="val_rut()" placeholder="{{paciente.run}}" value="{{paciente.run}}" minlength="7" maxlength="8" readonly required>
+            </div>
+            <div class="col-lg-1">
+                <label for="inputDVPaciente" class="form-label">DV<span id="dv_span" class="text-danger"></span></label>
+                <input type="text" class="form-control" name="inputDV" oninput="val_dv()" placeholder="{{paciente.dv}}" value="{{paciente.dv}}" minlength="1" maxlength="1" readonly required>
+            </div>
+            <div class="row mt-3">
+                <div class="col-lg-4">
+                    <label for="inputPrimerNombrePac" class="form-label">Primer Nombre<span id="primn_span" class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="inputPNom" oninput="val_primn()" placeholder="{{paciente.p_nombre}}" value="{{paciente.p_nombre}}" minlength="2" maxlength="100" required>
+                </div>
+                <div class="col-lg-4">
+                    <label for="inputSegundoNombrePac" class="form-label">Segundo Nombre</label>
+                    <input type="text" class="form-control" name="inputSNom" placeholder="{{paciente.s_nombre}}" value="{{paciente.s_nombre}}" maxlength="100">
+                </div>
+                <div class="col-lg-4">
+                    <label for="inputNombreSocialPac" class="form-label">Nombre Social</label>
+                    <input type="text" class="form-control" name="inputNomSoc" placeholder="{{paciente.nombre_social}}" value="{{paciente.nombre_social}}"  maxlength="100">
+                </div>
+                <div class="col-lg-4">
+                    <label for="inputApellidoPaPac" class="form-label">Apellido Paterno<span id="ap_span" class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="inputAp" oninput="val_apPaterno()" placeholder="{{paciente.apellido_pa}}" value="{{paciente.apellido_pa}}"  minlength="2" maxlength="100" required>
+                </div>
+                <div class="col-lg-4">
+                    <label for="inputApellidoMaPac" class="form-label">Apellido Materno<span id="am_span" class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="inputAM"  oninput="val_apMaterno()" placeholder="{{paciente.apellido_ma}}" value="{{paciente.apellido_ma}}"  minlength="2" maxlength="100" required>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <hr>
+                <div class="col-md-4">
+                    <label for="inputComPac" class="form-label">Comuna</label>
+                    <select name="inputComPac" class="form-select ">
+                    {% for x in comuna %}
+                        {% if x.nombre_comuna == paciente.id_comuna.nombre_comuna %}
+                            <option selected>{{x.nombre_comuna}}</option>
+                        {% else %}
+                            <option>{{x.nombre_comuna}}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-8">
+                    <label for="inputDirPac" class="form-label">Dirección<span id="dir_span" class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="inputDir" oninput="val_direccion()" placeholder="{{paciente.direccion}}" value="{{paciente.direccion}}"  minlength="5" maxlength="100" required>
+                </div>
+                <div class=" col-lg-4">
+                    <label for="inputCorreoP" class="form-label">Correo Electrónico<span id="correo_span" class="text-danger">*</span></label>
+                    <input type="email" class="form-control" name="inputCorreo" oninput="ValidateEmail()" placeholder="{{paciente.correo}}" value="{{paciente.correo}}"  minlength="5" maxlength="100" required>
+                </div>
+                <div class="col-lg-5">
+                    <label for="inputNacPac" class="form-label">Nacionalidad</label>
+                    <select name="inputNacPac" class="form-select ">
+                    {% for x in nacionalidad %}
+                        {% if x.nombre_nac == paciente.id_nacionalidad.nombre_nac %}
+                            <option selected>{{x.nombre_nac}}</option>
+                        {% else %}
+                            <option>{{x.nombre_nac}}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <label for="FechaNacPac" class="form-label">Fecha Nacimiento<span id="fnac_span" class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="fecha" oninput="val_fechanac()" value="{{paciente.fecha_nac}}" placeholder="{{paciente.fecha_nac}}" minlength="8" maxlength="10" readonly required/>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-lg-4">
+                    <label for="inputEstadoPac" class="form-label">Estado Civil</label>
+                    <select name="inputEstadoPac" class="form-select ">
+                    {% for x in estado %}
+                        {% if x.nombre_estado == paciente.id_estado.nombre_estado %}
+                            <option selected>{{x.nombre_estado}}</option>
+                        {% else %}
+                            <option>{{x.nombre_estado}}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-4">
+                    <label for="inputGeneroPac" class="form-label">Género</label>
+                    <select name="inputGeneroPac" class="form-select ">
+                    {% for x in genero %}
+                        {% if x.nombre_genero == paciente.id_genero.nombre_genero %}
+                            <option selected>{{x.nombre_genero}}</option>
+                        {% else %}
+                            <option>{{x.nombre_genero}}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <label for="inputTalla" class="form-label">Talla (mts)</label>
+                    <input type="number" class="form-control" name="inputTalla" placeholder="{{paciente.paciente.talla}}" value="{{paciente.paciente.talla}}">
+                </div>
+                <div class="col-lg-2">
+                    <label for="inputPeso" class="form-label">Peso (kgs)</label>
+                    <input type="number" class="form-control" name="inputPeso" placeholder="{{paciente.paciente.peso}}" value="{{paciente.paciente.peso}}">
+                </div>  
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <label for="inputFonoPac" class="form-label">Teléfono<span id="tel_span" class="text-danger">*</span></label>
+                        {% for y in telefonos %}
+                            <input type="number" class="form-control" name="inputFono" oninput="val_telefono()" placeholder="{{y}}" value="{{y}}"  minlength="5" maxlength="12" required>
+                        {% endfor %}    
+                </div>
+                <div class="col-md-4">
+                    <label for="inputPrev" class="form-label">Previsión</label>
+                    <select name="inputPrev" class="form-select ">
+                    {% for x in prevision %}
+                        {% if x.nombre_prevision == paciente.paciente.id_prevision.nombre_prevision %}
+                            <option selected>{{x.nombre_prevision}}</option>
+                        {% else %}
+                            <option>{{x.nombre_prevision}}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+                </div>                        
+            </div>
+            
+            <div class="container">
+                <hr>
+                <p class="form-label">Alergias</p>
+                <div >
+                  <div >
+                    <input class="form-control" type="text" name="inputNuevaAlergia" placeholder="Ingrese Nueva Alergia" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 ">
+                    <div id="modules" class="d-flex flex-wrap overflow-auto" style="max-height: 300px">
+                        {% for aler in alers%}
+                          <p class="drag"><a class="btn  btn-outline-primary">{{aler.nombre_alergia}}</a></p>
+                        {% endfor %}
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div id="dropzone">
+                        {%for ale in alergias%}
+                            <div class="drop-item">{{ale}}
+                                <button type="button" class="btn btn-primary remove" onclick="return this.parentNode.remove();"><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" ></span></button>
+                            </div>
+                        {% endfor%}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end" class="row mt-3">
+                <button type="submit" class="btn btn-outline-primary">Guardar</button>
+            </div>
+            <div>
+                <label></label>
+                <label></label>
+            </div>  
+        </form>
+    </div>
+    <!-- Contenido de los tab de cada tabla -->
+</main>
+{% endblock contenido %}
+
+{% block js1 %}
+<script src="{% static 'js/drag_drop.js' %}"></script>
+<script>
+    $.datepicker.regional['es'] = {
+        closeText: 'Cerrar',
+        prevText: '< Ant',
+        nextText: 'Sig >',
+        currentText: 'Hoy',
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+        weekHeader: 'Sm',
+        dateFormat: 'yy-mm-dd',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ''
+    };
+    $.datepicker.setDefaults($.datepicker.regional['es']);
+    $(function () {
+        $("#fecha").datepicker();
+    });
+</script>
+<script>
+    /*Validacion modificaciones*/
+    function val_modificacion(){
+        var pn = val_primn();
+        var apa = val_apPaterno();
+        var ama = val_apMaterno();
+        var dir = val_direccion();
+        var ce = ValidateEmail();
+        var fn = val_fechanac();
+        var tu = val_telefono();
+        var fi = val_fechaing();
+        var sc = val_sueldo();
+        var rh = val_hrs();
+        if (pn == true && apa == true && ama == true && dir == true && ce == true && fn == true && tu == true && fi == true && sc == true && apa == true) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: 'Colaborador Modificado',
+                showConfirmButton: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.edit_usuario.submit();
+                    return true;
+                }
+            })
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Formulario Con Errores',
+                text: 'Favor Revisar los Formatos Establecidos'
+            })
+            return false;
+        }
+    }
+</script>
+{% endblock js1%}

@@ -19,55 +19,10 @@
     <!-- Navbar recepcion -->
     {% include "navbar_paciente.html" %}
     <!-- Navbar recepcion -->
-    {% include "banner_recepcion.html" %}
-    <main class="p-5">
-        <div class="d-flex">
-            <!-- Tabla de navegacion vertical  -->
-            <div class="nav flex-column nav-pills me-5" id="v-pills-tab" role="tablist1" aria-orientation="vertical">
-                <button class="nav-link active border m-3  btn btn-primary" id="v-pills-tomarhr-tab"
-                    data-bs-toggle="pill" data-bs-target="#v-pills-tomarhr" type="button" role="tab"
-                    aria-controls="v-pills-tomarhr" aria-selected="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-medical" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v.634l.549-.317a.5.5 0 1 1 .5.866L9 6l.549.317a.5.5 0 1 1-.5.866L8.5 6.866V7.5a.5.5 0 0 1-1 0v-.634l-.549.317a.5.5 0 1 1-.5-.866L7 6l-.549-.317a.5.5 0 0 1 .5-.866l.549.317V4.5A.5.5 0 0 1 8 4zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
-                        <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
-                        <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
-                      </svg>
-                    Tomar Hora
-                </button>
-                <button class="nav-link border m-3 btn btn-primary" id="v-pills-anularhr-tab" data-bs-toggle="pill"
-                    data-bs-target="#v-pills-anularhr" type="button" role="tab" aria-controls="v-pills-anularhr"
-                    aria-selected="false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                      </svg>
-                    Anular Hora
-                </button>
-                <button class="nav-link border m-3 btn btn-primary" id="v-pills-verex-tab" data-bs-toggle="pill"
-                    data-bs-target="#v-pills-verex" type="button" role="tab" aria-controls="v-pills-verex"
-                    aria-selected="false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
-                        <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
-                        <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
-                      </svg>
-                    Mis examenes
-                </button> 
-            </div>
-            <!-- Contenido de los tab de cada tabla -->
-            <div class="tab-content  container-fluid" id="v-pills-tabContent">
-                <div class="tab-pane fade show active container-fluid" id="v-pills-tomarhr" role="tabpanel" aria-labelledby="v-pills-tomarhr-tab">
-                    {% include "tomarhr_paciente.html" %}
-                </div>
-            
-                <div class="tab-pane fade" id="v-pills-anularhr" role="tabpanel" aria-labelledby="v-pills-anularhr-tab">
-                    {% include "anularhr_paciente.html" %}
-                </div>
-                <div class="tab-pane fade" id="v-pills-verex" role="tabpanel" aria-labelledby="v-pills-verex-tab">
-                    {% include "verex_paciente.html" %}
-                </div>
-            </div>
-        </div>   
-    </main>
+    {% include "banner_paciente.html" %}
+    {% block contenido %}
+    {% endblock contenido %}
+    
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script>
@@ -108,5 +63,7 @@
     crossorigin="anonymous"></script>
     <!--<script src="http://code.jquery.com/jquery-1.9.1.js"></script>-->
     <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    {% block js1%}
+    {% endblock js1%}
 </body>
 </html>

@@ -10,7 +10,7 @@
                 <div class="mx-auto"></div>
                 <ul class="navbar-nav hstack gap-3">
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'indexPaciente' %}">Inicio</a>
+                        <a class="nav-link text-white" href="{% url 'indexPaciente' paciente.run %}">Inicio</a>
                     </li>
                     <div class="vr"></div>
                     <li class="nav-item">
@@ -18,11 +18,11 @@
                     </li>
                     <div class="vr"></div>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'micuenta' %}">Mi Cuenta</a>
+                        <a class="nav-link text-white" href="{% url 'micuenta' paciente.run %}">Mi Cuenta</a>
                     </li>
                     <div class="vr"></div>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'indexPaciente' %}">Cerrar Sesión</a>
+                        <a class="nav-link text-white" href="{% url 'indexPaciente' paciente.run %}">Cerrar Sesión</a>
                     </li>
                 </ul>
             </div>
