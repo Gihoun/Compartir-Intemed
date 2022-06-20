@@ -48,17 +48,20 @@
             <!-- Tabla de navegacion vertical  -->
             <div class="nav flex-column nav-pills me-5" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <button class="nav-link border m-3  btn btn-primary" id="v-pills-ingresarP-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ingresarP" type="button" role="tab" aria-controls="v-pills-ingresarP" aria-selected="false">
-                    <a class="nav-link" href="{% url 'ingresarPac' %}">Ingresar Pago</a>
+                    <a class="nav-link" href="{% url 'ingresarPac' %}">Ingresar Paciente</a>
                 </button>
                 <button class="nav-link border m-3 btn btn-primary" id="v-pills-buscarP-tab" data-bs-toggle="pill" data-bs-target="#v-pills-buscarP" type="button" role="tab" aria-controls="v-pills-buscarP" aria-selected="false">
 
                     <a class="nav-link" href="{% url 'buscarPac' %}"> Buscar Paciente</a>
                 </button>
                 <button class="nav-link border m-3 btn btn-primary" id="v-pills-ingresarPago-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ingresarPago" type="button" role="tab" aria-controls="v-pills-ingresarPago" aria-selected="false">
-
+                    <a class="nav-link" href= "{% url 'anularHor' %}">Anular Hora</a>
+                </button>
+                <button class="nav-link border m-3 btn btn-primary" id="v-pills-ingresarPago-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ingresarPago" type="button" role="tab" aria-controls="v-pills-ingresarPago" aria-selected="false">
                     <a class="nav-link" href="{% url 'ingresarPag' %}">Ingresar Pago</a>
                 </button>
             </div>
+
             <!-- Contenido de los tab de cada tabla -->
             <div class="tab-content  container-fluid" id="v-pills-tabContent">
                 <div class="tab-pane fade show active container-fluid p-4" id="v-pills-ingresarP" role="tabpanel" aria-labelledby="v-pills-ingresarP-tab">  
