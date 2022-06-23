@@ -747,3 +747,5 @@ def vista_newpac(request):
         print("Error, Sin retorno del Formulario")
     contexto = {"estados":estados, "comunas":comunas, "generos": generos, "nacionalidades": nacionalidades, "previsiones": previsiones}
     return render(request, "crear_pac.html", contexto)
+
+

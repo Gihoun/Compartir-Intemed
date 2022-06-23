@@ -1,0 +1,186 @@
+{% extends "base_recepcion.html" %}
+{% load static %}
+{% block contenido %}  
+<section class="p-4">
+    <h3 class="text-center mb-5">Ingreso Paciente </h3>
+    <form class="row " action="{% url 'editarPac' paciente.run %}" method="POST" enctype="multipart/form-data" onsubmit="">
+        {% csrf_token %}
+        <div class="row mt-3">
+            <div class="col-lg-3">
+                <label for="inputRutPaciente" class="form-label">Rut paciente<span id="rut_span" class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="inputRut" name="inputRut" placeholder="{{paciente.run}}" value="{{paciente.run}}"  oninput="val_rut()" minlength="7" maxlength="8" readonly required>
+                
+            </div>
+            <div class="col-lg-1">
+                <label for="inputDVPaciente" class="form-label">Dv<span id="dv_span" class="text-danger"></span></label>
+                <input type="text" class="form-control" id="inputDV" name="inputDV" placeholder="{{paciente.dv}}" value="{{paciente.dv}}" oninput="val_dv()" minlength="1" maxlength="1" readonly required>
+            </div>
+            <div class="col-lg-4">
+                <label for="fecha" class="form-label"> Seleccione una fecha:</label>
+                <input type="text" class="form-control" id="fecha" name="fechaNac" value="{{paciente.fecha_nac}}" placeholder="{{paciente.fecha_nac}}" onchange="selectdia()" placeholder="Seleccione fecha"readonly required> 
+            </div>
+            <div class=" col-lg-4">
+                <label for="inputcorreo" class="form-label">Correo Electrónico<span id="correo_span" class="text-danger">*</span></label>
+                <input type="email" class="form-control" id="inputCorreo" name="inputCorreo" placeholder="{{paciente.correo}}" value="{{paciente.correo}}" oninput="ValidateEmail()" minlength="5" maxlength="100" required>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-lg-4">
+                <label for="inputNombrePaciente" class="form-label">Primer Nombre<span id="primn_span" class="text-danger"></span></label>
+                <input type="text" class="form-control" name="inputPNom" placeholder="{{paciente.p_nombre}}" value="{{paciente.p_nombre}}" oninput="val_primn()"  minlength="2" maxlength="100" required>
+            </div>
+            <div class="col-lg-4">
+                <label for="inputSegundoNombrePac" class="form-label">Segundo Nombre<span id="segn_span" class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="inputSNom" name="inputSNom" placeholder="{{paciente.s_nombre}}" value="{{paciente.s_nombre}}" oninput="val_segn()" minlength="2" maxlength="100" required>
+            </div>
+            <div class="col-lg-4">
+                <label for="inputNombreSocial" class="form-label">Nombre Social<span id="nomsoc_span" class="text-danger"></span></label>
+                <input type="text" class="form-control" id="inputNomSoc" name="inputNomSoc" placeholder="{{paciente.nombre_social}}" value="{{paciente.nombre_social}}" oninput="val_nomsoc()"  maxlength="100">
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-lg-4">
+                <label for="inputApellidoPaciente" class="form-label">Apellido P.<span id="ap_span" class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="inputAp" name="inputAp" placeholder="{{paciente.apellido_pa}}" value="{{paciente.apellido_pa}}" oninput="val_apPaterno()" minlength="2" maxlength="100" required>
+            </div>
+            <div class="col-lg-4">
+                <label for="inputApellidomPaciente" class="form-label">Apellido M.<span id="am_span" class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="inputAM" name="inputAM" placeholder="{{paciente.apellido_ma}}" value="{{paciente.apellido_ma}}" oninput="val_apMaterno()" minlength="2" maxlength="100" required>
+            </div>
+            <div class="col-lg-4">
+                <label for="inputNac" class="form-label">Nacionalidad</label>
+                <select name="inputNac" class="form-select ">
+                    {% for x in nacionalidad %}
+                    {% if x.nombre_nac == paciente.id_nacionalidad.nombre_nac %}
+                        <option selected>{{x.nombre_nac}}</option>
+                    {% else %}
+                        <option>{{x.nombre_nac}}</option>
+                    {% endif %}
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-lg-4">
+                <label for="inputEstadoCivil" class="form-label">Estado Civil</label>
+                <select name="inputEstadoCivil" class="form-select ">
+                    {% for x in estado %}
+                    {% if x.nombre_estado == paciente.id_estado.nombre_estado %}
+                        <option selected>{{x.nombre_estado}}</option>
+                    {% else %}
+                        <option>{{x.nombre_estado}}</option>
+                    {% endif %}
+                    {% endfor %}
+                
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <label for="inputGenero" class="form-label">Género</label>
+                <select name="inputGenero" class="form-select ">
+                    {% for x in genero %}
+                    {% if x.nombre_genero == paciente.id_genero.nombre_genero %}
+                        <option selected>{{x.nombre_genero}}</option>
+                    {% else %}
+                        <option>{{x.nombre_genero}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="inputPrevi" class="form-label">Previsión</label>
+                <select name="inputPrevi" class="form-select ">
+
+                    {% for x in prevision %}
+                    {% if x.nombre_prevision == paciente.paciente.id_prevision.nombre_prevision %}
+                        <option selected>{{x.nombre_prevision}}</option>
+                    {% else %}
+                        <option>{{x.nombre_prevision}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>  
+            
+        </div>
+        <div class="row mt-3">
+            <div class="col-lg-8">
+                <label for="inputDireccion" class="form-label">Dirección<span id="dir_span" class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="inputDir" placeholder="{{paciente.direccion}}" value="{{paciente.direccion}}" oninput="val_direccion()" minlength="5" maxlength="100" required>
+                
+            </div>
+
+            <div class="col-md-4">
+                <label for="inputComuna" class="form-label">Comuna</label>
+                <select name="inputComuna" class="form-select ">
+
+                    {% for x in comuna %}
+                    {% if x.nombre_comuna == paciente.id_comuna.nombre_comuna %}
+                        <option selected>{{x.nombre_comuna}}</option>
+                    {% else %}
+                        <option>{{x.nombre_comuna}}</option>
+                    {% endif %}
+                    {% endfor %}
+                    
+                </select>
+            </div>
+
+        </div>
+        
+        <div class="row mt-3">
+            
+            
+        </div>
+        
+    
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end" class="row mt-3">
+            <button type="submit" class="btn btn-outline-primary" >Editar</button>
+        </div>
+    </form >
+
+    <div>
+        {% if messages %}
+            {% for m in menssages %}
+                <script>
+                    Swal.fire({
+                        "title": "Realizado",
+                        "text": "{{m}}",
+                        "icon": "success"
+                    })
+                </script>
+            {% endfor %}
+        {% endif %}
+    </div>
+</section>
+<script>
+    /*Validacion modificaciones*/
+    function val_modificacion(){
+        var pn = val_primn();
+        var apa = val_apPaterno();
+        var ama = val_apMaterno();
+        var dir = val_direccion();
+        var ce = ValidateEmail();
+        var fn = val_fechanac();
+        var tu = val_telefono();
+
+        if (pn == true && apa == true && ama == true && dir == true && ce == true && fn == true && tu == true) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: 'Paciente Modificado',
+                showConfirmButton: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.edit_usuario.submit();
+                    return true;
+                }
+            })
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Formulario Con Errores',
+                text: 'Favor Revisar los Formatos Establecidos'
+            })
+            return false;
+        }
+    }
+</script>            
+{% endblock contenido %}

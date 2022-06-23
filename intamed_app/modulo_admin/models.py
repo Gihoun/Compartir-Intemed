@@ -12,6 +12,8 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from datetime import date
 
+
+
 class Usuario(models.Model):
     
     run = models.BigIntegerField(primary_key=True)
@@ -66,6 +68,7 @@ class Agenda(models.Model):
     mes = models.BigIntegerField()
     anio = models.BigIntegerField()
     hora = models.TextField()  # This field type is a guess.
+    
 
     class Meta:
         managed = False
@@ -129,13 +132,13 @@ class Contrato(models.Model):
         managed = False
         db_table = 'contrato'
 
-class DetalleAgenda(models.Model):
-    id_agenda = models.ForeignKey(Agenda, models.DO_NOTHING, db_column='id_agenda')
-    run_recepcionista = models.ForeignKey('Recepcionista', on_delete=models.CASCADE, db_column='run_recepcionista')
-
-    class Meta:
-        managed = False
-        db_table = 'detalle_agenda'
+#class DetalleAgenda(models.Model):
+#    id_agenda = models.ForeignKey(Agenda, models.DO_NOTHING, db_column='id_agenda')
+#    run_recepcionista = models.ForeignKey('Recepcionista', on_delete=models.CASCADE, db_column='run_recepcionista')
+#
+#    class Meta:
+#        managed = False
+#        db_table = 'detalle_agenda'
 
 class DetalleAlergia(models.Model):
     run_paciente = models.ForeignKey('Paciente', on_delete=models.CASCADE, db_column='run_paciente')

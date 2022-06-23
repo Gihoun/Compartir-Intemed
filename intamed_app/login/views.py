@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from modulo_admin.models import *
 from modulo_paciente.views import *
-from login.models import Usuario_django
+from .models import Usuario_django
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, logout, login

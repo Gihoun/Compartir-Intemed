@@ -1,9 +1,9 @@
-{%extends "base_recepcion.html"%}
+{% extends "base_recepcion.html "%}
 {% load static %}
 {% block contenido %}  
 <section class="p-4">
-    <h3 class="text-center mb-5">Ingreso paciente </h3>
-    <form class="row" method="POST" enctype="multipart/form-data" onsubmit="">
+    <h3 class="text-center mb-5">Ingreso Paciente </h3>
+    <form class="row" method="POST" enctype="multipart/form-data" >
         {% csrf_token %}
         <div class="row mt-3">
             <div class="col-lg-3">
@@ -18,6 +18,10 @@
             <div class="col-lg-4">
                 <label for="fecha" class="form-label"> Seleccione una fecha:</label>
                 <input type="text" class="form-control" id="fecha" name="fechaNac" onchange="selectdia()" placeholder="Seleccione fecha" />
+            </div>
+            <div class=" col-lg-4">
+                <label for="inputcorreo" class="form-label">Correo Electrónico<span id="correo_span" class="text-danger">*</span></label>
+                <input type="email" class="form-control" id="inputCorreo" name="inputCorreo" oninput="ValidateEmail()" minlength="5" maxlength="100" required>
             </div>
         </div>
         <div class="row mt-3">
@@ -71,10 +75,19 @@
 
                 </select>
             </div>
+            <div class="col-md-4">
+                <label for="inputPrevision" class="form-label">Previsión</label>
+                <select name="inputPrevision" class="form-select ">
+
+                {% for y in prevision %}
+                        <option value="{{y.id_prevision}}">{{y.nombre_prevision}}</option>
+                {% endfor %}
+                </select>
+            </div>  
             
         </div>
         <div class="row mt-3">
-            <div class="col-lg-4">
+            <div class="col-lg-8">
                 <label for="inputDireccion" class="form-label">Dirección<span id="dir_span" class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="inputDir" name="inputDir" oninput="val_direccion()" minlength="5" maxlength="100" required>
             </div>
@@ -91,21 +104,6 @@
             </div>
 
         </div>
-        <div class="row mt-3">
-            <div class=" col-lg-4">
-                <label for="inputcorreo" class="form-label">Correo Electrónico<span id="correo_span" class="text-danger">*</span></label>
-                <input type="email" class="form-control" id="inputCorreo" name="inputCorreo" oninput="ValidateEmail()" minlength="5" maxlength="100" required>
-            </div>
-            <div class="col-md-4">
-                <label for="inputPrev" class="form-label">Previsión</label>
-                <select name="inputPrev" class="form-select ">
-                {% for x in prevision %}
-                        <option value="{{x.id_prevision}}">{{x.nombre_prevision}}</option>
-                {% endfor %}
-                </select>
-            </div>  
-        </div>
-        
     
         <div class="col-12 mt-5">
             <button type="submit" class="btn btn-primary">Ingresar Paciente</button>

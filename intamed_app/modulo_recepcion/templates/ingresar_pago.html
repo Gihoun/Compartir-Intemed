@@ -1,8 +1,8 @@
-{%extends "base_recepcion.html"%}
+{% extends "base_recepcion.html" %}
 {% load static %}
 {% block contenido %}  
 <section class="p-4">
-    <form>
+    <form class="row " action="{% url 'ingresarPag' %}" method="POST" enctype="multipart/form-data" onsubmit="">
         <h3 class="text-center mb-5">Ingresar Pago paciente</h3>
             <div class="row mt-3">
                 <div class="col-sm-3">

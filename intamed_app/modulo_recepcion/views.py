@@ -16,7 +16,6 @@ import requests
 import logging
 from django.http import JsonResponse
 import datetime
-
 from django.http import HttpRequest
 
 # Create your views here.
@@ -33,7 +32,6 @@ def inicio(request):
         y = Paciente()
 
         new_run_pac = request.POST.get('inputRut')
-        #x.run = request.POST.get('inputRutPaciente')
         x.dv = request.POST.get('inputDV')
         x.p_nombre = request.POST.get('inputPNom')
         x.nombre_social = request.POST.get('inputNomSoc')
@@ -64,9 +62,12 @@ def inicio(request):
         perfilu = PerfilUsuario.objects.get(id_perfil=4)
         x.id_perfil = perfilu
 
-        id_previ = request.POST.get('inputPrev')
+        id_previ = request.POST.get('inputPrevision')
         pprev = Prevision.objects.get(id_prevision=id_previ)
         y.id_prevision = pprev
+
+        y.peso = request.POST.get('inputPeso')
+        y.talla = request.POST.get('inputTalla')
 
         try:
             user = Usuario.objects.get(run=new_run_pac)
@@ -74,18 +75,19 @@ def inicio(request):
             print(user.run)
         except:
             x.run = new_run_pac
-            if x.run is not None and x.dv is not None and x.p_nombre is not None and x.apellido_pa is not None and x.apellido_ma is not None and x.direccion is not None and x.correo is not None and x.contrasena is not None:
-                if x.run.strip() !='' and x.dv.strip() !='' and x.p_nombre.strip() !='' and x.apellido_pa.strip() !='' and x.apellido_ma.strip() !='' and x.direccion.strip() !='' and x.correo.strip() !='' and x.contrasena.strip() !='': 
+            if x.run is not None and x.dv is not None and x.p_nombre is not None and x.apellido_pa is not None and x.apellido_ma is not None and x.direccion is not None and x.correo is not None and x.contrasena is not None and y.peso is not None and y.talla is not None:
+                if x.run.strip() !='' and x.dv.strip() !='' and x.p_nombre.strip() !='' and x.apellido_pa.strip() !='' and x.apellido_ma.strip() !='' and x.direccion.strip() !='' and x.correo.strip() !='' and y.peso.strip() !='' and y.talla.strip() !='': 
                     try:
                         x.save()
                         print("Usuario Paciente Registrado")
 
-                        runpac = request.POST.get('inputRutPaciente')
+                        runpac = request.POST.get('inputRut')
                         newrun = Usuario.objects.get(run=runpac)
                         y.run_paciente = newrun
 
                         y.save()
                         print("Paciente 100% Registrado")
+
                     except:
                         print("Error, RUT Repetido")
                 else:
@@ -99,11 +101,6 @@ def inicio(request):
 
 
 
-
-
-
-def edit_paciente(request):
-    return render(request,"edit_paciente.html")
 
 def ingresarPago(request):
     return render(request,"ingresar_pago.html")
@@ -137,7 +134,8 @@ def editar_paciente(request,id):
     cant_tel = tel_users.count() 
     cant = num_tel.count()
     paciente = Usuario.objects.get(run=id)
-    paciente_real = Usuario.objects.get(run=id)
+    paciente_real = Paciente.objects.get(run_paciente=id)
+
     comunas = Comuna.objects.all()
     nacionalidades = Nacionalidad.objects.all()
     estados = EstadoCivil.objects.all()
@@ -159,7 +157,7 @@ def editar_paciente(request,id):
         gen_p = request.POST.get("inputGenero")
         
         ## CAMPOS EXCLUSIVOS DE PACIENTE
-        prev = request.POST.get("inputPrev")
+        prev = request.POST.get("inputPrevi")
         
         
         flag , userr = editar_usuario_gral(id, p_nom, s_nom, nom_soc, ap_pa, ap_ma, com_p, dir_p, correo_p, nac_p, fec_nacP, est_p, gen_p)
@@ -168,6 +166,7 @@ def editar_paciente(request,id):
                 prevP = Prevision.objects.get(nombre_prevision=prev)
                 paciente_real.id_prevision = prevP
                 paciente_real.save()
+
                 mensaje="paciente guardado exitosamente"
                 contexto = {"paciente": userr, "prevision": prevision, "telefonos": num_tel, "cantidad": cant_tel,
                 "comuna": comunas, "nacionalidad": nacionalidades, "estado": estados, "genero": generos}
@@ -182,6 +181,27 @@ def editar_paciente(request,id):
     contexto = {"paciente": paciente, "prevision": prevision, "telefonos": num_tel, "cantidad": cant_tel,
                 "comuna": comunas, "nacionalidad": nacionalidades, "estado": estados, "genero": generos}
    
-    return render(request, 'edit_paciente.html',contexto)
+    return render(request, 'editar_paciente.html',contexto)
 
 
+
+def anularHora(request):
+    users_all = Usuario.objects.all()
+    if request.POST:
+        busqueda = request.POST.get("txbusqueda")
+        pac_ret = Usuario.objects.all().select_related('paciente').filter(run__startswith=busqueda, id_perfil=4)
+        cant_p = pac_ret.count()
+        if cant_p>=1:
+            contexto = {"usuarios":pac_ret,"cantidad":cant_p}
+        else:
+            contexto = {"usuarios":0,"cantidad":0}
+    else:
+        users_pac = Usuario.objects.all().select_related('paciente').filter(id_perfil=4)[:25]
+        userp_cant = users_pac.count()
+        contexto = {"usuarios":users_pac,"cantidad":userp_cant}
+    return render(request, "anular_hora.html", contexto)
+
+
+def anularHora(request):
+    
+    return render(request, 'atenciones.html')

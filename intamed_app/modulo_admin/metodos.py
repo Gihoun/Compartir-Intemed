@@ -1,4 +1,3 @@
-#FUNCION PARA GUADAR HACIA TABLA USUARIO------------------
 from .models import *
 
 def editar_usuario_gral(id_user,p_nom,s_nom,nom_soc,ap,am,com,dire,correo,nac,fech,est,gen):
