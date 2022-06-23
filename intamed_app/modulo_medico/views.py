@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from modulo_admin.models import Comuna, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono
 from modulo_admin.models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato, Alergia, DetalleAlergia,DetalleAtencion
+from modulo_medico.models import *
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required, permission_required
 from django.views.decorators.csrf import csrf_protect
@@ -15,7 +16,7 @@ from django.db.models import Count
 from django.contrib import messages
 import logging
 from django.http import JsonResponse
-import datetime
+from datetime import datetime
 # Create your views here.
 
 
@@ -44,6 +45,9 @@ def inicio(request):
     return render(request,"base_medico.html", contexto)
 
 def agenda(request):
+    ### objetos nuevos
+    
+    ##########
     array_paciente=[]
     array_antiguedad=[]
     pacientes = Usuario.objects.filter(id_perfil = 4)[:20]
@@ -57,6 +61,45 @@ def agenda(request):
         else:
             array_antiguedad.append("Nuevo")
     zip(pacientes,array_antiguedad)
+
+    ################################# codigo agregado
+    if request.POST:
+        #d = datetime(2022, 10, 9, 23, 55, 59, 342380)
+        d_lun = request.POST.getlist("lunes")
+        d_mar = request.POST.getlist("martes")
+        d_mier = request.POST.getlist("martes")
+        d_jue = request.POST.getlist("martes")
+        
+        for hora in d_lun:
+            med = Medico.objects.get(run_medico=2222222)
+            arr_time = hora.split('-')
+            print(arr_time)
+            d = datetime.fromisoformat(f'2022-11-04T{arr_time[0]}:{arr_time[1]}:00')
+            x = agenda_hora()
+            y = Disponibilidad()
+                        
+            #try:
+                
+            id_h = agenda_hora.objects.last().id_hora + 5
+            id_d = Disponibilidad.objects.last().id_disp + 5
+            print(id_h, id_d)
+            ##OBJETO AGENDA_HORA
+            x.id_hora = id_h
+            x.fecha_hora = d
+            x.save()
+            ##OBJETO DISPONIBILIDAD
+            y.id_disp = id_d
+            y.id_horaD = x
+            y.run_medico = med
+            y.save()
+            print(f'{d} EXITO ')
+            #except:
+            print("error en el proceso de agendamiento")
+  
+
+
+
+    ################################
     contexto = {
         "pacientes":pacientes,
         "antiguo":zip(pacientes,array_antiguedad),
