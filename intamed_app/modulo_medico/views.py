@@ -1,11 +1,15 @@
 from array import array
+from curses import use_default_colors
+from email import message_from_binary_file
 from multiprocessing import context
 from multiprocessing.sharedctypes import Array
+from pickle import NONE
 from re import A
 from select import select
+from xml.dom import NoDataAllowedErr
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from modulo_admin.models import Comuna, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono
+from modulo_admin.models import Comuna, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, ResultadoExamen, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono
 from modulo_admin.models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato, Alergia, DetalleAlergia,DetalleAtencion
 from modulo_medico.models import *
 from modulo_admin.metodos import agregar_disp
@@ -167,8 +171,31 @@ def atePaciente(request,id):
     return render(request,"atencion_paciente.html",contexto)
 
 def consultaV(request):
+    
+    pacientes = Paciente.objects.all() 
+
     return render(request,"consulta_paciente.html")
 def consultaP(request,id):
+
     return render(request,"consulta_paciente.html")
 def examenesP(request):
-    return render(request,"examenes_paciente.html")    
+
+    if request.POST:
+        paciente = request.POST.get("sPaciente") 
+        if paciente != '':  
+            pat = Paciente.objects.get(run_paciente=paciente)
+            examenReslt_conteo = ResultadoExamen.objects.all().filter(run_paciente=paciente).count() 
+            e = ResultadoExamen.objects.get(run_paciente=paciente)
+           
+
+            contexto = {"eRsultados_conteo":examenReslt_conteo}
+
+        else:
+            userv = Usuario.objects.get(run=12101765)
+            print(userv)
+            contexto = {"Presentacion":"noexiste"}
+
+    else:
+        contexto = {"Presentacion":"nada"}
+
+    return render(request,"examenes_paciente.html",contexto)    

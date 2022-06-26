@@ -8,7 +8,7 @@ header {
     background-color: rgb(240, 240, 240);
 }
 .banner {
-    max-height: 500px;
+    max-height: 300px;
     border-radius: 10px;
     width: fit-content;
     background-size: cover;
@@ -34,4 +34,16 @@ header {
 }
 body{
     background: linear-gradient(45deg, rgb(232, 232, 244) 0%, rgb(215, 242, 244) 43%, rgb(201, 217, 239) 70%);
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+/* For Firefox */
+input[type='number'] {
+    -moz-appearance:textfield;
 }

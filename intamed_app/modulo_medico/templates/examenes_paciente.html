@@ -1,22 +1,25 @@
 {% extends "base_medico.html" %}
 {% load static %}
 {% block contenido %}
+
 <div class=" container-fluid row p-4">
     <div class="col-lg-12">
         <h2 class="text-center mb-5 fw-bolder">Exámenes Pacientes</h2>
         <!-- form para buscar examen paciente -->
-        <form class="row row-cols-lg-auto g-3 align-items-center mb-5">
+        <form class="row row-cols-lg-auto g-3 align-items-center mb-5" method="POST" accept="{% url 'examenesP'%}">
+            {% csrf_token %}
             <label class="fw-bolder" for="rutPaciente">Rut Paciente</label>
             <div class="col-12">
-                <input type="text" class="form-control" id="rutPaciente"
-                    placeholder="Ingrese rut paciente" />
+                <input type="number" class="form-control" id="rutPaciente" name="sPaciente"
+                    placeholder="Ingrese rut paciente" pattern="[0-9]" required />
             </div>
             <div class="col-12">
-                <input type="text" class="form-control" id="DV" placeholder="DV"
-                    style="width: 75px;" />
-            </div>
-            <div class="col-12">
-                <button type="submit" class="btn btn-primary" id="btnbuscarPaciente">
+                <button type="submit" class="btn btn-primary" id="btnbuscarPaciente" name="btnbuscarPaciente">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-search" viewBox="0 0 16 16">
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
                     Buscar Paciente
                 </button>
             </div>
@@ -32,65 +35,42 @@
                         <th scope="col" style="text-align: center">Funciones</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">0122</th>
-                        <td>Exámen 1</td>
-                        <td>22-11-2022</td>
-                        <td style="text-align: center;">
-                            <button id="boton" type="button" class="btn btn-info m-1 text-white"
-                                onclick="">
-                                Visualizar
-                            </button>
-                            <button id="boton" type="button" class="btn btn-info m-1 text-white"
-                                onclick="">
-                                Imprimir
-                            </button>
-                            <button id="boton" type="button" class="btn btn-info m-1 text-white"
-                                onclick="">
-                                Eliminar
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">0123</th>
-                        <td>Exámen 2</td>
-                        <td>22-11-2022</td>
-                        <td style="text-align: center;">
-                            <button id="boton" type="button" class="btn btn-info m-1 text-white"
-                                onclick="">
-                                Visualizar
-                            </button>
-                            <button id="boton" type="button" class="btn btn-info m-1 text-white"
-                                onclick="">
-                                Imprimir
-                            </button>
-                            <button id="boton" type="button" class="btn btn-info m-1 text-white"
-                                onclick="">
-                                Eliminar
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">0124</th>
-                        <td>Exámen 3</td>
-                        <td>22-11-2022</td>
-                        <td style="text-align: center;">
-                            <button id="boton" type="button" class="btn btn-info m-1 text-white"
-                                onclick="">
-                                Visualizar
-                            </button>
-                            <button id="boton" type="button" class="btn btn-info m-1 text-white"
-                                onclick="">
-                                Imprimir
-                            </button>
-                            <button id="boton" type="button" class="btn btn-info m-1 text-white"
-                                onclick="">
-                                Eliminar
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
+                {% if eRsultados_conteo < 1 %} 
+                    <tbody>
+                        <tr>
+                        <td colspan="4" class="text-center mt-5 font-weight-bolder"> No se han encontrados exámenes para
+                            el RUT del paciente indicado. </td>
+                        </tr>
+                    </tbody>
+                {% elif eRsultados_conteo >= 1 %}
+                    <tbody>
+    
+                        <tr>
+                            <th scope="row">0122</th>
+                            <td>{x.archivo}</td>
+                            <td>22-11-2022</td>
+                            <td style="text-align: center;">
+                                <button id="boton" type="button" class="btn btn-info m-1 text-white" onclick="">
+                                    Visualizar
+                                </button>
+                                <button id="boton" type="button" class="btn btn-info m-1 text-white" onclick="">
+                                    Imprimir
+                                </button>
+                                <button id="boton" type="button" class="btn btn-info m-1 text-white" onclick="">
+                                    Eliminar
+                                </button>
+                            </td> 
+                        </tr>                                  
+
+                    </tbody>
+                {% else %}
+                    <tbody>
+                        <tr>
+                            <td colspan="4" class="text-center mt-5 font-weight-bolder"> Inicie la búsqueda de exámenes
+                                colocando el RUT del paciente sin su dígito verificador. </td>
+                        </tr>
+                    </tbody>
+                {% endif %}
             </table>
         </div>
         <div class="col-lg-12 mt-5">
@@ -100,5 +80,5 @@
             tempore.
         </div>
     </div>
-</div>  
+</div>
 {% endblock contenido %}
