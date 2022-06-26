@@ -1,5 +1,39 @@
 from .models import *
+from modulo_medico.models import *
+from datetime import datetime
 
+def agregar_disp(arr_horas,run_doc):
+    fecha_l = arr_horas[0]
+    del arr_horas[0]
+
+    for hora in arr_horas:
+        
+        med = Medico.objects.get(run_medico=2222222)
+        arr_time = hora.split('-')
+        print(arr_time)
+        d = datetime.fromisoformat(f'{fecha_l}T{arr_time[0]}:{arr_time[1]}:00')
+        x = agenda_hora()
+        y = Disponibilidad()
+        try:
+            id_h = agenda_hora.objects.last().id_hora + 5
+            id_d = Disponibilidad.objects.last().id_disp + 5
+            print(id_h, id_d)
+            ##OBJETO AGENDA_HORA
+            x.id_hora = id_h
+            x.fecha_hora = d
+            x.save()
+            ##OBJETO DISPONIBILIDAD
+            y.id_disp = id_d
+            y.id_horaD = x
+            y.run_medico = med
+            y.save()
+            print(f'HABILITADA HORA {d}')   
+        except:
+            print("error en el proceso de agendamiento")
+            return False
+    print(f'EXITO PARA TODAS LAS HORAS EN FECHA {fecha_l}')
+    return True
+    
 def editar_usuario_gral(id_user,p_nom,s_nom,nom_soc,ap,am,com,dire,correo,nac,fech,est,gen):
     # recoge un request
     usr = Usuario.objects.get(run=id_user)

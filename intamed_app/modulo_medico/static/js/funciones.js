@@ -98,8 +98,75 @@ $.datepicker.regional['es'] = {
 };
 $.datepicker.setDefaults($.datepicker.regional['es']);
 $(function () {
-    $("#fecha").datepicker();
+    $("#fecha").datepicker({
+        multidate: true
+    });
 });
+
+
+$(function() {
+    moment.locale('es');
+    $('#fechita').daterangepicker({
+      "minDate": moment(),
+      "maxSpan": {
+          "days": 4
+      },
+      "locale": {
+        "daysOfWeek": [
+            "Dom",
+            "Lun",
+            "Mar",
+            "Mier",
+            "Jue",
+            "Vie",
+            "Sab"
+        ],
+      }
+    }, function(start, end, label) {
+      
+      console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+      var $days = end.diff(start, 'days');
+      console.log($days);
+      var arr_horas = ["08-00","08-15","08-30","08-45","09-00"];
+      for (var i = 0; i <= $days; i++) {
+        
+        var $item = $('<div class="accordion-item" id="aco_item'+i+'">'+'<h2 class="accordion-header" id="jjj">'+'<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-'+i+'" aria-expanded="false" aria-controls="flush-collapseOne"><input type="label" class="badge badge-pill badge-info" name="'+start.format('dd')+'" value="'+start.format('YYYY-MM-DD')+'" >'+start.format('dddd')+'</button></h2>'+'</div>');
+        var $acob = $('<div id="flush-'+i+'" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlush"> <div class="accordion-body"> <ul class="list-group" id="li'+i+'" ></ul></div></div>');
+        var $ids = 'li'+i ;
+        var $acoit = 'aco_item' + i ;
+        
+        $('#accordionFlush').append($item);
+        $('#'+$acoit).append($acob);
+        
+        for (var p = 0; p < 4; p++) {
+            var $horas = $('<li class="list-group-item">'+ '<input class="form-check-input me-1" type="checkbox" name="'+start.format('dd')+'" value="'+arr_horas[p]+'" aria-label="...">'+arr_horas[p]+'</li>');
+            
+            $('#'+ $ids).append($horas);
+        }
+        var $ext = $()
+        
+        $vd = start.add(1,'days');
+        console.log(start.format('dd'));
+        
+        
+      }
+      
+      
+    });
+
+    $('#fechita').on('apply.daterangepicker', function(ev, picker) {
+    $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+        document.getElementById("fechita").style.visibility = "hidden";
+        document.getElementById("boton").style.visibility = "visible";
+        var $el = $('<button id="boton1" class="btn btn-outline-secondary">reiniciar</button>').click(function () { window.location.href = ""; $(this).parent().detach();});
+        $('#reinicio').append($el);
+        
+        });
+
+    $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
+    $(this).val('');
+});
+  });
 
 // Validaciones para Farmacos
 function valida_via(){

@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from modulo_admin.models import Comuna, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono
 from modulo_admin.models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato, Alergia, DetalleAlergia,DetalleAtencion
 from modulo_medico.models import *
+from modulo_admin.metodos import agregar_disp
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required, permission_required
 from django.views.decorators.csrf import csrf_protect
@@ -17,6 +18,8 @@ from django.contrib import messages
 import logging
 from django.http import JsonResponse
 from datetime import datetime
+import numpy as np 
+
 # Create your views here.
 
 
@@ -63,39 +66,36 @@ def agenda(request):
     zip(pacientes,array_antiguedad)
 
     ################################# codigo agregado
+   
+
     if request.POST:
         #d = datetime(2022, 10, 9, 23, 55, 59, 342380)
-        d_lun = request.POST.getlist("lunes")
-        d_mar = request.POST.getlist("martes")
-        d_mier = request.POST.getlist("martes")
-        d_jue = request.POST.getlist("martes")
-        
-        for hora in d_lun:
-            med = Medico.objects.get(run_medico=2222222)
-            arr_time = hora.split('-')
-            print(arr_time)
-            d = datetime.fromisoformat(f'2022-11-04T{arr_time[0]}:{arr_time[1]}:00')
-            x = agenda_hora()
-            y = Disponibilidad()
-                        
-            #try:
-                
-            id_h = agenda_hora.objects.last().id_hora + 5
-            id_d = Disponibilidad.objects.last().id_disp + 5
-            print(id_h, id_d)
-            ##OBJETO AGENDA_HORA
-            x.id_hora = id_h
-            x.fecha_hora = d
-            x.save()
-            ##OBJETO DISPONIBILIDAD
-            y.id_disp = id_d
-            y.id_horaD = x
-            y.run_medico = med
-            y.save()
-            print(f'{d} EXITO ')
-            #except:
-            print("error en el proceso de agendamiento")
-  
+        #datetime.date(2010, 6, 16).isocalendar().week
+        d_lun = request.POST.getlist("lu")
+        d_mar = request.POST.getlist("ma")
+        d_mier = request.POST.getlist("mi")
+        d_jue = request.POST.getlist("ju")
+        d_vie = request.POST.getlist("vi")
+                    
+         
+
+        if d_lun is not None and len(d_lun)>0:
+            print(d_lun)
+            agregar_disp(d_lun, 2222222)
+        if d_mar is not None and len(d_mar)>0:
+            print(d_mar)
+            agregar_disp(d_mar, 2222222)
+        if d_mier is not None and len(d_mier)>0:
+            print(d_mier)
+            agregar_disp(d_mier, 2222222)
+        if d_jue is not None and len(d_jue)>0:
+            print(d_jue)
+            agregar_disp(d_jue, 2222222)
+        if d_vie is not None and len(d_vie)>0:
+            print(d_vie)
+            agregar_disp(d_mier, 2222222)
+           
+
 
 
 
