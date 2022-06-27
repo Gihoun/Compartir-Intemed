@@ -181,12 +181,13 @@ def consultaP(request,id):
 def examenesP(request):
 
     if request.POST:
-        paciente = request.POST.get("sPaciente") 
+        paciente = request.POST.get("sPaciente")
+        user  = Usuario.objects.get(run=paciente)
+        print(user)
         if paciente != '':  
-            pat = Paciente.objects.get(run_paciente=paciente)
             examenReslt_conteo = ResultadoExamen.objects.all().filter(run_paciente=paciente).count() 
-            e = ResultadoExamen.objects.get(run_paciente=paciente)
-           
+            e = ResultadoExamen.objects.filter(run_paciente=paciente)
+            
 
             contexto = {"eRsultados_conteo":examenReslt_conteo}
 
