@@ -73,8 +73,8 @@ def agenda(request):
    
 
     if request.POST:
-        #d = datetime(2022, 10, 9, 23, 55, 59, 342380)
-        #datetime.date(2010, 6, 16).isocalendar().week
+        #RECOGE LA DISPONIBILIDAD SELECCIONADA DE HORARIO MEDICO
+        
         d_lun = request.POST.getlist("lu")
         d_mar = request.POST.getlist("ma")
         d_mier = request.POST.getlist("mi")
@@ -82,7 +82,7 @@ def agenda(request):
         d_vie = request.POST.getlist("vi")
                     
          
-
+        #SI HAY DATOS INSERTA LA DISPONIBILIDAD EN TABLA METODO EN metodos.py
         if d_lun is not None and len(d_lun)>0:
             print(d_lun)
             agregar_disp(d_lun, 2222222)
@@ -97,16 +97,16 @@ def agenda(request):
             agregar_disp(d_jue, 2222222)
         if d_vie is not None and len(d_vie)>0:
             print(d_vie)
-            agregar_disp(d_mier, 2222222)
-           
-
-
+            agregar_disp(d_mier, 2222222)           
+    # RECOGE HORAS ASIGNADAS PREVIAMENTE
+    disp = Disponibilidad.objects.filter(run_medico=2222222)
 
 
     ################################
     contexto = {
         "pacientes":pacientes,
         "antiguo":zip(pacientes,array_antiguedad),
+        "disponibilidad": disp
     }
     return render(request,"agenda_paciente.html",contexto)
 

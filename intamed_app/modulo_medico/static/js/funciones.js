@@ -127,18 +127,18 @@ $(function() {
       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
       var $days = end.diff(start, 'days');
       console.log($days);
-      var arr_horas = ["08-00","08-15","08-30","08-45","09-00"];
+      var arr_horas = ["08-00","08-15","08-30","08-45","09-00","09:15","09:30","09:45","10-00","10:15","10:30","10:45","11-00","11:15","11:30","11:45","12-00","12:15","12:30","12:45","13-00","13:15","13:30","13:45","14-00","14:15","14:30","14:45","15-00","15:15","15:30","15:45","16-00","16:15","16:30","16:45","17-00","17:15","17:30","17:45","18-00"];
       for (var i = 0; i <= $days; i++) {
         
-        var $item = $('<div class="accordion-item" id="aco_item'+i+'">'+'<h2 class="accordion-header" id="jjj">'+'<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-'+i+'" aria-expanded="false" aria-controls="flush-collapseOne"><input type="label" class="badge badge-pill badge-info" name="'+start.format('dd')+'" value="'+start.format('YYYY-MM-DD')+'" >'+start.format('dddd')+'</button></h2>'+'</div>');
-        var $acob = $('<div id="flush-'+i+'" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlush"> <div class="accordion-body"> <ul class="list-group" id="li'+i+'" ></ul></div></div>');
+        var $item = $('<div class="accordion-item" id="aco_item'+i+'">'+'<h2 class="accordion-header" id="jjj">'+'<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-'+i+'" aria-expanded="false" aria-controls="flush-collapseOne"><input type="label" class="badge badge-pill badge-info" name="'+start.format('dd')+'" value="'+start.format('YYYY-MM-DD')+'" >'+start.format('dddd DD - MMMM')+'</button></h2>'+'</div>');
+        var $acob = $('<div id="flush-'+i+'" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlush"> <div class="accordion-body overflow-auto" style="max-height: 300px;"> <ul class="list-group" id="li'+i+'" ></ul></div></div>');
         var $ids = 'li'+i ;
         var $acoit = 'aco_item' + i ;
         
         $('#accordionFlush').append($item);
         $('#'+$acoit).append($acob);
         
-        for (var p = 0; p < 4; p++) {
+        for (var p = 0; p < arr_horas.length; p++) {
             var $horas = $('<li class="list-group-item">'+ '<input class="form-check-input me-1" type="checkbox" name="'+start.format('dd')+'" value="'+arr_horas[p]+'" aria-label="...">'+arr_horas[p]+'</li>');
             
             $('#'+ $ids).append($horas);
