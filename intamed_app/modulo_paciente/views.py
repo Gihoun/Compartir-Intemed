@@ -1,11 +1,34 @@
 from django.shortcuts import render
 from modulo_admin.models import *
+from modulo_medico.models import *
+from select import select
 # Create your views here.
 
 
 def inicio(request,id):
     paciente = Usuario.objects.get(run=id)
-    contexto = {"paciente": paciente}
+    med = Usuario.objects.filter(id_perfil=2)
+    if request.POST:
+        ru = request.POST.get("run_medic")
+        hor = request.POST.get("fechainput")
+        print(hor)
+
+        
+        
+        if hor is not None and hor != '':
+            
+            arr_date= hor.split("-")
+            print(arr_date)
+            agnd = agenda_hora.objects.filter(fecha_hora__year=arr_date[0],fecha_hora__month=arr_date[1],fecha_hora__day=arr_date[2])
+
+            print(agnd)            
+            disp = Disponibilidad.objects.filter(run_medico=ru, id_horaD__in=agnd)
+        else:
+            disp = Disponibilidad.objects.filter(run_medico=ru).select_related('id_horaD')
+        contexto = {"paciente": paciente,"medico": med,"disponibilidad":disp}
+    else:
+        contexto = {"paciente": paciente,"medico": med}
+    
     return render(request,"paciente.html", contexto)
 
 

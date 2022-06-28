@@ -6,6 +6,7 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required,permission_required
+from django.shortcuts import redirect
 import requests
 from select import select
 
@@ -31,11 +32,34 @@ def login_todos(request):
             
             print(f"perfoo;; {perf}")
             if perf == 4:
-                contexto ={"paciente": userORA}
-                return render(request, 'paciente.html', contexto )
+                med = Usuario.objects.filter(id_perfil=2)
+                contexto ={"paciente": userORA,"medico":med}
+                response = redirect('modulo_paciente:indexPaciente',id=userORA.run)
+                return response
+                #return render(request, 'paciente.html', contexto )
             elif perf == 1:
                 contexto ={"admin": userORA}
                 return render(request, 'administrator.html', contexto )
+            elif perf==2:
+                array_paciente=[]
+                array_antiguedad=[]
+                pacientes = Usuario.objects.filter(id_perfil = 4)[:20]
+                for x in pacientes:
+                    array_paciente.append(x.run)
+                for x in array_paciente:
+                    ateExiste = DetalleAtencion.objects.filter(run_paciente=x)
+                    cant = ateExiste.count()
+                    if cant > 0:
+                        array_antiguedad.append("Antiguo")          
+                    else:
+                        array_antiguedad.append("Nuevo")
+                zip(pacientes,array_antiguedad)
+                contexto = {
+                            "pacientes":pacientes,
+                            "antiguo":zip(pacientes,array_antiguedad),
+                            "disponibilidad": disp
+                            }
+                return render(request,"agenda_paciente.html",contexto)
 
         else:
             

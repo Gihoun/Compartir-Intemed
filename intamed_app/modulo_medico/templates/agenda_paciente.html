@@ -23,8 +23,12 @@
     <button class="nav-link" id="horariomedico-tab" data-bs-toggle="tab" data-bs-target="#horariomedico" type="button"
       role="tab" aria-controls="horariomedico" aria-selected="false">Horario medico</button>
   </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="hora_asig-tab" data-bs-toggle="tab" data-bs-target="#horariasig" type="button"
+      role="tab" aria-controls="horariasig" aria-selected="false">Disponibilidad asignada </button>
+  </li>
 </ul>
-<div class="tab-content" id="tabcontenidobs">
+<div class="tab-content" id="tabcontenidobs" >
   <div class="tab-pane fade show active" id="consultaragenda" role="tabpanel" aria-labelledby="consultaragenda-tab">
     <div class="container m-1 table-responsive  border">
       <table class="table is-fullwidth is-striped is-bordered">
@@ -74,11 +78,36 @@
     <div class="accordion accordion-flush" id="accordionFlush">
                                     
     </div>
-      <div class="col-lg-4">
+      <div class="col-lg-4" id="reinicio">
         <button id="boton" class="btn btn-outline-primary" type="submit" style="visibility:hidden">Confirmar disponibilidad</button>
       </div>
-      <div id="reinicio"></div>
+      
     </form>
   </div>
+  <div class="tab-pane fade show active" id="horariasig" role="tabpanel" aria-labelledby="hora_asig-tab">
+    <div class="container m-1 table-responsive  border">
+    <table class="table is-fullwidth is-striped is-bordered">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for disp in disponibilidad %}       
+            <tr>
+              <th>{{ disp.id_horaD.fecha_hora|date:"N d "}}</th>
+              <td >{{disp.id_horaD.fecha_hora|date:"P"}}</td>
+              <td>Work in Porgress</td>
+              
+            </tr> 
+        {% endfor %}
+        
+      </tbody>
+    </table>
+  </div>
+  </div>
+  
 </div> 
 {% endblock contenido %}
