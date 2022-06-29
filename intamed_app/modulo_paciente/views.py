@@ -8,29 +8,75 @@ from select import select
 def inicio(request,id):
     paciente = Usuario.objects.get(run=id)
     med = Usuario.objects.filter(id_perfil=2)
+    
+    tom = det_agenda.objects.values_list("idda")
+    
+    
+    tom_us = det_agenda.objects.filter(run_pac=id)
+    #.values_list("idda")
+    #arr_us=[]
+    #
+    #for h in tom_us:
+    #    arr_us.append(h[0])
+
+    #print(f'agenda de usuario{arr_us}')
+
+    
+    age = Disponibilidad.objects.filter(det_agenda__in=tom_us)
+
     if request.POST:
         ru = request.POST.get("run_medic")
-        hor = request.POST.get("fechainput")
-        print(hor)
+        dat = request.POST.get("fechainput")
+        sel_hora = request.POST.get("hor_sel")
+        print(sel_hora)
 
-        
-        
-        if hor is not None and hor != '':
+        if sel_hora is not None and sel_hora != '':
+            print(f'el valor de selhora {sel_hora}')
+            di = Disponibilidad.objects.get(id_disp=sel_hora)
+            pac = Paciente.objects.get(run_paciente=id)
+            try:
+                test_det = det_agenda.objects.get(idd=sel_hora)
+                print(f'hora NO DISPONIBLE')
+            except:
+                new_agenda = det_agenda()
+                new_agenda.idd = di
+                new_agenda.run_pac = pac
+                new_agenda.idda = sel_hora
+                new_agenda.save()
+                print(f'hora agendada con exito')
+
+        if dat is not None and dat != '':
             
-            arr_date= hor.split("-")
+            arr_date= dat.split("-")
             print(arr_date)
             agnd = agenda_hora.objects.filter(fecha_hora__year=arr_date[0],fecha_hora__month=arr_date[1],fecha_hora__day=arr_date[2])
 
             print(agnd)            
             disp = Disponibilidad.objects.filter(run_medico=ru, id_horaD__in=agnd)
         else:
-            disp = Disponibilidad.objects.filter(run_medico=ru).select_related('id_horaD')
+
+            disp = Disponibilidad.objects.filter(run_medico=ru).select_related('id_horaD').exclude(id_disp__in=tom)
+
         contexto = {"paciente": paciente,"medico": med,"disponibilidad":disp}
     else:
-        contexto = {"paciente": paciente,"medico": med}
+        print(f'esto es el objeto {age}')
+        contexto = {"paciente": paciente,"medico": med,"agenda" : age}
     
     return render(request,"paciente.html", contexto)
 
+def anular_hr(request,id):
+    paciente = Usuario.objects.get(run=id)
+    med = Usuario.objects.filter(id_perfil=2)
+    detalle = det_agenda.objects.filter(run_pac=id)
+    tom =detalle.values_list("idda")
+    print(tom)
+
+    #if request.POST:
+    age = Disponibilidad.objects.filter(id_disp__in=tom).select_related('id_horaD')
+    
+    contexto = {"paciente": paciente,"medico": med,"agenda":age}
+    
+    return render(request,"anularhr_paciente.html", contexto)
 
 def mi_cuenta(request, id):
     

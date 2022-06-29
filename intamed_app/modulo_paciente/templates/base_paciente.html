@@ -28,7 +28,7 @@
    
    
     
-
+    
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     
@@ -37,8 +37,47 @@
     crossorigin="anonymous"></script>
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-    
+    <script src="{% static 'js/sweetalert2.all.min.js' %}"></script>
 </body>
+<script>
+    function confirmacion(id){
+      Swal.fire({
+        "title": "¿Esta Seguro?",
+        "text": "Esta Acción es Irreversible {{di.id_disp}}",
+        "icon": "question",
+        "showCancelButton": true,
+        "cancelButtonText": "No, Cancelar",
+        "confirmButtonText": "Si, seguro",
+        "reverseButtons": true,
+        "confirmButtonColor": "#dc3545"
+      })
+      .then(function(result){
+        if(result.isConfirmed){
+          const data = new FormData();
+          var csrftoken = '{{ csrf_token }}';
+          data.append('hor_sel',id);
+          console.log(id);
+          fetch('{% url 'modulo_paciente:indexPaciente' paciente.run %}', {
+            method: 'POST',
+            body: data ,
+            headers: {
+              'X-CSRFToken': csrftoken ,
+            }
+         });
+         Swal.fire({
+          "title": "Realizado",
+          "text": "Su hora ha sido agendada, llegara una notificacion",
+          "icon": "success"
+        })
+        .then(function(result){
+          if(result.isConfirmed){
+          window.location.href = "{% url 'modulo_paciente:indexPaciente' paciente.run %}";
+          }
+        });
+      }
+    })   
+    }
+  </script>
     {% block js1%}
     {% endblock js1%}
     

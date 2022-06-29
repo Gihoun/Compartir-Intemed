@@ -42,11 +42,12 @@
             <div class="col-lg-2">
                 <button type="Submit" class="btn btn-primary mb-2" >Buscar</button>
             </div>
+        </form>
             <!--
             <div class="col-lg-2">
                 <button type="submit" class="btn btn-primary mb-2" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Buscar</button>
             </div>-->
-        </form>
+        
         </div>
         <table class="table is-fullwidth is-striped is-bordered table-hover">
             <thead>
@@ -57,17 +58,21 @@
                 <th>Estado hora</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody name="hor_sel">
             {% if disponibilidad %}
                 {% for di in disponibilidad %}
             <tr>
                 <th>{{di.id_disp}}</th>
                 <th>{{di.id_horaD.fecha_hora|date:"N d "}}</th>
                 <th>{{di.id_horaD.fecha_hora|date:"P"}}</th>
+                {% if tomada %}
+                <th>No Disponible</th>
+                {% else %}
                 <th>Disponible</th>
+                {% endif %}
                 <td style="text-align: center;">
-                    <button  type="button" class="btn btn-info m-1 text-white"
-                        onclick="">
+                    <button type="button" class="btn btn-info m-1 text-white"
+                        onclick="confirmacion({{di.id_disp}})">
                         Seleccionar Hora
                     </button>
                 </td>
@@ -77,7 +82,7 @@
             
             </tbody>
         </table>
-        
+    
         
         
         <!--Si no funciona desplegar menu al apretar el boton y buscar, mover la tabla fuera del collapse-->

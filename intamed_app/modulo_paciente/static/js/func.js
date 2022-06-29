@@ -21,3 +21,57 @@ $(function () {
          
     });
 });
+function confirmar(id){
+
+
+    var inputd = document.getElementById('hor_sel').value.trim();
+    const data = new FormData();
+    var csrftoken = '{{ csrf_token }}';
+    data.append('hor_sel',id);
+          console.log(id);
+          fetch('', {
+            method: 'POST',
+            body: data ,
+            headers: {
+              'X-CSRFToken': csrftoken ,
+            }
+    });
+
+}
+function confirmatio(id){
+    Swal.fire({
+      "title": "¿Esta Seguro?",
+      "text": "Esta Acción es Irreversible",
+      "icon": "question",
+      "showCancelButton": true,
+      "cancelButtonText": "No, Cancelar",
+      "confirmButtonText": "Si, seguro",
+      "reverseButtons": true,
+      "confirmButtonColor": "#dc3545"
+    })
+    .then(function(result){
+      if(result.isConfirmed){
+        const data = new FormData();
+        var csrftoken = '{{ csrf_token }}';
+        data.append('hor_sel',id);
+        console.log(id);
+        fetch('modulo_paciente:indexPaciente', {
+          method: 'POST',
+          body: data ,
+          headers: {
+            'X-CSRFToken': csrftoken ,
+          }
+       });
+       Swal.fire({
+        "title": "Realizado",
+        "text": "Colaborador Eliminado Exitosamente",
+        "icon": "success"
+      })
+      .then(function(result){
+        if(result.isConfirmed){
+        window.location.href = "{% url 'userg' %}";
+        }
+      });
+    }
+  })   
+  }

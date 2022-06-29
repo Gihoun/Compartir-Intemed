@@ -14,49 +14,29 @@
                     </tr>
                     </thead>
                     <tbody>
-        
+                        {% if agenda %}
+                        {% for di in agenda %}
                     <tr>
-                        <th>11</th>
-                        <th>12-06-2022</th>
-                        <th>12:30-13:30</th>
+                        <th>{{di.id_disp}}</th>
+                        <th>{{di.id_horaD.fecha_hora|date:"N d "}}</th>
+                        <th>{{di.id_horaD.fecha_hora|date:"P"}}</th>
+                        {% if tomada %}
+                        <th>No Disponible</th>
+                        {% else %}
                         <th>Reservada</th>
-                        <th>Camilo Sexto</th>
-                        <th>Geriatría</th>
+                        {% endif %}
+                        <th>medico</th>
+                        <th>especialidad</th>
                         <td style="text-align: center;">
-                            <button  type="button" class="btn btn-info m-1 text-white"
-                                onclick="">
+                            <button type="button" class="btn btn-info m-1 text-white"
+                                onclick="confirmacion({{di.id_disp}})">
                                 Eliminar Hora
                             </button>
                         </td>
                     </tr>
-                    <tr>
-                        <th>22</th>
-                        <th>12-06-2022</th>
-                        <th>14:30-15:30</th>
-                        <th>Reservada</th>
-                        <th>Aaron Farías</th>
-                        <th>Ginecologogia</th>
-                        <td style="text-align: center;">
-                            <button  type="button" class="btn btn-info m-1 text-white"
-                                onclick="">
-                                Eliminar Hora
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>33</th>
-                        <th>12-06-2022</th>
-                        <th>15:30-16:30</th>
-                        <th>Reservada</th>
-                        <th>Aaron Farías</th>
-                        <th>Ginecologogia</th>
-                        <td style="text-align: center;">
-                            <button  type="button" class="btn btn-info m-1 text-white"
-                                onclick="">
-                                Eliminar Hora
-                            </button>
-                        </td>
-                    </tr>
+                        {% endfor %}
+                    {% endif%}
+                    
                     </tbody>
                 </table>
         </form>
