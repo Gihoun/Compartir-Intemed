@@ -21,6 +21,18 @@ function delete_row2(botonE) {
     fila.parentNode.removeChild(fila);
 }
 
+
+function cal_imc() {
+    var peso = document.getElementById("inputPeso").value
+    var talla = document.getElementById("inputTalla").value 
+    console.log(talla)              
+    if (talla > 0 && peso > 0) {
+        var imc = (peso)/((talla/100)*(talla/100))
+        document.getElementById("inputIMC").value = Math.round(imc)
+    } else
+        document.getElementById("inputIMC").value = 0
+}
+
 // Atencion alergias
 function validar_Alergia(id) {
     var Alergia = document.getElementById(id).value;

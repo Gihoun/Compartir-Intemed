@@ -2,15 +2,31 @@
 {% load static %}
 {% block contenido %}
 <h2 class="text-center mb-5 fw-bolder">Consulta Pacientes</h2>
-<form action="" method="post">
+<form action="" method="POST" enctype="multipart/form-data" onsubmit="">
     {% csrf_token %}
     <!-- Datos Basicos del Paciente -->
     <div class="row mt-3 justify-content-start">
-        <div class="col-lg-3">
+        <div class="col-md-3">
             <label class="fw-bolder" for="rutPaciente">Rut Paciente</label>
-            <input type="text" class="form-control" id="rutPaciente" placeholder="Ingrese rut paciente" />
+            {% if User_p.run > 0 %}
+            <input type="number" class="form-control" id="rutPaciente" name="rutPaciente"
+                placeholder="RUT paciente sin dígito verificador." value="{{User_p.run}}" minlength="7" maxlength="8"
+                disabled>
+            {% else %}
+            <input type="number" class="form-control" id="rutPaciente" name="rutPaciente"
+                placeholder="RUT paciente sin dígito verificador." minlength="7" maxlength="8" required>
+            {% endif %}
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
+            {% if User_p.run > 0 %}
+            <button type="submit" class="btn btn-primary mt-4" id="btnbuscarPaciente" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                </svg> Buscar
+            </button>
+            {% else %}
             <button type="submit" class="btn btn-primary mt-4" id="btnbuscarPaciente">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
                     viewBox="0 0 16 16">
@@ -18,85 +34,124 @@
                         d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                 </svg> Buscar
             </button>
+            {% endif %}
         </div>
     </div>
 </form>
-
 <form class="row ">
+    {% csrf_token %}
     <div class="row mt-3">
         <div class="col-md-3">
             <label for="inputNombre2" class="form-label fw-bolder">P. Nombre</label>
-            <input type="text" class="form-control" id="inputNombre2" placeholder="Primer Nombre Paciente">
+            <input type="text" class="form-control" id="inputNombre2" name="inputNombre2"
+                placeholder="Primer Nombre Paciente" minlength="2" maxlength="100" value="{{User_p.p_nombre}}" disabled>
         </div>
         <div class="col-md-3">
             <label for="inputSNombre2" class="form-label fw-bolder">S. Nombre</label>
-            <input type="text" class="form-control" id="inputSNombre2" placeholder="Segundo Nombre Paciente">
+            <input type="text" class="form-control" id="inputSNombre2" name="inputSNombre2"
+                placeholder="Segundo Nombre Paciente" minlength="2" maxlength="100" value="{{User_p.s_nombre}}"
+                disabled>
         </div>
         <div class="col-md-3">
             <label for="inputApellidop2" class="form-label fw-bolder">Apellido P.</label>
-            <input type="text" class="form-control" id="inputApellidop2" placeholder="Apellido Paterno">
+            <input type="text" class="form-control" id="inputApellidop2" name="inputApellidop2"
+                placeholder="Apellido Paterno" minlength="2" maxlength="100" value="{{User_p.apellido_pa}}" disabled>
         </div>
         <div class="col-md-3">
             <label for="inputApellidom2" class="form-label fw-bolder">Apellido M.</label>
-            <input type="text" class="form-control" id="inputApellidom2" placeholder="Apellido Materno">
+            <input type="text" class="form-control" id="inputApellidom2" name="inputApellidom2"
+                placeholder="Apellido Materno" minlength="2" maxlength="100" value="{{User_p.apellido_ma}}" disabled>
         </div>
     </div>
     <div class="row mt-3">
-        <div class=" col-lg-3">
+        <div class="col-md-3">
+            <label for="inputNsocial" class="form-label fw-bolder">N. Social</label>
+            <input type="text" class="form-control" id="inputNsocial" name="inputNsocial" placeholder="Nombre Social"
+                minlength="2" maxlength="100" value="{{User_p.nombre_social}}" disabled>
+        </div>
+        <div class=" col-md-3">
             <label for="inputcorreo2" class="form-label fw-bolder">Correo Electrónico</label>
-            <input type="email" class="form-control" id="inputcorreo2" placeholder="Ejemplo@correo.paciente">
-        </div>
-        <div class="col-lg-3">
-            <label for="inputDireccion2" class="form-label fw-bolder">Dirección</label>
-            <input type="text" class="form-control" id="inputDireccion2" placeholder="Dirección">
-        </div>
-        <div class="col-lg-3">
-            <label for="inputcomuna2" class="form-label fw-bolder">Comuna</label>
-            <input type="text" class="form-control" id="inputcomuna2" placeholder="Comuna">
+            <input type="email" class="form-control" id="inputcorreo2" placeholder="Ejemplo@correo.paciente"
+                minlength="5" maxlength="100" value="{{User_p.correo}}">
         </div>
         <div class="col-md-3">
-            <label for="inputEstado2" class="form-label fw-bolder">Estado civil</label>
-            <select id="inputEstado2" class="form-select ">
-                <option selected>Soltero</option>
-                <option>oa cosa</option>
-                <option>Cruz Blanca</option>
-                <option>Codelco</option>
-                <option>ETC</option>
+            <label for="inputDireccion2" class="form-label fw-bolder">Dirección</label>
+            <input type="text" class="form-control" id="inputDireccion2" placeholder="Dirección" minlength="5"
+                maxlength="100" value="{{User_p.direccion}}">
+        </div>
+        <div class="col-md-3">
+            <label for="inputcomuna2" class="form-label fw-bolder">Comuna</label>
+            <select id="inputComuna" name="inputComuna" class="form-select ">
+                {% for x in Comunas %}
+                {% if x.nombre_comuna == User_p.id_comuna.nombre_comuna %}
+                <option selected>{{x.nombre_comuna}}</option>
+                {% else %}
+                <option>{{x.nombre_comuna}}</option>
+                {% endif %}
+                {% endfor %}
             </select>
         </div>
     </div>
     <div class="row mt-3">
-        <div class=" col-lg-2">
-            <label for="inputNac2" class="form-label fw-bolder">Nacionalidad</label>
-            <input type="text" class="form-control" id="inputNac2" placeholder="Nacionalidad">
+        <div class="col-md-2">
+            <label for="inputEstado2" class="form-label fw-bolder">Estado civil</label>
+            <select id="inputEstado2" class="form-select ">
+                {% for x in ECivil %}
+                {% if x.nombre_estado == User_p.id_estado.nombre_estado %}
+                <option selected>{{x.nombre_estado}}</option>
+                {% else %}
+                <option>{{x.nombre_estado}}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
         </div>
-        <div class="col-lg-2">
+        <div class="col-md-2">
             <label for="inputNac2" class="form-label fw-bolder">Fecha Nacimiento</label>
-            <input type="datetime-local" class="form-control" id="inputNac2" placeholder="Fecha Nacimiento">
+            <input type="date" class="form-control" id="inputNac2" name="inputNac2" placeholder="Fecha Nacimiento"
+                value="{{User_p.fecha_nac}}" disabled>
         </div>
-        <div class="col-lg-2">
+        <div class="col-md-2">
             <label for="inputEdad2" class="form-label fw-bolder">Edad</label>
-            <input type="number" class="form-control" id="inputEdad2" placeholder="Edad Paciente">
+            <input type="number" class="form-control" id="inputEdad2" name="inputEdad2" placeholder="Edad Paciente"
+                value="{{User_p.edad_actual}}" disabled>
         </div>
-        <div class="col-lg-2">
-            <label for="inputTalla2" class="form-label fw-bolder">Talla</label>
-            <input type="number" class="form-control" id="inputTalla2" placeholder="Talla Paciente (cm)">
+        <div class="col-md-2">
+            <label for="inputTalla" class="form-label fw-bolder">Talla</label>
+            <input type="number" class="form-control" id="inputTalla" oninput="cal_imc()" name="inputTalla "
+                placeholder="Talla Paciente (cm)" min="10" max="350" value="{{paciente.talla}}" required>
         </div>
-        <div class="col-lg-2">
-            <label for="inputPeso2" class="form-label fw-bolder">Peso</label>
-            <input type="number" class="form-control" id="inputPeso2" placeholder="Peso Paciente (Kg)">
+        <div class="col-md-2">
+            <label for="inputPeso" class="form-label fw-bolder">Peso</label>
+            <input type="number" class="form-control" id="inputPeso" oninput="cal_imc()" name="inputPeso"
+                placeholder="Peso Paciente (Kg)" min="10" max="600" value="{{paciente.peso}}" required>
         </div>
-        <div class="col-lg-2">
-            <label for="inputIMC2" class="form-label fw-bolder">IMC</label>
-            <input type="number" class="form-control" id="inputIMC2" placeholder="IMC Paciente" disabled>
+        <div class="col-md-2">
+            <label for="inputIMC" class="form-label fw-bolder">IMC</label>
+            <input type="number" class="form-control" id="inputIMC" name="inputIMC" placeholder="IMC Paciente" value="{{paciente.imc}}"
+                disabled>
         </div>
     </div>
     <div class="row mt-3">
-        <div class="col-md-4">
-            <label for="inputFono2" class="form-label fw-bolder">Fono</label>
-            <input type="tel" class="form-control" id="inputFono2" placeholder="Teléfono Paciente">
+        <div class=" col-md-3">
+            <label for="inputNac2" class="form-label fw-bolder">Nacionalidad</label>
+            {% if User_p.run > 0 %}
+            <input type="text" class="form-control" id="inputNac2" name="inputNac2" placeholder="Nacionalidad"
+                value="{{User_p.id_nacionalidad.nombre_nac}}" disabled>
+            {% else %}
+            <input type="text" class="form-control" id="inputNac2" name="inputNac2" placeholder="Nacionalidad"
+                list="nacionalidad">
+            <datalist id="nacionalidad">
+                {% for x in Nacionalidad %}
+                <option value="{{x.nombre_nac}}"></option>
+                {% endfor %}
+            </datalist>
+            {% endif %}
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
+            <label for="inputFono2" class="form-label fw-bolder">Fono</label>
+            <input type="tel" class="form-control" id="inputFono2" name="inputFono2" placeholder="Teléfono Paciente" value="+569{{telePac.id_telefono.num_telefono}}">
+        </div>
+        <div class="col-md-3">
             <label for="inputDetalleA2" class="form-label fw-bolder">Detalle Alergia</label>
             <div class="input-group ">
                 <input type="text col-md-8" class="form-control" id="inputDetalleA2" placeholder="Detalle de Alergia"
@@ -123,27 +178,26 @@
                             </div>
                             <div class="modal-body">
                                 <div class="d-grid gap-2 d-md-block">
-                                    <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder"
-                                        id="tipo_alergia1" onclick="validar_Alergia2(this.id)" value="Alergia 1">Alergia
-                                        1</button>
-                                    <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder"
-                                        id="tipo_alergia2" onclick="validar_Alergia2(this.id)" value="Alergia 2">Alergia
-                                        2</button>
-                                    <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder"
-                                        id="tipo_alergia3" onclick="validar_Alergia2(this.id)" value="Alergia 3">Alergia
-                                        3</button>
-                                    <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder"
-                                        id="tipo_alergia4" onclick="validar_Alergia2(this.id)" value="Alergia 6">Alergia
-                                        6</button>
-                                    <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder"
-                                        id="tipo_alergia5" onclick="validar_Alergia2(this.id)" value="Alergia 5">Alergia
-                                        5</button>
-                                    <button type="button" class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder"
-                                        id="tipo_alergia_otro" onclick="desplegar_alergia2()">Otra Alergia</button>
-                                    <div class="m-2" id="auto_completar2" hidden>
-                                        <input type="text" class="form-control " id="auto_alergia2"
-                                            placeholder="Ingrese una Alergia" oninput="validar_Alergia2(this.id)">
-                                    </div>
+                                    {% for x in selectAlergia %}
+                                    {% if forloop.counter <= 5 %} <button type="button"
+                                        class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder" id="tipo_alergia1"
+                                        onclick="validar_Alergia(this.id)" value="{{x.nombre_alergia}}">
+                                        {{x.nombre_alergia}}</button>
+                                        {% endif %}
+                                        {% endfor %}
+                                        <button type="button"
+                                            class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder"
+                                            id="tipo_alergia_otro" onclick="desplegar_alergia()">Otra Alergia</button>
+                                        <div class="m-2" id="auto_completar" hidden>
+                                            <input type="text" class="form-control " id="auto_alergia"
+                                                placeholder="Ingrese una Alergia" oninput="validar_Alergia(this.id)"
+                                                list="dataAlergia">
+                                            <datalist id="dataAlergia">
+                                                {% for x in selectAlergia %}
+                                                <option value="{{x.nombre_alergia}}"></option>
+                                                {% endfor %}
+                                            </datalist>
+                                        </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -161,13 +215,11 @@
         </div>
         <div class="col-md-3">
             <label for="inputPrev2" class="form-label fw-bolder">Previsión</label>
-
             <select id="inputPrev2" class="form-select ">
                 {% for x in prevision %}
                 <option>{{x.nombre_prevision}}</option>
                 {% endfor %}
             </select>
-
         </div>
     </div>
     <hr class="mt-5" style="color: grey" />
@@ -193,8 +245,19 @@
             <button class="nav-link fw-bolder" id="diagnotico2-tab" data-bs-toggle="tab" data-bs-target="#diagnostico2"
                 type="button" role="tab" aria-controls="diagnostico2" aria-selected="false">Nuevo Diagnostico</button>
         </li>
+        <li class="nav-item " role="presentation">
+            <button class="nav-link fw-bolder" id="hClinico2-tab" data-bs-toggle="tab" data-bs-target="#hClinico2"
+                type="button" role="tab" aria-controls="hClinico2" aria-selected="false">Nuevo historial
+                Clinico</button>
+        </li>
+        <li class="nav-item " role="presentation">
+            <button class="nav-link fw-bolder" id="mHabitual2-tab" data-bs-toggle="tab" data-bs-target="#mHabitual2"
+                type="button" role="tab" aria-controls="mHabitual2" aria-selected="false">Nueva Medicacion
+                habitual</button>
+        </li>
     </ul>
     <div class="tab-content" id="tabcontenidobs2">
+        <!-- ========== Start Tabla de Antecendetes ========== -->
         <div class="tab-pane fade show active" id="antecedente" role="tabpanel" aria-labelledby="antecedente-tab">
             <h3 class="text-center mt-4"> Consultas anteriores</h3>
             <div class="table-responsive">
@@ -203,8 +266,9 @@
                         <tr>
                             <th scope="col">Fecha Consulta</th>
                             <th scope="col">Observaciones</th>
-                            <th scope="col">Diagnostico</th>
+                            <th scope="col">Diagnóstico</th>
                             <th scope="col">Historial Clínico</th>
+                            <th scope="col">Medicación Habitual</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -214,22 +278,26 @@
                             </td>
                             <td>
                                 <textarea name="obs_anterior" id="obs_anterior" cols="30" rows="3" disabled
-                                    style="resize: none;"></textarea>
+                                    style="resize: none;">{{paciente.observaciones}}</textarea>
                             </td>
                             <td>
                                 <textarea name="diag_anterior" id="diag_anterior" cols="30" rows="3" disabled
-                                    style="resize: none;"></textarea>
+                                    style="resize: none;">{{paciente.enfermedades}}</textarea>
                             </td>
                             <td>
                                 <textarea name="hst_clinico" id="hst_clinico" cols="30" rows="3" disabled
-                                    style="resize: none;"></textarea>
+                                    style="resize: none;">{{paciente.cirugias}}</textarea>
                             </td>
+                            <td>
+                                <textarea name="mHabt" id="mHabt" cols="30" rows="3" disabled
+                                    style="resize: none;">{{paciente.medicacion_habitual}}</textarea>
+                            </td>                            
                         </tr>
-
                     </tbody>
                 </table>
             </div>
         </div>
+        <!-- ========== Start Tabla de Nuevas Observaciones ========== -->
         <div class="tab-pane fade" id="observaciones2" role="tabpanel" aria-labelledby="observaciones2-tab">
             <div class="mb-3 mt-5">
                 <label for="inputObservacion2" class="form-label">Escriba nuevas
@@ -237,6 +305,7 @@
                 <textarea class="form-control" id="inputObservacion2" rows="3"></textarea>
             </div>
         </div>
+        <!-- ========== Start Tabla de Nuevos Farmacos ========== -->
         <div class="tab-pane fade" id="farmaco2" role="tabpanel" aria-labelledby="farmaco2-tab">
             <h3 class="text-center"> Receta Médica</h3>
             <table class="table borde table-hover" id="tablaF2">
@@ -328,9 +397,24 @@
                 </div>
             </div>
         </div>
+        <!-- ========== Start Tabla de Nuevos Diagnostico ========== -->
         <div class="tab-pane fade" id="diagnostico2" role="tabpanel" aria-labelledby="diagnotico2-tab">
             <div class="mb-3 mt-5">
-                <label for="inputDiagnostico2" class="form-label">Escriba nuevo diagnostico</label>
+                <label for="inputDiagnostico2" class="form-label">Escriba nuevo diagnóstico</label>
+                <textarea class="form-control" id="inputDiagnostico2" rows="3"></textarea>
+            </div>
+        </div>
+        <!-- ========== Start Tabla de Nuevos Historial Clinico ========== -->
+        <div class="tab-pane fade" id="hClinico2" role="tabpanel" aria-labelledby="hClinico2-tab">
+            <div class="mb-3 mt-5">
+                <label for="inputDiagnostico2" class="form-label">Escriba Nuevo Historial Clínico</label>
+                <textarea class="form-control" id="inputDiagnostico2" rows="3"></textarea>
+            </div>
+        </div>
+        <!-- ========== Start Tabla de Nueva Medicacion habitual ========== -->
+        <div class="tab-pane fade" id="mHabitual2" role="tabpanel" aria-labelledby="mHabitual2-tab">
+            <div class="mb-3 mt-5">
+                <label for="inputDiagnostico2" class="form-label">Escriba nueva Medicación Habitual</label>
                 <textarea class="form-control" id="inputDiagnostico2" rows="3"></textarea>
             </div>
         </div>

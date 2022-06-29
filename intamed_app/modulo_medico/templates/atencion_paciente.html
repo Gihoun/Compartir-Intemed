@@ -3,7 +3,7 @@
 {% block contenido %}
 <!-- Primera Atencion Paciente -->
 <h2 class="text-center fw-bolder mb-5">Atención Pacientes Nuevos</h2>
-<form class="row" ction="{% url 'consultaP' paciente.run %}"method="POST" enctype="multipart/form-data" onsubmit="">
+<form class="row" action="{% url 'consultaP' paciente.run %}" method="POST" enctype="multipart/form-data" onsubmit="">
     {% csrf_token %}
     <!-- Datos Basicos del Paciente -->
     <div class="row mt-3">
@@ -114,23 +114,11 @@
             <label for="inputIMC" class="form-label fw-bolder">IMC</label>
             <input type="number" class="form-control" id="inputIMC" name="inputIMC"  placeholder="IMC Paciente"
                 value="" disabled>
-            <script>
-                function cal_imc() {
-                    var peso = document.getElementById("inputPeso").value
-                    var talla = document.getElementById("inputTalla").value 
-                    console.log(talla)              
-                    if (talla > 0 && peso > 0) {
-                        var imc = (peso)/((talla/100)*(talla/100))
-                        document.getElementById("inputIMC").value = Math.round(imc)
-                    } else
-                        document.getElementById("inputIMC").value = 0
-                }
-            </script>
         </div>
     </div>
     <div class="row mt-3">
         <div class="col-md-4">
-            <label for="inputFono" class="form-label fw-bolder">Fono</label>
+            <label for="inpu3Fono" class="form-label fw-bolder">Fono</label>
             <input type="tel" class="form-control" id="inputFono" placeholder="Teléfono Paciente"
                 value="{{telePac.id_telefono.num_telefono}}" disabled>
         </div>
