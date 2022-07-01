@@ -32,6 +32,16 @@ function cal_imc() {
     } else
         document.getElementById("inputIMC").value = 0
 }
+function cal_imc2() {
+    var peso = document.getElementById("inputPeso2").value
+    var talla = document.getElementById("inputTalla2").value 
+    console.log(talla)              
+    if (talla > 0 && peso > 0) {
+        var imc = (peso)/((talla/100)*(talla/100))
+        document.getElementById("inputIMC2").value = Math.round(imc)
+    } else
+        document.getElementById("inputIMC2").value = 0
+}
 
 // Atencion alergias
 function validar_Alergia(id) {

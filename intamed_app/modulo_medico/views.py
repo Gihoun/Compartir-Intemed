@@ -23,33 +23,13 @@ import logging
 from django.http import JsonResponse
 from datetime import datetime
 import numpy as np
+from django.shortcuts import redirect
 
 # Create your views here.
 
 
 def inicio(request):
-    comunas = Comuna.objects.all()
-    cat_prevision = Prevision.objects.all()
-    estadoCivil = EstadoCivil.objects.all()
-    admin_farmaco = Farmaco.objects.all()
-    ####filtro Paciente#####
-    pacienteAtencion = Paciente.objects.values_list('run_paciente')
-    ########################
-
-    pacientes = Usuario.objects.filter(id_perfil=4)[:10]
-    nacionalidades = Nacionalidad.objects.all()
-
-    contexto = {"prevision": cat_prevision,
-                "ECivil": estadoCivil,
-                "comunas": comunas,
-                "via_admin": admin_farmaco,
-                "nacionalidad": nacionalidades,
-                "pacientes": pacientes,
-                "runPaciente": pacienteAtencion,
-                "nacionalidad": nacionalidades,
-                }
-
-    return render(request, "base_medico.html", contexto)
+    return render(request, "index_medico.html")
 
 
 def agenda(request):
@@ -173,24 +153,47 @@ def consultaV(request):
     estadoCivil = EstadoCivil.objects.all()
     # Prevision sin pacientes
     cat_prevision = Prevision.objects.all()
-    # Alergiias sin paciente
+    # Alergias sin paciente
     mostrarAlergia = Alergia.objects.all()
     # Nacionalidad Sin paciente
     nacionalidades = Nacionalidad.objects.all()
     # Comunas sin paciente.
     comunas = Comuna.objects.all()
+    # Usuario para datos del paciente en general
+    user = Usuario.objects.all()
+    if request.POST:
+        run_paciente = request.POST.get("rutPaciente2")
+        user_c = Usuario.objects.all().filter(run=run_paciente).count()
+        print(user_c)
 
-
-    contexto = {"ECivil": estadoCivil, 
-                "prevision": cat_prevision,
-                "selectAlergia": mostrarAlergia, 
-                "Nacionalidad": nacionalidades,
-                "Comunas":comunas
-                }
-    return render(request, "consulta_paciente.html", contexto)
+        if user_c > 0:                   
+            return redirect('consultaP', id=run_paciente)
+        else:   
+            mensaje = True
+            contexto = {"ECivil": estadoCivil,
+                        "prevision": cat_prevision,
+                        "selectAlergia": mostrarAlergia,
+                        "Nacionalidad": nacionalidades,
+                        "Comunas": comunas,
+                        "User_p": user,
+                        "existe": mensaje
+                        }
+            return render(request, "consulta_paciente.html", contexto)    
+    else:
+        mensaje = False
+        contexto = {"ECivil": estadoCivil,
+                    "prevision": cat_prevision,
+                    "selectAlergia": mostrarAlergia,
+                    "Nacionalidad": nacionalidades,
+                    "Comunas": comunas,
+                    "User_p": user,
+                    "existe": mensaje
+                    }
+        return render(request, "consulta_paciente.html", contexto)
 
 
 def consultaP(request, id):
+    mensaje = 0
     # Pacioente Antiguo por ID, datos de observaciones y demas
     pacientes = Paciente.objects.get(run_paciente=id)
     # Usuario para datos del paciente en general
@@ -198,7 +201,6 @@ def consultaP(request, id):
     # Telefono del usuario por ID = run
     tel_users = TelefonoUsuario.objects.get(run_usuario=id)
     # atencion del paciente solo 1
-    
 
     # Estado Civil sin paciente.
     estadoCivil = EstadoCivil.objects.all()
@@ -210,42 +212,86 @@ def consultaP(request, id):
     nacionalidades = Nacionalidad.objects.all()
     # Comunas sin paciente.
     comunas = Comuna.objects.all()
- 
 
+    if request.POST:
+        uPac = Paciente()
+        userP = Usuario()
+        tel_u = Telefono()
+
+        #####Datos Usuario
+        userP.run = user.run
+        userP.dv = user.dv
+        userP.p_nombre = user.p_nombre
+        userP.s_nombre = user.s_nombre
+        userP.apellido_pa = user.apellido_pa
+        userP.apellido_ma = user.apellido_ma
+        userP.id_perfil = user.id_perfil
+        userP.fecha_nac = user.fecha_nac
+        userP.contrasena = user.contrasena
+        userP.id_genero = user.id_genero
+        userP.id_nacionalidad = user.id_nacionalidad
+        correo = request.POST.get("inputcorreo2")
+        userP.correo = correo
+        direcc = request.POST.get("inputDireccion2")
+        userP.direccion = direcc
+        com_p = request.POST.get("inputComuna2")
+        userP.id_comuna = Comuna.objects.get(nombre_comuna=com_p)
+        estado =  request.POST.get("inputEstado2")   
+        userP.id_estado = EstadoCivil.objects.get(nombre_estado=estado)
+        tel_u.num_telefono = tel_users.id_telefono.num_telefono
+        ######Datos Paciente
+        uPac.run_paciente = pacientes.run_paciente
+        uPac.id_prevision = pacientes.id_prevision
+        talla = request.POST.get("inputTalla2")
+        uPac.talla = talla
+        peso =  request.POST.get("inputPeso2")
+        uPac.peso = peso
+        imc = request.POST.get("inputIMC2")
+        uPac.imc = imc
+        observacion = request.POST.get("inputObservacion2")
+        uPac.observaciones = observacion
+        cirugia = request.POST.get("inputHClinico2")
+        uPac.cirugias = cirugia
+        diagnostico = request.POST.get("inputDiagnostico2")
+        uPac.enfermedades = diagnostico
+        medicamento = request.POST.get("inputHabmed2")
+        uPac.medicacion_habitual = medicamento
+        if userP.correo is not None and userP.direccion is not None and userP.id_comuna is not None and userP.id_estado is not None and uPac.talla is not None and uPac.peso is not None and uPac.observaciones is not None and uPac.cirugias is not None and uPac.enfermedades is not None and uPac.medicacion_habitual:
+            if  userP.correo.strip() != '' and userP.direccion.strip() != '' and uPac.talla.strip() != '' and uPac.peso.strip() != '' and uPac.observaciones.strip() != '' and uPac.cirugias.strip() != '' and uPac.enfermedades.strip() != '' and uPac.medicacion_habitual:
+                try:
+                    mensaje = 0
+                    uPac.save()
+                    userP.save()
+                except:
+                    mensaje= 1
+            else:
+                mensaje= 2
+        else:
+            mensaje= 3
 
     contexto = {"User_p": user,
-                "paciente":pacientes,
-                "ECivil": estadoCivil, 
+                "paciente": pacientes,
+                "ECivil": estadoCivil,
                 "prevision": cat_prevision,
-                "selectAlergia": mostrarAlergia, 
+                "selectAlergia": mostrarAlergia,
                 "Nacionalidad": nacionalidades,
-                "Comunas":comunas,
-                "telePac": tel_users
+                "Comunas": comunas,
+                "telePac": tel_users,
+                "validar": mensaje
 
                 }
-
-    return render(request, "consulta_paciente.html",contexto)
+    return render(request, "consulta_paciente.html", contexto)
 
 
 def examenesP(request):
-
     if request.POST:
         paciente = request.POST.get("sPaciente")
-        user = Usuario.objects.get(run=paciente)
-        print(user)
         if paciente != '':
-            examenReslt_conteo = ResultadoExamen.objects.all().filter(
-                run_paciente=paciente).count()
+            examenReslt_conteo = ResultadoExamen.objects.all().filter(run_paciente=paciente).count()
             e = ResultadoExamen.objects.filter(run_paciente=paciente)
-
             contexto = {"eRsultados_conteo": examenReslt_conteo}
-
         else:
-            userv = Usuario.objects.get(run=12101765)
-            print(userv)
             contexto = {"Presentacion": "noexiste"}
-
     else:
         contexto = {"Presentacion": "nada"}
-
     return render(request, "examenes_paciente.html", contexto)

@@ -1,25 +1,27 @@
 {% extends "base_medico.html" %}
 {% load static %}
 {% block contenido %}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <h2 class="text-center mb-5 fw-bolder">Consulta Pacientes</h2>
-<form action="" method="POST" enctype="multipart/form-data" onsubmit="">
+<form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <!-- Datos Basicos del Paciente -->
     <div class="row mt-3 justify-content-start">
         <div class="col-md-3">
             <label class="fw-bolder" for="rutPaciente">Rut Paciente</label>
             {% if User_p.run > 0 %}
-            <input type="number" class="form-control" id="rutPaciente" name="rutPaciente"
-                placeholder="RUT paciente sin dígito verificador." value="{{User_p.run}}" minlength="7" maxlength="8"
+            <input type="number" class="form-control" id="rutPaciente" name="rutPaciente1"
+                placeholder="RUT paciente sin dígito verificador" value="{{User_p.run}}" minlength="7" maxlength="8"
                 disabled>
             {% else %}
-            <input type="number" class="form-control" id="rutPaciente" name="rutPaciente"
-                placeholder="RUT paciente sin dígito verificador." minlength="7" maxlength="8" required>
+            <input type="number" class="form-control" id="rutPaciente" name="rutPaciente2"
+                placeholder="RUT paciente sin dígito verificador" minlength="7" maxlength="8" required>
             {% endif %}
         </div>
         <div class="col-md-3">
             {% if User_p.run > 0 %}
-            <button type="submit" class="btn btn-primary mt-4" id="btnbuscarPaciente" disabled>
+            <button type="button" class="btn btn-primary mt-4" id="btnbuscarPaciente" disabled>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
                     viewBox="0 0 16 16">
                     <path
@@ -27,18 +29,29 @@
                 </svg> Buscar
             </button>
             {% else %}
-            <button type="submit" class="btn btn-primary mt-4" id="btnbuscarPaciente">
+            <a href="{% url 'consulta' %}""><button type=" submit" class="btn btn-primary mt-4" id="btnbuscarPaciente"
+                name="btnbuscarPaciente">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
                     viewBox="0 0 16 16">
                     <path
                         d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                 </svg> Buscar
-            </button>
+                </button></a>
             {% endif %}
         </div>
     </div>
 </form>
-<form class="row ">
+
+{% if existe %}
+<script>
+    Swal.fire({
+        icon: 'error',
+        text: 'El RUT ingresado no existe',
+    })
+</script>
+{% endif %}
+
+<form class="row " method="POST" enctype="multipart/form-data" action="{% url 'consulta' %}" >
     {% csrf_token %}
     <div class="row mt-3">
         <div class="col-md-3">
@@ -66,22 +79,22 @@
     <div class="row mt-3">
         <div class="col-md-3">
             <label for="inputNsocial" class="form-label fw-bolder">N. Social</label>
-            <input type="text" class="form-control" id="inputNsocial" name="inputNsocial" placeholder="Nombre Social"
+            <input type="text" class="form-control" id="inputNsocial2" name="inputNsocial2" placeholder="Nombre Social"
                 minlength="2" maxlength="100" value="{{User_p.nombre_social}}" disabled>
         </div>
         <div class=" col-md-3">
             <label for="inputcorreo2" class="form-label fw-bolder">Correo Electrónico</label>
-            <input type="email" class="form-control" id="inputcorreo2" placeholder="Ejemplo@correo.paciente"
+            <input type="email" class="form-control" id="inputcorreo2" name="inputcorreo2" placeholder="Ejemplo@correo.paciente"
                 minlength="5" maxlength="100" value="{{User_p.correo}}">
         </div>
         <div class="col-md-3">
             <label for="inputDireccion2" class="form-label fw-bolder">Dirección</label>
-            <input type="text" class="form-control" id="inputDireccion2" placeholder="Dirección" minlength="5"
+            <input type="text" class="form-control" id="inputDireccion2" name="inputDireccion2" placeholder="Dirección" minlength="5"
                 maxlength="100" value="{{User_p.direccion}}">
         </div>
         <div class="col-md-3">
             <label for="inputcomuna2" class="form-label fw-bolder">Comuna</label>
-            <select id="inputComuna" name="inputComuna" class="form-select ">
+            <select id="inputComuna2" name="inputComuna2" class="form-select ">
                 {% for x in Comunas %}
                 {% if x.nombre_comuna == User_p.id_comuna.nombre_comuna %}
                 <option selected>{{x.nombre_comuna}}</option>
@@ -95,7 +108,7 @@
     <div class="row mt-3">
         <div class="col-md-2">
             <label for="inputEstado2" class="form-label fw-bolder">Estado civil</label>
-            <select id="inputEstado2" class="form-select ">
+            <select id="inputEstado2" name="inputEstado2" class="form-select ">
                 {% for x in ECivil %}
                 {% if x.nombre_estado == User_p.id_estado.nombre_estado %}
                 <option selected>{{x.nombre_estado}}</option>
@@ -116,19 +129,19 @@
                 value="{{User_p.edad_actual}}" disabled>
         </div>
         <div class="col-md-2">
-            <label for="inputTalla" class="form-label fw-bolder">Talla</label>
-            <input type="number" class="form-control" id="inputTalla" oninput="cal_imc()" name="inputTalla "
+            <label for="inputTalla2" class="form-label fw-bolder">Talla</label>
+            <input type="number" class="form-control" id="inputTalla2" oninput="cal_imc2()" name="inputTalla2"
                 placeholder="Talla Paciente (cm)" min="10" max="350" value="{{paciente.talla}}" required>
         </div>
         <div class="col-md-2">
-            <label for="inputPeso" class="form-label fw-bolder">Peso</label>
-            <input type="number" class="form-control" id="inputPeso" oninput="cal_imc()" name="inputPeso"
+            <label for="inputPeso2" class="form-label fw-bolder">Peso</label>
+            <input type="number" class="form-control" id="inputPeso2" oninput="cal_imc2()" name="inputPeso2"
                 placeholder="Peso Paciente (Kg)" min="10" max="600" value="{{paciente.peso}}" required>
         </div>
         <div class="col-md-2">
-            <label for="inputIMC" class="form-label fw-bolder">IMC</label>
-            <input type="number" class="form-control" id="inputIMC" name="inputIMC" placeholder="IMC Paciente" value="{{paciente.imc}}"
-                disabled>
+            <label for="inputIMC2" class="form-label fw-bolder">IMC</label>
+            <input type="number" class="form-control" id="inputIMC2" name="inputIMC2" placeholder="IMC Paciente"
+                value="{{paciente.imc}}" disabled>
         </div>
     </div>
     <div class="row mt-3">
@@ -149,7 +162,8 @@
         </div>
         <div class="col-md-3">
             <label for="inputFono2" class="form-label fw-bolder">Fono</label>
-            <input type="tel" class="form-control" id="inputFono2" name="inputFono2" placeholder="Teléfono Paciente" value="+569{{telePac.id_telefono.num_telefono}}">
+            <input type="tel" class="form-control" id="inputFono2" name="inputFono2" placeholder="Teléfono Paciente"
+                value="9{{telePac.id_telefono.num_telefono}}">
         </div>
         <div class="col-md-3">
             <label for="inputDetalleA2" class="form-label fw-bolder">Detalle Alergia</label>
@@ -277,21 +291,21 @@
                                 <p>Fecha (DD-MM-AAAA)</p>
                             </td>
                             <td>
-                                <textarea name="obs_anterior" id="obs_anterior" cols="30" rows="3" disabled
+                                <textarea name="obs_anterior" id="obs_anterior" cols="22" rows="3" disabled
                                     style="resize: none;">{{paciente.observaciones}}</textarea>
                             </td>
                             <td>
-                                <textarea name="diag_anterior" id="diag_anterior" cols="30" rows="3" disabled
+                                <textarea name="diag_anterior" id="diag_anterior" cols="22" rows="3" disabled
                                     style="resize: none;">{{paciente.enfermedades}}</textarea>
                             </td>
                             <td>
-                                <textarea name="hst_clinico" id="hst_clinico" cols="30" rows="3" disabled
+                                <textarea name="hst_clinico" id="hst_clinico" cols="22" rows="3" disabled
                                     style="resize: none;">{{paciente.cirugias}}</textarea>
                             </td>
                             <td>
-                                <textarea name="mHabt" id="mHabt" cols="30" rows="3" disabled
+                                <textarea name="mHabt" id="mHabt" cols="22" rows="3" disabled
                                     style="resize: none;">{{paciente.medicacion_habitual}}</textarea>
-                            </td>                            
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -302,7 +316,7 @@
             <div class="mb-3 mt-5">
                 <label for="inputObservacion2" class="form-label">Escriba nuevas
                     observaciones</label>
-                <textarea class="form-control" id="inputObservacion2" rows="3"></textarea>
+                <textarea class="form-control" id="inputObservacion2" name="inputObservacion2" rows="3"></textarea>
             </div>
         </div>
         <!-- ========== Start Tabla de Nuevos Farmacos ========== -->
@@ -401,40 +415,40 @@
         <div class="tab-pane fade" id="diagnostico2" role="tabpanel" aria-labelledby="diagnotico2-tab">
             <div class="mb-3 mt-5">
                 <label for="inputDiagnostico2" class="form-label">Escriba nuevo diagnóstico</label>
-                <textarea class="form-control" id="inputDiagnostico2" rows="3"></textarea>
+                <textarea class="form-control" id="inputDiagnostico2" name="inputDiagnostico2" rows="3"></textarea>
             </div>
         </div>
         <!-- ========== Start Tabla de Nuevos Historial Clinico ========== -->
         <div class="tab-pane fade" id="hClinico2" role="tabpanel" aria-labelledby="hClinico2-tab">
             <div class="mb-3 mt-5">
-                <label for="inputDiagnostico2" class="form-label">Escriba Nuevo Historial Clínico</label>
-                <textarea class="form-control" id="inputDiagnostico2" rows="3"></textarea>
+                <label for="inputHClinico2" class="form-label">Escriba Nuevo Historial Clínico</label>
+                <textarea class="form-control" id="inputHClinico2" name="inputHClinico2"  rows="3"></textarea>
             </div>
         </div>
         <!-- ========== Start Tabla de Nueva Medicacion habitual ========== -->
         <div class="tab-pane fade" id="mHabitual2" role="tabpanel" aria-labelledby="mHabitual2-tab">
             <div class="mb-3 mt-5">
-                <label for="inputDiagnostico2" class="form-label">Escriba nueva Medicación Habitual</label>
-                <textarea class="form-control" id="inputDiagnostico2" rows="3"></textarea>
+                <label for="inputHabmed2" class="form-label">Escriba nueva Medicación Habitual</label>
+                <textarea class="form-control" id="inputHabmed2" name="inputHabmed2" rows="3"></textarea>
             </div>
         </div>
     </div>
     <div class="col-12 mt-5 text-end">
-        <button type="submit" class="btn btn-success fs-6"> Registrar Nueva Atención <svg
+        <button type="submit" class="btn btn-success fs-6 m-1"> Registrar Nueva Atención <svg
                 xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                 class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                 <path
                     d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
             </svg>
         </button>
-        <button type="button" class="btn btn-secondary fs-6"> Generar Certificado <svg
+        <button type="button" class="btn btn-secondary fs-6 m-1"> Generar Certificado <svg
                 xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                 class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
                 <path
                     d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0z" />
             </svg>
         </button>
-        <button type="button" class="btn btn-secondary fs-6">Generar Orden de Exámen <svg
+        <button type="button" class="btn btn-secondary fs-6 m-1">Generar Orden de Exámen <svg
                 xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                 class="bi bi-file-earmark-pdf-fill" viewBox="0 0 16 16">
                 <path
@@ -444,6 +458,31 @@
             </svg>
         </button>
     </div>
+    {% if validar == 3  %}
+    <script>
+        Swal.fire({
+            icon: 'error',
+            text: 'No puede dejar campos nulos.',
+        })
+    </script>
+    {% elif validar == 2 %} 
+    <script>
+        Swal.fire({
+            icon: 'error',
+            text: 'No puede dejar campos con ESPACIOS.',
+        })
+    </script>
+    {% elif validar == 1 %} 
+    <script>
+        Swal.fire({
+            icon: 'error',
+            text: 'Error!! al registrar la atención del paciente.',
+        })
+    </script>
+    {% else %}
+      
+    {% endif %}
+    
 </form>
 {% endblock contenido %}
 <!-- Datos Basicos del Paciente consulta antigua -->

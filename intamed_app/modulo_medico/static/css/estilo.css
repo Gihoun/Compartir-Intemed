@@ -1,11 +1,13 @@
 header {
     background: rgb(2,0,36);
     background: linear-gradient(45deg, rgb(172, 172, 207) 0%, rgb(48, 165, 171) 43%, rgb(48, 99, 171) 70%);
-    color: whitesmoke; 
+    color: whitesmoke;
+ 
 }
 
 #banner_container{
     background-color: rgb(240, 240, 240);
+    background-size: cover;
 }
 .banner {
     max-height: 300px;
@@ -15,16 +17,19 @@ header {
 }
 #bienvenida_usuario{
     background-color: rgb(255, 252, 252);
-
+    background-size: cover;
+    min-width: fit-content;
 }
-
-
+.button-ta {
+    min-height: 5rem;
+}
 #v-pills-tab{
     border: 3px solid rgb(167, 167, 167);
     border-radius: 2%;
     background-color: rgb(242, 245, 247);
     font-family: Arial, Helvetica, sans-serif;
     min-height: fit-content;
+    min-width: 12rem;
 }
 #v-pills-tabContent{
     background-color: rgb(242, 245, 247);
@@ -34,6 +39,7 @@ header {
 }
 body{
     background: linear-gradient(45deg, rgb(232, 232, 244) 0%, rgb(215, 242, 244) 43%, rgb(201, 217, 239) 70%);
+    background-size: cover;
 }
 
 input[type=number]::-webkit-inner-spin-button, 
