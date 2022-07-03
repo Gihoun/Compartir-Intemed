@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'modulo_inicio',
     'modulo_admin',
     'login',
+    
 ]
 
 MIDDLEWARE = [
@@ -149,5 +150,4 @@ EMAIL_HOST_USER="envioautomaticoduoc@outlook.es"
 EMAIL_HOST_PASSWORD="duocenvioautomatico987"
 SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
 
