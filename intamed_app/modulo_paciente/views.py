@@ -2,6 +2,8 @@ from django.shortcuts import render
 from modulo_admin.models import *
 from modulo_medico.models import *
 from select import select
+from django.core.mail import send_mail
+
 # Create your views here.
 
 
@@ -57,7 +59,7 @@ def inicio(request,id):
 
             disp = Disponibilidad.objects.filter(run_medico=ru).select_related('id_horaD').exclude(id_disp__in=tom)
 
-        contexto = {"paciente": paciente,"medico": med,"disponibilidad":disp}
+        contexto = {"paciente": paciente,"medico": med,"disponibilidad":disp, "agenda" : age}
     else:
         print(f'esto es el objeto {age}')
         contexto = {"paciente": paciente,"medico": med,"agenda" : age}
@@ -71,7 +73,21 @@ def anular_hr(request,id):
     tom =detalle.values_list("idda")
     print(tom)
 
-    #if request.POST:
+    if request.POST:
+        idh= request.POST.get("id_hora")
+        
+        deta = det_agenda.objects.get(idda=idh)
+        deta.delete()
+        print(f"la hora que se eliminada {idh}")
+        send_mail(
+                'Subject here',
+                'Here is the message.',
+                'andrea.verdugomunoz@gmail.com',
+                ['an.verdugom@duocuc.cl'],
+                fail_silently=False,
+        )
+        
+
     age = Disponibilidad.objects.filter(id_disp__in=tom).select_related('id_horaD')
     
     contexto = {"paciente": paciente,"medico": med,"agenda":age}

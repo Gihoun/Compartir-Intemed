@@ -77,6 +77,43 @@
       }
     })   
     }
+    function confirma_anula(id){
+      Swal.fire({
+        "title": "¿Esta Seguro?",
+        "text": "Esta Acción es Irreversible {{di.id_disp}}",
+        "icon": "question",
+        "showCancelButton": true,
+        "cancelButtonText": "No, Cancelar",
+        "confirmButtonText": "Si, seguro",
+        "reverseButtons": true,
+        "confirmButtonColor": "#dc3545"
+      })
+      .then(function(result){
+        if(result.isConfirmed){
+          const data = new FormData();
+          var csrftoken = '{{ csrf_token }}';
+          data.append('id_hora',id);
+          console.log(id);
+          fetch('{% url 'modulo_paciente:anular' paciente.run %}', {
+            method: 'POST',
+            body: data ,
+            headers: {
+              'X-CSRFToken': csrftoken ,
+            }
+         });
+         Swal.fire({
+          "title": "Realizado",
+          "text": "Su hora ha sido ELIMINADA, llegara una notificacion",
+          "icon": "success"
+        })
+        .then(function(result){
+          if(result.isConfirmed){
+          window.location.href = "{% url 'modulo_paciente:indexPaciente' paciente.run %}";
+          }
+        });
+      }
+    })   
+    }
   </script>
     {% block js1%}
     {% endblock js1%}

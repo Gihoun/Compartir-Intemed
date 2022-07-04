@@ -13,7 +13,7 @@
                         <th>Especialidad</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody name="id_hora">
                         {% if agenda %}
                         {% for di in agenda %}
                     <tr>
@@ -29,7 +29,7 @@
                         <th>especialidad</th>
                         <td style="text-align: center;">
                             <button type="button" class="btn btn-info m-1 text-white"
-                                onclick="confirmacion({{di.id_disp}})">
+                                onclick="confirma_anula({{di.id_disp}})">
                                 Eliminar Hora
                             </button>
                         </td>
