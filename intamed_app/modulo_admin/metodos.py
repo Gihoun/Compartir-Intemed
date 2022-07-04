@@ -5,10 +5,12 @@ from datetime import datetime
 def agregar_disp(arr_horas,run_doc):
     fecha_l = arr_horas[0]
     del arr_horas[0]
-
+    print(f'esta es la fecha {fecha_l}')
     for hora in arr_horas:
-        
-        med = Medico.objects.get(run_medico=2222222)
+        print(f'insertando hora {hora}')
+        usu_med = Usuario.objects.get(run=run_doc)
+        print(f'usu_med {usu_med}')
+        med = Medico.objects.get(run_medico=run_doc)
         arr_time = hora.split('-')
         print(arr_time)
         d = datetime.fromisoformat(f'{fecha_l}T{arr_time[0]}:{arr_time[1]}:00')

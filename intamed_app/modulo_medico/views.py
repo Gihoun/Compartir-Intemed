@@ -29,12 +29,20 @@ from django.shortcuts import redirect
 
 
 def inicio(request):
-    return render(request, "index_medico.html")
+    
+    logueado = request.user
+    run_med = logueado.usuario_django.run_django
+    usu_medico = Usuario.objects.get(run=run_med)
+    contexto={"medico":usu_medico}
+    return render(request, "index_medico.html",contexto)
 
 
 def agenda(request):
-    # objetos nuevos
-
+    # obtiene el medico autenticado
+    logueado = request.user
+    run_med = logueado.usuario_django.run_django
+    usu_medico = Usuario.objects.get(run=run_med)
+    print(f'este es el usuario django en agenda {run_med}')
     ##########
     array_paciente = []
     array_antiguedad = []
@@ -64,27 +72,28 @@ def agenda(request):
         # SI HAY DATOS INSERTA LA DISPONIBILIDAD EN TABLA METODO EN metodos.py
         if d_lun is not None and len(d_lun) > 0:
             print(d_lun)
-            agregar_disp(d_lun, 2222222)
+            agregar_disp(d_lun, run_med)
         if d_mar is not None and len(d_mar) > 0:
             print(d_mar)
-            agregar_disp(d_mar, 2222222)
+            agregar_disp(d_mar, run_med)
         if d_mier is not None and len(d_mier) > 0:
             print(d_mier)
-            agregar_disp(d_mier, 2222222)
+            agregar_disp(d_mier, run_med)
         if d_jue is not None and len(d_jue) > 0:
             print(d_jue)
-            agregar_disp(d_jue, 2222222)
+            agregar_disp(d_jue, run_med)
         if d_vie is not None and len(d_vie) > 0:
             print(d_vie)
-            agregar_disp(d_mier, 2222222)
+            agregar_disp(d_mier, run_med)
     # RECOGE HORAS ASIGNADAS PREVIAMENTE
-    disp = Disponibilidad.objects.filter(run_medico=2222222)
+    disp = Disponibilidad.objects.filter(run_medico=run_med)
 
     ################################
     contexto = {
         "pacientes": pacientes,
         "antiguo": zip(pacientes, array_antiguedad),
-        "disponibilidad": disp
+        "disponibilidad": disp,
+        "medico":usu_medico
     }
     return render(request, "agenda_paciente.html", contexto)
 
@@ -201,6 +210,7 @@ def consultaP(request, id):
     # Telefono del usuario por ID = run
     tel_users = TelefonoUsuario.objects.get(run_usuario=id)
     # atencion del paciente solo 1
+    #BUSCAR MANERA DE TRAER EL OBJETO MEDICO USER AUTHENTICATED
 
     # Estado Civil sin paciente.
     estadoCivil = EstadoCivil.objects.all()

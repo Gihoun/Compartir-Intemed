@@ -29,7 +29,7 @@
                 </svg> Buscar
             </button>
             {% else %}
-            <a href="{% url 'consulta' %}""><button type=" submit" class="btn btn-primary mt-4" id="btnbuscarPaciente"
+            <a href="{% url 'modulo_medico:consulta' %}""><button type=" submit" class="btn btn-primary mt-4" id="btnbuscarPaciente"
                 name="btnbuscarPaciente">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
                     viewBox="0 0 16 16">
@@ -51,7 +51,7 @@
 </script>
 {% endif %}
 
-<form class="row " method="POST" enctype="multipart/form-data" action="{% url 'consulta' %}" >
+<form class="row " method="POST" enctype="multipart/form-data" action="{% url 'modulo_medico:consulta' %}" >
     {% csrf_token %}
     <div class="row mt-3">
         <div class="col-md-3">

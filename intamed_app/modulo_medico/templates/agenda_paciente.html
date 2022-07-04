@@ -45,9 +45,9 @@
             <td class="edadPaciente text-start">{{pac.fecha_nac}}</td>
             <td>Work in Porgress</td>
             {% if x == "Nuevo" %}
-            <td><a href="{% url 'atePaciente' pac.run %}">{{x}}</a></td>
+            <td><a href="{% url 'modulo_medico:atePaciente' pac.run %}">{{x}}</a></td>
             {% else %}
-            <td><a href="{% url 'consultaP' pac.run %}">{{x}}</a></td>
+            <td><a href="{% url 'modulo_medico:consultaP' pac.run %}">{{x}}</a></td>
             {% endif %}
           </tr>
           {% endfor %}
@@ -70,7 +70,7 @@
   <div class="tab-pane fade" id="horariomedico" role="tabpanel" aria-labelledby="horariomedico-tab">
     <h2 class="text-center mt-3">Seleccione disponibilidad de atención semanal</h2>
 
-    <form class="row" action="{% url 'agenda_pa' %}" method="POST" enctype="multipart/form-data" onsubmit="">
+    <form class="row" action="{% url 'modulo_medico:agenda_pa' %}" method="POST" enctype="multipart/form-data" onsubmit="">
       {% csrf_token %}
       <input type="text" id="fechita" placeholder="Seleccione rango de fechas">
       <div class="accordion accordion-flush" id="accordionFlush">

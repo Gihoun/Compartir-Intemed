@@ -30,7 +30,7 @@ def login_todos(request):
             userORA = Usuario.objects.get(run=ru)
             perf = userORA.id_perfil_id
             
-            print(f"perfoo;; {perf}")
+            print(f"perfil {perf}")
             if perf == 4:
                 med = Usuario.objects.filter(id_perfil=2)
                 contexto ={"paciente": userORA,"medico":med}
@@ -40,26 +40,9 @@ def login_todos(request):
             elif perf == 1:
                 contexto ={"admin": userORA}
                 return render(request, 'administrator.html', contexto )
-            elif perf==2:
-                array_paciente=[]
-                array_antiguedad=[]
-                pacientes = Usuario.objects.filter(id_perfil = 4)[:20]
-                for x in pacientes:
-                    array_paciente.append(x.run)
-                for x in array_paciente:
-                    ateExiste = DetalleAtencion.objects.filter(run_paciente=x)
-                    cant = ateExiste.count()
-                    if cant > 0:
-                        array_antiguedad.append("Antiguo")          
-                    else:
-                        array_antiguedad.append("Nuevo")
-                zip(pacientes,array_antiguedad)
-                contexto = {
-                            "pacientes":pacientes,
-                            "antiguo":zip(pacientes,array_antiguedad),
-                            "disponibilidad": disp
-                            }
-                return render(request,"agenda_paciente.html",contexto)
+            elif perf==2:##medico
+                response = redirect('modulo_medico:index')
+                return response
 
         else:
             
