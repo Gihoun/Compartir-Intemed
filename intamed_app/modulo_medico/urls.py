@@ -2,6 +2,7 @@ from unicodedata import name
 from django.contrib import admin
 from django.urls import path
 from .views import inicio,atePaciente,agenda,consultaV,consultaP,examenesP
+app_name="modulo_medico"
 
 urlpatterns = [   
     path('inicio/',inicio,name="index"),

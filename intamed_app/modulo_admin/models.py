@@ -241,7 +241,7 @@ class Medico(models.Model):
     id_agenda = models.ForeignKey(Agenda, models.DO_NOTHING, db_column='id_agenda')
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'medico'
 
 class Nacionalidad(models.Model):

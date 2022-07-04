@@ -57,7 +57,7 @@
         <div class="d-flex">
             <!-- Tabla de navegacion vertical  -->
             <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <a href="{% url 'agenda_pa' %}" style="text-decoration: none;"><button
+                <a href="{% url 'modulo_medico:agenda_pa' %}" style="text-decoration: none;"><button
                         class="nav-link border m-3 button-ta btn btn-primary fw-semibold fst-italic"
                         id="v-pills-agenda-tab" data-bs-toggle="pill" data-bs-target="#v-pills-agenda" type="button"
                         role="tab" aria-controls="v-pills-agenda" aria-selected="true">
@@ -75,7 +75,7 @@
                         </div>
                     </button>
                 </a>
-                <a href="{% url 'consulta' %}" style="text-decoration: none;">
+                <a href="{% url 'modulo_medico:consulta' %}" style="text-decoration: none;">
                     <button class="nav-link border button-ta m-3 btn btn-primary fw-semibold fst-italic"
                         id="v-pills-buscarpac-tab" data-bs-toggle="pill" data-bs-target="#v-pills-buscarpac"
                         type="button" role="tab" aria-controls="v-pills-buscarpac" aria-selected="false">
@@ -93,7 +93,7 @@
                         </div>
                     </button>
                 </a>
-                <a href="{% url 'examenesP' %}" style="text-decoration: none;">
+                <a href="{% url 'modulo_medico:examenesP' %}" style="text-decoration: none;">
                     <button class="nav-link border button-ta m-3 btn btn-primary fw-semibold fst-italic"
                         id="v-pills-examen-tab" data-bs-toggle="pill" data-bs-target="#v-pills-examen" type="button"
                         role="tab" aria-controls="v-pills-examen" aria-selected="false">

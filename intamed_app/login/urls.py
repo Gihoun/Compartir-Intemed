@@ -5,5 +5,5 @@ from modulo_paciente.views import *
 
 urlpatterns = [  
     path('',login_todos, name="login"), 
-    
+    path('',login_todos, name="index"),
 ]

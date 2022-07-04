@@ -382,6 +382,7 @@ def edit_colab(request,id):
         elif id_perfil == 2:
             fec_ing_colab = request.POST.get("inputFechaIngreso")
             sueldo = request.POST.get("inputSueldo")
+            print(f'este es su sueldo {sueldo}')
             reg_hrs = request.POST.get("inputRegimenHrs")
         elif id_perfil == 3:
             fec_ing_colab = request.POST.get("inputFechaIngreso")
@@ -409,10 +410,15 @@ def edit_colab(request,id):
                     mensaje="Administrador Modificado con Éxito"
                     
                 elif id_perfil == 2:
+                    print(f'usuario medicxo{id}')
                     medico = Medico.objects.get(run_medico=id)
+                    print(f'usuario medicxo {medico}')
                     medico.fecha_ingreso = fec_ing_colab
+                    print(f'fi medicxo {medico}')
                     medico.sueldo = sueldo
+                    print(f'sukdo medicxo {medico}')
                     medico.regimen_hrs = reg_hrs
+                    print(f'reghoras medicxo {medico}')
                     medico.save()
                     mensaje="Medico Modificado con Éxito"
                     
