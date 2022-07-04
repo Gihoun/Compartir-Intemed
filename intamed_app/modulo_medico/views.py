@@ -1,4 +1,5 @@
 from array import array
+from cProfile import run
 from curses import use_default_colors
 from email import message_from_binary_file
 from multiprocessing import context
@@ -9,20 +10,21 @@ from select import select
 from xml.dom import NoDataAllowedErr
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from modulo_admin.models import Comuna, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, ResultadoExamen, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono
+from modulo_admin.models import Agenda, Comuna, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, ResultadoExamen, TipoDiagnostico, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono
 from modulo_admin.models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato, Alergia, DetalleAlergia, DetalleAtencion
 from modulo_medico.models import Disponibilidad, agenda_hora, det_agenda
 from modulo_admin.metodos import agregar_disp
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required, permission_required
 from django.views.decorators.csrf import csrf_protect
-from datetime import datetime
 from django.db.models import Count
 from django.contrib import messages
 import logging
 from django.http import JsonResponse
-from datetime import datetime
+import time
 import numpy as np
+import datetime
+# from datetime import datetime
 from django.shortcuts import redirect
 
 # Create your views here.
@@ -101,14 +103,35 @@ def atePaciente(request, id):
     mostrarAlergia = Alergia.objects.all()
     alergiaPac = DetalleAlergia.objects.filter(run_paciente=id)
 
+
+    a_pac = DetalleAtencion.objects.all().filter(run_paciente=6038793)
+    id_at= list(a_pac.values_list("id_atencion"))
+
+
+
     if request.POST:
+        observacion = request.POST.get("inputObservacion")
+        t = time.localtime()
+        #### Valores Registro Atencion
+        ate_pac= Atencion()
+        ate_pac.id_atencion = Atencion.objects.all().count() + 1
+        ate_pac.fecha_atencion = datetime.date.today()
+        ate_pac.hora_atencion = time.strftime("%H:%M:%S", t)
+        ate_pac.exploracion_clinica = observacion
+        ate_pac.comentario_atencion = None
+        ate_pac.tratamiento = None
+        ate_pac.id_receta = None
+        ate_pac.id_examen = None
+        ate_pac.id_licencia = None
+        ate_pac.id_agenda =  Agenda.objects.get(id_agenda=999)
+
+        ###################
         userPaciente = Paciente()
 
         userPaciente.id_prevision = pacientePrev.id_prevision
-        userPaciente.run_paciente = usuario
+        userPaciente.run_paciente = usuario.run
 
         #### valores de input para paciente##
-
         talla = request.POST.get("inputTalla")
         userPaciente.talla = talla
         peso = request.POST.get("inputPeso")
@@ -128,6 +151,7 @@ def atePaciente(request, id):
             if userPaciente.talla.strip() != '' and userPaciente.peso.strip() != '' and userPaciente.imc.strip() != '' and userPaciente.observaciones.strip() != '' and userPaciente.cirugias.strip() != '' and userPaciente.enfermedad.strip() != '' and userPaciente.medicacion_habitual:
                 try:
                     userPaciente.save()
+                    ate_pac.save()
                 except:
                     print("Error Prueba de REGISTRO datos PACIENTE")
             else:
@@ -239,6 +263,7 @@ def consultaP(request, id):
         estado =  request.POST.get("inputEstado2")   
         userP.id_estado = EstadoCivil.objects.get(nombre_estado=estado)
         tel_u.num_telefono = tel_users.id_telefono.num_telefono
+        
         ######Datos Paciente
         uPac.run_paciente = pacientes.run_paciente
         uPac.id_prevision = pacientes.id_prevision
@@ -262,6 +287,7 @@ def consultaP(request, id):
                     mensaje = 0
                     uPac.save()
                     userP.save()
+                    return redirect('consultaP', id=user.run)
                 except:
                     mensaje= 1
             else:

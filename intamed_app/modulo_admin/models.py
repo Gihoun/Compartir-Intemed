@@ -32,7 +32,8 @@ class Usuario(models.Model):
     id_nacionalidad = models.ForeignKey('Nacionalidad', models.DO_NOTHING, db_column='id_nacionalidad')
     id_comuna = models.ForeignKey('Comuna', models.DO_NOTHING, db_column='id_comuna')
     id_perfil = models.ForeignKey('PerfilUsuario', models.DO_NOTHING, db_column='id_perfil')
-    
+   
+  
     @property
     def edad_actual(self):
         if self.fecha_nac:
