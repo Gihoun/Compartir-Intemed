@@ -10,7 +10,7 @@ from select import select
 from xml.dom import NoDataAllowedErr
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from modulo_admin.models import Agenda, Comuna, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, ResultadoExamen, TipoDiagnostico, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono
+from modulo_admin.models import Agenda, Comuna, Diagnostico, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, ResultadoExamen, TipoDiagnostico, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono
 from modulo_admin.models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato, Alergia, DetalleAlergia, DetalleAtencion
 from modulo_medico.models import Disponibilidad, agenda_hora, det_agenda
 from modulo_admin.metodos import agregar_disp
@@ -24,11 +24,17 @@ from django.http import JsonResponse
 import time
 import numpy as np
 import datetime
-# from datetime import datetime
+from django.db.models import Max
 from django.shortcuts import redirect
+from django.utils import timezone
+from django.db import connection
 
 # Create your views here.
 
+def insert_DetAtencio(x,y):
+    with connection.cursor() as cursor:
+        cursor.callproc("sp_detalle_atencion", (x,y))
+    return True
 
 def inicio(request):
     return render(request, "index_medico.html")
@@ -101,63 +107,70 @@ def atePaciente(request, id):
     estadoCivil = EstadoCivil.objects.all()
     nacionalidades = Nacionalidad.objects.all()
     mostrarAlergia = Alergia.objects.all()
-    alergiaPac = DetalleAlergia.objects.filter(run_paciente=id)
 
-
-    a_pac = DetalleAtencion.objects.all().filter(run_paciente=6038793)
-    id_at= list(a_pac.values_list("id_atencion"))
-
-
+    #id_at= list(a_pac.values_list("id_atencion"))
+    id_diag = Diagnostico.objects.aggregate(maximo=Max('id_diagnostico'))['maximo'] 
+    id_at = Atencion.objects.aggregate(maximo=Max('id_atencion'))['maximo']
 
     if request.POST:
-        observacion = request.POST.get("inputObservacion")
-        t = time.localtime()
-        #### Valores Registro Atencion
-        ate_pac= Atencion()
-        ate_pac.id_atencion = Atencion.objects.all().count() + 1
-        ate_pac.fecha_atencion = datetime.date.today()
-        ate_pac.hora_atencion = time.strftime("%H:%M:%S", t)
-        ate_pac.exploracion_clinica = observacion
-        ate_pac.comentario_atencion = None
-        ate_pac.tratamiento = None
-        ate_pac.id_receta = None
-        ate_pac.id_examen = None
-        ate_pac.id_licencia = None
-        ate_pac.id_agenda =  Agenda.objects.get(id_agenda=999)
-
-        ###################
-        userPaciente = Paciente()
-
-        userPaciente.id_prevision = pacientePrev.id_prevision
-        userPaciente.run_paciente = usuario.run
-
-        #### valores de input para paciente##
+    
         talla = request.POST.get("inputTalla")
-        userPaciente.talla = talla
         peso = request.POST.get("inputPeso")
-        userPaciente.peso = peso
         imc = request.POST.get("inputIMC")
-        userPaciente.imc = imc
         observacion = request.POST.get("inputObservacion")
-        userPaciente.observaciones = observacion
         cirugia = request.POST.get("inputHClinico")
-        userPaciente.cirugias = cirugia
         diagnostico = request.POST.get("inputDiagnostico")
-        userPaciente.enfermedad = diagnostico
         medicamento = request.POST.get("inputHabmed")
-        userPaciente.medicacion_habitual = medicamento
+        ############## Registro de Diagnostico = Z  ######################
+        z = Diagnostico()
+        z.id_diagnostico = id_diag+1
+        z.nombre_diag = diagnostico
+        z.id_tipo_diag = TipoDiagnostico.objects.get(id_tipo_diag=1)
 
-        if userPaciente.talla is not None and userPaciente.peso is not None and userPaciente.imc is not None and userPaciente.observaciones is not None and userPaciente.cirugias is not None and userPaciente.enfermedad is not None and userPaciente.medicacion_habitual:
-            if userPaciente.talla.strip() != '' and userPaciente.peso.strip() != '' and userPaciente.imc.strip() != '' and userPaciente.observaciones.strip() != '' and userPaciente.cirugias.strip() != '' and userPaciente.enfermedad.strip() != '' and userPaciente.medicacion_habitual:
-                try:
-                    userPaciente.save()
-                    ate_pac.save()
-                except:
-                    print("Error Prueba de REGISTRO datos PACIENTE")
+
+        ################### Paciente = X ###########################
+        x = Paciente()
+        x.id_prevision = pacientePrev.id_prevision
+        x.run_paciente = pacientePrev.run_paciente
+        x.talla = talla
+        x.peso = peso
+        x.imc = imc
+        x.observaciones = observacion
+        x.cirugias = cirugia
+        x.enfermedad = diagnostico
+        x.medicacion_habitual = medicamento
+               
+        if x.talla is not None and x.peso is not None and x.imc is not None and x.observaciones is not None and x.cirugias is not None and x.enfermedad is not None and x.medicacion_habitual:
+            if x.talla.strip() != '' and x.peso.strip() != '' and x.imc.strip() != '' and x.observaciones.strip() != '' and x.cirugias.strip() != '' and x.enfermedad.strip() != '' and x.medicacion_habitual:
+                #try:
+                    z.save()
+                    
+                    #### Valores Registro Atencion = Y #############################
+                    y = Atencion()
+                    y.id_atencion = id_at+7
+                    y.id_diagnostico = Diagnostico.objects.get(id_diagnostico=z.id_diagnostico)
+                    y.exploracion_clinica = observacion
+                    y.comentario_atencion = "prueba 999"
+                    y.tratamiento = medicamento
+                    #y.id_receta = None
+                    #y.id_examen = None
+                    #y.id_licencia = None
+                    y.id_agenda =  Agenda.objects.get(id_agenda=999)
+                    x.save()
+                    y.save()
+                    i_a = Atencion.objects.get(id_atencion=y.id_atencion)
+                    print(f'objeto atencion {y.id_atencion}---{i_a}')
+                    ###### Valores Detalle Atencion ##########
+                    insert_DetAtencio(id,y.id_atencion)
+                     
+                        #print("malo el atencion")
+                                    
+                #except:
+                    #print("Error Prueba de REGISTRO datos PACIENTE")
             else:
                 print("Error, Campos con Espacio")
         else:
-            print("Error, Campos Nulos")
+            print("Error, Campos Nulos") 
 
     contexto = {
         "prevision": cat_prevision,

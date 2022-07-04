@@ -20,25 +20,26 @@ function delete_row2(botonE) {
     var fila = botonE.parentNode.parentNode;
     fila.parentNode.removeChild(fila);
 }
-
+function roundUp(num, precision) {
+    precision = Math.pow(10, precision)
+    return Math.ceil(num * precision) / precision
+  }
 
 function cal_imc() {
     var peso = document.getElementById("inputPeso").value
-    var talla = document.getElementById("inputTalla").value 
-    console.log(talla)              
+    var talla = document.getElementById("inputTalla").value            
     if (talla > 0 && peso > 0) {
         var imc = (peso)/((talla/100)*(talla/100))
-        document.getElementById("inputIMC").value = Math.round(imc)
+        document.getElementById("inputIMC").value = roundUp(imc, 2)
     } else
         document.getElementById("inputIMC").value = 0
 }
 function cal_imc2() {
     var peso = document.getElementById("inputPeso2").value
-    var talla = document.getElementById("inputTalla2").value 
-    console.log(talla)              
+    var talla = document.getElementById("inputTalla2").value               
     if (talla > 0 && peso > 0) {
         var imc = (peso)/((talla/100)*(talla/100))
-        document.getElementById("inputIMC2").value = Math.round(imc)
+        document.getElementById("inputIMC2").value = roundUp(imc, 2)
     } else
         document.getElementById("inputIMC2").value = 0
 }

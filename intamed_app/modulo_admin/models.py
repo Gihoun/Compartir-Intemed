@@ -6,12 +6,13 @@
 #   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
+from math import trunc
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from datetime import date
-
+from datetime import datetime 
 
 
 class Usuario(models.Model):
@@ -87,16 +88,17 @@ class Alergia(models.Model):
 
 class Atencion(models.Model):
     id_atencion = models.BigIntegerField(primary_key=True)
-    fecha_atencion = models.DateField()
-    hora_atencion = models.TextField()  # This field type is a guess.
-    exploracion_clinica = models.CharField(max_length=500)
+    fecha_atencion = models.DateField(default=datetime.now, blank=True, null=True)
+    hora_atencion = models.DateTimeField(auto_now_add=True)  # This field type is a guess.
+    exploracion_clinica = models.CharField(max_length=500, blank=True, null=True)
     comentario_atencion = models.CharField(max_length=200, blank=True, null=True)
     tratamiento = models.CharField(max_length=500, blank=True, null=True)
-    id_diagnostico = models.ForeignKey('Diagnostico', models.DO_NOTHING, db_column='id_diagnostico')
+    id_diagnostico = models.ForeignKey('Diagnostico', models.DO_NOTHING, db_column='id_diagnostico', blank=True, null=True)
     id_receta = models.ForeignKey('Receta', models.DO_NOTHING, db_column='id_receta', blank=True, null=True)
     id_examen = models.ForeignKey('Examen', models.DO_NOTHING, db_column='id_examen', blank=True, null=True)
     id_licencia = models.ForeignKey('Licencia', models.DO_NOTHING, db_column='id_licencia', blank=True, null=True)
-    id_agenda = models.ForeignKey(Agenda, models.DO_NOTHING, db_column='id_agenda')
+    id_agenda = models.ForeignKey(Agenda, models.DO_NOTHING, db_column='id_agenda', blank=True, null=True)
+
 
     class Meta:
         managed = False
@@ -150,7 +152,7 @@ class DetalleAlergia(models.Model):
         db_table = 'detalle_alergia'
 
 class DetalleAtencion(models.Model):
-    run_paciente = models.ForeignKey('Paciente', on_delete=models.CASCADE, db_column='run_paciente')
+    run_paciente = models.ForeignKey('Paciente', on_delete=models.CASCADE, db_column='run_paciente', related_name='run')
     id_atencion = models.ForeignKey(Atencion, models.DO_NOTHING, db_column='id_atencion', related_name='ate')
 
     class Meta:
@@ -164,6 +166,7 @@ class DetalleFarmaco(models.Model):
     class Meta:
         managed = False
         db_table = 'detalle_farmaco'
+        
 
 class Diagnostico(models.Model):
     id_diagnostico = models.BigIntegerField(primary_key=True)
@@ -268,6 +271,15 @@ class Paciente(models.Model):
     observaciones = models.CharField(max_length=250, blank=True, null=True)
     id_prevision = models.ForeignKey(Prevision, models.DO_NOTHING, db_column='id_prevision')
     imc = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+
+    @property
+    def cal_imc(self):
+        if self.peso > 0  and self.talla > 0 :
+            imc = round((self.peso)/((self.talla/100)*(self.talla/100)),2)
+            return imc
+        else:
+            return 0
+
 
     class Meta:
         managed = True
