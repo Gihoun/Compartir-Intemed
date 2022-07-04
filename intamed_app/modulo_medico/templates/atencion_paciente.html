@@ -3,7 +3,7 @@
 {% block contenido %}
 <!-- Primera Atencion Paciente -->
 <h2 class="text-center fw-bolder mb-5">Atención Pacientes Nuevos</h2>
-<form class="row" action="{% url 'consultaP' paciente.run %}" method="POST" enctype="multipart/form-data" onsubmit="">
+<form class="row" action="{% url 'atePaciente' paciente.run  %}" method="POST" enctype="multipart/form-data" onsubmit="">
     {% csrf_token %}
     <!-- Datos Basicos del Paciente -->
     <div class="row mt-3">
