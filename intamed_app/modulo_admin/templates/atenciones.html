@@ -60,7 +60,7 @@
                     {% for s in selc %}
                       {% if s.1 == x.id_atencion %}
 		      <td><form type="submit" method="POST" action="{% url 'ateng' 2010 %}">
-            {% csrf_token %}<button type=submit class="btn btn-info" value="{{s.0}}" name="btn_run" >{{s.0}}</button>
+            {% csrf_token %}<button type=submit class="btn btn-primary" value="{{s.0}}" name="btn_run" >{{s.0}}</button>
           </form>
           </td>
                       {% endif %}
