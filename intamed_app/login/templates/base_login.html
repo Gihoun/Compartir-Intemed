@@ -81,29 +81,40 @@
             </header> 
     <div id="login">
         <div class="container mt-5">
-            <h3 class="text-center text-black pt-5">Inicia sesión para mejorar tu experiencia</h3>
+            <div class="text-center">
+                <img src="{% static 'img/login_img/login_user.png' %}" class="" alt="Cinque Terre" width="100" height="100">
+                <h3 class="text-center text-black pt-5">Mejorar Tu Experiencia, Regístraste</h3>
+            </div>
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
                     <div id="login-box" class="col-md-12 border rounded border-dark">
                         <form id="login-form" class="form" action="{% url 'login' %}" method="POST">
                             {% csrf_token %}
-                            <h3 class="text-center text-info">Inicio de Sesión</h3>
+                            <h3 class="text-center" style="color: #039BE5">Inicio de Sesión</h3>
                             <div class="form-group">
-                                <label for="username" class="text-info">Email:</label><br>
+                                <label for="username" style="color: #039BE5">Email:</label><br>
                                 <input type="text" id="username" name="nameU" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="password" class="text-info">Password:</label><br>
+                                <label for="password" style="color: #039BE5">Password:</label><br>
                                 <input type="password" id="password" name="passwd" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="remember-me" class="text-info"><span>Recordar</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
-                                <input type="submit" name="submit" id="btnIngreso" class="btn btn-info btn-md mt-3" value="Ingresar">
+                                <hr>
+                                <label for="remember-me" style="color: #039BE5"><span>Recordar</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
+                                <div class="text-center">
+                                    <input type="submit" name="submit" id="btnIngreso" class="btn btn-primary btn-md mt-3" value="Ingresar">
+                                </div>
                             </div>
                             <h5>{{uname}} {{mensaje}}</h5>
                         </form>
                     </div>
                 </div>
+            </div>
+            <div class="text-center">
+                <br>
+                <p> © 2022, Clínica de Servicios Médicos Intemed </p>
+                <br>
             </div>
         </div>
     </div>
