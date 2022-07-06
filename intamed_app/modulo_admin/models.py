@@ -307,7 +307,7 @@ class Recepcionista(models.Model):
 
 class Receta(models.Model):
     id_receta = models.BigIntegerField(primary_key=True)
-    fecha_receta = models.DateField()
+    fecha_receta = models.DateField(default=datetime.now)
     descripcion_receta = models.CharField(max_length=250, blank=True, null=True)
 
     class Meta:
