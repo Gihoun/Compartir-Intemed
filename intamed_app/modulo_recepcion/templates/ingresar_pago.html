@@ -3,15 +3,16 @@
 {% block contenido %}  
 <section class="p-4">
     <form class="row " action="{% url 'ingresarPag' %}" method="POST" enctype="multipart/form-data" onsubmit="">
+        {% csrf_token %}
         <h3 class="text-center mb-5">Ingresar Pago paciente</h3>
             <div class="row mt-3">
                 <div class="col-sm-3">
-                    <label for="inputRutPaciente" class="form-label">Rut Paciente</label>
-                    <input type="text" class="form-control" id="inputRutPaciente" placeholder="Ingrese Rut">
+                    <label for="inputRutPaciente" class="form-label" >Rut Paciente</label>
+                    <input type="number" class="form-control" name="runp" id="inputRutPaciente" placeholder="{{pac.run}}" value="{{pac.run}}">
                 </div>
                 <div class="col-sm-1">
                     <label for="inputDV" class="form-label">Dv</label>
-                    <input type="text" class="form-control" id="inputDV" placeholder="Dv">
+                    <input type="text" class="form-control" id="inputDV" placeholder="{{pac.dv}}">
                 </div>
                 <div class="col-sm-4" style="margin-top: 32px;">
                     <button type="submit" class="btn btn-primary mb-3">Buscar</button>
@@ -20,33 +21,39 @@
             <div class="row mt-3">
                 <div class="col-sm-4 mt-1">
                     <label for="inputNombre" class="form-label">Nombres</label>
-                    <input type="text" class="form-control" id="inputNombre" placeholder="Nombre Paciente">
+                    <input type="text" class="form-control" id="inputNombre" placeholder="{{pac.p_nombre}} {{pac.s_nombre}}">
                 </div>
                 <div class="col-sm-4">
                     <label for="inputApellidoPaciente" class="form-label">Apellido P.</label>
                     <input type="text" class="form-control" id="inputApellidoPaciente"
-                        placeholder="Apellido Paterno">
+                        placeholder="{{pac.apellido_pa}}">
                 </div>
                 <div class="col-sm-4">
                     <label for="inputApellidomPaciente" class="form-label">Apellido M.</label>
                     <input type="text" class="form-control" id="inputApellidomPaciente"
-                        placeholder="Apellido Materno">
+                        placeholder="{{pac.apellido_ma}}">
                 </div>
             </div>
             <div class="row mt-3">
                 <div class=" col-sm-4">
                     <label for="inputcorreo" class="form-label">Correo Electrónico</label>
-                    <input type="email" class="form-control" id="inputcorreo" placeholder="Ejemplo@correo.paciente">
+                    <input type="email" class="form-control" id="inputcorreo" placeholder="{{pac.correo}}">
                 </div>
                 <div class="col-sm-4">
                     <label for="inputPrev" class="form-label">Previsión</label>
-                    <select id="inputPrev" class="form-select ">
-                        <option selected>Fonasa</option>
-                        <option>Colmena</option>
-                        <option>Cruz Blanca</option>
-                        <option>Codelco</option>
-                        <option>ETC</option>
+                    <select name="inputPrev" class="form-select ">
+                    {% for x in prevision %}
+                        {% if x.nombre_prevision == pac.paciente.id_prevision.nombre_prevision %}
+                            <option selected>{{x.nombre_prevision}}</option>
+                        {% else %}
+                            <option>{{x.nombre_prevision}}</option>
+                        {% endif %}
+                    {% endfor %}
                     </select>
+                </div> 
+                <div class=" col-sm-4">
+                    <label for="inputvalue" class="form-label">valor</label>
+                    <input type="number" class="form-control" id="inputval" name="inpval" placeholder="">
                 </div>
             </div>
             

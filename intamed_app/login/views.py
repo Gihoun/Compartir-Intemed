@@ -31,16 +31,16 @@ def login_todos(request):
             perf = userORA.id_perfil_id
             
             print(f"perfil {perf}")
-            if perf == 4:
+            if perf == 4:#Medico
                 med = Usuario.objects.filter(id_perfil=2)
                 contexto ={"paciente": userORA,"medico":med}
                 response = redirect('modulo_paciente:indexPaciente',id=userORA.run)
                 return response
                 #return render(request, 'paciente.html', contexto )
-            elif perf == 1:
+            elif perf == 1:##Admin
                 contexto ={"admin": userORA}
                 return render(request, 'administrator.html', contexto )
-            elif perf==2:##medico
+            elif perf==2:##Medico
                 response = redirect('modulo_medico:index')
                 return response
 
@@ -49,12 +49,10 @@ def login_todos(request):
             mensaje="No existe usuario o contrasennia incorrecta si desea activar cuenta presione ok"
     contexto = {"uname": userL,"mensaje":mensaje}
    
-    return render(request,'base_login.html', contexto )
+    return render(request,'base_login.html', contexto)
+
 def activar_cuenta(request):
-
-
     if request.POST:
-
         user = User.objects.create_user(username='john',
                                         email='jlennon@beatles.com',
                                         password='glass onion')

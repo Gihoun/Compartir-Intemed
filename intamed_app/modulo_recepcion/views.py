@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from modulo_admin.models import Comuna, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, Usuario, Atencion, Farmaco
 from modulo_admin.models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato, Alergia
-from modulo_admin.models import Prevision, TelefonoUsuario, Telefono, DetalleAlergia
+from modulo_admin.models import Prevision, TelefonoUsuario, Telefono, DetalleAlergia, DetalleAtencion
 from django.contrib.auth import authenticate,logout,login
 from django.contrib.auth.decorators import login_required,permission_required
 from django.views.decorators.csrf import csrf_protect
@@ -16,6 +16,7 @@ import requests
 import logging
 from django.http import JsonResponse
 import datetime
+from datetime import datetime
 from django.http import HttpRequest
 
 # Create your views here.
@@ -103,7 +104,58 @@ def inicio(request):
 
 
 def ingresarPago(request):
-    return render(request,"ingresar_pago.html")
+    prev = Prevision.objects.all()
+    
+    if request.POST:
+        rp = request.POST.get('runp')
+        fdr_uno = request.POST.get('flexRadioDefault')
+        print(f' flex radio button value {fdr_uno}')
+        inpvalue = request.POST.get('inpval')
+        
+        if rp is not None: 
+            if rp.strip()!= '':
+                runf = rp
+                obj_pac = Usuario.objects.get(run=runf)
+            else:
+                runf = 0
+                obj_pac = None
+        else:
+            runf = 0
+            obj_pac = None
+        
+        if fdr_uno is not None and len(inpvalue) != 0 :
+            arr_2=[]
+            print("SE GENERARA LA BOLETA")
+            pac = Paciente.objects.get(run_paciente=rp)
+            
+            
+            print(f'id PACIENTE {runf}')
+            det_at_selected = DetalleAtencion.objects.filter(run_paciente=runf)
+            id_at= list(det_at_selected.values_list("id_atencion"))
+            print(id_at)
+            for f in id_at:
+                arr_2.append(f[0])
+            ate= Atencion.objects.filter(id_atencion__in=arr_2).last()
+            fe = datetime.now()
+            f_boleta = fe.strftime('%Y-%m-%d')
+
+            print(f'id atencion {ate} valor {inpvalue} fecha {f_boleta}')
+            new = Boleta()
+
+            new.id_atencion = ate
+            new.fecha_boleta = f_boleta
+            new.monto_pago = inpvalue
+
+            new.save()
+
+            print(f'BOLETA INGRESADA CON EXITO')
+        contexto={"pac": obj_pac,"prevision": prev}
+        return render(request,"ingresar_pago.html",contexto)
+    else:
+        contexto={"prevision":prev}
+        
+
+    return render(request,"ingresar_pago.html",contexto)
 
 
 def filtro_pacientes(request):
