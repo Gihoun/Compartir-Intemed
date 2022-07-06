@@ -46,7 +46,7 @@ def login_todos(request):
 
         else:
             
-            mensaje="No existe usuario o contrasennia incorrecta si desea activar cuenta presione ok"
+            mensaje="No existe usuario o contrasennia incorrecta"
     contexto = {"uname": userL,"mensaje":mensaje}
    
     return render(request,'base_login.html', contexto)

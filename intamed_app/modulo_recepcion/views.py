@@ -18,6 +18,10 @@ from django.http import JsonResponse
 import datetime
 from datetime import datetime
 from django.http import HttpRequest
+import io
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
+from django.shortcuts import redirect
 
 # Create your views here.
 
@@ -133,22 +137,29 @@ def ingresarPago(request):
             det_at_selected = DetalleAtencion.objects.filter(run_paciente=runf)
             id_at= list(det_at_selected.values_list("id_atencion"))
             print(id_at)
-            for f in id_at:
-                arr_2.append(f[0])
-            ate= Atencion.objects.filter(id_atencion__in=arr_2).last()
-            fe = datetime.now()
-            f_boleta = fe.strftime('%Y-%m-%d')
+            if len(id_at) > 0:
 
-            print(f'id atencion {ate} valor {inpvalue} fecha {f_boleta}')
-            new = Boleta()
+                for f in id_at:
+                    arr_2.append(f[0])
+                ate= Atencion.objects.filter(id_atencion__in=arr_2).last()
+                fe = datetime.now()
+                f_boleta = fe.strftime('%Y-%m-%d')
 
-            new.id_atencion = ate
-            new.fecha_boleta = f_boleta
-            new.monto_pago = inpvalue
+                print(f'id atencion {ate} valor {inpvalue} fecha {f_boleta}')
+                new = Boleta()
 
-            new.save()
+                new.id_atencion = ate
+                new.fecha_boleta = f_boleta
+                new.monto_pago = inpvalue
 
-            print(f'BOLETA INGRESADA CON EXITO')
+                new.save()
+                dat = str(ate.id_atencion) + '-' + str(runf)
+                print(f'BOLETA INGRESADA CON EXITO {ate.id_atencion}')
+                response = redirect('genpdf',id=dat)
+                return response
+            else:
+                print(" EL PACIENTE NO TIENE ATENCION GENERADA")
+
         contexto={"pac": obj_pac,"prevision": prev}
         return render(request,"ingresar_pago.html",contexto)
     else:
@@ -156,6 +167,30 @@ def ingresarPago(request):
         
 
     return render(request,"ingresar_pago.html",contexto)
+def genpdf_boleta(request,id):
+    arr_1= id.split('-')
+
+    # Create a file-like buffer to receive PDF data.
+    buffer = io.BytesIO()
+    bol = Boleta.objects.get(id_atencion=arr_1[0])
+    uss = Usuario.objects.get(run=arr_1[1])
+    # Create the PDF object, using the buffer as its "file."
+    p = canvas.Canvas(buffer)
+    valor = bol.monto_pago
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+    p.drawString(100, 600, f"Boleta generada por la atencion: {arr_1[0]}")
+    p.drawString(100, 580, f"por un valor de {valor}")
+    p.drawString(100, 560, f"Pago realizado a nombre de: {uss.p_nombre} {uss.s_nombre}")
+    filname = 'boleta' + str(id) + '.pdf'
+    # Close the PDF object cleanly, and we're done.
+    p.showPage()
+    p.save()
+
+    # FileResponse sets the Content-Disposition header so that browsers
+    # present the option to save the file.
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename=filname)
 
 
 def filtro_pacientes(request):
