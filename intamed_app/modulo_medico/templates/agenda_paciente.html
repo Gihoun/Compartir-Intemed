@@ -94,15 +94,13 @@
           </tr>
         </thead>
         <tbody>
-          {% for disp in disponibilidad %}
-          <tr>
-            <th>{{ disp.id_horaD.fecha_hora|date:"N d "}}</th>
-            <td>{{disp.id_horaD.fecha_hora|date:"P"}}</td>
-            <td>Work in Porgress</td>
-
-          </tr>
-          {% endfor %}
-
+            {% for disp in disponibilidad %}
+              <tr>
+                <th>{{ disp.id_horaD.fecha_hora|date:"N d "}}</th>
+                <td>{{disp.id_horaD.fecha_hora|date:"P"}}</td>
+                <td>Work in Progress</td>
+              </tr>
+            {% endfor %}
         </tbody>
       </table>
     </div>
