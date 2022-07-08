@@ -3,6 +3,7 @@ from select import select
 from .metodos import *
 from django.shortcuts import render
 from django.contrib.auth.models import User
+from modulo_medico.models import *
 from modulo_admin.models import Comuna, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, Usuario, Atencion, Farmaco
 from modulo_admin.models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato, Alergia
 from modulo_admin.models import Prevision, TelefonoUsuario, Telefono, DetalleAlergia, DetalleAtencion
@@ -18,6 +19,10 @@ from django.http import JsonResponse
 import datetime
 from datetime import datetime
 from django.http import HttpRequest
+import io
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
+from django.shortcuts import redirect
 
 # Create your views here.
 
@@ -133,22 +138,32 @@ def ingresarPago(request):
             det_at_selected = DetalleAtencion.objects.filter(run_paciente=runf)
             id_at= list(det_at_selected.values_list("id_atencion"))
             print(id_at)
-            for f in id_at:
-                arr_2.append(f[0])
-            ate= Atencion.objects.filter(id_atencion__in=arr_2).last()
-            fe = datetime.now()
-            f_boleta = fe.strftime('%Y-%m-%d')
+            if len(id_at) > 0:
+                # MANDAR POR PANTALLA SWAL FECHA HORA ID Y PERSONA para confirmar ANTES DEL POST
+                for f in id_at:
+                    arr_2.append(f[0])
+                ate= Atencion.objects.filter(id_atencion__in=arr_2).last()
+                fe = datetime.now()
+                f_boleta = fe.strftime('%Y-%m-%d')
 
-            print(f'id atencion {ate} valor {inpvalue} fecha {f_boleta}')
-            new = Boleta()
+                print(f'id atencion {ate} valor {inpvalue} fecha {f_boleta}')
+                new = Boleta()
 
-            new.id_atencion = ate
-            new.fecha_boleta = f_boleta
-            new.monto_pago = inpvalue
+                new.id_atencion = ate
+                new.fecha_boleta = f_boleta
+                new.monto_pago = inpvalue
+                try:
+                    bol = Boleta.objects.get(id_atencion=ate)
+                    print(" YA SE REALIZO EL PAGO POR ESTA ATENCION")
+                except:
+                    new.save()
+                    dat = str(ate.id_atencion) + '-' + str(runf)
+                    print(f'BOLETA INGRESADA CON EXITO {ate.id_atencion}')
+                    response = redirect('genpdf',id=dat)
+                    return response
+            else:
+                print(" EL PACIENTE NO TIENE ATENCION GENERADA")
 
-            new.save()
-
-            print(f'BOLETA INGRESADA CON EXITO')
         contexto={"pac": obj_pac,"prevision": prev}
         return render(request,"ingresar_pago.html",contexto)
     else:
@@ -156,6 +171,35 @@ def ingresarPago(request):
         
 
     return render(request,"ingresar_pago.html",contexto)
+def genpdf_boleta(request,id):
+    arr_1= id.split('-')
+
+    # Create a file-like buffer to receive PDF data.
+    buffer = io.BytesIO()
+    bol = Boleta.objects.get(id_atencion=arr_1[0])
+    uss = Usuario.objects.get(run=arr_1[1])
+    # Create the PDF object, using the buffer as its "file."
+    p = canvas.Canvas(buffer)
+    valor = bol.monto_pago
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+    img_file = "./modulo_recepcion/static/img/clipart2045091.png"
+    
+    x_start = 0
+    y_start = 0
+    p.drawImage(img_file, x_start, y_start, width=120, preserveAspectRatio=True, mask='auto')
+    p.drawString(100, 600, f"Boleta generada por la atencion: {arr_1[0]}")
+    p.drawString(100, 580, f"por un valor de {valor}")
+    p.drawString(100, 560, f"Pago realizado a nombre de: {uss.p_nombre} {uss.s_nombre}")
+    filname = 'boleta' + str(id) + '.pdf'
+    # Close the PDF object cleanly, and we're done.
+    p.showPage()
+    p.save()
+
+    # FileResponse sets the Content-Disposition header so that browsers
+    # present the option to save the file.
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename=filname)
 
 
 def filtro_pacientes(request):
@@ -239,21 +283,39 @@ def editar_paciente(request,id):
 
 def anularHora(request):
     users_all = Usuario.objects.all()
+    
+    med = Usuario.objects.filter(id_perfil=2)
+
+    #detalle = det_agenda.objects.filter(run_pac=id)
+    #tom =detalle.values_list("idda")
+    #print(tom)
+
     if request.POST:
-        busqueda = request.POST.get("txbusqueda")
-        pac_ret = Usuario.objects.all().select_related('paciente').filter(run__startswith=busqueda, id_perfil=4)
-        cant_p = pac_ret.count()
-        if cant_p>=1:
-            contexto = {"usuarios":pac_ret,"cantidad":cant_p}
-        else:
-            contexto = {"usuarios":0,"cantidad":0}
-    else:
-        users_pac = Usuario.objects.all().select_related('paciente').filter(id_perfil=4)[:25]
-        userp_cant = users_pac.count()
-        contexto = {"usuarios":users_pac,"cantidad":userp_cant}
+        idh= request.POST.get("id_hora")
+        id_pac = request.POST.get("id_pac")
+        paciente = Usuario.objects.get(run=id_pac)
+    
+        deta = det_agenda.objects.get(idda=idh)
+        deta.delete()
+        print(f"la hora que se eliminada {idh}")
+        send_mail(
+                'Subject here',
+                'Here is the message.',
+                'andrea.verdugomunoz@gmail.com',
+                ['an.verdugom@duocuc.cl'],
+                fail_silently=False,
+        )
+    #fe = datetime.now()
+    #f_dia = fe.strftime('%Y-%m-%d')
+   
+    #det_h = agenda_hora.objects.filter(fecha_hora__date=f_dia)
+
+
+    #age = Disponibilidad.objects.filter(id_disp__in=tom).select_related('id_horaD').select_related('Usuario')
+    det_age = det_agenda.objects.all()
+    tom =det_age.values_list("idda")
+    age = Disponibilidad.objects.filter(id_disp__in=tom)
+
+    contexto = {"medico": med,"agenda":age}
     return render(request, "anular_hora.html", contexto)
 
-
-def anularHora(request):
-    
-    return render(request, 'atenciones.html')

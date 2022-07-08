@@ -88,7 +88,7 @@ def anular_hr(request,id):
         )
         
 
-    age = Disponibilidad.objects.filter(id_disp__in=tom).select_related('id_horaD')
+    age = Disponibilidad.objects.filter(id_disp__in=tom).select_related('id_horaD').select_related('Usuario')
     
     contexto = {"paciente": paciente,"medico": med,"agenda":age}
     

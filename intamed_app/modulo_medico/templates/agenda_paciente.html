@@ -91,18 +91,27 @@
             <th>Fecha</th>
             <th>Hora</th>
             <th>Estado</th>
+            
           </tr>
         </thead>
         <tbody>
-          {% for disp in disponibilidad %}
-          <tr>
-            <th>{{ disp.id_horaD.fecha_hora|date:"N d "}}</th>
-            <td>{{disp.id_horaD.fecha_hora|date:"P"}}</td>
-            <td>Work in Porgress</td>
-
-          </tr>
-          {% endfor %}
-
+            {% for disp in disponibilidad %}
+              <tr>
+                <th>{{ disp.id_horaD.fecha_hora|date:"N d "}}</th>
+                <td>{{disp.id_horaD.fecha_hora|date:"P"}}</td>
+                <td>
+                {% for ag in agenda%}
+                
+                  {% if ag.idd == disp%}
+                agendada por: {{ag.run_pac_id}} 
+                  {% else %}
+                    -
+                  {% endif%}
+                {% endfor%}
+                </td>
+                  
+              </tr>
+            {% endfor %}
         </tbody>
       </table>
     </div>

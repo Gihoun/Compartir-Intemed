@@ -1,60 +1,61 @@
-{%extends "base_recepcion.html"%}
+{% extends "base_recepcion.html" %}
 {% load static %}
 {% block contenido %}  
+
+ 
 <section class="p-4">
-    <div class="container m-1 table-responsive  border">
-        <h2>Lista de Pacientes: {{cantidad}}</h2>
-                <div class="tab-pane fade show active container-fluid" id="v-pills-agenda" role="tabpanel" aria-labelledby="v-pills-agenda-tab">
-                    <form class="d-flex" method="POST" action="{% url 'anularHor' %}">
-                        {% csrf_token %}
-                            <input class="form-control me-2" type="search" placeholder="RUT Paciente" name="txbusqueda" aria-label="Search">
-                            <button id="boton" class="btn btn-primary" type="submit">Buscar</button>
-                    </form>     
-                </div>
-        <div class="table-responsive" style="min-height: 500px;">
-            <table class="table table-striped table-sm">
+    <form action="">
+        <h3 class="text-center mb-5">Horas Registradas día</h3>
+        <div class="row mt-3">
+            <div class="col-lg-3">
+                <input type="text" readonly class="form-control-plaintext"  value="Seleccione una Fecha ">
+            </div>
+            <div class="col-lg-4">
+                <input type="text" class="form-control" id="fechacalendar" name="fechainput" placeholder="Seleccione fecha" />
+            </div>
+        </div>
+            <table class="table is-fullwidth is-striped is-bordered table-hover">
                 <thead>
-                    <tr>           
-                        <th scope="col">Id</th>
-                        <th scope="col">Nombre Completo</th> 
-                        <th scope="col">Fecha Nacimiento</th>
-                        <th scope="col">Correo</th>
-                        <th scope="col">Previsión</th>
-                    </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Estado hora</th>
+                    <th>Médico</th>
+                    <th>Especialidad</th>
+                </tr>
                 </thead>
-                <tbody>
-                    {% if cantidad >= 1 %}              
-                        {% for usu in usuarios %}  
-                            <tr>
-                            <td>{{usu.run}}</td>
-                            <td>{{usu.p_nombre}} {{usu.s_nombre}} {{usu.apellido_pa}} {{usu.apellido_ma}}</td>
-                            <td>{{usu.fecha_nac}}</td>
-                            <td>{{usu.correo}}</td>
-                            <td>{{usu.paciente.id_prevision.nombre_prevision}}</td>
-                            <td>
-                                <div class="btn-group">
-                                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Acción
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark">    
-                                    <li><a id="1"  class="dropdown-item" name="runpac" value="editar" href="">Editar</a></li>                            
-                                </ul>
-                                </div>
-                            </td>
-                            </tr>                 
-                        {% endfor %}           
-                    {% elif cantidad < 1 %}
-                        <tr>
-                            <td>No Encontrado</td>
-                            <td>No Encontrado</td>
-                            <td>No Encontrado</td>
-                            <td>No Encontrado</td>
-                            <td>No Encontrado</td>
-                        </tr>
-                    {% endif %} 
+                <tbody name="id_hora">
+                {% if agenda %}
+                    {% for di in agenda %}
+                <tr>
+                    <th>{{di.id_disp}}</th>
+                    <th>{{di.id_horaD.fecha_hora|date:"N d "}}</th>
+                    <th>{{di.id_horaD.fecha_hora|date:"P"}}</th>
+                    {% if tomada %}
+                    <th>No Disponible</th>
+                    {% else %}
+                    <th>Reservada</th>
+                    {% endif %}
+                    {%for m in medico %}
+                    
+                        {% if m.run == di.run_medico_id%}
+                    <th>{{m.p_nombre}} {{m.apellido_pa}}</th>
+                    <th>especialidad</th>
+                        {% endif%}
+                    {% endfor %}
+                    <td style="text-align: center;">
+                        <button type="button" class="btn btn-info m-1 text-white"
+                            onclick="confirma_anula({{di.id_disp}})">
+                            Eliminar Hora
+                        </button>
+                    </td>
+                </tr>
+                    {% endfor %}
+                {% endif%}
+                
                 </tbody>
             </table>
-        </div>
-    </div>
+    </form>
 </section>
-{% endblock contenido %}  
+{% endblock contenido %}

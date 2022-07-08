@@ -109,16 +109,18 @@ def agenda(request):
             agregar_disp(d_jue, run_med)
         if d_vie is not None and len(d_vie) > 0:
             print(d_vie)
-            agregar_disp(d_mier, run_med)
+            agregar_disp(d_vie, run_med)
     # RECOGE HORAS ASIGNADAS PREVIAMENTE
+    #medi = Medico.objects.get(run_medico=usu_medico)
     disp = Disponibilidad.objects.filter(run_medico=run_med)
-
+    det_age= det_agenda.objects.filter(idd__in=disp)
     ################################
     contexto = {
         "pacientes": pacientes,
         "antiguo": zip(pacientes, array_antiguedad),
         "disponibilidad": disp,
-        "medico": usu_medico
+        "medico": usu_medico,
+        "agenda": det_age
     }
     return render(request, "agenda_paciente.html", contexto)
 
