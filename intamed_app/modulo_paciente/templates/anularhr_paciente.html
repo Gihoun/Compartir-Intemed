@@ -14,7 +14,7 @@
                     </tr>
                     </thead>
                     <tbody name="id_hora">
-                        {% if agenda %}
+                    {% if agenda %}
                         {% for di in agenda %}
                     <tr>
                         <th>{{di.id_disp}}</th>
@@ -25,8 +25,13 @@
                         {% else %}
                         <th>Reservada</th>
                         {% endif %}
-                        <th>medico</th>
+                        {%for m in medico %}
+                        
+                            {% if m.run == di.run_medico_id%}
+                        <th>{{m.p_nombre}} {{m.apellido_pa}}</th>
                         <th>especialidad</th>
+                            {% endif%}
+                        {% endfor %}
                         <td style="text-align: center;">
                             <button type="button" class="btn btn-info m-1 text-white"
                                 onclick="confirma_anula({{di.id_disp}})">

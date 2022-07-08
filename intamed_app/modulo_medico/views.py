@@ -108,13 +108,14 @@ def agenda(request):
     # RECOGE HORAS ASIGNADAS PREVIAMENTE
     #medi = Medico.objects.get(run_medico=usu_medico)
     disp = Disponibilidad.objects.filter(run_medico=run_med)
-    
+    det_age= det_agenda.objects.filter(idd__in=disp)
     ################################
     contexto = {
         "pacientes": pacientes,
         "antiguo": zip(pacientes, array_antiguedad),
         "disponibilidad": disp,
-        "medico": usu_medico
+        "medico": usu_medico,
+        "agenda": det_age
     }
     return render(request, "agenda_paciente.html", contexto)
 

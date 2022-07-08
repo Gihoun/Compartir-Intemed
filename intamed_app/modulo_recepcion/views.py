@@ -3,6 +3,7 @@ from select import select
 from .metodos import *
 from django.shortcuts import render
 from django.contrib.auth.models import User
+from modulo_medico.models import *
 from modulo_admin.models import Comuna, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, Usuario, Atencion, Farmaco
 from modulo_admin.models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato, Alergia
 from modulo_admin.models import Prevision, TelefonoUsuario, Telefono, DetalleAlergia, DetalleAtencion
@@ -282,21 +283,39 @@ def editar_paciente(request,id):
 
 def anularHora(request):
     users_all = Usuario.objects.all()
+    
+    med = Usuario.objects.filter(id_perfil=2)
+
+    #detalle = det_agenda.objects.filter(run_pac=id)
+    #tom =detalle.values_list("idda")
+    #print(tom)
+
     if request.POST:
-        busqueda = request.POST.get("txbusqueda")
-        pac_ret = Usuario.objects.all().select_related('paciente').filter(run__startswith=busqueda, id_perfil=4)
-        cant_p = pac_ret.count()
-        if cant_p>=1:
-            contexto = {"usuarios":pac_ret,"cantidad":cant_p}
-        else:
-            contexto = {"usuarios":0,"cantidad":0}
-    else:
-        users_pac = Usuario.objects.all().select_related('paciente').filter(id_perfil=4)[:25]
-        userp_cant = users_pac.count()
-        contexto = {"usuarios":users_pac,"cantidad":userp_cant}
+        idh= request.POST.get("id_hora")
+        id_pac = request.POST.get("id_pac")
+        paciente = Usuario.objects.get(run=id_pac)
+    
+        deta = det_agenda.objects.get(idda=idh)
+        deta.delete()
+        print(f"la hora que se eliminada {idh}")
+        send_mail(
+                'Subject here',
+                'Here is the message.',
+                'andrea.verdugomunoz@gmail.com',
+                ['an.verdugom@duocuc.cl'],
+                fail_silently=False,
+        )
+    #fe = datetime.now()
+    #f_dia = fe.strftime('%Y-%m-%d')
+   
+    #det_h = agenda_hora.objects.filter(fecha_hora__date=f_dia)
+
+
+    #age = Disponibilidad.objects.filter(id_disp__in=tom).select_related('id_horaD').select_related('Usuario')
+    det_age = det_agenda.objects.all()
+    tom =det_age.values_list("idda")
+    age = Disponibilidad.objects.filter(id_disp__in=tom)
+
+    contexto = {"medico": med,"agenda":age}
     return render(request, "anular_hora.html", contexto)
 
-
-def anularHora(request):
-    
-    return render(request, 'atenciones.html')
