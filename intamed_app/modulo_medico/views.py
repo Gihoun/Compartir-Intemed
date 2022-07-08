@@ -31,9 +31,9 @@ import reportlab
 import io
 from django.http import FileResponse
 from reportlab.pdfgen import canvas
+from django.http import FileResponse
 
 # Create your views here.
-
 
 def insert_DetAtencio(x, y):
     with connection.cursor() as cursor:
@@ -254,7 +254,8 @@ def atePaciente(request, id):
     return render(request, "atencion_paciente.html", contexto)
 
 
-def some_view(request):
+
+def receta_test(request,id):
     # Create a file-like buffer to receive PDF data.
     buffer = io.BytesIO()
 
@@ -310,6 +311,8 @@ def consultaV(request):
                         }
             return render(request, "consulta_paciente.html", contexto)
     else:
+        prueba = request.POST.get('inputHabmed')
+        print(prueba)
         mensaje = False
         contexto = {"ECivil": estadoCivil,
                     "prevision": cat_prevision,
@@ -319,6 +322,8 @@ def consultaV(request):
                     "User_p": user,
                     "existe": mensaje,
                     "tip_diag": t_diag,
+                    "prueba":prueba
+
                     }
         return render(request, "consulta_paciente.html", contexto)
 
@@ -344,11 +349,30 @@ def consultaP(request, id):
     nacionalidades = Nacionalidad.objects.all()
     # Comunas sin paciente.
     comunas = Comuna.objects.all()
+    # busca los farmacos del paciente.
+    lista_ate = []
+    far_pa = DetalleAtencion.objects.filter(run_paciente=id)
+    ids_ate = list(far_pa.values_list("id_atencion"))
+    for p in ids_ate:
+        lista_ate.append(p[0])
+    aten_pa = Atencion.objects.filter(id_atencion__in=lista_ate)
+    ids_re = []
+    for rece in aten_pa:
+        ids_re.append(rece.id_receta)
+
+    far_re = DetalleFarmaco.objects.filter(id_receta__in=ids_re)
+    ids_far = list(far_re.values_list("id_farmaco"))
+    print(ids_far)
+    lista_far = []
+    for h in ids_far:
+        lista_far.append(h[0])
+    real_far = Farmaco.objects.filter(id_farmaco__in=lista_far)
+
+    
 
     farma = Farmaco.objects.all()
     t_diag = TipoDiagnostico.objects.all()
-    id_diag = Diagnostico.objects.aggregate(
-        maximo=Max('id_diagnostico'))['maximo']
+    id_diag = Diagnostico.objects.aggregate(maximo=Max('id_diagnostico'))['maximo']
     id_at = Atencion.objects.aggregate(maximo=Max('id_atencion'))['maximo']
     t_farma = TipoFarmaco.objects.all()
     id_receta = Receta.objects.aggregate(maximo=Max('id_receta'))['maximo']
@@ -476,7 +500,9 @@ def consultaP(request, id):
                 "validar": mensaje,
                 "tip_diag": t_diag,
                 "todo_farma": farma,
-                "tip_farma": t_farma
+                "tip_farma": t_farma,
+                "farma_pa":zip(aten_pa,real_far),
+
                 }
     return render(request, "consulta_paciente.html", contexto)
 

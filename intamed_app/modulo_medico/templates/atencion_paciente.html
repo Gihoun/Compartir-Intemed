@@ -126,8 +126,8 @@
         <div class="col-md-3">
             <label for="inputAlergia" class="form-label fw-bolder">Alergia</label>
             <div class="input-group ">
-                <input type="text col-md-8" class="form-control" id="inputDetalleA" name="inputDetalleA" placeholder="Detalle de Alergia"
-                    readonly>
+                <input type="text col-md-8" class="form-control" id="inputDetalleA" name="inputDetalleA"
+                    placeholder="Detalle de Alergia" readonly>
                 <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
                     data-bs-target="#modal_alergia_scroll"><svg xmlns="http://www.w3.org/2000/svg" width="16"
                         height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
@@ -149,12 +149,13 @@
                             <div class="modal-body">
                                 <div class="d-grid gap-2 d-md-block">
                                     {% for x in selectAlergia %}
-                                    {% if forloop.counter <= 5 %} 
-                                    <button type="button"
-                                        class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder" id="tipo_alergia{{forloop.counter}}"
-                                        onclick="validar_Alergia(this.id)" value="{{x.nombre_alergia}}">
+                                    {% if forloop.counter <= 5 %} <button type="button"
+                                        class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder"
+                                        id="tipo_alergia{{forloop.counter}}"
+                                        onclick="validar_Alergia(this.id,'select_alergia')"
+                                        value="{{x.nombre_alergia}}">
                                         {{x.nombre_alergia}}
-                                    </button>
+                                        </button>
                                         {% endif %}
                                         {% endfor %}
                                         <button type="button"
@@ -162,8 +163,8 @@
                                             id="tipo_alergia_otro" onclick="desplegar_alergia()">Otra Alergia</button>
                                         <div class="m-2" id="auto_completar" hidden>
                                             <input type="text" class="form-control " id="auto_alergia"
-                                                placeholder="Ingrese una Alergia" oninput="validar_Alergia(this.id,'select_alergia')"
-                                                list="dataAlergia">
+                                                placeholder="Ingrese una Alergia"
+                                                oninput="validar_Alergia(this.id,'select_alergia')" list="dataAlergia">
                                             <datalist id="dataAlergia">
                                                 {% for x in selectAlergia %}
                                                 <option value="{{x.nombre_alergia}}"></option>
@@ -197,6 +198,47 @@
             </select>
         </div>
     </div>
+    <hr class="mt-5" style="color: grey" />
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                    aria-controls="panelsStayOpen-collapseOne">
+                    <strong>Datos Atención Paciente</strong>
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                aria-labelledby="panelsStayOpen-headingOne">
+                <div class="accordion-body">
+                    <div class="container-fluid">
+                        <div class="row align-items-center">
+                            <div class="col-md-3">
+                                <label for="inputexcli" class="form-label fw-bolder">Exploración Clinica</label>
+                                <textarea class="form'control" name="inputexcli" id="inputexcli" cols="25"
+                                    rows="6"></textarea>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="inputEnf" class="form-label fw-bolder">Enfermedades</label>
+                                <textarea class="form'control" name="inputEnf" id="inputEnf" cols="25"
+                                    rows="6"></textarea>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="inputTrata" class="form-label fw-bolder">Tratamiento</label>
+                                <textarea class="form'control" name="inputTrata" id="inputTrata" cols="25"
+                                    rows="6"></textarea>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="inputexcli" class="form-label fw-bolder">Exploración Clinica</label>
+                                <textarea class="form'control" name="" id="" cols="25" rows="6"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <hr class="mt-5" style="color: grey" />
     <!-- Observaciones Receta y mas -->
     <ul class="nav nav-tabs mt-3" id="tabsObs" role="tablist">
@@ -322,13 +364,13 @@
                         <path
                             d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
                     </svg>
-                  
+
                 </button>
                 <button type="button" class="btn btn-success fs-6 m-2"> Generar Receta <svg
-                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                    <path
-                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
                     </svg>
                 </button>
             </div>

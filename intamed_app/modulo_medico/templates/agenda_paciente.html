@@ -42,7 +42,7 @@
           {% for pac,x in antiguo %}
           <tr>
             <th>{{pac.p_nombre}} {{pac.apellido_pa}} {{pac.apellido_ma}}</th>
-            <td class="edadPaciente text-start">{{pac.fecha_nac}}</td>
+            <td class="edadPaciente text-start">{{pac.edad_actual}} años</td>
             <td>Work in Porgress</td>
             {% if x == "Nuevo" %}
             <td><a href="{% url 'modulo_medico:atePaciente' pac.run %}">{{x}}</a></td>
@@ -51,18 +51,6 @@
             {% endif %}
           </tr>
           {% endfor %}
-          <script>
-            edadP = document.getElementsByClassName('edadPaciente');
-            [...edadP].map(
-              e => e.textContent = calcularEdad(e.textContent) + ' años');
-
-            function calcularEdad(cumple) {
-              var cumple = new Date(cumple)
-              var fecha_Presente = Date.now() - cumple;
-              var ageDate = new Date(fecha_Presente);
-              return Math.abs(ageDate.getUTCFullYear() - 1970);
-            }
-          </script>
         </tbody>
       </table>
     </div>

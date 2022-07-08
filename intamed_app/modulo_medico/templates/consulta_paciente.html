@@ -50,6 +50,7 @@
     })
 </script>
 {% endif %}
+
 {% if User_p.run %}
 <form class="row " method="POST" enctype="multipart/form-data" action="{% url 'modulo_medico:consultaP' User_p.run %}">
     {% else %}
@@ -175,7 +176,7 @@
                 <label for="inputDetalleA" class="form-label fw-bolder">Detalle Alergia</label>
                 <div class="input-group ">
                     <input type="text col-md-8" class="form-control" id="inputDetalleA" name="inputDetalleA"
-                        placeholder="Detalle de Alergia"  readonly>
+                        placeholder="Detalle de Alergia" readonly>
                     <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
                         data-bs-target="#modal_alergia_scroll2"><svg xmlns="http://www.w3.org/2000/svg" width="16"
                             height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
@@ -201,7 +202,8 @@
                                         {% for x in selectAlergia %}
                                         {% if forloop.counter <= 5 %} <button type="button"
                                             class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder"
-                                            id="tipo_alergia{{forloop.counter}}" onclick="validar_Alergia(this.id,'select_alergia')"
+                                            id="tipo_alergia{{forloop.counter}}"
+                                            onclick="validar_Alergia(this.id,'select_alergia')"
                                             value="{{x.nombre_alergia}}">
                                             {{x.nombre_alergia}}</button>
                                             {% endif %}
@@ -212,7 +214,8 @@
                                                 Alergia</button>
                                             <div class="m-2" id="auto_completar" hidden>
                                                 <input type="text" class="form-control " id="auto_alergia"
-                                                    placeholder="Ingrese una Alergia" oninput="validar_Alergia(this.id,'select_alergia')"
+                                                    placeholder="Ingrese una Alergia"
+                                                    oninput="validar_Alergia(this.id,'select_alergia')"
                                                     list="dataAlergia">
                                                 <datalist id="dataAlergia">
                                                     {% for x in selectAlergia %}
@@ -228,7 +231,8 @@
                                     <button type="button" class="btn btn-warning"
                                         onclick="borrar_Alergia()">Borrar</button>
                                     <button type="button" class="btn btn-primary" id="select_alergia"
-                                        data-bs-dismiss="modal" onclick="detalle_Alergia('select_alergia')">Guardar</button>
+                                        data-bs-dismiss="modal"
+                                        onclick="detalle_Alergia('select_alergia')">Guardar</button>
                                 </div>
                             </div>
                         </div>
@@ -275,7 +279,7 @@
                     type="button" role="tab" aria-controls="mHabitual2" aria-selected="false">Nueva Medicacion
                     habitual</button>
             </li>
-<!--             <li class="nav-item " role="presentation">
+            <!--             <li class="nav-item " role="presentation">
                 <button class="nav-link fw-bolder" id="farmaco2-tab" data-bs-toggle="tab" data-bs-target="#farmaco2"
                     type="button" role="tab" aria-controls="farmaco2" aria-selected="false">Fármacos</button>
             </li> -->
@@ -429,9 +433,8 @@
                             <path
                                 d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
                         </svg>
-
                     </button>
-                    <button type="button" class="btn btn-success fs-6 m-2"> Generar Receta <svg
+                    <button type="submit" class="btn btn-success fs-6 m-2"> Generar Receta <svg
                             xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                             <path
@@ -446,40 +449,28 @@
                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Historial de Fármacos:
-                                    {{User_p.p_nombre}} {{User_p.apellido_pa}}</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Historial de Fármacos: 
+                                    <strong>{{User_p.p_nombre}} {{User_p.apellido_pa}} {{User_p.apellido_ma}}</strong> </h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body table-responsive">
                                 <table class="table">
                                     <thead>
                                         <tr>
                                             <th scope="col">N. fármaco</th>
-                                            <th scope="col">Dosis</th>
                                             <th scope="col">Via Adm.</th>
                                             <th scope="col">Fecha</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {% for farma,rece in farma_pa %}
                                         <tr>
-                                            <td>Aspirina</td>
-                                            <td>2</td>
-                                            <td>por ahi</td>
-                                            <td> 22-11-2021</td>
-                                        </tr>
-                                        <tr>
-                                            <td>paracetamol</td>
-                                            <td>1</td>
-                                            <td>por otro lado</td>
-                                            <td> 23-09-2019</td>
-                                        </tr>
-                                        <tr>
-                                            <td>otra pastilla</td>
-                                            <td>3</td>
-                                            <td>por otr lado</td>
-                                            <td>10-08-2019</td>
-                                        </tr>
+                                            <td>{{rece.nombre_farmaco}}</td>
+                                            <td>{{rece.via_administracion}}</td>
+                                            <td>{{farma.id_receta.fecha_receta}}</td>
+                                        </tr>  
+                                        {% endfor %}                                       
                                     </tbody>
                                 </table>
                             </div>
@@ -551,54 +542,6 @@
                     <button type="submit" class="btn btn-primary">Generar Receta</button>
                 </div> -->
                 <!-- Historial de Farmacos -->
-                <div class="modal fade" id="modalhistorial" tabindex="-1" aria-labelledby="modalhistirial"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Historial de Fármacos:
-                                    Paciente .....</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">N. fármaco</th>
-                                            <th scope="col">Dosis</th>
-                                            <th scope="col">Via Adm.</th>
-                                            <th scope="col">Fecha</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Aspirina</td>
-                                            <td>2</td>
-                                            <td>por ahi</td>
-                                            <td> 22-11-2021</td>
-                                        </tr>
-                                        <tr>
-                                            <td>paracetamol</td>
-                                            <td>1</td>
-                                            <td>por otro lado</td>
-                                            <td> 23-09-2019</td>
-                                        </tr>
-                                        <tr>
-                                            <td>otra pastilla</td>
-                                            <td>3</td>
-                                            <td>por otr lado</td>
-                                            <td>10-08-2019</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="col-12 mt-5 text-end">
@@ -649,9 +592,10 @@
         </script>
         {% elif validar == 0 %}
         <script>
-            Swal.fire(
-                'Atencion Guardada con Exito!',
-                'success')
+            Swal.fire({
+                icon: 'success',
+                text: 'Atencion Guardada con Exito!'
+            })
         </script>
         {% else %}
 
