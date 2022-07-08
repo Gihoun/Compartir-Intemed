@@ -7,8 +7,6 @@ function add_row(x) {
     var cell2 = row.insertCell(1);
     var cell3 = row.insertCell(2);
     var cell4 = row.insertCell(3);
-
-
     cell1.innerHTML='<input type="text" id="inputNfarmaco'+lenT+'" placeholder="Ingrese Fármaco" name="inputNfarmaco" oninput="auto_farma(this.id)">'
     cell2.innerHTML='<input type="text" id="inputDfarmaco'+lenT+'" placeholder="Ingrese Dosis" name="inputDfarmaco">'
     cell3.innerHTML='<input type="text" id="inputVfarmaco'+lenT+'" placeholder="Ingrese Via Adminsitración" name="inputVfarmaco">'
@@ -63,41 +61,25 @@ function cal_imc2() {
 //////////////////////////////////////////////////////////////////////
 
 // Atencion alergias
-function validar_Alergia(id) {
+function validar_Alergia(id,x) {
     var Alergia = document.getElementById(id).value;
-    document.getElementById('select_alergia').value = Alergia;
+    document.getElementById(x).value = Alergia;
 }
-function detalle_Alergia() {
-    var detalle = document.getElementById('select_alergia').value;
+function detalle_Alergia(x) {
+    var detalle = document.getElementById(x).value;
     var agregado = document.getElementById('inputDetalleA').value;
     if (detalle == '' && agregado == ''){
-        alert('No ha seleccionado una alergia.')
+        return 0
     }else{
         document.getElementById('inputDetalleA').value = detalle+ ' ' + agregado;
     }
 }
+
 function borrar_Alergia() {
     document.getElementById('inputDetalleA').value = '';
     document.getElementById('inputDetalleA').innerHTML = '';
 }
-// Consulta alergias
-function validar_Alergia2(id) {
-    var Alergia = document.getElementById(id).value;
-    document.getElementById('select_alergia2').value = Alergia;
-}
-function detalle_Alergia2() {
-    var detalle = document.getElementById('select_alergia2').value;
-    var agregado = document.getElementById('inputDetalleA2').value;
-    if (detalle=='' && agregado == ''){
-        alert('No ha seleccionado una alergia.')
-    }else{
-        document.getElementById('inputDetalleA2').value = detalle+ ', '+ agregado;
-    }
-}
-function borrar_Alergia2() {
-    document.getElementById('inputDetalleA2').value = '';
-    document.getElementById('inputDetalleA2').innerHTML = '';
-}
+
 function desplegar_alergia() {
     var desplegado = document.getElementById('auto_completar').hidden
     if (desplegado == true){
@@ -108,16 +90,7 @@ function desplegar_alergia() {
         document.getElementById('select_alergia').value = '';
     }
 }
-function desplegar_alergia2() {
-    var desplegado = document.getElementById('auto_completar2').hidden
-    if (desplegado == true){
-        document.getElementById('auto_completar2').hidden = false;
-    } else {
-        document.getElementById('auto_completar2').hidden = true ;
-        document.getElementById('auto_alergia2').value = '';
-        document.getElementById('select_alergia2').value = '';
-    }
-}
+
 
 //Calendario no sacar por ahora ta weno para nuestros requisitos.
 $.datepicker.regional['es'] = {

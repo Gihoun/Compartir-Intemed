@@ -5,7 +5,6 @@ from email import message_from_binary_file
 from multiprocessing import context
 from multiprocessing.sharedctypes import Array
 from pickle import NONE
-from re import A
 from select import select
 from xml.dom import NoDataAllowedErr
 from django.shortcuts import render
@@ -45,6 +44,12 @@ def insert_DetAtencio(x, y):
 def insert_DetFarmaco(x, y):
     with connection.cursor() as cursor:
         cursor.callproc("sp_detalle_farmaco", (x, y))
+    return True
+
+
+def insert_DetAlergia(x, y):
+    with connection.cursor() as cursor:
+        cursor.callproc("sp_detalle_alergia", (x, y))
     return True
 
 
@@ -188,6 +193,11 @@ def atePaciente(request, id):
         r.id_receta = id_receta + 1
         r.descripcion_receta = medicamento
 
+        ################## Receta Paciente = A ##################################
+        a_get = request.POST.get('inputDetalleA')
+        # Alergias cortadas para su identificacion
+        split_ale = a_get.split()
+
         if x.talla is not None and x.peso is not None and x.imc is not None and x.observaciones is not None and x.cirugias is not None and x.enfermedad is not None and x.medicacion_habitual:
             if x.talla.strip() != '' and x.peso.strip() != '' and x.imc.strip() != '' and x.observaciones.strip() != '' and x.cirugias.strip() != '' and x.enfermedad.strip() != '' and x.medicacion_habitual:
                 try:
@@ -212,7 +222,10 @@ def atePaciente(request, id):
                     y.id_agenda = Agenda.objects.get(id_agenda=999)
                     x.save()
                     y.save()
-
+                    ########## Valores de Alergias y Detalles #########
+                    for a in split_ale:
+                        al = Alergia.objects.get(nombre_alergia=a)
+                        insert_DetAlergia(id, al.id_alergia)
                     ###### Valores Detalle Atencion ##########
                     insert_DetAtencio(id, y.id_atencion)
                 except:
@@ -273,6 +286,8 @@ def consultaV(request):
     comunas = Comuna.objects.all()
     # Usuario para datos del paciente en general
     user = Usuario.objects.all()
+
+    t_diag = TipoDiagnostico.objects.all()
     if request.POST:
         run_paciente = request.POST.get("rutPaciente2")
         user_c = Usuario.objects.all().filter(run=run_paciente).count()
@@ -288,7 +303,8 @@ def consultaV(request):
                         "Nacionalidad": nacionalidades,
                         "Comunas": comunas,
                         "User_p": user,
-                        "existe": mensaje
+                        "existe": mensaje,
+                        "tip_diag": t_diag,
                         }
             return render(request, "consulta_paciente.html", contexto)
     else:
@@ -299,13 +315,14 @@ def consultaV(request):
                     "Nacionalidad": nacionalidades,
                     "Comunas": comunas,
                     "User_p": user,
-                    "existe": mensaje
+                    "existe": mensaje,
+                    "tip_diag": t_diag,
                     }
         return render(request, "consulta_paciente.html", contexto)
 
 
 def consultaP(request, id):
-    mensaje = 0
+    mensaje = 10
     # Pacioente Antiguo por ID, datos de observaciones y demas
     pacientes = Paciente.objects.get(run_paciente=id)
     # Usuario para datos del paciente en general
@@ -400,10 +417,14 @@ def consultaP(request, id):
         r.id_receta = id_receta + 1
         r.descripcion_receta = medicamento
 
+        ################## Receta Paciente = A ##################################
+        a_get = request.POST.get('inputDetalleA')
+        # Alergias cortadas para su identificacion
+        split_ale = a_get.split()
+
         if u.correo is not None and u.direccion is not None and u.id_comuna is not None and u.id_estado is not None and x.talla is not None and x.peso is not None and x.observaciones is not None and x.cirugias is not None and x.enfermedades is not None and x.medicacion_habitual:
             if u.correo.strip() != '' and u.direccion.strip() != '' and x.talla.strip() != '' and x.peso.strip() != '' and x.observaciones.strip() != '' and x.cirugias.strip() != '' and x.enfermedades.strip() != '' and x.medicacion_habitual:
                 try:
-                    mensaje = 0
                     z.save()
                     r.save()
                     ################### Detalle Farmaco = dt ####################################
@@ -419,6 +440,10 @@ def consultaP(request, id):
                         y.id_receta = Receta.objects.get(id_receta=r.id_receta)
                     else:
                         y.id_receta = None
+                    ########## Valores de Alergias y Detalles #########
+                    for a in split_ale:
+                        al = Alergia.objects.get(nombre_alergia=a)
+                        insert_DetAlergia(id, al.id_alergia)
                     y.comentario_atencion = "prueba 999"
                     y.tratamiento = medicamento
                     y.id_agenda = Agenda.objects.get(id_agenda=999)
@@ -429,7 +454,8 @@ def consultaP(request, id):
 
                     ###### Valores Detalle Atencion ##########
                     insert_DetAtencio(id, y.id_atencion)
-                    #return redirect('consultaP', id=user.run)
+                    # return redirect('consultaP', id=user.run)
+                    mensaje = 0
                 except:
                     mensaje = 1
             else:

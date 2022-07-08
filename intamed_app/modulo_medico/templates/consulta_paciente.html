@@ -172,10 +172,10 @@
                     value="9{{telePac.id_telefono.num_telefono}}">
             </div>
             <div class="col-md-3">
-                <label for="inputDetalleA2" class="form-label fw-bolder">Detalle Alergia</label>
+                <label for="inputDetalleA" class="form-label fw-bolder">Detalle Alergia</label>
                 <div class="input-group ">
-                    <input type="text col-md-8" class="form-control" id="inputDetalleA2"
-                        placeholder="Detalle de Alergia" value="" disabled>
+                    <input type="text col-md-8" class="form-control" id="inputDetalleA" name="inputDetalleA"
+                        placeholder="Detalle de Alergia"  readonly>
                     <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
                         data-bs-target="#modal_alergia_scroll2"><svg xmlns="http://www.w3.org/2000/svg" width="16"
                             height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
@@ -201,7 +201,7 @@
                                         {% for x in selectAlergia %}
                                         {% if forloop.counter <= 5 %} <button type="button"
                                             class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder"
-                                            id="tipo_alergia1" onclick="validar_Alergia(this.id)"
+                                            id="tipo_alergia{{forloop.counter}}" onclick="validar_Alergia(this.id,'select_alergia')"
                                             value="{{x.nombre_alergia}}">
                                             {{x.nombre_alergia}}</button>
                                             {% endif %}
@@ -212,7 +212,7 @@
                                                 Alergia</button>
                                             <div class="m-2" id="auto_completar" hidden>
                                                 <input type="text" class="form-control " id="auto_alergia"
-                                                    placeholder="Ingrese una Alergia" oninput="validar_Alergia(this.id)"
+                                                    placeholder="Ingrese una Alergia" oninput="validar_Alergia(this.id,'select_alergia')"
                                                     list="dataAlergia">
                                                 <datalist id="dataAlergia">
                                                     {% for x in selectAlergia %}
@@ -226,9 +226,9 @@
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar
                                     </button>
                                     <button type="button" class="btn btn-warning"
-                                        onclick="borrar_Alergia2()">Borrar</button>
-                                    <button type="button" class="btn btn-primary" id="select_alergia2"
-                                        data-bs-dismiss="modal" onclick="detalle_Alergia2()">Guardar</button>
+                                        onclick="borrar_Alergia()">Borrar</button>
+                                    <button type="button" class="btn btn-primary" id="select_alergia"
+                                        data-bs-dismiss="modal" onclick="detalle_Alergia('select_alergia')">Guardar</button>
                                 </div>
                             </div>
                         </div>
@@ -646,6 +646,12 @@
                 icon: 'error',
                 text: 'Error!! al registrar la atención del paciente.',
             })
+        </script>
+        {% elif validar == 0 %}
+        <script>
+            Swal.fire(
+                'Atencion Guardada con Exito!',
+                'success')
         </script>
         {% else %}
 

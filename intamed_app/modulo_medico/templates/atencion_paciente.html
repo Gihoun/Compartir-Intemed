@@ -126,8 +126,8 @@
         <div class="col-md-3">
             <label for="inputAlergia" class="form-label fw-bolder">Alergia</label>
             <div class="input-group ">
-                <input type="text col-md-8" class="form-control" id="inputDetalleA" placeholder="Detalle de Alergia"
-                    value="" disabled>
+                <input type="text col-md-8" class="form-control" id="inputDetalleA" name="inputDetalleA" placeholder="Detalle de Alergia"
+                    readonly>
                 <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
                     data-bs-target="#modal_alergia_scroll"><svg xmlns="http://www.w3.org/2000/svg" width="16"
                         height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
@@ -149,10 +149,12 @@
                             <div class="modal-body">
                                 <div class="d-grid gap-2 d-md-block">
                                     {% for x in selectAlergia %}
-                                    {% if forloop.counter <= 5 %} <button type="button"
-                                        class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder" id="tipo_alergia1"
+                                    {% if forloop.counter <= 5 %} 
+                                    <button type="button"
+                                        class="btn btn-info text-white m-1 text-wrap fs-6 fw-bolder" id="tipo_alergia{{forloop.counter}}"
                                         onclick="validar_Alergia(this.id)" value="{{x.nombre_alergia}}">
-                                        {{x.nombre_alergia}}</button>
+                                        {{x.nombre_alergia}}
+                                    </button>
                                         {% endif %}
                                         {% endfor %}
                                         <button type="button"
@@ -160,7 +162,7 @@
                                             id="tipo_alergia_otro" onclick="desplegar_alergia()">Otra Alergia</button>
                                         <div class="m-2" id="auto_completar" hidden>
                                             <input type="text" class="form-control " id="auto_alergia"
-                                                placeholder="Ingrese una Alergia" oninput="validar_Alergia(this.id)"
+                                                placeholder="Ingrese una Alergia" oninput="validar_Alergia(this.id,'select_alergia')"
                                                 list="dataAlergia">
                                             <datalist id="dataAlergia">
                                                 {% for x in selectAlergia %}
@@ -175,7 +177,7 @@
                                 </button>
                                 <button type="button" class="btn btn-warning" onclick="borrar_Alergia()">Borrar</button>
                                 <button type="button" class="btn btn-primary" id="select_alergia"
-                                    data-bs-dismiss="modal" onclick="detalle_Alergia()">Guardar</button>
+                                    data-bs-dismiss="modal" onclick="detalle_Alergia('select_alergia')">Guardar</button>
                             </div>
                         </div>
                     </div>
@@ -215,10 +217,6 @@
             <button class="nav-link fw-bolder" id="ant-med_hab-tab" data-bs-toggle="tab" data-bs-target="#ant-med_hab"
                 type="button" role="tab" aria-controls="ant-med_hab" aria-selected="false">Medicamento Habitual</button>
         </li>
-<!--         <li class="nav-item text-center" role="presentation">
-            <button class="nav-link fw-bolder" id="farmaco-tab" data-bs-toggle="tab" data-bs-target="#farmaco"
-                type="button" role="tab" aria-controls="farmaco" aria-selected="false">Receta Medica</button>
-        </li> -->
     </ul>
     <div class="tab-content" id="tabcontenidobs">
         <!-- Primera Observacion o Comentario -->
@@ -335,13 +333,6 @@
                 </button>
             </div>
         </div>
-        <!--Trabajando en receta didactica -->
-<!--         <div class="tab-pane fade" id="farmaco" role="tabpanel" aria-labelledby="farmaco-tab">
-            <div class="mb-3 mt-5">
-                <label for="receta" class="form-label">Receta Medica</label>
-                <textarea class="form-control" id="receta" name="receta" rows="3"></textarea>
-            </div>
-        </div> -->
     </div>
     <div class="col-12 mt-5 text-end">
         <button type="submit" class="btn btn-success fs-6 m-2"> Registrar Nueva Atención <svg
