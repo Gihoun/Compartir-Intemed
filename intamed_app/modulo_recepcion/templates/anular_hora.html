@@ -4,7 +4,7 @@
 
  
 <section class="p-4">
-    <form class="row" method="POST" action="{% url 'anularHor' %}" enctype="multipart/form-data" onsubmit="">
+    <form class="row" method="POST" action="{% url 'modulo_recepcion:anularHor' %}" enctype="multipart/form-data" onsubmit="">
         {% csrf_token %}
         <h3 class="text-center mb-5">Horas Registradas día</h3>
         

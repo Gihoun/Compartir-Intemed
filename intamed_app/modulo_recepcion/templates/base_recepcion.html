@@ -21,7 +21,7 @@
                 <div class="mx-auto"></div>
                 <ul class="navbar-nav hstack gap-3">
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'ingresarPac' %}">Inicio</a>
+                        <a class="nav-link text-white" href="{% url 'modulo_recepcion:ingresarPac' %}">Inicio</a>
                     </li>
                     <div class="vr"></div>
                     <li class="nav-item">
@@ -48,17 +48,17 @@
             <!-- Tabla de navegacion vertical  -->
             <div class="nav flex-column nav-pills me-5" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <button class="nav-link border m-3  btn btn-primary" id="v-pills-ingresarP-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ingresarP" type="button" role="tab" aria-controls="v-pills-ingresarP" aria-selected="false">
-                    <a class="nav-link" href="{% url 'ingresarPac' %}">Ingresar Paciente</a>
+                    <a class="nav-link" href="{% url 'modulo_recepcion:ingresarPac' %}">Ingresar Paciente</a>
                 </button>
                 <button class="nav-link border m-3 btn btn-primary" id="v-pills-buscarP-tab" data-bs-toggle="pill" data-bs-target="#v-pills-buscarP" type="button" role="tab" aria-controls="v-pills-buscarP" aria-selected="false">
 
-                    <a class="nav-link" href="{% url 'buscarPac' %}"> Buscar Paciente</a>
+                    <a class="nav-link" href="{% url 'modulo_recepcion:buscarPac' %}"> Buscar Paciente</a>
                 </button>
                 <button class="nav-link border m-3 btn btn-primary" id="v-pills-ingresarPago-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ingresarPago" type="button" role="tab" aria-controls="v-pills-ingresarPago" aria-selected="false">
-                    <a class="nav-link" href= "{% url 'anularHor' %}">Anular Hora</a>
+                    <a class="nav-link" href= "{% url 'modulo_recepcion:anularHor' %}">Anular Hora</a>
                 </button>
                 <button class="nav-link border m-3 btn btn-primary" id="v-pills-ingresarPago-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ingresarPago" type="button" role="tab" aria-controls="v-pills-ingresarPago" aria-selected="false">
-                    <a class="nav-link" href="{% url 'ingresarPag' %}">Ingresar Pago</a>
+                    <a class="nav-link" href="{% url 'modulo_recepcion:ingresarPag' %}">Ingresar Pago</a>
                 </button>
             </div>
 
@@ -137,7 +137,7 @@
                 var csrftoken = '{{ csrf_token }}';
                 data.append('id_hora',id);
                 console.log(id);
-                fetch('{% url 'anularHor' %}', {
+                fetch('{% url 'modulo_recepcion:anularHor' %}', {
                   method: 'POST',
                   body: data ,
                   headers: {
@@ -151,7 +151,7 @@
               })
               .then(function(result){
                 if(result.isConfirmed){
-                window.location.href = "{% url 'anularHor' %}";
+                window.location.href = "{% url 'modulo_recepcion:anularHor' %}";
                 }
               });
             }
@@ -177,7 +177,7 @@
                 data.append('inpval', inpvalue);
                 data.append('runp', run_p);
                 console.log(id);
-                fetch('{% url 'ingresarPag' %}', {
+                fetch('{% url 'modulo_recepcion:ingresarPag' %}', {
                   method: 'POST',
                   body: data ,
                   headers: {
@@ -191,7 +191,7 @@
               })
               .then(function(result){
                 if(result.isConfirmed){
-                window.location.href = "{% url 'ingresarPag' %}";
+                window.location.href = "{% url 'modulo_recepcion:ingresarPag' %}";
                 }
               });
             }

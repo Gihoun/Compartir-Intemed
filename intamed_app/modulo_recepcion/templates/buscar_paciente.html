@@ -5,7 +5,7 @@
     <div class="container m-1 table-responsive  border">
         <h2>Lista de Pacientes: {{cantidad}}</h2>
                 <div class="tab-pane fade show active container-fluid" id="v-pills-agenda" role="tabpanel" aria-labelledby="v-pills-agenda-tab">
-                    <form class="d-flex" method="POST" action="{% url 'buscarPac' %}">
+                    <form class="d-flex" method="POST" action="{% url 'modulo_recepcion:buscarPac' %}">
                         {% csrf_token %}
                             <input class="form-control me-2" type="search" placeholder="RUT Paciente" name="txbusqueda" aria-label="Search">
                             <button id="boton" class="btn btn-primary" type="submit">Buscar</button>
@@ -37,7 +37,7 @@
                                     Acción
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-dark">    
-                                    <li><a id="1"  class="dropdown-item" name="runpac" value="editar" href="{% url 'editarPac' usu.run %}">Editar</a></li>                            
+                                    <li><a id="1"  class="dropdown-item" name="runpac" value="editar" href="{% url 'modulo_recepcion:editarPac' usu.run %}">Editar</a></li>                            
                                 </ul>
                                 </div>
                             </td>

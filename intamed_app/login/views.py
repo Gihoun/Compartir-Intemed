@@ -31,19 +31,21 @@ def login_todos(request):
             perf = userORA.id_perfil_id
             
             print(f"perfil {perf}")
-            if perf == 4:#Medico
+            if perf == 4:#PACIENTE
                 med = Usuario.objects.filter(id_perfil=2)
                 contexto ={"paciente": userORA,"medico":med}
                 response = redirect('modulo_paciente:indexPaciente',id=userORA.run)
                 return response
                 #return render(request, 'paciente.html', contexto )
-            elif perf == 1:##Admin
+            elif perf == 1:#ADMIN
                 contexto ={"admin": userORA}
                 return render(request, 'administrator.html', contexto )
-            elif perf==2:##Medico
+            elif perf==2:##MEDICO
                 response = redirect('modulo_medico:index')
                 return response
-
+            elif perf==3:##RECEPCION
+                response = redirect('modulo_recepcion:ingresarPac')
+                return response
         else:
             
             mensaje="No existe usuario o contrasennia incorrecta"

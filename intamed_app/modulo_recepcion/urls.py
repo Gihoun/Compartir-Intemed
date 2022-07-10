@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import path
 from .views import inicio, ingresarPago, filtro_pacientes, editar_paciente, anularHora, genpdf_boleta
 
+app_name="modulo_recepcion"
+
 urlpatterns = [   
     path('inicio/ingresarPac',inicio, name="ingresarPac"),
     path('inicio/buscarPac',filtro_pacientes, name="buscarPac"),
