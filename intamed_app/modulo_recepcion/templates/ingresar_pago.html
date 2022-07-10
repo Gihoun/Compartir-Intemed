@@ -57,22 +57,54 @@
                 </div>
             </div>
             
-            
-            <div class="container table-responsive border mt-5">
-                <h3 class="text-center mb-5">Atención</h3>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                    <label class="form-check-label" for="flexRadioDefault1">Hora de Atención </label>
+            <div>
+                {% if agenda%}
+                <table class="table is-fullwidth is-striped is-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>Id agenda</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>   
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for ag in agenda %}
+                        <tr>
+                            
+                            <th>{{ag.id_disp}}</th>
+                            <th>{{ag.id_horaD.fecha_hora|date:"N d "}}</th>
+                            <th>{{ag.id_horaD.fecha_hora|date:"P"}}</th>
+                            <td style="text-align: center;">
+                                <button type="button" class="btn btn-info s-1 text-white"
+                                    onclick="confirma_bono({{ag.id_disp}})">
+                                    Imprimir Bono
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table> 
+
+                <div class="container table-responsive border mt-5">
+                    <h3 class="text-center mb-5">Atención</h3>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">Hora de Atención </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                        <label class="form-check-label" for="flexRadioDefault2"> Exámenes </label>
+                    </div> 
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                    <label class="form-check-label" for="flexRadioDefault2"> Exámenes </label>
-                </div> 
+                <div class="col-12 mt-5">
+                    <button type="submit" class="btn btn-primary mb-4">Cancelar</button>
+                    <button type="submit" class="btn btn-primary mb-4">Imprimir Bono</button>
+                </div>    
+                {% else %}
+                <label>el paciente no tiene horas en agenda</label>
+                {% endif%}
             </div>
-            <div class="col-12 mt-5">
-                <button type="submit" class="btn btn-primary mb-4">Cancelar</button>
-                <button type="submit" class="btn btn-primary mb-4">Imprimir Bono</button>
-            </div> 
+            
     </form>
 </section>
 {% endblock contenido %}  

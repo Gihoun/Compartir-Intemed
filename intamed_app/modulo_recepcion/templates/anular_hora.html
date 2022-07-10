@@ -4,15 +4,19 @@
 
  
 <section class="p-4">
-    <form action="">
+    <form class="row" method="POST" action="{% url 'anularHor' %}" enctype="multipart/form-data" onsubmit="">
+        {% csrf_token %}
         <h3 class="text-center mb-5">Horas Registradas día</h3>
+        
         <div class="row mt-3">
             <div class="col-lg-3">
                 <input type="text" readonly class="form-control-plaintext"  value="Seleccione una Fecha ">
             </div>
             <div class="col-lg-4">
-                <input type="text" class="form-control" id="fechacalendar" name="fechainput" placeholder="Seleccione fecha" />
+                <input type="date" class="form-control" id="fechacalendar" name="fechainput" placeholder="Seleccione fecha" />
             </div>
+            <button type="submit" class="btn btn-info m-1 text-white">buscar</button>
+
         </div>
             <table class="table is-fullwidth is-striped is-bordered table-hover">
                 <thead>
@@ -22,7 +26,7 @@
                     <th>Hora</th>
                     <th>Estado hora</th>
                     <th>Médico</th>
-                    <th>Especialidad</th>
+                    <th>Run paciente</th>
                 </tr>
                 </thead>
                 <tbody name="id_hora">
@@ -32,21 +36,27 @@
                     <th>{{di.id_disp}}</th>
                     <th>{{di.id_horaD.fecha_hora|date:"N d "}}</th>
                     <th>{{di.id_horaD.fecha_hora|date:"P"}}</th>
-                    {% if tomada %}
+                        {% if tomada %}
                     <th>No Disponible</th>
-                    {% else %}
+                        {% else %}
                     <th>Reservada</th>
-                    {% endif %}
+                        {% endif %}
                     {%for m in medico %}
                     
                         {% if m.run == di.run_medico_id%}
                     <th>{{m.p_nombre}} {{m.apellido_pa}}</th>
-                    <th>especialidad</th>
+                    
                         {% endif%}
+                    
+                    {% endfor %}
+                    {% for dd in det_age%}
+                        {% if dd.idd_id == di.id_disp %}
+                    <th>{{dd.run_pac_id}}</th>
+                        {% endif %}
                     {% endfor %}
                     <td style="text-align: center;">
                         <button type="button" class="btn btn-info m-1 text-white"
-                            onclick="confirma_anula({{di.id_disp}})">
+                            onclick="confirma_anular({{di.id_disp}})">
                             Eliminar Hora
                         </button>
                     </td>

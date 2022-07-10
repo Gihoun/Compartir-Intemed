@@ -4,6 +4,7 @@ from .metodos import *
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from modulo_medico.models import *
+from modulo_medico.views import insert_DetAtencio
 from modulo_admin.models import Comuna, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, Usuario, Atencion, Farmaco
 from modulo_admin.models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato, Alergia
 from modulo_admin.models import Prevision, TelefonoUsuario, Telefono, DetalleAlergia, DetalleAtencion
@@ -114,63 +115,82 @@ def ingresarPago(request):
     if request.POST:
         rp = request.POST.get('runp')
         fdr_uno = request.POST.get('flexRadioDefault')
-        print(f' flex radio button value {fdr_uno}')
-        inpvalue = request.POST.get('inpval')
         
+        inpvalue = request.POST.get('inpval')
+        print(f'input value {inpvalue}')
         if rp is not None: 
             if rp.strip()!= '':
                 runf = rp
-                obj_pac = Usuario.objects.get(run=runf)
+                try:
+                    obj_pac = Usuario.objects.get(run=runf)
+                    detalle = det_agenda.objects.filter(run_pac=runf)
+                    tomadas =detalle.values_list("idda")
+                    age = Disponibilidad.objects.filter(id_disp__in=tomadas).select_related('id_horaD')
+                except:
+                    runf = 0
+                    obj_pac = None
+                    age = None
             else:
                 runf = 0
                 obj_pac = None
+                age = None
         else:
             runf = 0
             obj_pac = None
+            age = None
         
-        if fdr_uno is not None and len(inpvalue) != 0 :
-            arr_2=[]
+        if len(inpvalue) != 0 and rp is not None:
+            
             print("SE GENERARA LA BOLETA")
             pac = Paciente.objects.get(run_paciente=rp)
-            
-            
             print(f'id PACIENTE {runf}')
-            det_at_selected = DetalleAtencion.objects.filter(run_paciente=runf)
-            id_at= list(det_at_selected.values_list("id_atencion"))
-            print(id_at)
-            if len(id_at) > 0:
-                # MANDAR POR PANTALLA SWAL FECHA HORA ID Y PERSONA para confirmar ANTES DEL POST
-                for f in id_at:
-                    arr_2.append(f[0])
-                ate= Atencion.objects.filter(id_atencion__in=arr_2).last()
+            
+            try:
+                # generar atencion vacia 
                 fe = datetime.now()
+                ate_new= Atencion()
+                id_at = Atencion.objects.last().id_atencion
+                
+                ate_new.id_atencion = id_at+7
+                ate_new.fecha_atencion = fe
+
+                print(ate_new.id_atencion)
+                
+                ate_new.save()
+                print("ATENCION NUEVA GUARDADA")
+
+                insert_DetAtencio(rp, ate_new.id_atencion)
+                
+                print("DETALLE ATENCION GENERADO")
+                
+                
                 f_boleta = fe.strftime('%Y-%m-%d')
 
-                print(f'id atencion {ate} valor {inpvalue} fecha {f_boleta}')
-                new = Boleta()
+                print(f'id atencion {ate_new.id_atencion} valor {inpvalue} fecha {f_boleta}')
+                newB = Boleta()
 
-                new.id_atencion = ate
-                new.fecha_boleta = f_boleta
-                new.monto_pago = inpvalue
+                newB.id_atencion = ate_new
+                newB.fecha_boleta = f_boleta
+                newB.monto_pago = inpvalue
                 try:
-                    bol = Boleta.objects.get(id_atencion=ate)
+                    bol = Boleta.objects.get(id_atencion=ate_new.id_atencion)
                     print(" YA SE REALIZO EL PAGO POR ESTA ATENCION")
                 except:
-                    new.save()
+                    newB.save()  ##just for testing
                     dat = str(ate.id_atencion) + '-' + str(runf)
                     print(f'BOLETA INGRESADA CON EXITO {ate.id_atencion}')
                     response = redirect('genpdf',id=dat)
                     return response
-            else:
+            except:
                 print(" EL PACIENTE NO TIENE ATENCION GENERADA")
 
-        contexto={"pac": obj_pac,"prevision": prev}
+        contexto={"pac": obj_pac,"prevision": prev,"agenda": age}
         return render(request,"ingresar_pago.html",contexto)
     else:
         contexto={"prevision":prev}
-        
-
+   
     return render(request,"ingresar_pago.html",contexto)
+
 def genpdf_boleta(request,id):
     arr_1= id.split('-')
 
@@ -286,36 +306,41 @@ def anularHora(request):
     
     med = Usuario.objects.filter(id_perfil=2)
 
-    #detalle = det_agenda.objects.filter(run_pac=id)
-    #tom =detalle.values_list("idda")
-    #print(tom)
+   
+    det_age = det_agenda.objects.all()
+    tomadas =det_age.values_list("idda")
+
+    age = Disponibilidad.objects.filter(id_disp__in=tomadas)
+
+    contexto = {"medico": med,"agenda":age,"det_age":det_age}
 
     if request.POST:
         idh= request.POST.get("id_hora")
         id_pac = request.POST.get("id_pac")
-        paciente = Usuario.objects.get(run=id_pac)
+        fecha_s = request.POST.get("fechainput")
+        #paciente = Usuario.objects.get(run=id_pac)
+        if idh is not None:
+            deta = det_agenda.objects.get(idda=idh)
+            deta.delete()
+            print(f"la hora que se elimino {idh}")
+            send_mail(
+                    'Subject here',
+                    'Here is the message.',
+                    'andrea.verdugomunoz@gmail.com',
+                    ['an.verdugom@duocuc.cl'],
+                    fail_silently=False,
+            )
+        elif fecha_s is not None and fecha_s.strip() != '':
+            print(fecha_s)
+            
+            
+            det_h = agenda_hora.objects.filter(fecha_hora__date=fecha_s)
+            dispo= Disponibilidad.objects.filter(id_horaD__in=det_h,id_disp__in=tomadas)
+            contexto = {"medico": med,"agenda":dispo,"det_age":det_age}
+            
+            #paciente = Usuario.objects.get(run=id_pac)
+
+      
     
-        deta = det_agenda.objects.get(idda=idh)
-        deta.delete()
-        print(f"la hora que se eliminada {idh}")
-        send_mail(
-                'Subject here',
-                'Here is the message.',
-                'andrea.verdugomunoz@gmail.com',
-                ['an.verdugom@duocuc.cl'],
-                fail_silently=False,
-        )
-    #fe = datetime.now()
-    #f_dia = fe.strftime('%Y-%m-%d')
-   
-    #det_h = agenda_hora.objects.filter(fecha_hora__date=f_dia)
-
-
-    #age = Disponibilidad.objects.filter(id_disp__in=tom).select_related('id_horaD').select_related('Usuario')
-    det_age = det_agenda.objects.all()
-    tom =det_age.values_list("idda")
-    age = Disponibilidad.objects.filter(id_disp__in=tom)
-
-    contexto = {"medico": med,"agenda":age}
     return render(request, "anular_hora.html", contexto)
 

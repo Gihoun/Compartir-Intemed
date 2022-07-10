@@ -85,6 +85,7 @@
         crossorigin="anonymous"></script>
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    <script src="{% static 'js/sweetalert2.all.min.js' %}"></script>
     <script>
         $.datepicker.regional['es'] = {
             closeText: 'Cerrar',
@@ -118,6 +119,85 @@
             }
         }
     </script>
+    <script>
+        function confirma_anular(id){
+            Swal.fire({
+              "title": "¿Esta Seguro?",
+              "text": "Esta Acción es Irreversible {{di.id_disp}}",
+              "icon": "question",
+              "showCancelButton": true,
+              "cancelButtonText": "No, Cancelar",
+              "confirmButtonText": "Si, seguro",
+              "reverseButtons": true,
+              "confirmButtonColor": "#dc3545"
+            })
+            .then(function(result){
+              if(result.isConfirmed){
+                const data = new FormData();
+                var csrftoken = '{{ csrf_token }}';
+                data.append('id_hora',id);
+                console.log(id);
+                fetch('{% url 'anularHor' %}', {
+                  method: 'POST',
+                  body: data ,
+                  headers: {
+                    'X-CSRFToken': csrftoken ,
+                  }
+               });
+               Swal.fire({
+                "title": "Realizado",
+                "text": "La hora ha sido ELIMINADA ",
+                "icon": "success"
+              })
+              .then(function(result){
+                if(result.isConfirmed){
+                window.location.href = "{% url 'anularHor' %}";
+                }
+              });
+            }
+          })   
+          }
+          function confirma_bono(id){
+            Swal.fire({
+              "title": "¿Esta Seguro?",
+              "text": "se imprimira la boleta y se generara una nueva atencion {{di.id_disp}}",
+              "icon": "question",
+              "showCancelButton": true,
+              "cancelButtonText": "No, Cancelar",
+              "confirmButtonText": "Si, seguro",
+              "reverseButtons": true,
+              "confirmButtonColor": "#dc3545"
+            })
+            .then(function(result){
+              var inpvalue = document.getElementById('inputval').value.trim();
+              var run_p = document.getElementById('inputRutPaciente').value.trim();
+              if(result.isConfirmed){
+                const data = new FormData();
+                var csrftoken = '{{ csrf_token }}';
+                data.append('inpval', inpvalue);
+                data.append('runp', run_p);
+                console.log(id);
+                fetch('{% url 'ingresarPag' %}', {
+                  method: 'POST',
+                  body: data ,
+                  headers: {
+                    'X-CSRFToken': csrftoken ,
+                  }
+               });
+               Swal.fire({
+                "title": "Realizado",
+                "text": "La atencion ha sido generada",
+                "icon": "success"
+              })
+              .then(function(result){
+                if(result.isConfirmed){
+                window.location.href = "{% url 'ingresarPag' %}";
+                }
+              });
+            }
+          })   
+          }
+        </script>
     {% block js %}  
 
     {% endblock js %}   
