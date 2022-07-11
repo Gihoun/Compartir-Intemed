@@ -1,5 +1,7 @@
+from modulo_medico.models import agenda_hora
 from .models import *
 from modulo_medico.models import *
+from django.db.models import Max
 from datetime import datetime
 
 def agregar_disp(arr_horas,run_doc):
@@ -13,13 +15,15 @@ def agregar_disp(arr_horas,run_doc):
         med = Medico.objects.get(run_medico=run_doc)
         arr_time = hora.split('-')
         print(arr_time)
-        d = datetime.fromisoformat(f'{fecha_l}T{arr_time[0]}:{arr_time[1]}:00')
+        d = datetime.fromisoformat(f'{fecha_l} {arr_time[0]}:{arr_time[1]}:00')
+        print(d)
         x = agenda_hora()
         y = Disponibilidad()
+     
         try:
-            id_h = agenda_hora.objects.last().id_hora + 5
+            id_h = agenda_hora.objects.aggregate(maximo=Max('id_hora'))['maximo'] + 5
             id_d = Disponibilidad.objects.last().id_disp + 5
-            print(id_h, id_d)
+            print(id_h)
             ##OBJETO AGENDA_HORA
             x.id_hora = id_h
             x.fecha_hora = d
@@ -32,7 +36,7 @@ def agregar_disp(arr_horas,run_doc):
             print(f'HABILITADA HORA {d}')   
         except:
             print("error en el proceso de agendamiento")
-            return False
+        
     print(f'EXITO PARA TODAS LAS HORAS EN FECHA {fecha_l}')
     return True
     

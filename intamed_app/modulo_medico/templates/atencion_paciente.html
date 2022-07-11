@@ -205,7 +205,7 @@
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
                     aria-controls="panelsStayOpen-collapseOne">
-                    <strong>Datos Atención Paciente</strong>
+                    <strong>Datos Antecendentes Paciente</strong>
                 </button>
             </h2>
             <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
@@ -213,25 +213,103 @@
                 <div class="accordion-body">
                     <div class="container-fluid">
                         <div class="row align-items-center">
-                            <div class="col-md-3">
-                                <label for="inputexcli" class="form-label fw-bolder">Exploración Clinica</label>
-                                <textarea class="form'control" name="inputexcli" id="inputexcli" cols="25"
-                                    rows="6"></textarea>
+                            <div class="col-md-4">
+                                <label for="inputexcli" class="form-label fw-bolder">Observaciones</label>
+                                <textarea class="form'control" name="inputObserva" id="inputObserva" cols="30"
+                                    rows="6" style="resize: none;"></textarea>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <label for="inputEnf" class="form-label fw-bolder">Enfermedades</label>
-                                <textarea class="form'control" name="inputEnf" id="inputEnf" cols="25"
-                                    rows="6"></textarea>
+                                <textarea class="form'control" name="inputEnf" id="inputEnf" cols="30"
+                                    rows="6" style="resize: none;"></textarea>
                             </div>
-                            <div class="col-md-3">
-                                <label for="inputTrata" class="form-label fw-bolder">Tratamiento</label>
-                                <textarea class="form'control" name="inputTrata" id="inputTrata" cols="25"
-                                    rows="6"></textarea>
+                            <div class="col-md-4">
+                                <label for="inputTrata" class="form-label fw-bolder">Antecedentes Quirúrgicos</label>
+                                <textarea class="form'control" name="inputAQuiru" id="inputAQuiru" cols="30"
+                                    rows="6" style="resize: none;"></textarea>
                             </div>
-                            <div class="col-md-3">
-                                <label for="inputexcli" class="form-label fw-bolder">Exploración Clinica</label>
-                                <textarea class="form'control" name="" id="" cols="25" rows="6"></textarea>
+                        </div>
+                        <h3 class="text-center mt-4"> Medicación Habitual</h3>
+                        <div class="table-responsive ">
+                            <table class="table borde table-hover" id="tablaF">
+                                <thead class="text-start">
+                                    <tr>
+                                        <th scope="col">Nombre Fármaco</th>
+                                        <th scope="col">Dosis</th>
+                                        <th scope="col">Via de Adminsitración</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-start">
+                                    <tr id="row">
+                                        <td>
+                                            <input type="text" id="inputNfarmaco" placeholder="Ingrese Fármaco" name="inputNfarmaco"
+                                                oninput="auto_farma(this.id)">
+                                        </td>
+                                        <td>
+                                            <input type="text" id="inputDfarmaco" placeholder="Ingrese Dosis" name="inputDfarmaco">
+                                        </td>
+                                        <td>
+                                            <input type="text" id="inputVfarmaco" placeholder="Ingrese Via Adminsitración"
+                                                name="inputVfarmaco">
+                                        </td>
+                                        <td>
+                                            <button class="mt-1" type="button" id="eliminarFar" onclick="delRow()" disabled><svg
+                                                    xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                                    class="bi bi-trash3" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                                                </svg>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <script>
+                                    function auto_farma(x) {
+                                        var farmDispo = [
+                                            {% for x in todo_farma %}
+            
+                                    "{{x.nombre_farmaco}}",
+            
+                                        {% endfor %}
+                                    ];
+                                    $("#" + x).autocomplete({
+                                        source: farmDispo
+                                    });                     
+                                };
+                                </script>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <label for="inputHabmed" class="form-label fw-bolder">Medicamentos Habituales</label>
+                            <div class="input-group mb-3 ">
+                                <input type="text" class="form-control" placeholder="Medicamentos Habituales" id="inputHabmed"
+                                    name="inputHabmed" aria-describedby="refresh_farma">
+                                <button class="btn btn-outline-secondary" type="button" id="refresh_farma"
+                                    onclick="refresh_Farma('tablaF')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+                                        <path
+                                            d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+                                    </svg> Actualizar</button>
                             </div>
+                        </div>
+                        <div class="text-end">
+                            <button type="button" class="btn btn-primary fs-6 m-2" onclick="add_row('tablaF')">Agregar
+                                Fármaco <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                                </svg>
+            
+                            </button>
+                            <button type="button" class="btn btn-success fs-6 m-2"> Generar Receta <svg
+                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -245,7 +323,7 @@
         <li class="nav-item text-center" role="presentation">
             <button class="nav-link active fw-bolder" id="observaciones-tab" data-bs-toggle="tab"
                 data-bs-target="#observaciones" type="button" role="tab" aria-controls="observaciones"
-                aria-selected="true">Observaciones</button>
+                aria-selected="true">Comentarios de la Atencion</button>
         </li>
         <li class="nav-item text-center" role="presentation">
             <button class="nav-link fw-bolder " id="diagnotico-tab" data-bs-toggle="tab" data-bs-target="#diagnostico"
@@ -253,25 +331,21 @@
         </li>
         <li class="nav-item text-center" role="presentation">
             <button class="nav-link fw-bolder" id="ant-clinico-tab" data-bs-toggle="tab" data-bs-target="#ant-clinico"
-                type="button" role="tab" aria-controls="ant-clinico" aria-selected="false">Historial Clínico</button>
-        </li>
-        <li class="nav-item text-center" role="presentation">
-            <button class="nav-link fw-bolder" id="ant-med_hab-tab" data-bs-toggle="tab" data-bs-target="#ant-med_hab"
-                type="button" role="tab" aria-controls="ant-med_hab" aria-selected="false">Medicamento Habitual</button>
+                type="button" role="tab" aria-controls="ant-clinico" aria-selected="false">Tratamiento</button>
         </li>
     </ul>
     <div class="tab-content" id="tabcontenidobs">
         <!-- Primera Observacion o Comentario -->
         <div class="tab-pane fade show active" id="observaciones" role="tabpanel" aria-labelledby="observaciones-tab">
             <div class="mb-3 mt-5">
-                <label for="inputObservacion" class="form-label fw-bolder">Escriba sus observaciones</label>
-                <textarea class="form-control" id="inputObservacion" name="inputObservacion" rows="3"></textarea>
+                <label for="inputComent" class="form-label fw-bolder">Escriba sus comentarios</label>
+                <textarea class="form-control" id="inputComent" name="inputComent" rows="3"></textarea>
             </div>
         </div>
         <!-- Primer diagnostico Paciente terminado -->
         <div class="row tab-pane fade" id="diagnostico" role="tabpanel" aria-labelledby="diagnotico-tab">
             <div class="col-md-2 mt-3">
-                <label for="inputDiag" class="form-label fw-bolder">Tipo de diagnostico</label>
+                <label for="inputDiag" class="form-label fw-bolder">Tipo de diagnóstico</label>
                 <select id="inputDiag" name="inputDiag" class="form-select">
                     {% for x in tip_diag %}
                     <option selected>{{x.tipo_diag}}</option>
@@ -279,100 +353,15 @@
                 </select>
             </div>
             <div class="mb-3 mt-3">
-                <label for="inputDiagnostico" class="form-label fw-bolder">Escriba su Diagnostico</label>
+                <label for="inputDiagnostico" class="form-label fw-bolder">Escriba su diagnóstico</label>
                 <textarea class="form-control" id="inputDiagnostico" name="inputDiagnostico" rows="3"></textarea>
             </div>
         </div>
         <!-- Historial Clinico , pensando en cambiar nombre pero listo-->
         <div class="tab-pane fade" id="ant-clinico" role="tabpanel" aria-labelledby="ant-clinico-tab">
             <div class="mb-3 mt-5">
-                <label for="inputHClinico" class="form-label fw-bolder">Historial clínico del paciente.</label>
-                <textarea class="form-control" id="inputHClinico" name="inputHClinico" rows="3"></textarea>
-            </div>
-        </div>
-        <!-- Medicacion habitual lista, pienso cambiar el nombre-->
-        <div class="tab-pane fade" id="ant-med_hab" role="tabpanel" aria-labelledby="ant-med_hab">
-            <h3 class="text-center mt-4"> Medicación Habitual / Receta Medica</h3>
-            <div class="table-responsive ">
-                <table class="table borde table-hover" id="tablaF">
-                    <thead class="text-start">
-                        <tr>
-                            <th scope="col">Nombre Fármaco</th>
-                            <th scope="col">Dosis</th>
-                            <th scope="col">Via de Adminsitración</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-start">
-                        <tr id="row">
-                            <td>
-                                <input type="text" id="inputNfarmaco" placeholder="Ingrese Fármaco" name="inputNfarmaco"
-                                    oninput="auto_farma(this.id)">
-                            </td>
-                            <td>
-                                <input type="text" id="inputDfarmaco" placeholder="Ingrese Dosis" name="inputDfarmaco">
-                            </td>
-                            <td>
-                                <input type="text" id="inputVfarmaco" placeholder="Ingrese Via Adminsitración"
-                                    name="inputVfarmaco">
-                            </td>
-                            <td>
-                                <button class="mt-1" type="button" id="eliminarFar" onclick="delRow()" disabled><svg
-                                        xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                                        class="bi bi-trash3" viewBox="0 0 16 16">
-                                        <path
-                                            d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
-                                    </svg>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <script>
-                        function auto_farma(x) {
-                            var farmDispo = [
-                                {% for x in todo_farma %}
-
-                        "{{x.nombre_farmaco}}",
-
-                            {% endfor %}
-                        ];
-                        $("#" + x).autocomplete({
-                            source: farmDispo
-                        });                     
-                    };
-                    </script>
-                </table>
-            </div>
-            <div class="row">
-                <label for="inputHabmed" class="form-label fw-bolder">Medicamentos Habituales</label>
-                <div class="input-group mb-3 ">
-                    <input type="text" class="form-control" placeholder="Medicamentos Habituales" id="inputHabmed"
-                        name="inputHabmed" aria-describedby="refresh_farma">
-                    <button class="btn btn-outline-secondary" type="button" id="refresh_farma"
-                        onclick="refresh_Farma('tablaF')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                            fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
-                            <path
-                                d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
-                        </svg> Actualizar</button>
-                </div>
-            </div>
-            <div class="text-end">
-                <button type="button" class="btn btn-primary fs-6 m-2" onclick="add_row('tablaF')">Agregar
-                    Fármaco <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                        <path
-                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
-                    </svg>
-
-                </button>
-                <button type="button" class="btn btn-success fs-6 m-2"> Generar Receta <svg
-                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                        <path
-                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
-                    </svg>
-                </button>
+                <label for="inputTrata" class="form-label fw-bolder">Escriba tratamiento del paciente.</label>
+                <textarea class="form-control" id="inputTrata" name="inputTrata" rows="3"></textarea>
             </div>
         </div>
     </div>

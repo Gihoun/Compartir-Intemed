@@ -157,11 +157,14 @@ def atePaciente(request, id):
         talla = request.POST.get("inputTalla")
         peso = request.POST.get("inputPeso")
         imc = request.POST.get("inputIMC")
-        observacion = request.POST.get("inputObservacion")
-        cirugia = request.POST.get("inputHClinico")
+        observacion = request.POST.get("inputObserva")
+        cirugia = request.POST.get("inputAQuiru")
         diagnostico = request.POST.get("inputDiagnostico")
         medicamento = request.POST.get("inputHabmed")
-
+        print(observacion)
+        print(cirugia)
+        print(diagnostico)
+        print(medicamento)
         # var de tipo de diagnostico
         t_diagnostico = request.POST.get("inputDiag")
 
