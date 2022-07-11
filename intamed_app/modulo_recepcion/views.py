@@ -178,8 +178,8 @@ def ingresarPago(request):
                     print(" YA SE REALIZO EL PAGO POR ESTA ATENCION")
                 except:
                     newB.save()  ##just for testing
-                    dat = str(ate.id_atencion) + '-' + str(runf)
-                    print(f'BOLETA INGRESADA CON EXITO {ate.id_atencion}')
+                    dat = str(ate_new.id_atencion) + '-' + str(runf)
+                    print(f'BOLETA INGRESADA CON EXITO {ate_new.id_atencion}')
                     response = redirect('genpdf',id=dat)
                     return response
             except:
@@ -253,7 +253,7 @@ def genpdf_boleta(request,id):
     # FileResponse sets the Content-Disposition header so that browsers
     # present the option to save the file.
     buffer.seek(0)
-    return FileResponse(buffer, as_attachment=True, filename=filname)
+    return FileResponse(buffer, as_attachment=False, filename=filname)
 
 
 def filtro_pacientes(request):
