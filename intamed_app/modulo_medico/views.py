@@ -362,7 +362,7 @@ def consultaP(request, id):
         lista_ate.append(p[0])  
     lista_ate.sort(reverse=True)
     id_ate = Atencion.objects.get(id_atencion=lista_ate[0])
-    aten_pa = Atencion.objects.filter(id_atencion__in=lista_ate)
+    aten_pa = Atencion.objects.filter(id_atencion__in=lista_ate).order_by('-id_atencion')[:3]
     ids_re = []
     for rece in aten_pa:
         ids_re.append(rece.id_receta)
@@ -474,6 +474,7 @@ def consultaP(request, id):
                     x.save()
                     id_ate.save()
                     mensaje = 0
+                    return redirect('consultaP', h=id)
                 except:
                     mensaje = 1
             else:
@@ -494,6 +495,7 @@ def consultaP(request, id):
                 "todo_farma": farma,
                 "tip_farma": t_farma,
                 "farma_pa":zip(aten_pa,real_far),
+                "lista_ate":aten_pa,
 
                 }
     return render(request, "consulta_paciente.html", contexto)

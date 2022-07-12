@@ -451,34 +451,45 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Fecha Consulta</th>
-                                    <th scope="col">Observaciones</th>
+                                    <th scope="col">Comentarios</th>
                                     <th scope="col">Diagnóstico</th>
-                                    <th scope="col">Historial Clínico</th>
-                                    <th scope="col">Medicación Habitual</th>
+                                    <th scope="col">Exploracion Clínica</th>
+                                    <th scope="col">Tratamientos</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr id="row">
+                                {% if User_p.run %}
+                                {% for pa in lista_ate  %}
+                                <tr id="row">                                   
                                     <td>
-                                        <p>Fecha (DD-MM-AAAA)</p>
+                                        <p>{{pa.fecha_atencion}}</p>
                                     </td>
                                     <td>
                                         <textarea name="obs_anterior" id="obs_anterior" cols="22" rows="3" disabled
-                                            style="resize: none;">{{paciente.observaciones}}</textarea>
+                                            style="resize: none;">{{pa.comentario_atencion}}</textarea>
                                     </td>
                                     <td>
                                         <textarea name="diag_anterior" id="diag_anterior" cols="22" rows="3" disabled
-                                            style="resize: none;">{{paciente.enfermedades}}</textarea>
+                                            style="resize: none;">{{pa.id_diagnostico.nombre_diag}}</textarea>
                                     </td>
                                     <td>
                                         <textarea name="hst_clinico" id="hst_clinico" cols="22" rows="3" disabled
-                                            style="resize: none;">{{paciente.cirugias}}</textarea>
+                                            style="resize: none;">{{pa.exploracion_clinica}}</textarea>
                                     </td>
                                     <td>
                                         <textarea name="mHabt" id="mHabt" cols="22" rows="3" disabled
-                                            style="resize: none;">{{paciente.medicacion_habitual}}</textarea>
-                                    </td>
-                                </tr>
+                                            style="resize: none;">{{pa.tratamiento}}</textarea>
+                                    </td>                                 
+                                </tr> 
+                                {% endfor %}                             
+                                {% else %}
+                                  <tr id="row">
+                                    <td colspan="5" class="text-center mt-5 font-weight-bolder"> Inicie la búsqueda de pacientes
+                                        colocando el RUT del paciente sin su dígito verificador. </td>
+                                  </tr>
+                                {% endif %}
+                                
+                                    
                             </tbody>
                         </table>
                     </div>
