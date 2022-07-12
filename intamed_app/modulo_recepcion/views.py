@@ -7,7 +7,7 @@ from modulo_medico.models import *
 from modulo_medico.views import insert_DetAtencio
 from modulo_admin.models import Comuna, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, Usuario, Atencion, Farmaco
 from modulo_admin.models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato, Alergia
-from modulo_admin.models import Prevision, TelefonoUsuario, Telefono, DetalleAlergia, DetalleAtencion
+from modulo_admin.models import Prevision, TelefonoUsuario, Telefono, DetalleAlergia, DetalleAtencion, Boleta
 from django.contrib.auth import authenticate,logout,login
 from django.contrib.auth.decorators import login_required,permission_required
 from django.views.decorators.csrf import csrf_protect
@@ -180,7 +180,7 @@ def ingresarPago(request):
                     newB.save()  ##just for testing
                     dat = str(ate_new.id_atencion) + '-' + str(runf)
                     print(f'BOLETA INGRESADA CON EXITO {ate_new.id_atencion}')
-                    response = redirect('genpdf',id=dat)
+                    response = redirect('modulo_recepcion:genpdf',id=dat)
                     return response
             except:
                 print(" EL PACIENTE NO TIENE ATENCION GENERADA")
@@ -253,7 +253,7 @@ def genpdf_boleta(request,id):
     # FileResponse sets the Content-Disposition header so that browsers
     # present the option to save the file.
     buffer.seek(0)
-    return FileResponse(buffer, as_attachment=False, filename=filname)
+    return FileResponse(buffer, as_attachment=True, filename=filname)
 
 
 def filtro_pacientes(request):
