@@ -16,6 +16,9 @@ import requests
 import logging
 from django.http import JsonResponse
 import datetime
+import random
+from flask import json
+import numpy as np
 
 def administrator(request):
     #Dash por Defecto
@@ -509,13 +512,56 @@ def vista_atenciones(request,id):
 def vista_reportes(request):
     reportes = Reporte.objects.all()
     report_cant = reportes.count()
+    annios = list(Atencion.objects.values_list("fecha_atencion__year"))
+    
+    arr_annios=[]
+    
+    for a in annios:
+        if a[0] not in arr_annios:
+            arr_annios.append(a[0])
+    arr_annios.sort()
+
     if request.POST:
-        busqueda = request.POST.get("txbusqueda")
-        report_selected = Reporte.objects.filter(id_reporte__startswith=busqueda)
-        report_cant = report_selected.count()
-        contexto = {"reportes":report_selected,"cantidad":report_cant}
+        nom_diag = []
+        cant_diag1 = []
+        cant_diag2 = []
+        big_arr = []
+        palabra1 = request.POST.get("txdiag1")
+        palabra2 = request.POST.get("txdiag2")
+        
+        
+        
+        
+        if palabra1 is not None:
+            bus_low1 = palabra1.lower()
+            nom_diag.append(bus_low1)
+            diag1 = Diagnostico.objects.filter(nombre_diag__icontains=bus_low1)
+            #cant_diag.append(diag1.count())
+
+            for annio in arr_annios:
+                ate_ym1 = Atencion.objects.filter(fecha_atencion__year=annio,id_diagnostico__in=diag1)
+                cant_diag1.append(ate_ym1.count())
+            
+        if palabra2 is not None:
+            bus_low2 = palabra2.lower()
+            nom_diag.append(bus_low2)
+            diag2 = Diagnostico.objects.filter(nombre_diag__icontains=bus_low2)
+            
+            for annio in arr_annios:
+                ate_ym2 = Atencion.objects.filter(fecha_atencion__year=annio,id_diagnostico__in=diag2)
+                cant_diag2.append(ate_ym2.count())
+        
+       
+        big_arr.append(cant_diag1)
+        big_arr.append(cant_diag2)
+        
+        print(cant_diag1)
+        print(cant_diag2)
+        contexto = {"diag_todos":big_arr,"diagnostico_a":json.dumps(cant_diag1),"diagnostico_b":json.dumps(cant_diag2),"annios":arr_annios,"nombres":nom_diag}
+        #return JsonResponse(contexto, status=200)
     else:
         contexto = {"reportes":reportes,"cantidad":report_cant}
+    
     return render(request, 'reportes.html', contexto)
 
 def vista_newcolab(request):

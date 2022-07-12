@@ -6,57 +6,115 @@
 
 {% block contenido %}  
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <h2>N° de Reportes: {{cantidad}}</h2>
+    <h2>Reporte cruce de diagnosticos</h2>
     <div class="tab-content  container-fluid" id="v-pills-tabContent">
         <div class="tab-pane fade show active container-fluid" id="v-pills-agenda" role="tabpanel"
             aria-labelledby="v-pills-agenda-tab">
             <form class="d-flex" method="POST" action="{% url 'reportg' %}">
                 {% csrf_token %}
-                    <input class="form-control me-2" type="search" placeholder="Introduzca N° de Reporte" name="txbusqueda" aria-label="Search">
+                    <input class="form-control me-2" type="search" placeholder="palabra clave diagnostico A" name="txdiag1" aria-label="Search">
+                    <input class="form-control me-2" type="search" placeholder="palabra clave diagnostico B" name="txdiag2" aria-label="Search">
+                    
                     <button id="boton" class="btn btn-outline-primary" type="submit">Buscar</button>
+                    
             </form>
             <div></div>
         </div>
     </div>  
+    <canvas id="lineChart" width="400" height="150"></canvas>
     <div class="table-responsive" style="min-height: 500px;">
       <table class="table table-striped table-sm">
         <thead>
           <tr>
-            <th scope="col">N° Reporte</th>
-            <th scope="col">Archivo</th>
-            <th scope="col">--</th>
+            <th scope="col">Diagnostico</th>
+            {% for ye in annios%}
+            <th scope="col">{{ye}}</th>
+            {% endfor%}
+            
           </tr>
         </thead>
         <tbody>
-            {% if cantidad >= 1 %}
-                {% for rep in reportes %}
+            
+                
                   <tr>
-                    <td>{{rep.id_reporte}}</td>
-                    <td>{{rep.documento}}</td>
-                    <td>
-                      <div class="btn-group">
-                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Acción
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                          <li><a id="1"  class="dropdown-item" href="#" value="editar">Editar</a></li>
-                          <li><a id="2"  class="dropdown-item" href="#" value="eliminar">Eliminar</a></li>
-                        </ul>
-                      </div>
-                    </td>
+                    <td>{{nombres.0}}</td>
+                    {% for adiag in diag_todos.0 %}
+                    <td>{{adiag}}</td>
+                    {% endfor %} 
+                    
                   </tr>
-                {% endfor %} 
-            {% elif cantidad < 1 %}
-          <tr>
-            <td>No Encontrado</td>
-            <td>No Encontrado</td>
-            <td>No Encontrado</td>
-          </tr>
-          {% endif %}
+                  <tr>
+                    <td>{{nombres.1}}</td>
+                    {% for adiag in diag_todos.1 %}
+                    <td>{{adiag}}</td>
+                    {% endfor %} 
+                    
+                  </tr> 
         </tbody>
       </table>
+      
     </div>
     <!--Contenido de los tab de cada tabla -->   
+    
     </div>
 </main>
 {% endblock contenido %} 
+
+{% block js1%}
+<script type="text/javascript">
+    var ctxL = document.getElementById("lineChart").getContext('2d');
+    var en = "{{ene}}";
+    var fe ="{{feb}}";
+    var ma = "{{mar}}";
+    var ab = "{{abr}}";
+    var ma = "{{may}}";
+    var jn = "{{jun}}";
+    var ju = "{{jul}}";
+    var ago = "{{ago}}";
+    var sep = "{{sep}}";
+    var oct = "{{oct}}";
+    var anniosjs = JSON.parse("{{ annios }}");
+    var diagnos1 = JSON.parse("{{ diagnostico_a }}");
+    var diagnos2 = JSON.parse("{{ diagnostico_b }}");
+   
+    var myLineChart = new Chart(ctxL, {
+      type: 'bar',
+      data: {
+        labels: anniosjs,
+        datasets: [{
+          label: "DIagnostico A",
+          data: diagnos1,
+          backgroundColor: [
+            'rgba(105, 0, 132, .2)',
+          ],
+          borderColor: [
+            'rgba(200, 99, 132, .7)',
+          ],
+          borderWidth: 2
+        },
+        {
+          label: "DIagnostico B",
+          data: diagnos2,
+          backgroundColor: [
+            'rgba(0, 137, 132, .2)',
+          ],
+          borderColor: [
+            'rgba(0, 10, 130, .7)',
+          ],
+          borderWidth: 2
+        }
+        ]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
+        responsive: true
+      }
+    });
+    
+</script>
+
+{% endblock js1%}
