@@ -1,5 +1,6 @@
 from array import array
 from cProfile import run
+from cmath import exp
 from curses import use_default_colors
 from email import message_from_binary_file
 from multiprocessing import context
@@ -77,7 +78,7 @@ def agenda(request):
     for x in array_paciente:
         ateExiste = DetalleAtencion.objects.filter(run_paciente=x)
         cant = ateExiste.count()
-        if cant > 0:
+        if cant > 1:
             array_antiguedad.append("Antiguo")
         else:
             array_antiguedad.append("Nuevo")
@@ -143,7 +144,15 @@ def atePaciente(request, id):
         maximo=Max('id_diagnostico'))['maximo']
     id_at = Atencion.objects.aggregate(maximo=Max('id_atencion'))['maximo']
     id_receta = Receta.objects.aggregate(maximo=Max('id_receta'))['maximo']
-
+    list_ate=[]
+    last_detAt = DetalleAtencion.objects.filter(run_paciente=id)
+    ids_ate = list(last_detAt.values_list("id_atencion"))
+    for id in ids_ate:
+        list_ate.append(id[0])
+    try:
+        aten_pa = Atencion.objects.get(id_atencion__in=list_ate)
+    except:
+        aten_pa= None
     if request.POST:
 
         # VAR de Usuario para su modificacion
@@ -157,14 +166,12 @@ def atePaciente(request, id):
         talla = request.POST.get("inputTalla")
         peso = request.POST.get("inputPeso")
         imc = request.POST.get("inputIMC")
-        observacion = request.POST.get("inputObserva")
+        enfermedad = request.POST.get("inputEnf")
+        observa = request.POST.get("inputObserva")
         cirugia = request.POST.get("inputAQuiru")
-        diagnostico = request.POST.get("inputDiagnostico")
-        medicamento = request.POST.get("inputHabmed")
-        print(observacion)
-        print(cirugia)
-        print(diagnostico)
-        print(medicamento)
+        medi_hab = request.POST.get("inputHabmed")
+
+
         # var de tipo de diagnostico
         t_diagnostico = request.POST.get("inputDiag")
 
@@ -178,7 +185,7 @@ def atePaciente(request, id):
 
         z = Diagnostico()
         z.id_diagnostico = id_diag+1
-        z.nombre_diag = diagnostico
+        z.nombre_diag = request.POST.get("inputDiagnostico")
         z.id_tipo_diag = TipoDiagnostico.objects.get(tipo_diag=t_diagnostico)
 
         ################### Paciente = X ###########################
@@ -188,15 +195,15 @@ def atePaciente(request, id):
         x.talla = talla
         x.peso = peso
         x.imc = imc
-        x.observaciones = observacion
+        x.observaciones = observa
         x.cirugias = cirugia
-        x.enfermedad = diagnostico
-        x.medicacion_habitual = medicamento
+        x.enfermedades = enfermedad
+        x.medicacion_habitual = medi_hab
 
         ################## Receta Paciente = R ##################################
         r = Receta()
         r.id_receta = id_receta + 1
-        r.descripcion_receta = medicamento
+        r.descripcion_receta = medi_hab
 
         ################## Receta Paciente = A ##################################
         a_get = request.POST.get('inputDetalleA')
@@ -212,27 +219,22 @@ def atePaciente(request, id):
                     for f in farmaname:
                         fa = Farmaco.objects.get(nombre_farmaco=f)
                         insert_DetFarmaco(r.id_receta, fa.id_farmaco)
-                    #### Valores Registro Atencion = Y #############################
-                    y = Atencion()
-                    y.id_atencion = id_at+7
-                    y.id_diagnostico = Diagnostico.objects.get(
-                        id_diagnostico=z.id_diagnostico)
-                    y.exploracion_clinica = observacion
+                    #### Valores Registro Atencion = Y ############################# 
+                    aten_pa.id_diagnostico = Diagnostico.objects.get(id_diagnostico=z.id_diagnostico)
+                    aten_pa.exploracion_clinica = request.POST.get("inputExplo")
                     if r.id_receta is not None:
-                        y.id_receta = Receta.objects.get(id_receta=r.id_receta)
+                        aten_pa.id_receta = Receta.objects.get(id_receta=r.id_receta)
                     else:
-                        y.id_receta = None
-                    y.comentario_atencion = "prueba 999"
-                    y.tratamiento = medicamento
-                    y.id_agenda = Agenda.objects.get(id_agenda=999)
+                        aten_pa.id_receta = None
+                    aten_pa.comentario_atencion =  request.POST.get("inputComent")
+                    aten_pa.tratamiento = request.POST.get("inputTrata")
+                    aten_pa.id_agenda = Agenda.objects.get(id_agenda=999)
                     x.save()
-                    y.save()
+                    aten_pa.save()
                     ########## Valores de Alergias y Detalles #########
                     for a in split_ale:
                         al = Alergia.objects.get(nombre_alergia=a)
                         insert_DetAlergia(id, al.id_alergia)
-                    ###### Valores Detalle Atencion ##########
-                    insert_DetAtencio(id, y.id_atencion)
                 except:
                     print("Error Prueba de REGISTRO datos PACIENTE")
             else:
@@ -357,15 +359,18 @@ def consultaP(request, id):
     far_pa = DetalleAtencion.objects.filter(run_paciente=id)
     ids_ate = list(far_pa.values_list("id_atencion"))
     for p in ids_ate:
-        lista_ate.append(p[0])
-    aten_pa = Atencion.objects.filter(id_atencion__in=lista_ate)
+        lista_ate.append(p[0])  
+    lista_ate.sort(reverse=True)
+    id_ate = Atencion.objects.get(id_atencion=lista_ate[0])
+    aten_pa = Atencion.objects.filter(id_atencion__in=lista_ate).order_by('-id_atencion')[:3]
     ids_re = []
     for rece in aten_pa:
         ids_re.append(rece.id_receta)
 
     far_re = DetalleFarmaco.objects.filter(id_receta__in=ids_re)
     ids_far = list(far_re.values_list("id_farmaco"))
-    print(ids_far)
+
+
     lista_far = []
     for h in ids_far:
         lista_far.append(h[0])
@@ -376,35 +381,24 @@ def consultaP(request, id):
     farma = Farmaco.objects.all()
     t_diag = TipoDiagnostico.objects.all()
     id_diag = Diagnostico.objects.aggregate(maximo=Max('id_diagnostico'))['maximo']
-    id_at = Atencion.objects.aggregate(maximo=Max('id_atencion'))['maximo']
     t_farma = TipoFarmaco.objects.all()
     id_receta = Receta.objects.aggregate(maximo=Max('id_receta'))['maximo']
 
     if request.POST:
         x = Paciente()
-        u = Usuario()
+
         tel_u = Telefono()
 
         # Datos Usuario
-        u.run = user.run
-        u.dv = user.dv
-        u.p_nombre = user.p_nombre
-        u.s_nombre = user.s_nombre
-        u.apellido_pa = user.apellido_pa
-        u.apellido_ma = user.apellido_ma
-        u.id_perfil = user.id_perfil
-        u.fecha_nac = user.fecha_nac
-        u.contrasena = user.contrasena
-        u.id_genero = user.id_genero
-        u.id_nacionalidad = user.id_nacionalidad
+
         correo = request.POST.get("inputcorreo2")
-        u.correo = correo
+        user.correo = correo
         direcc = request.POST.get("inputDireccion2")
-        u.direccion = direcc
+        user.direccion = direcc
         com_p = request.POST.get("inputComuna2")
-        u.id_comuna = Comuna.objects.get(nombre_comuna=com_p)
+        user.id_comuna = Comuna.objects.get(nombre_comuna=com_p)
         estado = request.POST.get("inputEstado2")
-        u.id_estado = EstadoCivil.objects.get(nombre_estado=estado)
+        user.id_estado = EstadoCivil.objects.get(nombre_estado=estado)
         tel_u.num_telefono = tel_users.id_telefono.num_telefono
 
         # Datos Paciente
@@ -416,12 +410,12 @@ def consultaP(request, id):
         x.peso = peso
         imc = request.POST.get("inputIMC2")
         x.imc = imc
-        observacion = request.POST.get("inputObservacion2")
+        observacion = request.POST.get("inputObserva")
         x.observaciones = observacion
-        cirugia = request.POST.get("inputHClinico2")
+        cirugia = request.POST.get("inputAQuiru")
         x.cirugias = cirugia
-        diagnostico = request.POST.get("inputDiagnostico2")
-        x.enfermedades = diagnostico
+        enfer = request.POST.get("inputEnf")
+        x.enfermedades = enfer
         medicamento = request.POST.get("inputHabmed")
         x.medicacion_habitual = medicamento
 
@@ -438,7 +432,7 @@ def consultaP(request, id):
 
         z = Diagnostico()
         z.id_diagnostico = id_diag+1
-        z.nombre_diag = diagnostico
+        z.nombre_diag = request.POST.get("inputDiagnostico2")
         z.id_tipo_diag = TipoDiagnostico.objects.get(tipo_diag=t_diagnostico)
 
         ################## Receta Paciente = R ##################################
@@ -451,8 +445,8 @@ def consultaP(request, id):
         # Alergias cortadas para su identificacion
         split_ale = a_get.split()
 
-        if u.correo is not None and u.direccion is not None and u.id_comuna is not None and u.id_estado is not None and x.talla is not None and x.peso is not None and x.observaciones is not None and x.cirugias is not None and x.enfermedades is not None and x.medicacion_habitual:
-            if u.correo.strip() != '' and u.direccion.strip() != '' and x.talla.strip() != '' and x.peso.strip() != '' and x.observaciones.strip() != '' and x.cirugias.strip() != '' and x.enfermedades.strip() != '' and x.medicacion_habitual:
+        if user.correo is not None and user.direccion is not None and user.id_comuna is not None and user.id_estado is not None and x.talla is not None and x.peso is not None and x.observaciones is not None and x.cirugias is not None and x.enfermedades is not None and x.medicacion_habitual:
+            if user.correo.strip() != '' and user.direccion.strip() != '' and x.talla.strip() != '' and x.peso.strip() != '' and x.observaciones.strip() != '' and x.cirugias.strip() != '' and x.enfermedades.strip() != '' and x.medicacion_habitual:
                 try:
                     z.save()
                     r.save()
@@ -461,30 +455,26 @@ def consultaP(request, id):
                         fa = Farmaco.objects.get(nombre_farmaco=f)
                         insert_DetFarmaco(r.id_receta, fa.id_farmaco)
                     #### Valores Registro Atencion = Y #############################
-                    y = Atencion()
-                    y.id_atencion = id_at+7
-                    y.id_diagnostico = Diagnostico.objects.get(id_diagnostico=z.id_diagnostico)
-                    y.exploracion_clinica = observacion
+ 
+                    id_ate.id_diagnostico = Diagnostico.objects.get(id_diagnostico=z.id_diagnostico)
+                    id_ate.exploracion_clinica = request.POST.get("inputExplo")
                     if r.id_receta is not None:
-                        y.id_receta = Receta.objects.get(id_receta=r.id_receta)
+                        id_ate.id_receta = Receta.objects.get(id_receta=r.id_receta)
                     else:
-                        y.id_receta = None
+                        id_ate.id_receta = None
                     ########## Valores de Alergias y Detalles #########
                     for a in split_ale:
                         al = Alergia.objects.get(nombre_alergia=a)
                         insert_DetAlergia(id, al.id_alergia)
-                    y.comentario_atencion = "prueba 999"
-                    y.tratamiento = medicamento
-                    y.id_agenda = Agenda.objects.get(id_agenda=999)
+                    id_ate.comentario_atencion = request.POST.get("inputcoment2")
+                    id_ate.tratamiento = request.POST.get("inputtrata2")
+                    id_ate.id_agenda = Agenda.objects.get(id_agenda=999)
 
-                    u.save()
+                    user.save()
                     x.save()
-                    y.save()
-
-                    ###### Valores Detalle Atencion ##########
-                    insert_DetAtencio(id, y.id_atencion)
-                    # return redirect('consultaP', id=user.run)
+                    id_ate.save()
                     mensaje = 0
+                    return redirect('consultaP', h=id)
                 except:
                     mensaje = 1
             else:
@@ -505,6 +495,7 @@ def consultaP(request, id):
                 "todo_farma": farma,
                 "tip_farma": t_farma,
                 "farma_pa":zip(aten_pa,real_far),
+                "lista_ate":aten_pa,
 
                 }
     return render(request, "consulta_paciente.html", contexto)
