@@ -174,7 +174,7 @@ def ingresarPago(request):
                 newB.fecha_boleta = f_boleta
                 newB.monto_pago = inpvalue
                 try:
-                    bol = Boleta.objects.get(id_atencion=ate_new.id_atencion)
+                    bol = Boleta.objects.get(id_atencion=ate_new)
                     print(" YA SE REALIZO EL PAGO POR ESTA ATENCION")
                 except:
                     newB.save()  ##just for testing
@@ -200,14 +200,13 @@ def genpdf_boleta(request,id):
     buffer = io.BytesIO()
     bol = Boleta.objects.get(id_atencion=arr_1[0])
     uss = Usuario.objects.get(run=arr_1[1])
-
+    img_file = "./modulo_recepcion/static/img/intemed.png"
+    valor = bol.monto_pago
+    
     # Create the PDF object, using the buffer as its "file."
     p = canvas.Canvas(buffer)
-    valor = bol.monto_pago
     # Draw things on the PDF. Here's where the PDF generation happens.
     # See the ReportLab documentation for the full list of functionality.
-    img_file = "./modulo_recepcion/static/img/intemed.png"
-    
     w, h = letter
 
     x_cord = 350
@@ -244,15 +243,16 @@ def genpdf_boleta(request,id):
     p.line(320, h-320, 520, h-320)
     p.drawString(350, 460, f"Firma Institucion")
 
-
-    filname = 'boleta' + str(id) + '.pdf'
     # Close the PDF object cleanly, and we're done.
     p.showPage()
     p.save()
-
     # FileResponse sets the Content-Disposition header so that browsers
     # present the option to save the file.
     buffer.seek(0)
+
+    filname = 'boleta' + str(id) + '.pdf'
+    
+
     return FileResponse(buffer, as_attachment=True, filename=filname)
 
 
