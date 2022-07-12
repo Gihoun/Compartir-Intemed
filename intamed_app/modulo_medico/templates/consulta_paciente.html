@@ -249,357 +249,335 @@
             </div>
         </div>
         <hr class="mt-5" style="color: grey" />
-        <!-- Observaciones Receta y mas Modificaciones -->
-        <ul class="nav nav-tabs mt-3" id="tabsObs2" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active fw-bolder" id="antecedente-tab" data-bs-toggle="tab"
-                    data-bs-target="#antecedente" type="button" role="tab" aria-controls="antecedente"
-                    aria-selected="false">Antecedentes
-                    Paciente</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link fw-bolder" id="observaciones2-tab" data-bs-toggle="tab"
-                    data-bs-target="#observaciones2" type="button" role="tab" aria-controls="observaciones2"
-                    aria-selected="true">Nuevas
-                    Observaciones</button>
-            </li>
-
-            <li class="nav-item " role="presentation">
-                <button class="nav-link fw-bolder" id="diagnotico2-tab" data-bs-toggle="tab"
-                    data-bs-target="#diagnostico2" type="button" role="tab" aria-controls="diagnostico2"
-                    aria-selected="false">Nuevo Diagnostico</button>
-            </li>
-            <li class="nav-item " role="presentation">
-                <button class="nav-link fw-bolder" id="hClinico2-tab" data-bs-toggle="tab" data-bs-target="#hClinico2"
-                    type="button" role="tab" aria-controls="hClinico2" aria-selected="false">Nuevo historial
-                    Clinico</button>
-            </li>
-            <li class="nav-item " role="presentation">
-                <button class="nav-link fw-bolder" id="mHabitual2-tab" data-bs-toggle="tab" data-bs-target="#mHabitual2"
-                    type="button" role="tab" aria-controls="mHabitual2" aria-selected="false">Nueva Medicacion
-                    habitual</button>
-            </li>
-            <!--             <li class="nav-item " role="presentation">
-                <button class="nav-link fw-bolder" id="farmaco2-tab" data-bs-toggle="tab" data-bs-target="#farmaco2"
-                    type="button" role="tab" aria-controls="farmaco2" aria-selected="false">Fármacos</button>
-            </li> -->
-        </ul>
-
-        <div class="tab-content" id="tabcontenidobs2">
-            <!-- ========== Start Tabla de Antecendetes ========== -->
-            <div class="tab-pane fade show active" id="antecedente" role="tabpanel" aria-labelledby="antecedente-tab">
-                <h3 class="text-center mt-4"> Consultas anteriores</h3>
-                <div class="table-responsive">
-                    <table class="table borde table-hover" id="tablaObs">
-                        <thead>
-                            <tr>
-                                <th scope="col">Fecha Consulta</th>
-                                <th scope="col">Observaciones</th>
-                                <th scope="col">Diagnóstico</th>
-                                <th scope="col">Historial Clínico</th>
-                                <th scope="col">Medicación Habitual</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr id="row">
-                                <td>
-                                    <p>Fecha (DD-MM-AAAA)</p>
-                                </td>
-                                <td>
-                                    <textarea name="obs_anterior" id="obs_anterior" cols="22" rows="3" disabled
-                                        style="resize: none;">{{paciente.observaciones}}</textarea>
-                                </td>
-                                <td>
-                                    <textarea name="diag_anterior" id="diag_anterior" cols="22" rows="3" disabled
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                        aria-controls="panelsStayOpen-collapseOne">
+                        <strong>Datos Antecendentes Paciente</strong>
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                    aria-labelledby="panelsStayOpen-headingOne">
+                    <div class="accordion-body">
+                        <div class="container-fluid">
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <label for="inputexcli" class="form-label fw-bolder">Observaciones</label>
+                                    <textarea class="form'control" name="inputObserva" id="inputObserva" cols="30"
+                                        rows="6" style="resize: none;">{{paciente.observaciones}}</textarea>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="inputEnf" class="form-label fw-bolder">Enfermedades</label>
+                                    <textarea class="form'control" name="inputEnf" id="inputEnf" cols="30" rows="6"
                                         style="resize: none;">{{paciente.enfermedades}}</textarea>
-                                </td>
-                                <td>
-                                    <textarea name="hst_clinico" id="hst_clinico" cols="22" rows="3" disabled
-                                        style="resize: none;">{{paciente.cirugias}}</textarea>
-                                </td>
-                                <td>
-                                    <textarea name="mHabt" id="mHabt" cols="22" rows="3" disabled
-                                        style="resize: none;">{{paciente.medicacion_habitual}}</textarea>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <!-- ========== Start Tabla de Nuevas Observaciones ========== -->
-            <div class="tab-pane fade" id="observaciones2" role="tabpanel" aria-labelledby="observaciones2-tab">
-                <div class="mb-3 mt-5">
-                    <label for="inputObservacion2" class="form-label fw-bolder">Escriba nuevas
-                        observaciones</label>
-                    <textarea class="form-control" id="inputObservacion2" name="inputObservacion2" rows="3"></textarea>
-                </div>
-            </div>
-            <!-- ========== Start Tabla de Nuevos Diagnostico ========== -->
-            <div class="tab-pane fade" id="diagnostico2" role="tabpanel" aria-labelledby="diagnotico2-tab">
-                <div class="col-md-2 mt-3">
-                    <label for="inputDiag" class="form-label fw-bolder">Tipo de diagnostico</label>
-                    <select id="inputDiag" name="inputDiag" class="form-select">
-                        {% for x in tip_diag %}
-                        <option selected>{{x.tipo_diag}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="mb-3 mt-5">
-                    <label for="inputDiagnostico2" class="form-label fw-bolder">Escriba nuevo diagnóstico</label>
-                    <textarea class="form-control" id="inputDiagnostico2" name="inputDiagnostico2" rows="3"></textarea>
-                </div>
-            </div>
-            <!-- ========== Start Tabla de Nuevos Historial Clinico ========== -->
-            <div class="tab-pane fade" id="hClinico2" role="tabpanel" aria-labelledby="hClinico2-tab">
-                <div class="mb-3 mt-5">
-                    <label for="inputHClinico2" class="form-label fw-bolder">Escriba Nuevo Historial Clínico</label>
-                    <textarea class="form-control" id="inputHClinico2" name="inputHClinico2" rows="3"></textarea>
-                </div>
-            </div>
-            <!-- ========== Start Tabla de Nueva Medicacion habitual ========== -->
-            <div class="tab-pane fade" id="mHabitual2" role="tabpanel" aria-labelledby="mHabitual2-tab">
-                <h3 class="text-center mt-4"> Medicación Habitual / Receta Medica</h3>
-                <div class="table-responsive ">
-                    <table class="table borde table-hover" id="tablaF">
-                        <thead class="text-start">
-                            <tr>
-                                <th scope="col">Nombre Fármaco</th>
-                                <th scope="col">Dosis</th>
-                                <th scope="col">Via de Adminsitración</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-start">
-                            <tr id="row">
-                                <td>
-                                    <input type="text" id="inputNfarmaco" placeholder="Ingrese Fármaco"
-                                        name="inputNfarmaco" oninput="auto_farma(this.id)">
-                                </td>
-                                <td>
-                                    <input type="text" id="inputDfarmaco" placeholder="Ingrese Dosis"
-                                        name="inputDfarmaco">
-                                </td>
-                                <td>
-                                    <input type="text" id="inputVfarmaco" placeholder="Ingrese Via Adminsitración"
-                                        name="inputVfarmaco">
-                                </td>
-                                <td>
-                                    <button class="mt-1" type="button" id="eliminarFar" onclick="delRow()" disabled><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                            fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                                            <path
-                                                d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
-                                        </svg>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                        <script>
-                            function auto_farma(x) {
-                                var farmDispo = [
-                                    {% for x in todo_farma %}
-
-                            "{{x.nombre_farmaco}}",
-
-                                {% endfor %}
-                            ];
-                            $("#" + x).autocomplete({
-                                source: farmDispo
-                            });                     
-                        };
-                        </script>
-                    </table>
-                </div>
-                <div class="row">
-                    <label for="inputHabmed" class="form-label fw-bolder">Medicamentos Habituales</label>
-                    <div class="input-group mb-3 ">
-                        <input type="text" class="form-control" placeholder="Medicamentos Habituales" id="inputHabmed"
-                            name="inputHabmed" aria-describedby="refresh_farma">
-                        <button class="btn btn-outline-secondary" type="button" id="refresh_farma"
-                            onclick="refresh_Farma('tablaF')"><svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd"
-                                    d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
-                                <path
-                                    d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
-                            </svg> Actualizar</button>
-                    </div>
-                </div>
-                <div class="text-end">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#modalhistorial">Historial</button>
-                    <button type="button" class="btn btn-primary fs-6 m-2" onclick="add_row('tablaF')">Agregar
-                        Fármaco <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
-                        </svg>
-                    </button>
-                    <button type="submit" class="btn btn-success fs-6 m-2"> Generar Receta <svg
-                            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
-                        </svg>
-                    </button>
-                </div>
-
-                <!-- Historial de Farmacos -->
-                <div class="modal fade" id="modalhistorial" tabindex="-1" aria-labelledby="modalhistirial"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Historial de Fármacos: 
-                                    <strong>{{User_p.p_nombre}} {{User_p.apellido_pa}} {{User_p.apellido_ma}}</strong> </h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="inputTrata" class="form-label fw-bolder">Antecedentes
+                                        Quirúrgicos</label>
+                                    <textarea class="form'control" name="inputAQuiru" id="inputAQuiru" cols="30"
+                                        rows="6" style="resize: none;">{{paciente.cirugias}}</textarea>
+                                </div>
                             </div>
-                            <div class="modal-body table-responsive">
-                                <table class="table">
-                                    <thead>
+                            <h3 class="text-center mt-4"> Medicación Habitual</h3>
+                            <div class="table-responsive ">
+                                <table class="table borde table-hover" id="tablaF">
+                                    <thead class="text-start">
                                         <tr>
-                                            <th scope="col">N. fármaco</th>
-                                            <th scope="col">Via Adm.</th>
-                                            <th scope="col">Fecha</th>
+                                            <th scope="col">Nombre Fármaco</th>
+                                            <th scope="col">Dosis</th>
+                                            <th scope="col">Via de Adminsitración</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        {% for farma,rece in farma_pa %}
-                                        <tr>
-                                            <td>{{rece.nombre_farmaco}}</td>
-                                            <td>{{rece.via_administracion}}</td>
-                                            <td>{{farma.id_receta.fecha_receta}}</td>
-                                        </tr>  
-                                        {% endfor %}                                       
+                                    <tbody class="text-start">
+                                        <tr id="row">
+                                            <td>
+                                                <input type="text" id="inputNfarmaco" placeholder="Ingrese Fármaco"
+                                                    name="inputNfarmaco" oninput="auto_farma(this.id)">
+                                            </td>
+                                            <td>
+                                                <input type="text" id="inputDfarmaco" placeholder="Ingrese Dosis"
+                                                    name="inputDfarmaco">
+                                            </td>
+                                            <td>
+                                                <input type="text" id="inputVfarmaco"
+                                                    placeholder="Ingrese Via Adminsitración" name="inputVfarmaco">
+                                            </td>
+                                            <td>
+                                                <button class="mt-1" type="button" id="eliminarFar" onclick="delRow()"
+                                                    disabled><svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                        height="20" fill="currentColor" class="bi bi-trash3"
+                                                        viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                                                    </svg>
+                                                </button>
+                                            </td>
+                                        </tr>
                                     </tbody>
+                                    <script>
+                                        function auto_farma(x) {
+                                            var farmDispo = [
+                                                {% for x in todo_farma %}
+
+                                        "{{x.nombre_farmaco}}",
+
+                                            {% endfor %}
+                            ];
+                                        $("#" + x).autocomplete({
+                                            source: farmDispo
+                                        });                     
+                        };
+                                    </script>
                                 </table>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <div class="row">
+                                <label for="inputHabmed" class="form-label fw-bolder">Medicamentos Habituales</label>
+                                <div class="input-group mb-3 ">
+                                    <input type="text" class="form-control" placeholder="Medicamentos Habituales"
+                                        id="inputHabmed" name="inputHabmed" aria-describedby="refresh_farma">
+                                    <button class="btn btn-outline-secondary" type="button" id="refresh_farma"
+                                        onclick="refresh_Farma('tablaF')"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise"
+                                            viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd"
+                                                d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+                                            <path
+                                                d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+                                        </svg> Actualizar</button>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#modalhistorial">Historial</button>
+                                <button type="button" class="btn btn-primary fs-6 m-2"
+                                    onclick="add_row('tablaF')">Agregar
+                                    Fármaco <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                                    </svg>
+                                </button>
+                                <button type="submit" class="btn btn-success fs-6 m-2"> Generar Receta <svg
+                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="modal fade" id="modalhistorial" tabindex="-1" aria-labelledby="modalhistirial"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Historial de Fármacos:
+                                                <strong>{{User_p.p_nombre}} {{User_p.apellido_pa}}
+                                                    {{User_p.apellido_ma}}</strong>
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">N. fármaco</th>
+                                                        <th scope="col">Via Adm.</th>
+                                                        <th scope="col">Fecha</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for farma,rece in farma_pa %}
+                                                    <tr>
+                                                        <td>{{rece.nombre_farmaco}}</td>
+                                                        <td>{{rece.via_administracion}}</td>
+                                                        <td>{{farma.id_receta.fecha_receta}}</td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- ========== Start Tabla de Nuevos Farmacos ========== -->
-            <div class="tab-pane fade" id="farmaco2" role="tabpanel" aria-labelledby="farmaco2-tab">
-                <!--                 <h3 class="text-center"> Receta Médica</h3>
-                <div class="table-responsive ">
-                    <table class="table borde table-hover" id="tablaF">
-                        <thead class="text-start">
-                            <tr>
-                                <th scope="col">Nombre Fármaco</th>
-                                <th scope="col">Dosis</th>
-                                <th scope="col">Via de Adminsitración</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-start">
-                            <tr id="row">
-                                <td>
-                                    <input type="text" id="inputNfarmaco" placeholder="Ingrese Fármaco"
-                                        name="inputNfarmaco" oninput="auto_farma(this.id)">
-                                </td>
-                                <td>
-                                    <input type="text" id="inputDfarmaco" placeholder="Ingrese Dosis"
-                                        name="inputDfarmaco">
-                                </td>
-                                <td>
-                                    <input type="text" id="inputVfarmaco" placeholder="Ingrese Via Adminsitración"
-                                        name="inputVfarmaco">
-                                </td>
-                                <td>
-                                    <button class="mt-1" type="button" id="eliminarFar" onclick="delRow()" disabled><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                            fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                                            <path
-                                                d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
-                                        </svg>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                        <script>
-                            function auto_farma(x) {
-                                var farmDispo = [
-                                    {% for x in todo_farma %}
+            <hr class="mt-5" style="color: grey" />
+            <!-- Observaciones Receta y mas Modificaciones -->
+            <ul class="nav nav-tabs mt-3" id="tabsObs2" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active fw-bolder" id="antecedente-tab" data-bs-toggle="tab"
+                        data-bs-target="#antecedente" type="button" role="tab" aria-controls="antecedente"
+                        aria-selected="false">Antecedentes
+                        Paciente</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link fw-bolder" id="observaciones2-tab" data-bs-toggle="tab"
+                        data-bs-target="#observaciones2" type="button" role="tab" aria-controls="observaciones2"
+                        aria-selected="true">Comentarios de la atencion</button>
+                </li>
 
-                            "{{x.nombre_farmaco}}",
+                <li class="nav-item " role="presentation">
+                    <button class="nav-link fw-bolder" id="diagnotico2-tab" data-bs-toggle="tab"
+                        data-bs-target="#diagnostico2" type="button" role="tab" aria-controls="diagnostico2"
+                        aria-selected="false">Nuevo Diagnostico</button>
+                </li>
+                <li class="nav-item text-center" role="presentation">
+                    <button class="nav-link fw-bolder" id="ant-expclinico-tab" data-bs-toggle="tab" data-bs-target="#ant-expclinico"
+                        type="button" role="tab" aria-controls="ant-expclinico" aria-selected="false">Nueva Exploración Clinica</button>
+                </li>
+                <li class="nav-item " role="presentation">
+                    <button class="nav-link fw-bolder" id="hClinico2-tab" data-bs-toggle="tab"
+                        data-bs-target="#hClinico2" type="button" role="tab" aria-controls="hClinico2"
+                        aria-selected="false">Nuevo Tratamiento</button>
+                </li>
+            </ul>
 
-                                {% endfor %}
-                            ];
-                            $("#" + x).autocomplete({
-                                source: farmDispo
-                            });                     
-                        };
-                        </script>
-                    </table>
+            <div class="tab-content" id="tabcontenidobs2">
+                <!-- ========== Start Tabla de Antecendetes ========== -->
+                <div class="tab-pane fade show active" id="antecedente" role="tabpanel"
+                    aria-labelledby="antecedente-tab">
+                    <h3 class="text-center mt-4"> Consultas anteriores</h3>
+                    <div class="table-responsive">
+                        <table class="table borde table-hover" id="tablaObs">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Fecha Consulta</th>
+                                    <th scope="col">Observaciones</th>
+                                    <th scope="col">Diagnóstico</th>
+                                    <th scope="col">Historial Clínico</th>
+                                    <th scope="col">Medicación Habitual</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="row">
+                                    <td>
+                                        <p>Fecha (DD-MM-AAAA)</p>
+                                    </td>
+                                    <td>
+                                        <textarea name="obs_anterior" id="obs_anterior" cols="22" rows="3" disabled
+                                            style="resize: none;">{{paciente.observaciones}}</textarea>
+                                    </td>
+                                    <td>
+                                        <textarea name="diag_anterior" id="diag_anterior" cols="22" rows="3" disabled
+                                            style="resize: none;">{{paciente.enfermedades}}</textarea>
+                                    </td>
+                                    <td>
+                                        <textarea name="hst_clinico" id="hst_clinico" cols="22" rows="3" disabled
+                                            style="resize: none;">{{paciente.cirugias}}</textarea>
+                                    </td>
+                                    <td>
+                                        <textarea name="mHabt" id="mHabt" cols="22" rows="3" disabled
+                                            style="resize: none;">{{paciente.medicacion_habitual}}</textarea>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="text-end">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#modalhistorial">Historial</button>
-                    <button type="button" class="btn btn-primary" onclick="add_row2()">Agregar
-                        Fármaco</button>
-                    <button type="submit" class="btn btn-primary">Generar Receta</button>
-                </div> -->
-                <!-- Historial de Farmacos -->
+                <!-- ========== Start Tabla de Nuevas Observaciones ========== -->
+                <div class="tab-pane fade" id="observaciones2" role="tabpanel" aria-labelledby="observaciones2-tab">
+                    <div class="mb-3 mt-5">
+                        <label for="inputcoment2" class="form-label fw-bolder">Escriba nuevos
+                            comentarios</label>
+                        <textarea class="form-control" id="inputcoment2" name="inputcoment2"
+                            rows="3"></textarea>
+                    </div>
+                </div>
+                <!-- ========== Start Tabla de Nuevos Diagnostico ========== -->
+                <div class="tab-pane fade" id="diagnostico2" role="tabpanel" aria-labelledby="diagnotico2-tab">
+                    <div class="col-md-2 mt-3">
+                        <label for="inputDiag" class="form-label fw-bolder">Tipo de diagnostico</label>
+                        <select id="inputDiag" name="inputDiag" class="form-select">
+                            {% for x in tip_diag %}
+                            <option selected>{{x.tipo_diag}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3 mt-5">
+                        <label for="inputDiagnostico2" class="form-label fw-bolder">Escriba nuevo diagnóstico</label>
+                        <textarea class="form-control" id="inputDiagnostico2" name="inputDiagnostico2"
+                            rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="ant-expclinico" role="tabpanel" aria-labelledby="ant-expclinico-tab">
+                    <div class="mb-3 mt-5">
+                        <label for="inputExplo" class="form-label fw-bolder">Escriba exploración clínica</label>
+                        <textarea class="form-control" id="inputExplo" name="inputExplo" rows="3"></textarea>
+                    </div>
+                </div>
+                <!-- ========== Start Tabla de Nuevos Historial Clinico ========== -->
+                <div class="tab-pane fade" id="hClinico2" role="tabpanel" aria-labelledby="hClinico2-tab">
+                    <div class="mb-3 mt-5">
+                        <label for="inputtrata2" class="form-label fw-bolder">Escriba nuevo tratamiento</label>
+                        <textarea class="form-control" id="inputtrata2" name="inputtrata2" rows="3"></textarea>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-12 mt-5 text-end">
-            <button type="submit" class="btn btn-success fs-6 m-1"> Registrar Nueva Atención <svg
-                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                    <path
-                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
-                </svg>
-            </button>
-            <button type="button" class="btn btn-secondary fs-6 m-1"> Generar Certificado <svg
-                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
-                    <path
-                        d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0z" />
-                </svg>
-            </button>
-            <button type="button" class="btn btn-secondary fs-6 m-1">Generar Orden de Exámen <svg
-                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-file-earmark-pdf-fill" viewBox="0 0 16 16">
-                    <path
-                        d="M5.523 12.424c.14-.082.293-.162.459-.238a7.878 7.878 0 0 1-.45.606c-.28.337-.498.516-.635.572a.266.266 0 0 1-.035.012.282.282 0 0 1-.026-.044c-.056-.11-.054-.216.04-.36.106-.165.319-.354.647-.548zm2.455-1.647c-.119.025-.237.05-.356.078a21.148 21.148 0 0 0 .5-1.05 12.045 12.045 0 0 0 .51.858c-.217.032-.436.07-.654.114zm2.525.939a3.881 3.881 0 0 1-.435-.41c.228.005.434.022.612.054.317.057.466.147.518.209a.095.095 0 0 1 .026.064.436.436 0 0 1-.06.2.307.307 0 0 1-.094.124.107.107 0 0 1-.069.015c-.09-.003-.258-.066-.498-.256zM8.278 6.97c-.04.244-.108.524-.2.829a4.86 4.86 0 0 1-.089-.346c-.076-.353-.087-.63-.046-.822.038-.177.11-.248.196-.283a.517.517 0 0 1 .145-.04c.013.03.028.092.032.198.005.122-.007.277-.038.465z" />
-                    <path fill-rule="evenodd"
-                        d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm5.5 1.5v2a1 1 0 0 0 1 1h2l-3-3zM4.165 13.668c.09.18.23.343.438.419.207.075.412.04.58-.03.318-.13.635-.436.926-.786.333-.401.683-.927 1.021-1.51a11.651 11.651 0 0 1 1.997-.406c.3.383.61.713.91.95.28.22.603.403.934.417a.856.856 0 0 0 .51-.138c.155-.101.27-.247.354-.416.09-.181.145-.37.138-.563a.844.844 0 0 0-.2-.518c-.226-.27-.596-.4-.96-.465a5.76 5.76 0 0 0-1.335-.05 10.954 10.954 0 0 1-.98-1.686c.25-.66.437-1.284.52-1.794.036-.218.055-.426.048-.614a1.238 1.238 0 0 0-.127-.538.7.7 0 0 0-.477-.365c-.202-.043-.41 0-.601.077-.377.15-.576.47-.651.823-.073.34-.04.736.046 1.136.088.406.238.848.43 1.295a19.697 19.697 0 0 1-1.062 2.227 7.662 7.662 0 0 0-1.482.645c-.37.22-.699.48-.897.787-.21.326-.275.714-.08 1.103z" />
-                </svg>
-            </button>
-        </div>
-        {% if validar == 3 %}
-        <script>
-            Swal.fire({
-                icon: 'error',
-                text: 'No puede dejar campos nulos.',
-            })
-        </script>
-        {% elif validar == 2 %}
-        <script>
-            Swal.fire({
-                icon: 'error',
-                text: 'No puede dejar campos con ESPACIOS.',
-            })
-        </script>
-        {% elif validar == 1 %}
-        <script>
-            Swal.fire({
-                icon: 'error',
-                text: 'Error!! al registrar la atención del paciente.',
-            })
-        </script>
-        {% elif validar == 0 %}
-        <script>
-            Swal.fire({
-                icon: 'success',
-                text: 'Atencion Guardada con Exito!'
-            })
-        </script>
-        {% else %}
+            <div class="col-12 mt-5 text-end">
+                <button type="submit" class="btn btn-success fs-6 m-1"> Registrar Nueva Atención <svg
+                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                    </svg>
+                </button>
+                <button type="button" class="btn btn-secondary fs-6 m-1"> Generar Certificado <svg
+                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0z" />
+                    </svg>
+                </button>
+                <button type="button" class="btn btn-secondary fs-6 m-1">Generar Orden de Exámen <svg
+                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-file-earmark-pdf-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M5.523 12.424c.14-.082.293-.162.459-.238a7.878 7.878 0 0 1-.45.606c-.28.337-.498.516-.635.572a.266.266 0 0 1-.035.012.282.282 0 0 1-.026-.044c-.056-.11-.054-.216.04-.36.106-.165.319-.354.647-.548zm2.455-1.647c-.119.025-.237.05-.356.078a21.148 21.148 0 0 0 .5-1.05 12.045 12.045 0 0 0 .51.858c-.217.032-.436.07-.654.114zm2.525.939a3.881 3.881 0 0 1-.435-.41c.228.005.434.022.612.054.317.057.466.147.518.209a.095.095 0 0 1 .026.064.436.436 0 0 1-.06.2.307.307 0 0 1-.094.124.107.107 0 0 1-.069.015c-.09-.003-.258-.066-.498-.256zM8.278 6.97c-.04.244-.108.524-.2.829a4.86 4.86 0 0 1-.089-.346c-.076-.353-.087-.63-.046-.822.038-.177.11-.248.196-.283a.517.517 0 0 1 .145-.04c.013.03.028.092.032.198.005.122-.007.277-.038.465z" />
+                        <path fill-rule="evenodd"
+                            d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm5.5 1.5v2a1 1 0 0 0 1 1h2l-3-3zM4.165 13.668c.09.18.23.343.438.419.207.075.412.04.58-.03.318-.13.635-.436.926-.786.333-.401.683-.927 1.021-1.51a11.651 11.651 0 0 1 1.997-.406c.3.383.61.713.91.95.28.22.603.403.934.417a.856.856 0 0 0 .51-.138c.155-.101.27-.247.354-.416.09-.181.145-.37.138-.563a.844.844 0 0 0-.2-.518c-.226-.27-.596-.4-.96-.465a5.76 5.76 0 0 0-1.335-.05 10.954 10.954 0 0 1-.98-1.686c.25-.66.437-1.284.52-1.794.036-.218.055-.426.048-.614a1.238 1.238 0 0 0-.127-.538.7.7 0 0 0-.477-.365c-.202-.043-.41 0-.601.077-.377.15-.576.47-.651.823-.073.34-.04.736.046 1.136.088.406.238.848.43 1.295a19.697 19.697 0 0 1-1.062 2.227 7.662 7.662 0 0 0-1.482.645c-.37.22-.699.48-.897.787-.21.326-.275.714-.08 1.103z" />
+                    </svg>
+                </button>
+            </div>
+            {% if validar == 3 %}
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    text: 'No puede dejar campos nulos.',
+                })
+            </script>
+            {% elif validar == 2 %}
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    text: 'No puede dejar campos con ESPACIOS.',
+                })
+            </script>
+            {% elif validar == 1 %}
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Error!! al registrar la atención del paciente.',
+                })
+            </script>
+            {% elif validar == 0 %}
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    text: 'Atencion Guardada con Exito!'
+                })
+            </script>
+            {% else %}
 
-        {% endif %}
+            {% endif %}
 
     </form>
     {% endblock contenido %}

@@ -216,17 +216,17 @@
                             <div class="col-md-4">
                                 <label for="inputexcli" class="form-label fw-bolder">Observaciones</label>
                                 <textarea class="form'control" name="inputObserva" id="inputObserva" cols="30"
-                                    rows="6" style="resize: none;"></textarea>
+                                    rows="6" style="resize: none;">{{paciente.observaciones}}</textarea>
                             </div>
                             <div class="col-md-4">
                                 <label for="inputEnf" class="form-label fw-bolder">Enfermedades</label>
                                 <textarea class="form'control" name="inputEnf" id="inputEnf" cols="30"
-                                    rows="6" style="resize: none;"></textarea>
+                                    rows="6" style="resize: none;">{{paciente.enfermedades}}</textarea>
                             </div>
                             <div class="col-md-4">
                                 <label for="inputTrata" class="form-label fw-bolder">Antecedentes Quirúrgicos</label>
                                 <textarea class="form'control" name="inputAQuiru" id="inputAQuiru" cols="30"
-                                    rows="6" style="resize: none;"></textarea>
+                                    rows="6" style="resize: none;">{{paciente.cirugias}}</textarea>
                             </div>
                         </div>
                         <h3 class="text-center mt-4"> Medicación Habitual</h3>
@@ -283,7 +283,7 @@
                             <label for="inputHabmed" class="form-label fw-bolder">Medicamentos Habituales</label>
                             <div class="input-group mb-3 ">
                                 <input type="text" class="form-control" placeholder="Medicamentos Habituales" id="inputHabmed"
-                                    name="inputHabmed" aria-describedby="refresh_farma">
+                                    name="inputHabmed" aria-describedby="refresh_farma" value="{{paciente.medicacion_habitual}}">
                                 <button class="btn btn-outline-secondary" type="button" id="refresh_farma"
                                     onclick="refresh_Farma('tablaF')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                         fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
@@ -318,7 +318,7 @@
     </div>
 
     <hr class="mt-5" style="color: grey" />
-    <!-- Observaciones Receta y mas -->
+    <!-- Observaciones eXPLORACIOn y mas -->
     <ul class="nav nav-tabs mt-3" id="tabsObs" role="tablist">
         <li class="nav-item text-center" role="presentation">
             <button class="nav-link active fw-bolder" id="observaciones-tab" data-bs-toggle="tab"
@@ -328,6 +328,10 @@
         <li class="nav-item text-center" role="presentation">
             <button class="nav-link fw-bolder " id="diagnotico-tab" data-bs-toggle="tab" data-bs-target="#diagnostico"
                 type="button" role="tab" aria-controls="diagnostico" aria-selected="false">Diagnostico</button>
+        </li>
+        <li class="nav-item text-center" role="presentation">
+            <button class="nav-link fw-bolder" id="ant-expclinico-tab" data-bs-toggle="tab" data-bs-target="#ant-expclinico"
+                type="button" role="tab" aria-controls="ant-expclinico" aria-selected="false">Exploración Clinica</button>
         </li>
         <li class="nav-item text-center" role="presentation">
             <button class="nav-link fw-bolder" id="ant-clinico-tab" data-bs-toggle="tab" data-bs-target="#ant-clinico"
@@ -357,7 +361,13 @@
                 <textarea class="form-control" id="inputDiagnostico" name="inputDiagnostico" rows="3"></textarea>
             </div>
         </div>
-        <!-- Historial Clinico , pensando en cambiar nombre pero listo-->
+        <div class="tab-pane fade" id="ant-expclinico" role="tabpanel" aria-labelledby="ant-expclinico-tab">
+            <div class="mb-3 mt-5">
+                <label for="inputExplo" class="form-label fw-bolder">Escriba exploración clínica</label>
+                <textarea class="form-control" id="inputExplo" name="inputExplo" rows="3"></textarea>
+            </div>
+        </div>
+        <!-- Tratamiento Clinico-->
         <div class="tab-pane fade" id="ant-clinico" role="tabpanel" aria-labelledby="ant-clinico-tab">
             <div class="mb-3 mt-5">
                 <label for="inputTrata" class="form-label fw-bolder">Escriba tratamiento del paciente.</label>
