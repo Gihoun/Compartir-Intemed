@@ -41,10 +41,10 @@ def login_todos(request):
                 contexto ={"admin": userORA}
                 return render(request, 'administrator.html', contexto )
             elif perf==2:##MEDICO
-                response = redirect('modulo_medico:index')
+                response = redirect('modulo_medico:inicioMedico')
                 return response
             elif perf==3:##RECEPCION
-                response = redirect('modulo_recepcion:ingresarPac')
+                response = redirect('modulo_recepcion:inicio')
                 return response
         else:
             

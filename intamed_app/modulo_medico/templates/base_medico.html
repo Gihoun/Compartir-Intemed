@@ -39,11 +39,7 @@
                     <div class="mx-auto"></div>
                     <ul class="navbar-nav hstack gap-3">
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="{% url 'index' %}">Inicio</a>
-                        </li>
-                        <div class="vr"></div>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="{% url 'nuestraclinica' %}">Nuestra Clinica</a>
+                            <a class="nav-link text-white" href="{% url 'modulo_medico:inicioMedico' %}">Inicio</a>
                         </li>
                         <div class="vr"></div>
                         <li class="nav-item">
@@ -51,7 +47,9 @@
                         </li>
                         <div class="vr"></div>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Cerrar Sesión</a>
+                            {% if user.is_authenticated %}
+                            <a class="nav-link text-white" href="{% url 'login' %}">Cerrar Sesión : {{ user.username }} </a>
+                            {% endif %}
                         </li>
                     </ul>
                 </div>

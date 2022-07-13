@@ -21,19 +21,18 @@
                 <div class="mx-auto"></div>
                 <ul class="navbar-nav hstack gap-3">
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'modulo_recepcion:ingresarPac' %}">Inicio</a>
-                    </li>
-                    <div class="vr"></div>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Nuestra Clinica</a>
+                        <a class="nav-link text-white" href="{% url 'modulo_recepcion:inicio' %}">Inicio</a>
                     </li>
                     <div class="vr"></div>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#">Mi Cuenta</a>
                     </li>
                     <div class="vr"></div>
+                    
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Cerrar Sesión</a>
+                        {% if user.is_authenticated %}
+                        <a class="nav-link text-white" href="{% url 'login' %}">Cerrar Sesión : {{ user.username }} </a>
+                        {% endif %}
                     </li>
                 </ul>
             </div>
@@ -48,17 +47,60 @@
             <!-- Tabla de navegacion vertical  -->
             <div class="nav flex-column nav-pills me-5" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <button class="nav-link border m-3  btn btn-primary" id="v-pills-ingresarP-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ingresarP" type="button" role="tab" aria-controls="v-pills-ingresarP" aria-selected="false">
-                    <a class="nav-link" href="{% url 'modulo_recepcion:ingresarPac' %}">Ingresar Paciente</a>
+                    <div class="row align-items-center">
+                        <div class="col-3 ">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"  fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+                                <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                              </svg>
+                        </div>
+                        <div class="col-9 text-center overflow-hidden">
+                            <a class="nav-link" href="{% url 'modulo_recepcion:ingresarPac' %}">Ingresar Paciente</a>
+                        </div>
+                    </div>
+                    
                 </button>
                 <button class="nav-link border m-3 btn btn-primary" id="v-pills-buscarP-tab" data-bs-toggle="pill" data-bs-target="#v-pills-buscarP" type="button" role="tab" aria-controls="v-pills-buscarP" aria-selected="false">
-
-                    <a class="nav-link" href="{% url 'modulo_recepcion:buscarPac' %}"> Buscar Paciente</a>
+                    <div class="row align-items-center">
+                        <div class="col-3 ">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"  fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                              </svg>
+                        </div>
+                        <div class="col-9 text-center overflow-hidden">
+                            <a class="nav-link" href="{% url 'modulo_recepcion:buscarPac' %}"> Buscar Paciente</a>
+                        </div>
+                    </div>
+                    
                 </button>
                 <button class="nav-link border m-3 btn btn-primary" id="v-pills-ingresarPago-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ingresarPago" type="button" role="tab" aria-controls="v-pills-ingresarPago" aria-selected="false">
-                    <a class="nav-link" href= "{% url 'modulo_recepcion:anularHor' %}">Anular Hora</a>
+                    <div class="row align-items-center">
+                        <div class="col-3 ">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"  fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                              </svg>
+                        </div>
+                        <div class="col-9 text-center overflow-hidden">
+                            <a class="nav-link" href= "{% url 'modulo_recepcion:anularHor' %}">Anular Hora</a>
+                        </div>
+                    </div>
+                    
                 </button>
                 <button class="nav-link border m-3 btn btn-primary" id="v-pills-ingresarPago-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ingresarPago" type="button" role="tab" aria-controls="v-pills-ingresarPago" aria-selected="false">
-                    <a class="nav-link" href="{% url 'modulo_recepcion:ingresarPag' %}">Ingresar Pago</a>
+                    <div class="row align-items-center">
+                        <div class="col-3 ">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"  fill="currentColor" class="bi bi-wallet" viewBox="0 0 16 16">
+                                <path d="M0 3a2 2 0 0 1 2-2h13.5a.5.5 0 0 1 0 1H15v2a1 1 0 0 1 1 1v8.5a1.5 1.5 0 0 1-1.5 1.5h-12A2.5 2.5 0 0 1 0 12.5V3zm1 1.732V12.5A1.5 1.5 0 0 0 2.5 14h12a.5.5 0 0 0 .5-.5V5H2a1.99 1.99 0 0 1-1-.268zM1 3a1 1 0 0 0 1 1h12V2H2a1 1 0 0 0-1 1z"/>
+                              </svg>
+                        </div>
+                        <div class="col-9 text-center overflow-hidden">
+                            <a class="nav-link" href="{% url 'modulo_recepcion:ingresarPag' %}">Ingresar Pago</a>
+                        </div>
+                    </div>
+                    
+                </button>
+                <button class="nav-link border m-3 btn btn-primary" id="v-pills-ingresarPago-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ingresarPago" type="button" role="tab" aria-controls="v-pills-ingresarPago" aria-selected="false">
+                    <a class="nav-link" href="{% url 'modulo_recepcion:tomar_hr' %}">Tomar hora Atencion</a>
                 </button>
             </div>
 
@@ -120,6 +162,52 @@
         }
     </script>
     <script>
+        function confirmacion_ate(id){
+              Swal.fire({
+                "title": "¿Esta Seguro?",
+                "text": "Esta Acción es Irreversible {{di.id_disp}}",
+                "icon": "question",
+                "showCancelButton": true,
+                "cancelButtonText": "No, Cancelar",
+                "confirmButtonText": "Si, seguro",
+                "reverseButtons": true,
+                "confirmButtonColor": "#dc3545"
+              })
+              .then(function(result){
+                var runp= document.getElementById('inputRut').value.trim();
+                if(runp==0){
+                    Swal.fire({
+                        "title": "Error",
+                        "text": "debe ingresar un valor para el rut del paciente",
+                        "icon": "question"
+                      })
+                  }
+                if(result.isConfirmed && runp!=0){
+                  const data = new FormData();
+                  var csrftoken = '{{ csrf_token }}';
+                  data.append('hor_sel',id);
+                  data.append('inputRut',runp);
+                  console.log(id);
+                  fetch('{% url 'modulo_recepcion:tomar_hr' %}', {
+                    method: 'POST',
+                    body: data ,
+                    headers: {
+                      'X-CSRFToken': csrftoken ,
+                    }
+                 });
+                 Swal.fire({
+                  "title": "Realizado",
+                  "text": "Su hora ha sido agendada, llegara una notificacion",
+                  "icon": "success"
+                })
+                .then(function(result){
+                  if(result.isConfirmed){
+                  window.location.href = "{% url 'modulo_recepcion:tomar_hr' %}";
+                  }
+                });
+              }
+            })   
+            }
         function confirma_anular(id){
             Swal.fire({
               "title": "¿Esta Seguro?",
@@ -171,7 +259,15 @@
             .then(function(result){
               var inpvalue = document.getElementById('inputval').value.trim();
               var run_p = document.getElementById('inputRutPaciente').value.trim();
-              if(result.isConfirmed){
+              console.log(inpvalue)
+              if(inpvalue==0){
+                Swal.fire({
+                    "title": "Error",
+                    "text": "debe ingresar un valor para el bono",
+                    "icon": "question"
+                  })
+              }
+              if(result.isConfirmed && inpvalue!=0){
                 const data = new FormData();
                 var csrftoken = '{{ csrf_token }}';
                 data.append('inpval', inpvalue);
