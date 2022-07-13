@@ -32,8 +32,11 @@
                         <a class="nav-link text-white" href="#">Mi Cuenta</a>
                     </li>
                     <div class="vr"></div>
+                    
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Cerrar Sesión</a>
+                        {% if user.is_authenticated %}
+                        <a class="nav-link text-white" href="{% url 'login' %}">Cerrar Sesión : {{ user.username }} </a>
+                        {% endif %}
                     </li>
                 </ul>
             </div>
@@ -59,6 +62,9 @@
                 </button>
                 <button class="nav-link border m-3 btn btn-primary" id="v-pills-ingresarPago-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ingresarPago" type="button" role="tab" aria-controls="v-pills-ingresarPago" aria-selected="false">
                     <a class="nav-link" href="{% url 'modulo_recepcion:ingresarPag' %}">Ingresar Pago</a>
+                </button>
+                <button class="nav-link border m-3 btn btn-primary" id="v-pills-ingresarPago-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ingresarPago" type="button" role="tab" aria-controls="v-pills-ingresarPago" aria-selected="false">
+                    <a class="nav-link" href="{% url 'modulo_recepcion:tomar_hr' %}">Tomar hora Atencion</a>
                 </button>
             </div>
 
@@ -120,6 +126,52 @@
         }
     </script>
     <script>
+        function confirmacion_ate(id){
+              Swal.fire({
+                "title": "¿Esta Seguro?",
+                "text": "Esta Acción es Irreversible {{di.id_disp}}",
+                "icon": "question",
+                "showCancelButton": true,
+                "cancelButtonText": "No, Cancelar",
+                "confirmButtonText": "Si, seguro",
+                "reverseButtons": true,
+                "confirmButtonColor": "#dc3545"
+              })
+              .then(function(result){
+                var runp= document.getElementById('inputRut').value.trim();
+                if(runp==0){
+                    Swal.fire({
+                        "title": "Error",
+                        "text": "debe ingresar un valor para el rut del paciente",
+                        "icon": "question"
+                      })
+                  }
+                if(result.isConfirmed && runp!=0){
+                  const data = new FormData();
+                  var csrftoken = '{{ csrf_token }}';
+                  data.append('hor_sel',id);
+                  data.append('inputRut',runp);
+                  console.log(id);
+                  fetch('{% url 'modulo_recepcion:tomar_hr' %}', {
+                    method: 'POST',
+                    body: data ,
+                    headers: {
+                      'X-CSRFToken': csrftoken ,
+                    }
+                 });
+                 Swal.fire({
+                  "title": "Realizado",
+                  "text": "Su hora ha sido agendada, llegara una notificacion",
+                  "icon": "success"
+                })
+                .then(function(result){
+                  if(result.isConfirmed){
+                  window.location.href = "{% url 'modulo_recepcion:tomar_hr' %}";
+                  }
+                });
+              }
+            })   
+            }
         function confirma_anular(id){
             Swal.fire({
               "title": "¿Esta Seguro?",
@@ -171,7 +223,15 @@
             .then(function(result){
               var inpvalue = document.getElementById('inputval').value.trim();
               var run_p = document.getElementById('inputRutPaciente').value.trim();
-              if(result.isConfirmed){
+              console.log(inpvalue)
+              if(inpvalue==0){
+                Swal.fire({
+                    "title": "Error",
+                    "text": "debe ingresar un valor para el bono",
+                    "icon": "question"
+                  })
+              }
+              if(result.isConfirmed && inpvalue!=0){
                 const data = new FormData();
                 var csrftoken = '{{ csrf_token }}';
                 data.append('inpval', inpvalue);
