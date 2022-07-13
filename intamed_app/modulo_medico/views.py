@@ -47,11 +47,62 @@ def insert_DetFarmaco(x, y):
         cursor.callproc("sp_detalle_farmaco", (x, y))
     return True
 
+def receta_test(request,ate):
+    # Create a file-like buffer to receive PDF data.
+    buffer = io.BytesIO()
+
+    # Create the PDF object, using the buffer as its "file."
+    p = canvas.Canvas(buffer)
+
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+    p.drawString(100, 100, "Hello world."+ate)
+
+    # Close the PDF object cleanly, and we're done.
+    p.showPage()
+    p.save()
+
+    # FileResponse sets the Content-Disposition header so that browsers
+    # present the option to save the file.
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename='hello.pdf')
 
 def insert_DetAlergia(x, y):
     with connection.cursor() as cursor:
         cursor.callproc("sp_detalle_alergia", (x, y))
     return True
+
+def receta_med(request,id):  
+    ar_id = id.split('-')
+    u =  Usuario.objects.get(run = ar_id[1])
+    a = Atencion.objects.get(id_atencion = ar_id[0])
+    id_re = Receta.objects.aggregate(maximo=Max('id_receta'))['maximo']
+    if request.POST:
+        det_R = request.POST.get("recetaP")
+        if det_R is not None:
+            if det_R.strip() != '':        
+                try:
+                    r = Receta()       
+                    r.id_receta = id_re + 1
+                    r.descripcion_receta = det_R
+                    print(id_re)
+                    r.save()
+                    return receta_test(request,det_R)
+
+                except:
+                    er = 1
+                    print('mal')
+            else:
+                print('mal srp')
+                er= 2
+
+    
+    contexto = {
+        "user":u,
+        "atencion":a,
+        "id":id
+    }
+    return render(request,"med_receta.html",contexto)
 
 
 def inicio(request):
@@ -151,8 +202,12 @@ def atePaciente(request, id):
         list_ate.append(id[0])
     try:
         aten_pa = Atencion.objects.get(id_atencion__in=list_ate)
+        print(aten_pa.id_atencion)
     except:
         aten_pa= None
+    
+    
+    
     if request.POST:
 
         # VAR de Usuario para su modificacion
@@ -253,32 +308,14 @@ def atePaciente(request, id):
         "selectAlergia": mostrarAlergia,
         "tip_diag": t_diag,
         "todo_farma": farma,
-        "tip_farma": t_farma
+        "tip_farma": t_farma,
+        "atencion": aten_pa
 
     }
     return render(request, "atencion_paciente.html", contexto)
 
 
 
-def receta_test(request,id):
-    # Create a file-like buffer to receive PDF data.
-    buffer = io.BytesIO()
-
-    # Create the PDF object, using the buffer as its "file."
-    p = canvas.Canvas(buffer)
-
-    # Draw things on the PDF. Here's where the PDF generation happens.
-    # See the ReportLab documentation for the full list of functionality.
-    p.drawString(100, 100, "Hello world.")
-
-    # Close the PDF object cleanly, and we're done.
-    p.showPage()
-    p.save()
-
-    # FileResponse sets the Content-Disposition header so that browsers
-    # present the option to save the file.
-    buffer.seek(0)
-    return FileResponse(buffer, as_attachment=True, filename='hello.pdf')
 
 
 def consultaV(request):
@@ -363,6 +400,9 @@ def consultaP(request, id):
     lista_ate.sort(reverse=True)
     id_ate = Atencion.objects.get(id_atencion=lista_ate[0])
     aten_pa = Atencion.objects.filter(id_atencion__in=lista_ate).order_by('-id_atencion')[:3]
+    c_receta= str(id_ate.id_atencion)+'-'+str(user.run)
+
+    print(c_receta) 
     ids_re = []
     for rece in aten_pa:
         ids_re.append(rece.id_receta)
@@ -496,6 +536,7 @@ def consultaP(request, id):
                 "tip_farma": t_farma,
                 "farma_pa":zip(aten_pa,real_far),
                 "lista_ate":aten_pa,
+                "receta":c_receta,
 
                 }
     return render(request, "consulta_paciente.html", contexto)
