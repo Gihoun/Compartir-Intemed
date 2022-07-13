@@ -30,9 +30,9 @@ from django.utils import timezone
 from django.db import connection
 import reportlab
 import io
-from django.http import FileResponse
 from reportlab.pdfgen import canvas
 from django.http import FileResponse
+from reportlab.lib.pagesizes import letter
 
 # Create your views here.
 
@@ -47,25 +47,48 @@ def insert_DetFarmaco(x, y):
         cursor.callproc("sp_detalle_farmaco", (x, y))
     return True
 
-def receta_test(request,ate):
-    # Create a file-like buffer to receive PDF data.
+def receta_test(request,ate,id,id_r):
+    
+    ## id ppara personalizar
+    ar_id = id.split('-')
+    u =  Usuario.objects.get(run = ar_id[1])
+    a = Atencion.objects.get(id_atencion = ar_id[0])
+    fecha = a.fecha_atencion
+    formato = fecha.strftime("%d - %m - %Y")
+    
     buffer = io.BytesIO()
 
     # Create the PDF object, using the buffer as its "file."
     p = canvas.Canvas(buffer)
+    p.drawString(220, 800, f"Receta Médica")
+    p.drawString(20, 780, f"Nombre Paciente : {u.p_nombre} {u.s_nombre} {u.apellido_pa} {u.apellido_ma}")
+    p.drawString(350, 780, f"Folio receta: re00{id_r}")
+    p.drawString(20, 760, f"Edad                  : {u.edad_actual} años")
+    p.drawString(350, 760, f"Sexo: {u.id_genero.nombre_genero}")
 
-    # Draw things on the PDF. Here's where the PDF generation happens.
-    # See the ReportLab documentation for the full list of functionality.
-    p.drawString(100, 100, "Hello world."+ate)
+    p.drawString(20, 740, f"Direccion           : {u.direccion}")
+    p.drawString(20, 720, f"Fecha Emisión  :  {formato} ")
+    p.drawString(350,740, f"Direccion clinica: [Direccion Clinica X, X] ")
+    
+    p.line(20,700,570,700)
+    p.drawString(20, 680, f"Descripción de la receta: ")
+    p.drawString(40, 620, ate)
+    p.line(20, 120, 570, 120)
+    
+    p.drawString(350, 100, f"Run profesional : ")
+    p.drawString(350, 80, f"Medico Tratante : ")
+    p.drawString(350, 60, f"Especialidad    : ")
+    p.drawString(20, 100, f"Servicios de salud Intemed ")
+    p.drawString(20, 80, f"RUT: 96.999.888-2 ")
 
     # Close the PDF object cleanly, and we're done.
     p.showPage()
     p.save()
-
+    namefile = 'Re'+str(id)+'ta-'+str(id_r)+'.pdf'
     # FileResponse sets the Content-Disposition header so that browsers
     # present the option to save the file.
     buffer.seek(0)
-    return FileResponse(buffer, as_attachment=True, filename='hello.pdf')
+    return FileResponse(buffer, as_attachment=True, filename=namefile)
 
 def insert_DetAlergia(x, y):
     with connection.cursor() as cursor:
@@ -85,9 +108,8 @@ def receta_med(request,id):
                     r = Receta()       
                     r.id_receta = id_re + 1
                     r.descripcion_receta = det_R
-                    print(id_re)
                     r.save()
-                    return receta_test(request,det_R)
+                    return receta_test(request,det_R,id,r.id_receta)
 
                 except:
                     er = 1
