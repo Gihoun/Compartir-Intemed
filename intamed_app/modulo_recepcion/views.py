@@ -29,6 +29,11 @@ from reportlab.lib.pagesizes import A4,letter
 # Create your views here.
 
 def inicio(request):
+
+
+    return render(request, "index_recepcion.html")
+
+def ingresarPac(request):
     comunas = Comuna.objects.all()
     nacionalidades = Nacionalidad.objects.all()
     estados = EstadoCivil.objects.all()

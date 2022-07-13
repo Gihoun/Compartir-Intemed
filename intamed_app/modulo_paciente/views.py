@@ -3,7 +3,7 @@ from modulo_admin.models import *
 from modulo_medico.models import *
 from select import select
 from django.core.mail import send_mail
-
+from django.contrib import messages
 # Create your views here.
 
 
@@ -121,4 +121,3 @@ def mi_cuenta(request, id):
     contexto = {"paciente": paciente, "prevision": prevision, "telefonos": num_tel, "cantidad": cant_tel,
                 "comuna": comunas, "nacionalidad": nacionalidades, "estado": estados, "genero": generos, "alergias": alergias,"alers":todo_alergias}
     return render(request,"micuenta.html",contexto)
-
