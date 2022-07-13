@@ -258,7 +258,7 @@ def genpdf_boleta(request,id):
     filname = 'boleta' + str(id) + '.pdf'
     
 
-    return FileResponse(buffer, as_attachment=True, filename=filname)
+    return FileResponse(buffer, as_attachment=False, filename=filname)
 
 
 def filtro_pacientes(request):
@@ -378,8 +378,49 @@ def anularHora(request):
             contexto = {"medico": med,"agenda":dispo,"det_age":det_age}
             
             #paciente = Usuario.objects.get(run=id_pac)
-
-      
     
     return render(request, "anular_hora.html", contexto)
 
+def tomar_hora(request):
+    med = Usuario.objects.filter(id_perfil=2)
+    tom = det_agenda.objects.values_list("idda")
+    disp = Disponibilidad.objects.select_related('id_horaD').exclude(id_disp__in=tom)
+
+    
+    if request.POST:
+        runm = request.POST.get("run_medic")
+        rut = request.POST.get("inputRut")
+        dat = request.POST.get("fechainput")
+        sel_hora = request.POST.get("hor_sel")
+        print(sel_hora)
+
+        if sel_hora is not None and sel_hora != '':
+            print(f'el valor de selhora {sel_hora}')
+            di = Disponibilidad.objects.get(id_disp=sel_hora)
+            pac = Paciente.objects.get(run_paciente=rut)
+            
+            try:
+                test_det = det_agenda.objects.get(idd=sel_hora)
+                print(f'hora NO DISPONIBLE')
+            except:
+                new_agenda = det_agenda()
+                new_agenda.idd = di
+                new_agenda.run_pac = pac
+                new_agenda.idda = sel_hora
+                new_agenda.save()
+                print(f'hora agendada con exito')
+        if dat is not None and dat != '':
+            
+            arr_date= dat.split("-")
+            print(arr_date)
+            agnd = agenda_hora.objects.filter(fecha_hora__year=arr_date[0],fecha_hora__month=arr_date[1],fecha_hora__day=arr_date[2])
+
+            print(agnd)            
+            disp = Disponibilidad.objects.filter(run_medico=runm, id_horaD__in=agnd)
+        else:
+
+            disp = Disponibilidad.objects.filter(run_medico=runm).select_related('id_horaD').exclude(id_disp__in=tom)
+
+    
+    contexto = {"medico":med,"disponibilidad":disp}
+    return render(request,'tomar_hora.html',contexto)
