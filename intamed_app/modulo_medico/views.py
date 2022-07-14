@@ -143,6 +143,10 @@ def orden_med(request,id):
 @login_required()
 def pdf_orden(request,det_o,id,id_exa,te):
     ## id ppara personalizar
+    logueado = request.user
+    run_med = logueado.usuario_django.run_django
+    usu_medico = Usuario.objects.get(run=run_med)
+
     ar_id = id.split('-')
     u =  Usuario.objects.get(run = ar_id[1])
     a = Atencion.objects.get(id_atencion = ar_id[0])
@@ -169,8 +173,8 @@ def pdf_orden(request,det_o,id,id_exa,te):
     p.drawString(40, 620, det_o)
     p.line(20, 120, 570, 120)
     
-    p.drawString(350, 100, f"Run profesional : ")
-    p.drawString(350, 80, f"Medico Tratante : ")
+    p.drawString(350, 100, f"Run profesional :{usu_medico.run}-{usu_medico.dv} ")
+    p.drawString(350, 80, f"Medico Tratante : {usu_medico.p_nombre} {usu_medico.apellido_pa}")
     p.drawString(350, 60, f"Especialidad    : ")
     p.drawString(20, 100, f"Servicios de salud Intemed ")
     p.drawString(20, 80, f"RUT: 96.999.888-2 ")
@@ -186,7 +190,9 @@ def pdf_orden(request,det_o,id,id_exa,te):
 
 @login_required()
 def pdf_receta(request,ate,id,id_r):
-    
+    logueado = request.user
+    run_med = logueado.usuario_django.run_django
+    usu_medico = Usuario.objects.get(run=run_med)
     ## id ppara personalizar
     ar_id = id.split('-')
     u =  Usuario.objects.get(run = ar_id[1])
@@ -213,8 +219,8 @@ def pdf_receta(request,ate,id,id_r):
     p.drawString(40, 620, ate)
     p.line(20, 120, 570, 120)
     
-    p.drawString(350, 100, f"Run profesional : ")
-    p.drawString(350, 80, f"Medico Tratante : ")
+    p.drawString(350, 100, f"Run profesional :{usu_medico.run}-{usu_medico.dv} ")
+    p.drawString(350, 80, f"Medico Tratante : {usu_medico.p_nombre} {usu_medico.apellido_pa}")
     p.drawString(350, 60, f"Especialidad    : ")
     p.drawString(20, 100, f"Servicios de salud Intemed ")
     p.drawString(20, 80, f"RUT: 96.999.888-2 ")
@@ -230,6 +236,10 @@ def pdf_receta(request,ate,id,id_r):
 
 @login_required()
 def pdf_certi(request,detC,id):
+    
+    logueado = request.user
+    run_med = logueado.usuario_django.run_django
+    usu_medico = Usuario.objects.get(run=run_med)
     ## id ppara personalizar
     ar_id = id.split('-')
     u =  Usuario.objects.get(run = ar_id[1])
@@ -255,8 +265,8 @@ def pdf_certi(request,detC,id):
     p.drawString(40, 620, detC)
     p.line(20, 120, 570, 120)
     
-    p.drawString(350, 100, f"Run profesional : ")
-    p.drawString(350, 80, f"Medico Tratante : ")
+    p.drawString(350, 100, f"Run profesional :{usu_medico.run}-{usu_medico.dv} ")
+    p.drawString(350, 80, f"Medico Tratante : {usu_medico.p_nombre} {usu_medico.apellido_pa}")
     p.drawString(350, 60, f"Especialidad    : ")
     p.drawString(20, 100, f"Servicios de salud Intemed ")
     p.drawString(20, 80, f"RUT: 96.999.888-2 ")
