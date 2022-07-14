@@ -264,20 +264,21 @@
                         <div class="container-fluid">
                             <div class="row align-items-center">
                                 <div class="col-md-4">
-                                    <label for="inputObserva" class="form-label fw-bolder">Observaciones Paciente</label>
-                                    <textarea class="form'control" name="inputObserva" id="inputObserva" 
-                                        rows="6" style="resize: none;" cols="30">{{paciente.observaciones}}</textarea>
+                                    <label for="inputObserva" class="form-label fw-bolder">Observaciones
+                                        Paciente</label>
+                                    <textarea class="form'control" name="inputObserva" id="inputObserva" rows="6"
+                                        style="resize: none;" cols="30">{{paciente.observaciones}}</textarea>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="inputEnf" class="form-label fw-bolder">Enfermedades Paciente</label>
-                                    <textarea class="form'control" name="inputEnf" id="inputEnf"  rows="6"
+                                    <textarea class="form'control" name="inputEnf" id="inputEnf" rows="6"
                                         style="resize: none;" cols="30">{{paciente.enfermedades}}</textarea>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="inputAQuiru" class="form-label fw-bolder">Antecedentes
                                         Quirúrgicos</label>
-                                    <textarea class="form'control" name="inputAQuiru" id="inputAQuiru" 
-                                        rows="6" style="resize: none;" cols="30">{{paciente.cirugias}}</textarea>
+                                    <textarea class="form'control" name="inputAQuiru" id="inputAQuiru" rows="6"
+                                        style="resize: none;" cols="30">{{paciente.cirugias}}</textarea>
                                 </div>
                             </div>
                             <h3 class="text-center mt-4"> Medicación Habitual</h3>
@@ -424,8 +425,9 @@
                         aria-selected="false">Nuevo Diagnostico</button>
                 </li>
                 <li class="nav-item text-center" role="presentation">
-                    <button class="nav-link fw-bolder" id="ant-expclinico-tab" data-bs-toggle="tab" data-bs-target="#ant-expclinico"
-                        type="button" role="tab" aria-controls="ant-expclinico" aria-selected="false">Nueva Exploración Clinica</button>
+                    <button class="nav-link fw-bolder" id="ant-expclinico-tab" data-bs-toggle="tab"
+                        data-bs-target="#ant-expclinico" type="button" role="tab" aria-controls="ant-expclinico"
+                        aria-selected="false">Nueva Exploración Clinica</button>
                 </li>
                 <li class="nav-item " role="presentation">
                     <button class="nav-link fw-bolder" id="hClinico2-tab" data-bs-toggle="tab"
@@ -452,8 +454,8 @@
                             </thead>
                             <tbody>
                                 {% if User_p.run %}
-                                {% for pa in lista_ate  %}
-                                <tr id="row">                                   
+                                {% for pa in lista_ate %}
+                                <tr id="row">
                                     <td>
                                         <p>{{pa.fecha_atencion}}</p>
                                     </td>
@@ -472,17 +474,18 @@
                                     <td>
                                         <textarea name="mHabt" id="mHabt" cols="22" rows="3" disabled
                                             style="resize: none;">{{pa.tratamiento}}</textarea>
-                                    </td>                                 
-                                </tr> 
-                                {% endfor %}                             
+                                    </td>
+                                </tr>
+                                {% endfor %}
                                 {% else %}
-                                  <tr id="row">
-                                    <td colspan="5" class="text-center mt-5 font-weight-bolder"> Inicie la búsqueda de pacientes
+                                <tr id="row">
+                                    <td colspan="5" class="text-center mt-5 font-weight-bolder"> Inicie la búsqueda de
+                                        pacientes
                                         colocando el RUT del paciente sin su dígito verificador. </td>
-                                  </tr>
+                                </tr>
                                 {% endif %}
-                                
-                                    
+
+
                             </tbody>
                         </table>
                     </div>
@@ -492,8 +495,7 @@
                     <div class="mb-3 mt-5">
                         <label for="inputcoment2" class="form-label fw-bolder">Escriba nuevos
                             comentarios</label>
-                        <textarea class="form-control" id="inputcoment2" name="inputcoment2"
-                            rows="3"></textarea>
+                        <textarea class="form-control" id="inputcoment2" name="inputcoment2" rows="3"></textarea>
                     </div>
                 </div>
                 <!-- ========== Start Tabla de Nuevos Diagnostico ========== -->
@@ -534,13 +536,6 @@
                             d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
                     </svg>
                 </button>
-                <button type="button" class="btn btn-secondary fs-6 m-1"> Generar Certificado <svg
-                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
-                        <path
-                            d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0z" />
-                    </svg>
-                </button>
                 <button type="button" class="btn btn-secondary fs-6 m-1">Generar Orden de Exámen <svg
                         xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-file-earmark-pdf-fill" viewBox="0 0 16 16">
@@ -551,6 +546,14 @@
                     </svg>
                 </button>
                 {% if User_p.run %}
+                <a href="{% url 'modulo_medico:certiP' receta %}"><button type="button"
+                        class="btn btn-secondary fs-6 m-1"> Generar Certificado <svg xmlns="http://www.w3.org/2000/svg"
+                            width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus-fill"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0z" />
+                        </svg>
+                    </button></a>
                 <a href="{% url 'modulo_medico:recetaP' receta %}">
                     <button type="button" class="btn btn-success fs-6 m-2"> Generar Receta <svg
                             xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -560,13 +563,20 @@
                         </svg>
                     </button></a>
                 {% else %}
-                    <button type="button" class="btn btn-success fs-6 m-2" disabled> Generar Receta <svg
-                            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
-                        </svg>
-                    </button>
+                <button type="button" class="btn btn-secondary fs-6 m-1"> Generar Certificado <svg
+                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0z" />
+                    </svg>
+                </button>
+                <button type="button" class="btn btn-success fs-6 m-2" disabled> Generar Receta <svg
+                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                    </svg>
+                </button>
                 {% endif %}
             </div>
             {% if validar == 3 %}

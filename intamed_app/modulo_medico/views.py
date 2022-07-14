@@ -35,26 +35,81 @@ from django.http import FileResponse
 from reportlab.lib.pagesizes import letter
 
 # Create your views here.
-
+### Procedimentos almacenados para insert ####
 def insert_DetAtencio(x, y):
     with connection.cursor() as cursor:
         cursor.callproc("sp_detalle_atencion", (x, y))
     return True
-
-
 def insert_DetFarmaco(x, y):
     with connection.cursor() as cursor:
         cursor.callproc("sp_detalle_farmaco", (x, y))
     return True
+def insert_DetAlergia(x, y):
+    with connection.cursor() as cursor:
+        cursor.callproc("sp_detalle_alergia", (x, y))
+    return True
+##############################################
 
-def receta_test(request,ate,id,id_r):
+
+def receta_med(request,id):  
+    ar_id = id.split('-')
+    u =  Usuario.objects.get(run = ar_id[1])
+    a = Atencion.objects.get(id_atencion = ar_id[0])
+    id_re = Receta.objects.aggregate(maximo=Max('id_receta'))['maximo']
+    if request.POST:
+        det_R = request.POST.get("recetaP")
+        if det_R is not None:
+            if det_R.strip() != '':        
+                try:
+                    r = Receta()       
+                    r.id_receta = id_re + 1
+                    r.descripcion_receta = det_R
+                    r.save()
+                    return pdf_receta(request,det_R,id,r.id_receta)
+
+                except:
+                    er = 1
+                    print('mal')
+            else:
+                print('mal srp')
+                er= 2    
+    contexto = {
+        "user":u,
+        "atencion":a,
+        "id":id
+    }
+    return render(request,"med_receta.html",contexto)
+def certi_med(request,id):
+    ar_id = id.split('-')
+    u =  Usuario.objects.get(run = ar_id[1])
+    a = Atencion.objects.get(id_atencion = ar_id[0])
+    
+    if request.POST:
+        det_C = request.POST.get("certiP")
+        if det_C is not None:
+            if det_C.strip() != '':        
+                try:                   
+                    return pdf_certi(request,det_C,id)
+                except:
+                    er = 1
+                    print('mal')
+            else:
+                print('mal srp')
+                er= 2    
+    contexto = {
+        "user":u,
+        "atencion":a,
+        "id":id
+    }
+    return render(request,"med_certi.html",contexto)
+def pdf_receta(request,ate,id,id_r):
     
     ## id ppara personalizar
     ar_id = id.split('-')
     u =  Usuario.objects.get(run = ar_id[1])
     a = Atencion.objects.get(id_atencion = ar_id[0])
     fecha = a.fecha_atencion
-    formato = fecha.strftime("%d - %m - %Y")
+    formato = fecha.strftime("%d-%m-%Y")
     
     buffer = io.BytesIO()
 
@@ -89,43 +144,46 @@ def receta_test(request,ate,id,id_r):
     # present the option to save the file.
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename=namefile)
-
-def insert_DetAlergia(x, y):
-    with connection.cursor() as cursor:
-        cursor.callproc("sp_detalle_alergia", (x, y))
-    return True
-
-def receta_med(request,id):  
+def pdf_certi(request,detC,id):
+    ## id ppara personalizar
     ar_id = id.split('-')
     u =  Usuario.objects.get(run = ar_id[1])
     a = Atencion.objects.get(id_atencion = ar_id[0])
-    id_re = Receta.objects.aggregate(maximo=Max('id_receta'))['maximo']
-    if request.POST:
-        det_R = request.POST.get("recetaP")
-        if det_R is not None:
-            if det_R.strip() != '':        
-                try:
-                    r = Receta()       
-                    r.id_receta = id_re + 1
-                    r.descripcion_receta = det_R
-                    r.save()
-                    return receta_test(request,det_R,id,r.id_receta)
-
-                except:
-                    er = 1
-                    print('mal')
-            else:
-                print('mal srp')
-                er= 2
-
+    fecha = a.fecha_atencion
+    formato = fecha.strftime("%d-%m-%Y")
     
-    contexto = {
-        "user":u,
-        "atencion":a,
-        "id":id
-    }
-    return render(request,"med_receta.html",contexto)
+    buffer = io.BytesIO()
 
+    # Create the PDF object, using the buffer as its "file."
+    p = canvas.Canvas(buffer)
+    p.drawString(220, 800, f"Certificado Médico")
+    p.drawString(20, 780, f"Nombre Paciente : {u.p_nombre} {u.s_nombre} {u.apellido_pa} {u.apellido_ma}")
+    p.drawString(20, 760, f"Edad                  : {u.edad_actual} años")
+    p.drawString(350, 760, f"Sexo: {u.id_genero.nombre_genero}")
+
+    p.drawString(20, 740, f"Direccion           : {u.direccion}")
+    p.drawString(20, 720, f"Fecha Emisión  :  {formato} ")
+    p.drawString(350,740, f"Direccion clinica: [Direccion Clinica X, X] ")
+    
+    p.line(20,700,570,700)
+    p.drawString(20, 680, f"Detalle Certificado: ")
+    p.drawString(40, 620, detC)
+    p.line(20, 120, 570, 120)
+    
+    p.drawString(350, 100, f"Run profesional : ")
+    p.drawString(350, 80, f"Medico Tratante : ")
+    p.drawString(350, 60, f"Especialidad    : ")
+    p.drawString(20, 100, f"Servicios de salud Intemed ")
+    p.drawString(20, 80, f"RUT: 96.999.888-2 ")
+
+    # Close the PDF object cleanly, and we're done.
+    p.showPage()
+    p.save()
+    namefile = 'Cer'+str(id)+'ti'+formato+'.pdf'
+    # FileResponse sets the Content-Disposition header so that browsers
+    # present the option to save the file.
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename=namefile)
 
 def inicio(request):
 
