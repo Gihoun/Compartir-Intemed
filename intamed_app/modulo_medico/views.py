@@ -10,7 +10,7 @@ from select import select
 from xml.dom import NoDataAllowedErr
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from modulo_admin.models import Agenda, Comuna, DetalleFarmaco, Diagnostico, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, Receta, ResultadoExamen, TipoDiagnostico, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono
+from modulo_admin.models import Agenda, Comuna, DetalleFarmaco, Diagnostico, EstadoCivil, Examen, Genero, Medico, Nacionalidad, Paciente, Receta, ResultadoExamen, TipoDiagnostico, TipoExamen, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono
 from modulo_admin.models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato, Alergia, DetalleAlergia, DetalleAtencion
 from modulo_medico.models import Disponibilidad, agenda_hora, det_agenda
 from modulo_admin.metodos import agregar_disp
@@ -79,6 +79,7 @@ def receta_med(request,id):
         "id":id
     }
     return render(request,"med_receta.html",contexto)
+
 def certi_med(request,id):
     ar_id = id.split('-')
     u =  Usuario.objects.get(run = ar_id[1])
@@ -102,6 +103,83 @@ def certi_med(request,id):
         "id":id
     }
     return render(request,"med_certi.html",contexto)
+
+def orden_med(request,id):
+    ar_id = id.split('-')
+    u =  Usuario.objects.get(run = ar_id[1])
+    a = Atencion.objects.get(id_atencion = ar_id[0])
+    te =  TipoExamen.objects.all()
+    id_ex = Examen.objects.aggregate(maximo=Max('id_examen'))['maximo']
+    if request.POST:
+        det_o = request.POST.get("ordenP")
+        tipo_ex = request.POST.get("inputexa")
+        if det_o is not None:
+            if det_o.strip() != '':        
+                try:                   
+                    e = Examen()
+                    e.id_examen = id_ex + 2
+                    e.nombre_examen = det_o
+                    e.id_tipo_exam = TipoExamen.objects.get(tipo_exam=tipo_ex)
+                    e.save()
+
+                    return pdf_orden(request,det_o,id,e.id_examen,tipo_ex)
+                except:
+                    er = 1
+                    print('mal')
+            else:
+                print('mal srp')
+                er= 2    
+    contexto = {
+        "user":u,
+        "atencion":a,
+        "id":id,
+        "tipo_exa":te,
+    }
+    return render(request,"med_orden.html",contexto)
+
+def pdf_orden(request,det_o,id,id_exa,te):
+    ## id ppara personalizar
+    ar_id = id.split('-')
+    u =  Usuario.objects.get(run = ar_id[1])
+    a = Atencion.objects.get(id_atencion = ar_id[0])
+    fecha = a.fecha_atencion
+    formato = fecha.strftime("%d-%m-%Y")
+    
+    buffer = io.BytesIO()
+
+    # Create the PDF object, using the buffer as its "file."
+    p = canvas.Canvas(buffer)
+    p.drawString(220, 800, f"Orden de Exámen")
+    p.drawString(20, 780, f"Nombre Paciente : {u.p_nombre} {u.s_nombre} {u.apellido_pa} {u.apellido_ma}")
+    p.drawString(350, 780, f"Folio Orden: O-{id_exa}")
+    p.drawString(20, 760, f"Edad                  : {u.edad_actual} años")
+    p.drawString(350, 760, f"Sexo: {u.id_genero.nombre_genero}")
+
+    p.drawString(20, 740, f"Direccion           : {u.direccion}")
+    p.drawString(20, 720, f"Fecha Emisión  :  {formato} ")
+    p.drawString(350,740, f"Direccion clinica: [Direccion Clinica X, X] ")
+    
+    p.line(20,700,570,700)
+    p.drawString(20, 680, f"Detalle Orden: ")
+    p.drawString(40, 640,f"Tipo exámen: {te}" )
+    p.drawString(40, 620, det_o)
+    p.line(20, 120, 570, 120)
+    
+    p.drawString(350, 100, f"Run profesional : ")
+    p.drawString(350, 80, f"Medico Tratante : ")
+    p.drawString(350, 60, f"Especialidad    : ")
+    p.drawString(20, 100, f"Servicios de salud Intemed ")
+    p.drawString(20, 80, f"RUT: 96.999.888-2 ")
+
+    # Close the PDF object cleanly, and we're done.
+    p.showPage()
+    p.save()
+    namefile = 'Pa'+str(id)+'O_'+str(id_exa)+'.pdf'
+    # FileResponse sets the Content-Disposition header so that browsers
+    # present the option to save the file.
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename=namefile)
+
 def pdf_receta(request,ate,id,id_r):
     
     ## id ppara personalizar
@@ -144,6 +222,7 @@ def pdf_receta(request,ate,id,id_r):
     # present the option to save the file.
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename=namefile)
+
 def pdf_certi(request,detC,id):
     ## id ppara personalizar
     ar_id = id.split('-')
@@ -184,6 +263,10 @@ def pdf_certi(request,detC,id):
     # present the option to save the file.
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename=namefile)
+
+
+
+
 
 def inicio(request):
 

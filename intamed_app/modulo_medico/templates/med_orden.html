@@ -1,0 +1,96 @@
+{% extends "base_medico.html" %}
+{% load static %}
+{% block contenido %}
+<h2 class="text-center fw-bolder mb-5">Orden de Exámen</h2>
+<form class="row gx-3 gy-2" action="" method="POST" enctype="multipart/form-data" onsubmit="">
+    {% csrf_token %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="input-group mb-3 ">
+                    <span class="input-group-text" id="rut"><strong>Rut Paciente</strong></span>
+                    <input type="text" class="form-control" placeholder="Run Paciente" aria-label="runP" id="runP"
+                        name="runP" aria-describedby="rut" value="{{user.run}}-{{user.dv}}" readonly>
+                </div>
+            </div>
+            <div class="col-sm-4 align-items-end">
+                <div class="input-group mb-3 ">
+                    <span class="input-group-text" id="fercha"><strong>Fecha:</strong></span>
+                    <input type="text" class="form-control" placeholder="Run Paciente" aria-label="fechaR" id="fechaR"
+                        name="fechaR" aria-describedby="fercha" value="{{atencion.fecha_atencion}}" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="names"><strong>Nombre Completo</strong></span>
+                    <input type="text" class="form-control" placeholder="Nombre Completo" aria-label="nCompleto"
+                        aria-describedby="names" id="nCompleto" name="nCompleto"
+                        value="{{user.p_nombre}} {{user.s_nombre}} {{user.apellido_pa}} {{user.apellido_ma}}" readonly>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="snames"><strong>Nombre Social</strong></span>
+                    <input type="text" class="form-control" placeholder="Nombre Social" aria-label="sCompleto"
+                        aria-describedby="snames" id="sCompleto" name="sCompleto" value="{{user.nombre_social}}"
+                        readonly>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon2"> <strong>Correo Electronico</strong></span>
+                    <input type="text" class="form-control" placeholder="Correo Electronico"
+                        aria-label="Correo Electronico" aria-describedby="basic-addon2" name="correoP" id="correoP"
+                        value="{{user.correo}}" readonly>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon3"> <strong>Edad Paciente</strong></span>
+                    <input type="text" class="form-control" id="edadP" name="edadP" placeholder="Edad Paciente"
+                        aria-describedby="basic-addon3" value="{{user.edad_actual}} años" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group mb-3">
+                <span class="input-group-text"> <strong>Genero</strong></span>
+                <input type="text" class="form-control" aria-label="Genero" id="generoP" name="generoP"
+                    value="{{user.id_genero.nombre_genero}}" readonly>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="inputexa" class="form-label fw-bolder">Tipo de Exámen</label>
+            <select id="inputexa" name="inputexa" class="form-select">
+                {% for x in tipo_exa %}
+                <option selected>{{x.tipo_exam}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="input-group">
+            <span class="input-group-text">Detalle de Orden Exámen</span>
+            <textarea class="form-control" aria-label="With textarea" id="ordenP" name="ordenP" style="resize: none;"
+                required maxlength="400" minlength="10"></textarea>
+        </div>
+    </div>
+    <div class="text-end ">
+        <a href="javascript:history.go(-1)"><button class="btn btn-warning fs-6 m-2" type="button">Volver <svg
+                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-back"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H2z" />
+                </svg> </button></a>
+        <button type="submit" class="btn btn-success fs-6 m-2"> Generar Orden de Exámen <svg xmlns="http://www.w3.org/2000/svg"
+                width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                <path
+                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+            </svg>
+        </button>
+    </div>
+</form>
+{% endblock contenido %}
