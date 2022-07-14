@@ -106,7 +106,7 @@
       
         <div class="col-lg-4" id="areamed" style="visibility: hidden;">
             <label for="inputRegimenHrs" class="form-label">Horas Diarias de Trabajo (Solo para Médico)</label>
-            <input type="number" class="form-control" id="inputRegimenHrs" name="inputRegimenHrs" placeholder="Horas Médico" minlength="1" maxlength="3">
+            <input type="number" class="form-control" id="inputRegimenHrs" name="inputRegimenHrs" placeholder="Horas Médico" minlength="1" maxlength="3" max="24">
             &nbsp;
         </div>
       </div>
@@ -156,10 +156,10 @@
     console.log(fech);
     if(id_p==2){
       
-      if(fech!='' && sal!=0 && horas_c!=0){
+      if(fech!='' && sal!=0 && horas_c!=0 && horas_c<25){
           cambiar_perfil(id_p);
       }else{
-        alert("Faltan Datos")
+        alert("Faltan Datos recuerde que el maximo de horas por dia son 24")
       };
     }else if(id_p==4){
       alert("no se puede convertir un Colaborador a Paciente")

@@ -32,7 +32,7 @@ def inicio(request):
 
 
     return render(request, "index_recepcion.html")
-    
+
 @login_required()
 def ingresarPac(request):
     comunas = Comuna.objects.all()
@@ -54,31 +54,35 @@ def ingresarPac(request):
         x.apellido_ma = request.POST.get('inputAM')
         x.direccion = request.POST.get('inputDir')
         x.correo = request.POST.get('inputCorreo')
-        x.fecha_nac = request.POST.get('fechaNac')  
+        x.fecha_nac = request.POST.get('inputNac')  
         x.contrasena = "temporal123"
 
         id_estC = request.POST.get('inputEstadoCivil')
         eestado = EstadoCivil.objects.get(id_estado=id_estC) 
         x.id_estado = eestado
+        print(f'id estado {x.id_estado}')
 
         id_ggen = request.POST.get('inputGenero')
         ggenero = Genero.objects.get(id_genero=id_ggen)
         x.id_genero = ggenero
+        print(f'id genero {x.id_genero}')
 
         id_nnac = request.POST.get('inputNacPac') 
-        nnacionalidad = Nacionalidad.objects.get(id_nacionalidad=id_nnac)
+        print(f'id nacionalidad  {id_nnac}')
+        nnacionalidad = Nacionalidad.objects.get(nombre_nac=id_nnac)
         x.id_nacionalidad = nnacionalidad
 
         id_ccom = request.POST.get('inputComuna')
         ccomuna = Comuna.objects.get(id_comuna=id_ccom)
         x.id_comuna = ccomuna
-
+        print(f'id comuna {x.id_comuna}')
         perfilu = PerfilUsuario.objects.get(id_perfil=4)
         x.id_perfil = perfilu
 
         id_previ = request.POST.get('inputPrevision')
         pprev = Prevision.objects.get(id_prevision=id_previ)
         y.id_prevision = pprev
+        print(f'id prev {y.id_prevision}')
 
         y.peso = request.POST.get('inputPeso')
         y.talla = request.POST.get('inputTalla')
@@ -89,8 +93,8 @@ def ingresarPac(request):
             print(user.run)
         except:
             x.run = new_run_pac
-            if x.run is not None and x.dv is not None and x.p_nombre is not None and x.apellido_pa is not None and x.apellido_ma is not None and x.direccion is not None and x.correo is not None and x.contrasena is not None and y.peso is not None and y.talla is not None:
-                if x.run.strip() !='' and x.dv.strip() !='' and x.p_nombre.strip() !='' and x.apellido_pa.strip() !='' and x.apellido_ma.strip() !='' and x.direccion.strip() !='' and x.correo.strip() !='' and y.peso.strip() !='' and y.talla.strip() !='': 
+            if x.run is not None and x.dv is not None and x.p_nombre is not None and x.apellido_pa is not None and x.apellido_ma is not None and x.direccion is not None and x.correo is not None and x.contrasena is not None:# and y.peso is not None and y.talla is not None:
+                if x.run.strip() !='' and x.dv.strip() !='' and x.p_nombre.strip() !='' and x.apellido_pa.strip() !='' and x.apellido_ma.strip() !='' and x.direccion.strip() !='' and x.correo.strip() !='':# and y.peso.strip() !='' and y.talla.strip() !='': 
                     try:
                         x.save()
                         print("Usuario Paciente Registrado")

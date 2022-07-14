@@ -15,47 +15,44 @@
                 <label for="inputDVPaciente" class="form-label">Dv<span id="dv_span" class="text-danger"></span></label>
                 <input type="text" class="form-control" id="inputDV" name="inputDV" oninput="val_dv()" minlength="1" maxlength="1" required>
             </div>
-            <div class="col-md-3">
-                <label for="fecha" class="form-label fw-bolder"> Seleccione una fecha:</label>
-                <input type="text" class="form-control" id="fecha" name="fechaNac" onchange="selectdia()" placeholder="Seleccione fecha" />
-            </div>
+            
         </div>
         <div class="row mt-3">
             <div class="col-md-3">
                 <label for="inputNombre" class="form-label fw-bolder">P. Nombre <span id="p_name" class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="inputNombre" name="inputNombre2"
+                <input type="text" class="form-control" id="inputNombre" name="inputPNom"
                     placeholder="Primer Nombre Paciente" minlength="2" maxlength="100" required>
             </div>
             <div class="col-md-3">
                 <label for="inputSNombre" class="form-label fw-bolder">S. Nombre <span id="s_name" class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="inputSNombre" name="inputSNombre2"
+                <input type="text" class="form-control" id="inputSNombre" name="inputSNom"
                     placeholder="Segundo Nombre Paciente" minlength="2" maxlength="100" required>
             </div>
             <div class="col-md-3">
                 <label for="inputApellidop" class="form-label fw-bolder">Apellido P.<span id="a_paterno" class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="inputApellidop2" name="inputApellidop2"
+                <input type="text" class="form-control" id="inputApellidop2" name="inputAp"
                     placeholder="Apellido Paterno" minlength="2" maxlength="100" required>
             </div>
             <div class="col-md-3">
                 <label for="inputApellidom" class="form-label fw-bolder">Apellido M.<span id="a_materno" class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="inputApellidom" name="inputApellidom2"
+                <input type="text" class="form-control" id="inputApellidom" name="inputAM"
                     placeholder="Apellido Materno" minlength="2" maxlength="100" required>
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-md-3">
                 <label for="inputNsocial" class="form-label fw-bolder">N. Social</label>
-                <input type="text" class="form-control" id="inputNsocial" name="inputNsocial" placeholder="Nombre Social"
+                <input type="text" class="form-control" id="inputNsocial" name="inputNomSoc" placeholder="Nombre Social"
                     minlength="2" maxlength="100">
             </div>
             <div class=" col-md-3">
                 <label for="inputcorreo" class="form-label fw-bolder">Correo Electrónico<span id="p_correo" class="text-danger">*</span></label>
-                <input type="email" class="form-control" id="inputcorreo" name="inputcorreo" placeholder="Ejemplo@correo.paciente"
+                <input type="email" class="form-control" id="inputcorreo" name="inputCorreo" placeholder="Ejemplo@correo.paciente"
                     minlength="5" maxlength="100" required>
             </div>
             <div class="col-md-3">
                 <label for="inputDireccion" class="form-label fw-bolder">Dirección<span id="p_direccion" class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="inputDireccion" name="inputDireccion" placeholder="Dirección" minlength="5"
+                <input type="text" class="form-control" id="inputDireccion" name="inputDir" placeholder="Dirección" minlength="5"
                     maxlength="100" required>
             </div>
             <div class="col-md-3">
@@ -101,10 +98,10 @@
         <div class="row mt-3">
             <div class=" col-md-3">
                 <label for="inputNac2" class="form-label fw-bolder">Nacionalidad</label>
-                <input type="text" class="form-control" id="inputNac2" name="inputNac2" placeholder="Nacionalidad"
+                <input type="text" class="form-control" id="inputNac2" name="inputNacPac" placeholder="Nacionalidad"
                     list="nacionalidad">
                 <datalist id="nacionalidad">
-                    {% for x in Nacionalidad %}
+                    {% for x in nacionalidad %}
                     <option value="{{x.nombre_nac}}"></option>
                     {% endfor %}
                 </datalist>

@@ -307,6 +307,7 @@ def vista_perfil(request):
         fechaI = request.POST.get("fecha_ing")
         salary = request.POST.get("sueldo")
         horas_col = request.POST.get("horas_colab")
+        print(f'horas colab {horas_col}')
         if idpf is not None and inprut is not None:
             print(idpf)
             usc = Usuario.objects.get(run=inprut)
@@ -348,7 +349,7 @@ def vista_perfil(request):
                     med.run_medico = usc
                     med.fecha_ingreso = fechaI
                     med.sueldo = salary
-                    med.regimen_hrs = horas_col
+                    med.regimen_hrs = int(horas_col)
                     med.id_contrato = contra
                     med.id_agenda = ag
                     med.id_espec = esp
@@ -382,7 +383,7 @@ def vista_perfil(request):
                     med.run_medico = usc
                     med.fecha_ingreso = fechaI
                     med.sueldo = salary
-                    med.regimen_hrs = horas_col
+                    med.regimen_hrs = int(horas_col)
                     med.id_contrato = contra
                     med.id_agenda = ag
                     med.id_espec = esp
