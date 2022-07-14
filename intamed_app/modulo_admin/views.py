@@ -400,7 +400,7 @@ def vista_perfil(request):
             perfiles = PerfilUsuario.objects.all()
             contexto = {"perfiles":perfiles,"cantidad":users_cant}
         elif busqueda is not None:
-            users_all = Usuario.objects.filter(run__contains=busqueda)
+            users_all = Usuario.objects.filter(run__contains=busqueda,id_perfil__in=arr_id)
             users_cant = users_all.count()
                 
     
