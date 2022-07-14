@@ -367,8 +367,7 @@ def atePaciente(request, id):
     farma = Farmaco.objects.all()
     t_diag = TipoDiagnostico.objects.all()
     t_farma = TipoFarmaco.objects.all()
-    id_diag = Diagnostico.objects.aggregate(
-        maximo=Max('id_diagnostico'))['maximo']
+    id_diag = Diagnostico.objects.aggregate(maximo=Max('id_diagnostico'))['maximo']
     id_at = Atencion.objects.aggregate(maximo=Max('id_atencion'))['maximo']
     id_receta = Receta.objects.aggregate(maximo=Max('id_receta'))['maximo']
     list_ate=[]
@@ -382,8 +381,7 @@ def atePaciente(request, id):
     except:
         aten_pa= None
     
-    
-    
+      
     if request.POST:
 
         # VAR de Usuario para su modificacion
