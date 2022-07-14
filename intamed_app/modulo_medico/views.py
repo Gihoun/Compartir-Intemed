@@ -67,7 +67,6 @@ def receta_med(request,id):
                     r.descripcion_receta = det_R
                     r.save()
                     return pdf_receta(request,det_R,id,r.id_receta)
-
                 except:
                     er = 1
                     print('mal')
