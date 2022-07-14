@@ -53,8 +53,13 @@ def login_todos(request):
    
     return render(request,'base_login.html', contexto)
 
-def activar_cuenta(request):
-    if request.POST:
-        user = User.objects.create_user(username='john',
-                                        email='jlennon@beatles.com',
-                                        password='glass onion')
+#def activar_cuenta(request):
+#    if request.POST:
+#        user = User.objects.create_user(username='john',
+#                                        email='jlennon@beatles.com',
+#                                        password='glass onion')
+
+def log_out(request):
+    logout(request)
+    response = redirect('nuestraclinica')
+    return response

@@ -20,6 +20,7 @@ import random
 from flask import json
 import numpy as np
 
+@login_required(redirect_field_name='nuestraclinica')
 def administrator(request):
     #Dash por Defecto
     logger = logging.getLogger(__name__)
@@ -97,6 +98,7 @@ def administrator(request):
                     }
     return render(request,"administrator.html",contexto)
 
+@login_required(redirect_field_name='nuestraclinica')
 def filtro_usuarios(request):
     arr_id=[1,2,3]
     users_all = Usuario.objects.filter(id_perfil__in = arr_id)
@@ -123,6 +125,7 @@ def filtro_usuarios(request):
         contexto = {"usuarios":users_all,"cantidad":users_cant}
     return render(request, 'usuarios_s.html', contexto)
 
+@login_required(redirect_field_name='nuestraclinica')
 def filtro_pacientes(request):
     if request.POST:
         busqueda = request.POST.get("txbusqueda")
@@ -152,6 +155,7 @@ def filtro_pacientes(request):
         contexto = {"usuarios":users_pac,"cantidad":userp_cant}
     return render(request, 'pacientes_s.html', contexto)
 
+@login_required(redirect_field_name='nuestraclinica')
 def edit_paciente(request,id):
     logger = logging.getLogger(__name__)
     mensaje = ''
@@ -215,6 +219,7 @@ def edit_paciente(request,id):
                 "comuna": comunas, "nacionalidad": nacionalidades, "estado": estados, "genero": generos, "alergias": alergias,"alers":todo_alergias}
     return render(request, 'edit_paciente.html',contexto)
 
+@login_required(redirect_field_name='nuestraclinica')
 def vista_farmaco(request):
     farmacos = Farmaco.objects.all()
     farmaco_cant = farmacos.count()
@@ -245,7 +250,7 @@ def vista_farmaco(request):
         contexto = {"farmacos":farmacos,"cantidad":farmaco_cant}
     return render(request, 'farmacos.html', contexto)
 
-
+@login_required(redirect_field_name='nuestraclinica')
 def edit_farmaco(request,id):
     logger = logging.getLogger(__name__)
     tipo_farmacos= TipoFarmaco.objects.all()
@@ -286,6 +291,7 @@ def edit_farmaco(request,id):
         contexto = {"farmaco": farmaco_todos,"tipos": tipo_farmacos,"mensaje": mensaje}
     return render(request, 'edit_farma.html', contexto)
 
+@login_required(redirect_field_name='nuestraclinica')
 def vista_perfil(request):
     perfiles = PerfilUsuario.objects.all()
     perfiles_cant = perfiles.count()
@@ -316,6 +322,7 @@ def vista_perfil(request):
         contexto = {"perfiles":perfiles,"cantidad":perfiles_cant}
     return render(request, 'perfiles.html', contexto)
 
+@login_required(redirect_field_name='nuestraclinica')
 def edit_perfil(request,id):
     logger = logging.getLogger(__name__)
     perfiles = PerfilUsuario.objects.get(id_perfil=id)
@@ -346,6 +353,7 @@ def edit_perfil(request,id):
         contexto = {"perfil": perfiles,"mensaje": mensaje}
     return render(request, 'edit_perfil.html', contexto)
 
+@login_required(redirect_field_name='nuestraclinica')
 def edit_colab(request,id):
     logger = logging.getLogger(__name__)
     colab = Usuario.objects.get(run=id)
@@ -449,6 +457,7 @@ def edit_colab(request,id):
                     "nacionalidad":nacionalidades, "estado":estados, "genero":generos, "mensaje": mensaje}
     return render(request, 'edit_usuario.html', contexto)
 
+@login_required(redirect_field_name='nuestraclinica')
 def vista_atenciones(request,id):
     usrs = Usuario.objects.all()
     atenciones = Atencion.objects.all()
@@ -509,6 +518,7 @@ def vista_atenciones(request,id):
         contexto = {"atencion":ate_year,"cantidad":atenciones_cant,"c_total":cant_tot, "detalle":det_at_selected,"annios":arr_annios,"fecha":id,"selc": sel}
     return render(request, 'atenciones.html', contexto)
 
+@login_required(redirect_field_name='nuestraclinica')
 def vista_reportes(request):
     reportes = Reporte.objects.all()
     report_cant = reportes.count()
@@ -564,6 +574,7 @@ def vista_reportes(request):
     
     return render(request, 'reportes.html', contexto)
 
+@login_required(redirect_field_name='nuestraclinica')
 def vista_newcolab(request):
     arr_id=[1,2,3]
     comunas = Comuna.objects.all()
@@ -673,6 +684,7 @@ def vista_newcolab(request):
         contexto = {"estadoCivil":estado, "perfiles": perfil, "comuna":comunas, "genero": generos, "nacionalidad": nacionalidades}
         return render(request,"crear_colab.html",contexto)
 
+@login_required(redirect_field_name='nuestraclinica')
 def vista_newdrug(request):
     tipos = TipoFarmaco.objects.all()
     if request.POST:
@@ -702,6 +714,7 @@ def vista_newdrug(request):
         contexto = {"tipos": tipos}
         return render(request, "crear_farma.html", contexto)
 
+@login_required(redirect_field_name='nuestraclinica')
 def vista_newperfil(request):
     if request.POST:
         p = PerfilUsuario()
@@ -721,6 +734,7 @@ def vista_newperfil(request):
     else:
         return render(request, "crear_perfil.html")
 
+@login_required(redirect_field_name='nuestraclinica')
 def vista_newpac(request):
     comunas = Comuna.objects.all()
     nacionalidades = Nacionalidad.objects.all()

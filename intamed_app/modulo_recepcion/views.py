@@ -27,12 +27,13 @@ from django.shortcuts import redirect
 from reportlab.lib.pagesizes import A4,letter
 
 # Create your views here.
-
+@login_required()
 def inicio(request):
 
 
     return render(request, "index_recepcion.html")
-
+    
+@login_required()
 def ingresarPac(request):
     comunas = Comuna.objects.all()
     nacionalidades = Nacionalidad.objects.all()
@@ -114,7 +115,7 @@ def ingresarPac(request):
 
 
 
-
+@login_required()
 def ingresarPago(request):
     prev = Prevision.objects.all()
     
@@ -197,6 +198,7 @@ def ingresarPago(request):
    
     return render(request,"ingresar_pago.html",contexto)
 
+@login_required()
 def genpdf_boleta(request,id):
     arr_1= id.split('-')
 
@@ -260,7 +262,7 @@ def genpdf_boleta(request,id):
 
     return FileResponse(buffer, as_attachment=False, filename=filname)
 
-
+@login_required()
 def filtro_pacientes(request):
     users_all = Usuario.objects.all()
     if request.POST:
@@ -279,6 +281,7 @@ def filtro_pacientes(request):
  
 
 #Arreglar mañana
+@login_required()
 def editar_paciente(request,id):
     logger = logging.getLogger(__name__)
     mensaje = ''
