@@ -4,9 +4,10 @@ from modulo_medico.models import *
 from select import select
 from django.core.mail import send_mail
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required, permission_required
 # Create your views here.
 
-
+@login_required()
 def inicio(request,id):
     paciente = Usuario.objects.get(run=id)
     med = Usuario.objects.filter(id_perfil=2)
@@ -65,7 +66,7 @@ def inicio(request,id):
         contexto = {"paciente": paciente,"medico": med,"agenda" : age}
     
     return render(request,"paciente.html", contexto)
-
+@login_required()
 def anular_hr(request,id):
     paciente = Usuario.objects.get(run=id)
     med = Usuario.objects.filter(id_perfil=2)
@@ -93,7 +94,7 @@ def anular_hr(request,id):
     contexto = {"paciente": paciente,"medico": med,"agenda":age}
     
     return render(request,"anularhr_paciente.html", contexto)
-
+@login_required()
 def mi_cuenta(request, id):
     
     mensaje = ''

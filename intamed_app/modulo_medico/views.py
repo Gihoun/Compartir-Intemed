@@ -36,6 +36,7 @@ from reportlab.lib.pagesizes import letter
 
 # Create your views here.
 ### Procedimentos almacenados para insert ####
+@login_required()
 def insert_DetAtencio(x, y):
     with connection.cursor() as cursor:
         cursor.callproc("sp_detalle_atencion", (x, y))
@@ -50,7 +51,7 @@ def insert_DetAlergia(x, y):
     return True
 ##############################################
 
-
+@login_required()
 def receta_med(request,id):  
     ar_id = id.split('-')
     u =  Usuario.objects.get(run = ar_id[1])
@@ -80,6 +81,7 @@ def receta_med(request,id):
     }
     return render(request,"med_receta.html",contexto)
 
+@login_required()
 def certi_med(request,id):
     ar_id = id.split('-')
     u =  Usuario.objects.get(run = ar_id[1])
@@ -104,6 +106,7 @@ def certi_med(request,id):
     }
     return render(request,"med_certi.html",contexto)
 
+@login_required()
 def orden_med(request,id):
     ar_id = id.split('-')
     u =  Usuario.objects.get(run = ar_id[1])
@@ -137,6 +140,7 @@ def orden_med(request,id):
     }
     return render(request,"med_orden.html",contexto)
 
+@login_required()
 def pdf_orden(request,det_o,id,id_exa,te):
     ## id ppara personalizar
     ar_id = id.split('-')
@@ -180,6 +184,7 @@ def pdf_orden(request,det_o,id,id_exa,te):
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename=namefile)
 
+@login_required()
 def pdf_receta(request,ate,id,id_r):
     
     ## id ppara personalizar
@@ -223,6 +228,7 @@ def pdf_receta(request,ate,id,id_r):
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename=namefile)
 
+@login_required()
 def pdf_certi(request,detC,id):
     ## id ppara personalizar
     ar_id = id.split('-')
@@ -264,10 +270,7 @@ def pdf_certi(request,detC,id):
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename=namefile)
 
-
-
-
-
+@login_required()
 def inicio(request):
 
     logueado = request.user
@@ -276,7 +279,7 @@ def inicio(request):
     contexto = {"medico": usu_medico}
     return render(request, "index_medico.html", contexto)
 
-
+@login_required()
 def agenda(request):
     # obtiene el medico autenticado
     logueado = request.user
@@ -339,7 +342,7 @@ def agenda(request):
     }
     return render(request, "agenda_paciente.html", contexto)
 
-
+@login_required()
 def atePaciente(request, id):
 
     tel_users = TelefonoUsuario.objects.get(run_usuario=id)
@@ -480,7 +483,7 @@ def atePaciente(request, id):
 
 
 
-
+@login_required()
 def consultaV(request):
     # Estado Civil sin paciente.
     estadoCivil = EstadoCivil.objects.all()
@@ -532,7 +535,7 @@ def consultaV(request):
                     }
         return render(request, "consulta_paciente.html", contexto)
 
-
+@login_required()
 def consultaP(request, id):
     mensaje = 10
     # Pacioente Antiguo por ID, datos de observaciones y demas
@@ -704,7 +707,7 @@ def consultaP(request, id):
                 }
     return render(request, "consulta_paciente.html", contexto)
 
-
+@login_required()
 def examenesP(request):
     if request.POST:
         paciente = request.POST.get("sPaciente")
