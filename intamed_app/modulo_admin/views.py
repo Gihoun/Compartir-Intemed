@@ -295,31 +295,116 @@ def edit_farmaco(request,id):
 def vista_perfil(request):
     perfiles = PerfilUsuario.objects.all()
     perfiles_cant = perfiles.count()
+   
+    arr_id=[1,2,3]
+    users_all = Usuario.objects.filter(id_perfil__in = arr_id)
+    users_cant = users_all.count()
     if request.POST:
         busqueda = request.POST.get("txbusqueda")
         eliminar = request.POST.get("eliminar")
+        idpf = request.POST.get("id_perfil")
+        inprut = request.POST.get("inputRut")
+        fechaI = request.POST.get("fecha_ing")
+        salary = request.POST.get("sueldo")
+        horas_col = request.POST.get("horas_colab")
+        if idpf is not None and inprut is not None:
+            print(idpf)
+            usc = Usuario.objects.get(run=inprut)
+            perf_nuevo = PerfilUsuario.objects.get(id_perfil=idpf)
+            # eliminar perfil antiguo
+            try:
+                if usc.id_perfil_id == 1:
+                    admin = Administrador.objects.get(run_admin=inprut)
+                    admin.delete()   
+                    print(" PERFIL ANTIGUO BORRADO ADMIN")
 
-        if eliminar is not None:
-            per = PerfilUsuario.objects.get(id_perfil=eliminar)
-            per.delete()
-            print("Perfil Eliminado Exitosamente")
-            messages.success(request, "Perfil de Usuario Eliminado Exitosamente")
+                elif usc.id_perfil_id  == 2:
+                    medico = Medico.objects.get(run_medico=inprut)
+                    medico.delete()
+                    print(" PERFIL ANTIGUO BORRADO MEDICO")
+                           
+                elif usc.id_perfil_id  == 3:
+                    recep = Recepcionista.objects.get(run_recepcionista=inprut)
+                    recep.delete()
+                    print(" PERFIL ANTIGUO BORRADO RECEPCION")
+            except: 
+                print(" PERFIL ANTIGUO NO TENIA REGISTRO REAL") 
+                usc.id_perfil = perf_nuevo
+                usc.save()          
+                # guardar datos en nuevo perfil
+                contra = Contrato.objects.get(id_contrato=990)
+                if idpf == '1':
+                    adm = Administrador()
+                    adm.run_admin = usc
+                    adm.fecha_ingreso = fechaI
+                    adm.sueldo = salary
+                    adm.id_contrato = contra
+                    adm.save()
+                    print("guardado con exito")
+                elif idpf == '2':
+                    ag = Agenda.objects.get(id_agenda=999) ## por defecto
+                    esp = Especialidad.objects.get(id_espec=1) ## por defecto
+                    med = Medico()
+                    med.run_medico = usc
+                    med.fecha_ingreso = fechaI
+                    med.sueldo = salary
+                    med.regimen_hrs = horas_col
+                    med.id_contrato = contra
+                    med.id_agenda = ag
+                    med.id_espec = esp
+                    med.save()
+                    print("guardado con exito")
+                elif idpf == '3':
+                    rec = Recepcionista() 
+                    rec.run_recepcionista = usc
+                    rec.fecha_ingreso = fechaI
+                    rec.sueldo = salary 
+                    rec.id_contrato = contra
+                    rec.save()
+                    print("guardado con exito")
+            else:
+                usc.id_perfil = perf_nuevo
+                usc.save()          
+                # guardar datos en nuevo perfil
+                contra = Contrato.objects.get(id_contrato=990)
+                if idpf == '1':
+                    adm = Administrador()
+                    adm.run_admin = usc
+                    adm.fecha_ingreso = fechaI
+                    adm.sueldo = salary
+                    adm.id_contrato = contra
+                    adm.save()
+                    print("guardado con exito")
+                elif idpf == '2':
+                    ag = Agenda.objects.get(id_agenda=999) ## por defecto
+                    esp = Especialidad.objects.get(id_espec=1) ## por defecto
+                    med = Medico()
+                    med.run_medico = usc
+                    med.fecha_ingreso = fechaI
+                    med.sueldo = salary
+                    med.regimen_hrs = horas_col
+                    med.id_contrato = contra
+                    med.id_agenda = ag
+                    med.id_espec = esp
+                    med.save()
+                    print("guardado con exito")
+                elif idpf == '3':
+                    rec = Recepcionista() 
+                    rec.run_recepcionista = usc
+                    rec.fecha_ingreso = fechaI
+                    rec.sueldo = salary 
+                    rec.id_contrato = contra
+                    rec.save()
+                    print("guardado con exito")
+            print(idpf)
             perfiles = PerfilUsuario.objects.all()
-            perfiles_cant = perfiles.count()
-            contexto = {"perfiles":perfiles,"cantidad":perfiles_cant}
+            contexto = {"perfiles":perfiles,"cantidad":users_cant}
         elif busqueda is not None:
-            perfiles = PerfilUsuario.objects.filter(nombre_perfil__startswith=busqueda)
-            perfiles_cant = perfiles.count()
-        else:
-            perfiles = PerfilUsuario.objects.all()
-            perfiles_cant = perfiles.count()
-        contexto = {"perfiles":perfiles,"cantidad":perfiles_cant}
-        if perfiles_cant>=1:
-            contexto = {"perfiles":perfiles,"cantidad":perfiles_cant}
-        else:
-            contexto = {"perfiles":0,"cantidad":0}
-    else:
-        contexto = {"perfiles":perfiles,"cantidad":perfiles_cant}
+            users_all = Usuario.objects.filter(run__contains=busqueda)
+            users_cant = users_all.count()
+                
+    
+    contexto = {"usuarios":users_all,"cantidad":users_cant,"perfiles":perfiles}
     return render(request, 'perfiles.html', contexto)
 
 @login_required(redirect_field_name='nuestraclinica')

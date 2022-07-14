@@ -6,62 +6,233 @@
 
 {% block contenido %}  
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <h2>Perfiles de Usuarios: {{cantidad}}</h2>
-    <div class="tab-content  container-fluid" id="v-pills-tabContent">
-        <div class="tab-pane fade show active container-fluid" id="v-pills-agenda" role="tabpanel"
-            aria-labelledby="v-pills-agenda-tab">
+  <h2>Colaboradores nuevo perfil: {{cantidad}}</h2>
+  <div class="tab-content  container-fluid" id="v-pills-tabContent">
+      <div class="tab-pane fade show active container-fluid" id="v-pills-agenda" role="tabpanel"
+          aria-labelledby="v-pills-agenda-tab">
             <form class="d-flex" method="POST" action="{% url 'perfilg' %}">
                 {% csrf_token %}
-                    <input class="form-control me-2" type="search" placeholder="Introduzca Nombre del Perfil" name="txbusqueda" aria-label="Search">
+                    <input class="form-control me-2" type="search" placeholder="RUT Colaborador" name="txbusqueda" aria-label="Search">
                     <button id="boton" class="btn btn-outline-primary" type="submit">Buscar</button>
-                    &nbsp;
-                    <a class="btn btn-outline-info" href= "{% url 'crear_perfil' %}" >Nuevo</a>
+                
             </form>
-            <div></div>
             
+          <div></div>
+      </div>
+  </div>  
+  <div class="table-responsive" style="min-height: 500px;" >
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th scope="col">RUT</th>
+          <th scope="col">Nombre Completo</th>
+          <th scope="col">Fecha Nacimiento</th>
+          <th scope="col">Correo</th>
+          <th scope="col">id_perfil</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+          {% if cantidad >= 1 %}
+              {% for usu in usuarios %}
+                <tr>
+                  <td>{{usu.run}}-{{usu.dv}}</td>
+                  <td>{{usu.p_nombre}} {{usu.s_nombre}} {{usu.apellido_pa}} {{usu.apellido_ma}}</td>
+                  <td>{{usu.fecha_nac}}</td>
+                  <td>{{usu.correo}}</td>
+                  <td>{{usu.id_perfil_id}}</td>
+                  <td>
+                    <div class="btn-group">
+                      <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Acción
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-dark" style="padding-bottom: 10%;">
+                        <li><a id="1"  class="dropdown-item" href="#" value="editar" onclick="mostrarperfil({{usu.run}},{{usu.id_perfil_id}})" >cambiar de perfil</a></li>
+                        <li><a id="1"  class="dropdown-item" href="{% url 'edit_colab' usu.run %}" value="editar">Editar</a></li>
+                        <li><button href="#" class="btn dropdown-item" name="eliminar" onclick="eliminarColab({{usu.run}})" value="{{usu.run}}">Eliminar</button></li>  
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              {% endfor %} 
+          {% elif cantidad < 1 %}
+        <tr>
+          <td>--</td>
+          <td>No Encontrado</td>
+          <td>No Encontrado</td>
+          <td>No Encontrado</td>
+          <td>No Encontrado</td>
+        </tr>
+        
+        {% endif %} 
+      </tbody>
+    </table>
+  </div>
+      <div class="row mt-3" id="areaPerfil" style="visibility: hidden;">
+        <hr>
+        
+        <div class="btn-group" id="dropperfil">
+          <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Seleccione perfil y rellene los campos requeridos
+          </button>
+          <ul class="dropdown-menu dropdown-menu-dark" style="padding-bottom: 10%;">
+            {% for perf in perfiles %}
+            <li><a class="dropdown-item" href="#" value="{{perf.id_perfil}}" onclick="adjperfil({{perf.id_perfil}})" >{{perf.nombre_perfil}}</a></li>
+            {% endfor %}
+          </ul>
         </div>
-    </div>  
-    <div class="table-responsive" style="min-height: 500px;">
-      <table class="table table-striped table-sm">
-        <thead>
-          <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Nombre Perfil</th>
-            <th scope="col">--</th>
-          </tr>
-        </thead>
-        <tbody>
-            {% if cantidad >= 1 %}
-                {% for perfil in perfiles %}
-                  <tr>
-                    <td>{{perfil.id_perfil}}</td>
-                    <td>{{perfil.nombre_perfil}}</td>
-                    <td>
-                      <div class="btn-group">
-                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Acción
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                          <li><a id="1"  class="dropdown-item" href="{% url 'edit_perfil' perfil.id_perfil %}" value="editar">Editar</a></li>
-                          <li><form type="submit" method="POST" action="{% url 'perfilg' %}">{% csrf_token%}<button type=submit class="btn dropdown-item" name="eliminar" value="{{perfil.id_perfil}}">Eliminar</button></form></li>
-                        </ul>
-                      </div>
-                    </td>
-                  </tr>
-                {% endfor %} 
-            {% elif cantidad < 1 %}
-          <tr>
-            <td>No Encontrado</td>
-            <td>No Encontrado</td>
-            <td>No Encontrado</td>
-          </tr>
-          
-          {% endif %} 
-        </tbody>
-      </table>
+        <div class="col-lg-4"  >
+          <label  class="form-label">rut</label>
+          <input type="number" class="form-control" id="rut_col" name="run_colab" placeholder="" minlength="8" maxlength="10" readonly required>
+        </div>
+        <div class="col-lg-1">
+          <label  class="form-label">id perfil<span id="dv_span" class="text-danger"></span></label>
+          <input type="text" class="form-control" name="" id="idprof" oninput="" placeholder="" value="" minlength="1" maxlength="1" readonly required>
+      </div>
+      <div class="col-lg-1">
+        <label  class="form-label">nuevo<span id="dv_span" class="text-danger"></span></label>
+        <input type="text" class="form-control" name="" id="idpnew" oninput="" placeholder="" value="" minlength="1" maxlength="1" readonly required>
+    </div>
+      <div id="areanop">
+        
+        <div class="col-lg-4"  >
+            <label for="fechaIng" class="form-label">Fecha de Ingreso</label>
+            <input type="date" class="form-control" id="fechaIng" name="fechaIng" placeholder="Fecha de Ingreso" minlength="8" maxlength="10" required>
+        </div>
+        <div class="col-lg-4">
+            <label for="inputSueldo" class="form-label">Sueldo ($)</label>
+            <input type="number" class="form-control" id="inputSueldo" name="inputSueldo" placeholder="Ingrese Sueldo ($)" minlength="1" maxlength="9" required>
+        </div>
+      
+        <div class="col-lg-4" id="areamed" style="visibility: hidden;">
+            <label for="inputRegimenHrs" class="form-label">Horas Diarias de Trabajo (Solo para Médico)</label>
+            <input type="number" class="form-control" id="inputRegimenHrs" name="inputRegimenHrs" placeholder="Horas Médico" minlength="1" maxlength="3">
+            &nbsp;
+        </div>
+      </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end" class="row mt-3">
+          <button type="" class="btn btn-outline-primary" onclick="validar_cambio()">Confirmar</button>
+        </div>
+      </div>
     </div>
     <!-- Contenido de los tab de cada tabla -->
           
     </div>
 </main>
 {% endblock contenido %}
+{% block js1%}
+<script>
+
+  function mostrarperfil(id,prof){
+    const area = document.getElementById('areaPerfil');
+    area.style.visibility = "visible"; 
+    document.getElementById('rut_col').value = id;
+    document.getElementById('idprof').value =prof;
+  } 
+  function adjperfil(id){
+    const aream = document.getElementById('areamed');
+    const areanopac = document.getElementById('areanop');
+    document.getElementById('idpnew').value = id;
+    if(id==2){
+      console.log(id);
+      areanopac.style.visibility = "visible";
+      aream.style.visibility = "visible";
+    }else if(id==4){
+      aream.style.visibility = "hidden";
+      areanopac.style.visibility = "hidden";
+      
+    }else{
+      aream.style.visibility = "hidden";
+      areanopac.style.visibility = "visible";
+    };
+  }
+  function validar_cambio(){
+    var fech = document.getElementById('fechaIng').value;
+    var sal = document.getElementById('inputSueldo').value;
+    var horas_c = document.getElementById('inputRegimenHrs').value;
+    var run_co = document.getElementById('rut_col').value;
+    var id_p = document.getElementById('idpnew').value;
+    console.log(id_p);
+    console.log(fech);
+    if(id_p==2){
+      
+      if(fech!='' && sal!=0 && horas_c!=0){
+          cambiar_perfil(id_p);
+      }else{
+        alert("Faltan Datos")
+      };
+    }else if(id_p==4){
+      alert("no se puede convertir un Colaborador a Paciente")
+    }else{
+      if(fech!='' && sal!=0 && id_p!=0){
+        cambiar_perfil(id_p);
+      }else{
+        alert("Faltan Datos")
+      };
+      
+    };
+    
+
+
+  }
+  function cambiar_perfil(id){
+    var run_co = document.getElementById('rut_col').value;
+    var idold = document.getElementById('idprof').value;
+    var idnew = document.getElementById('idpnew').value;
+
+    var fech = document.getElementById('fechaIng').value;
+    var sal = document.getElementById('inputSueldo').value;
+    var horas_c = document.getElementById('inputRegimenHrs').value;
+    Swal.fire({
+      "title": "¿Esta Seguro?",
+      "text": "Esta Acción cambiara el perfil de: " + idold + " a "+ idnew +" para el usuario run: "+ run_co,
+      "icon": "question",
+      "showCancelButton": true,
+      "cancelButtonText": "No, Cancelar",
+      "confirmButtonText": "Si, seguro",
+      "reverseButtons": true,
+      "confirmButtonColor": "#dc3545"
+    })
+    .then(function(result){
+            
+      if(result.isConfirmed){
+        const data = new FormData();
+        var csrftoken = '{{ csrf_token }}';
+        data.append('id_perfil',id);
+        data.append('inputRut',run_co);
+        if(id==1 || id==3){
+          data.append('fecha_ing',fech);
+          data.append('sueldo',sal);
+
+        }else if(id==2){
+          data.append('fecha_ing',fech);
+          data.append('sueldo',sal);
+          data.append('horas_colab',horas_c);
+        };
+        
+        console.log(id);
+        fetch('{% url 'perfilg' %}', {
+          method: 'POST',
+          body: data ,
+          headers: {
+            'X-CSRFToken': csrftoken ,
+          }
+       });
+       Swal.fire({
+        "title": "Realizado",
+        "text": "el perfil ha sido cambiado",
+        "icon": "success"
+      })
+      .then(function(result){
+        if(result.isConfirmed){
+        window.location.href = "{% url 'perfilg' %}";
+        }
+      });
+    }
+  })  
+    
+  }
+
+
+</script>
+{% endblock js1 %}
