@@ -350,8 +350,6 @@
                                 </div>
                             </div>
                             <div class="text-end">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#modalhistorial">Historial</button>
                                 <button type="button" class="btn btn-primary fs-6 m-2"
                                     onclick="add_row('tablaF')">Agregar
                                     Fármaco <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -360,45 +358,6 @@
                                             d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
                                     </svg>
                                 </button>
-                            </div>
-                            <div class="modal fade" id="modalhistorial" tabindex="-1" aria-labelledby="modalhistirial"
-                                aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Historial de Fármacos:
-                                                <strong>{{User_p.p_nombre}} {{User_p.apellido_pa}}
-                                                    {{User_p.apellido_ma}}</strong>
-                                            </h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body table-responsive">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">N. fármaco</th>
-                                                        <th scope="col">Via Adm.</th>
-                                                        <th scope="col">Fecha</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {% for farma,rece in farma_pa %}
-                                                    <tr>
-                                                        <td>{{rece.nombre_farmaco}}</td>
-                                                        <td>{{rece.via_administracion}}</td>
-                                                        <td>{{farma.id_receta.fecha_receta}}</td>
-                                                    </tr>
-                                                    {% endfor %}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>

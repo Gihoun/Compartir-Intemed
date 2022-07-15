@@ -1,107 +1,87 @@
 {% extends "base_recepcion.html" %}
 {% load static %}
-{% block contenido %}  
+{% block contenido %}
 <section class="p-4">
-    <form class="row " action="{% url 'modulo_recepcion:ingresarPag' %}" method="POST" enctype="multipart/form-data" onsubmit="">
+    <form class="row " action="{% url 'modulo_recepcion:ingresarPag' %}" method="POST" enctype="multipart/form-data"
+        onsubmit="">
         {% csrf_token %}
         <h3 class="text-center mb-5">Ingresar Pago paciente</h3>
-            <div class="row mt-3">
-                <div class="col-sm-3">
-                    <label for="inputRutPaciente" class="form-label" >Rut Paciente</label>
-                    <input type="number" class="form-control" name="runp" id="inputRutPaciente" placeholder="{{pac.run}}" value="{{pac.run}}">
-                </div>
-                <div class="col-sm-1">
-                    <label for="inputDV" class="form-label">Dv</label>
-                    <input type="text" class="form-control" id="inputDV" placeholder="{{pac.dv}}">
-                </div>
-                <div class="col-sm-4" style="margin-top: 32px;">
-                    <button type="submit" class="btn btn-primary mb-3">Buscar</button>
-                </div>
+        <div class="row mt-3">
+            <div class="col-sm-3">
+                <label for="inputRutPaciente" class="form-label">Rut Paciente</label>
+                <input type="number" class="form-control" name="runp" id="inputRutPaciente" placeholder="{{pac.run}}"
+                    value="{{pac.run}}">
             </div>
-            <div class="row mt-3">
-                <div class="col-sm-4 mt-1">
-                    <label for="inputNombre" class="form-label">Nombres</label>
-                    <input type="text" class="form-control" id="inputNombre" placeholder="{{pac.p_nombre}} {{pac.s_nombre}}">
-                </div>
-                <div class="col-sm-4">
-                    <label for="inputApellidoPaciente" class="form-label">Apellido P.</label>
-                    <input type="text" class="form-control" id="inputApellidoPaciente"
-                        placeholder="{{pac.apellido_pa}}">
-                </div>
-                <div class="col-sm-4">
-                    <label for="inputApellidomPaciente" class="form-label">Apellido M.</label>
-                    <input type="text" class="form-control" id="inputApellidomPaciente"
-                        placeholder="{{pac.apellido_ma}}">
-                </div>
+            <div class="col-sm-1">
+                <label for="inputDV" class="form-label">Dv</label>
+                <input type="text" class="form-control" id="inputDV" placeholder="{{pac.dv}}">
             </div>
-            <div class="row mt-3">
-                <div class=" col-sm-4">
-                    <label for="inputcorreo" class="form-label">Correo Electrónico</label>
-                    <input type="email" class="form-control" id="inputcorreo" placeholder="{{pac.correo}}">
-                </div>
-                <div class="col-sm-4">
-                    <label for="inputPrev" class="form-label">Previsión</label>
-                    <select name="inputPrev" class="form-select ">
-                    {% for x in prevision %}
-                        {% if x.nombre_prevision == pac.paciente.id_prevision.nombre_prevision %}
-                            <option selected>{{x.nombre_prevision}}</option>
-                        {% else %}
-                            <option>{{x.nombre_prevision}}</option>
-                        {% endif %}
-                    {% endfor %}
-                    </select>
-                </div> 
-                <div class=" col-sm-4">
-                    <label for="inputvalue" class="form-label">valor</label>
-                    <input type="number" class="form-control" id="inputval" name="inpval" placeholder="">
-                </div>
+            <div class="col-sm-4" style="margin-top: 32px;">
+                <button type="submit" class="btn btn-primary mb-3">Buscar</button>
             </div>
-            
-            <div>
-                {% if agenda%}
-                <table class="table is-fullwidth is-striped is-bordered table-hover">
-                    <thead>
+        </div>
+        {% if pac %}
+        <div class="row mt-3">
+            <div class="col-sm-4 mt-1">
+                <label for="inputNombre" class="form-label">Nombres</label>
+                <input type="text" class="form-control" id="inputNombre"
+                    placeholder="{{pac.p_nombre}} {{pac.s_nombre}}">
+            </div>
+            <div class="col-sm-4">
+                <label for="inputApellidoPaciente" class="form-label">Apellido P.</label>
+                <input type="text" class="form-control" id="inputApellidoPaciente" placeholder="{{pac.apellido_pa}}">
+            </div>
+            <div class="col-sm-4">
+                <label for="inputApellidomPaciente" class="form-label">Apellido M.</label>
+                <input type="text" class="form-control" id="inputApellidomPaciente" placeholder="{{pac.apellido_ma}}">
+            </div>
+        </div>
+        {% endif %}
+        <div class="row mt-3">
+            <div class=" col-sm-4">
+                <label for="inputvalue" class="form-label">Monto</label>
+                <input type="number" class="form-control" id="inputval" name="inpval" placeholder="$"  min="1000" max="999999991">
+            </div>
+        </div>
+        <div>
+            {% if agenda %}
+            <table class="table is-fullwidth is-striped is-bordered table-hover">
+                <thead>
                     <tr>
                         <th>Id agenda</th>
                         <th>Fecha</th>
-                        <th>Hora</th>   
+                        <th>Hora</th>
                     </tr>
-                    </thead>
-                    <tbody>
-                        {% for ag in agenda %}
-                        <tr>
-                            
-                            <th>{{ag.id_disp}}</th>
-                            <th>{{ag.id_horaD.fecha_hora|date:"N d "}}</th>
-                            <th>{{ag.id_horaD.fecha_hora|date:"P"}}</th>
-                            <td style="text-align: center;">
-                                <button type="button" class="btn btn-info s-1 text-white"
-                                    onclick="confirma_bono({{ag.id_disp}})">
-                                    Imprimir Bono
-                                </button>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table> 
+                </thead>
+                <tbody>
+                    {% for ag in agenda %}
+                    <tr>
+                        <th><input name="id_dispon" value="{{ag.id_disp}}" readonly hidden></input>{{ag.id_disp}}</th>
+                        <th>{{ag.id_horaD.fecha_hora|date:"N d "}}</th>
+                        <th>{{ag.id_horaD.fecha_hora|date:"P"}}</th>
+                        <td style="text-align: center;">
+                            <button type="submit" class="btn btn-info s-1 text-white">
+                                Imprimir Bono
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
 
-                <div class="container table-responsive border mt-5">
-                    <h3 class="text-center mb-5">Atención</h3>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">Hora de Atención </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                        <label class="form-check-label" for="flexRadioDefault2"> Exámenes </label>
-                    </div> 
+            <div class="container table-responsive border mt-5">
+                <h3 class="text-center mt-5">Atención</h3>
+                <div class="form-check p-5">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                    <label class="form-check-label" for="flexRadioDefault1">Hora de Atención </label>
                 </div>
-                   
-                {% else %}
-                <label>el paciente no tiene horas en agenda</label>
-                {% endif%}
             </div>
-            
+
+            {% else %}
+            <label class="mt-3">El paciente no tiene horas en agenda</label>
+            {% endif%}
+        </div>
+
     </form>
 </section>
-{% endblock contenido %}  
+{% endblock contenido %}

@@ -34,7 +34,6 @@
     </head>
     <script src="https://unpkg.com/feather-icons"></script>
         <body>
- 
             <header class="fixed-top">
                 <nav class="navbar navbar-expand-xl navbar-light border p-md-3">
                     <div class="container">
@@ -71,7 +70,7 @@
                             {% csrf_token %}
                             <h3 class="text-center" style="color: #039BE5">Inicio de Sesión</h3>
                             <div class="form-group">
-                                <label for="username" style="color: #039BE5">Correo:</label><br>
+                                <label for="username" style="color: #039BE5">Usuario:</label><br>
                                 <input type="text" id="username" name="nameU" class="form-control">
                             </div>
                             <div class="form-group">
@@ -90,12 +89,12 @@
                     </div>
                 </div>
             </div>
-            <div class="text-center">
-                <br>
-                <p> © 2022, Clínica de Servicios Médicos Intemed </p>
-                <br>
-            </div>
         </div>
     </div>
+    <footer class="mt-5">
+        <div class="text-center">
+            <p class="font-weight-bold">© 2022, Clínica de Servicios Médicos Intemed</p>
+        </div>
+    </footer>
 </body>
 </html>
