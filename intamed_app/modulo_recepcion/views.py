@@ -431,3 +431,6 @@ def tomar_hora(request):
     
     contexto = {"medico":med,"disponibilidad":disp}
     return render(request,'tomar_hora.html',contexto)
+
+def vista_boleta(request):
+    return render(request,'boleta_skull.html')

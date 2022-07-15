@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from .views import inicio, ingresarPago, filtro_pacientes, editar_paciente, anularHora, genpdf_boleta, ingresarPac, tomar_hora
+from .views import inicio, ingresarPago, filtro_pacientes, editar_paciente, anularHora, genpdf_boleta, ingresarPac, tomar_hora, vista_boleta
 
 app_name="modulo_recepcion"
 
@@ -12,5 +12,6 @@ urlpatterns = [
     path('inicio/editarPac/<id>',editar_paciente, name="editarPac"),
     path('inicio/anularHora',anularHora, name="anularHor"),
     path('inicio/genboleta/<id>',genpdf_boleta, name="genpdf"),
+    path('inicio/boleta',vista_boleta, name="boleta"),
     path('inicio/tomarHora/',tomar_hora, name="tomar_hr")
 ]
