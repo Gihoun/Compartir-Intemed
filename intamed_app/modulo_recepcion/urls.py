@@ -11,6 +11,5 @@ urlpatterns = [
     path('inicio/ingresarPago',ingresarPago, name="ingresarPag"),
     path('inicio/editarPac/<id>',editar_paciente, name="editarPac"),
     path('inicio/anularHora',anularHora, name="anularHor"),
-    path('inicio/genboleta/<id>',genpdf_boleta, name="genpdf"),
     path('inicio/tomarHora/',tomar_hora, name="tomar_hr")
 ]

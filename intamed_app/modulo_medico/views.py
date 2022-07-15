@@ -9,7 +9,7 @@ from select import select
 from xml.dom import NoDataAllowedErr
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from modulo_admin.models import Agenda, Comuna, DetalleFarmaco, Diagnostico, EstadoCivil, Examen, Genero, Medico, Nacionalidad, Paciente, Receta, ResultadoExamen, TipoDiagnostico, TipoExamen, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono
+from modulo_admin.models import Agenda, Comuna,Boleta, DetalleFarmaco, Diagnostico, EstadoCivil, Examen, Genero, Medico, Nacionalidad, Paciente, Receta, ResultadoExamen, TipoDiagnostico, TipoExamen, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono
 from modulo_admin.models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato, Alergia, DetalleAlergia, DetalleAtencion
 from modulo_medico.models import Disponibilidad, agenda_hora, det_agenda
 from modulo_admin.metodos import agregar_disp
@@ -48,6 +48,7 @@ def insert_DetAlergia(x, y):
     with connection.cursor() as cursor:
         cursor.callproc("sp_detalle_alergia", (x, y))
     return True
+
 ##############################################
 
 @login_required()
@@ -279,6 +280,64 @@ def pdf_certi(request,detC,id):
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename=namefile)
 
+
+def genpdf_boleta(request,id):
+    arr_1= id.split('-')
+
+
+    # Create a file-like buffer to receive PDF data.
+    buffer = io.BytesIO()
+    bol = Boleta.objects.get(id_atencion=arr_1[0])
+    uss = Usuario.objects.get(run=arr_1[1])
+    #img_file = "./modulo_recepcion/static/img/intemed.png"
+    valor = bol.monto_pago
+    
+    # Create the PDF object, using the buffer as its "file."
+    p = canvas.Canvas(buffer)
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+
+    x_cord = 350
+    y_cord = 510
+    #p.drawImage(img_file, x_cord, y_cord, width=200, preserveAspectRatio=True, mask='auto')
+    p.drawString(240, 820, f"BONO DE ATENCION: {arr_1[0]}")
+    p.drawString(20, 780, f"Nombre Paciente: {uss.p_nombre} {uss.s_nombre}")
+    p.drawString(20, 760, f"Edad:  {uss.edad_actual}  Sexo: X")
+    p.drawString(20, 740, f"Direccion      : {uss.direccion}")
+    p.drawString(20, 720, f"Fecha Emisión  :  {bol.fecha_boleta} ")
+    p.drawString(350,720, f"Direccion clinica: [Direccion Clinica X, X] ")
+
+    p.drawString(20, 690, f"Detalle Atencion ")
+
+    p.line(20, 120, 570, 120)
+
+    p.drawString(20, 640, f"Atencion: X")
+    p.drawString(350, 640, f"Por un valor de     :${valor}")
+    
+    p.line(20, 170, 570, 170)
+    
+    p.drawString(350, 590, f"Valor Total a pagar :${valor}")
+    
+    p.drawString(20, 500, f"Run profesional : ")
+    p.drawString(20, 480, f"Medico Tratante : ")
+    p.drawString(20, 460, f"Especialidad    : ")
+
+    p.drawString(350, 500, f"Servicios de salud Intamed ")
+    p.drawString(350, 480, f"RUT: 96.999.888-2 ")
+
+    p.line(320, 320, 520, 320)
+    p.drawString(350, 460, f"Firma Institucion")
+
+    p.showPage()
+    p.save()
+
+    buffer.seek(0)
+
+    filname = 'boleta' + str(id) + '.pdf'
+    
+    return FileResponse(buffer, as_attachment=True, filename=filname)
+
+
 @login_required()
 def inicio(request):
 
@@ -294,6 +353,7 @@ def agenda(request):
     logueado = request.user
     run_med = logueado.usuario_django.run_django
     usu_medico = Usuario.objects.get(run=run_med)
+
 
     ##########
     array_paciente = []
