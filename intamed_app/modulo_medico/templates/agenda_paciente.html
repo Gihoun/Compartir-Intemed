@@ -39,11 +39,11 @@
           </tr>
         </thead>
         <tbody>
-          {% for pac,x in antiguo %}
+          {% for pac,x,y in antiguo %}
           <tr>
             <th>{{pac.p_nombre}} {{pac.apellido_pa}} {{pac.apellido_ma}}</th>
             <td class="edadPaciente text-start">{{pac.edad_actual}} años</td>
-            <td>Work in Porgress</td>
+            <td>{{y.idd.id_horaD.fecha_hora}}</td>
             {% if x == "Nuevo" %}
             <td><a href="{% url 'modulo_medico:atePaciente' pac.run %}">{{x}}</a></td>
             {% else %}
@@ -71,7 +71,7 @@
 
     </form>
   </div>
-  <div class="tab-pane fade show active" id="horariasig" role="tabpanel" aria-labelledby="hora_asig-tab">
+  <div class="tab-pane fade" id="horariasig" role="tabpanel" aria-labelledby="hora_asig-tab">
     <div class="container m-1 table-responsive  border">
       <table class="table is-fullwidth is-striped is-bordered">
         <thead>

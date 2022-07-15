@@ -7,24 +7,16 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 # Create your views here.
 
+
 @login_required()
 def inicio(request,id):
     paciente = Usuario.objects.get(run=id)
     med = Usuario.objects.filter(id_perfil=2)
     
     tom = det_agenda.objects.values_list("idda")
-    
-    
+       
     tom_us = det_agenda.objects.filter(run_pac=id)
-    #.values_list("idda")
-    #arr_us=[]
-    #
-    #for h in tom_us:
-    #    arr_us.append(h[0])
-
-    #print(f'agenda de usuario{arr_us}')
-
-    
+   
     age = Disponibilidad.objects.filter(det_agenda__in=tom_us)
 
     if request.POST:
@@ -66,6 +58,8 @@ def inicio(request,id):
         contexto = {"paciente": paciente,"medico": med,"agenda" : age}
     
     return render(request,"paciente.html", contexto)
+
+
 @login_required()
 def anular_hr(request,id):
     paciente = Usuario.objects.get(run=id)
@@ -95,6 +89,8 @@ def anular_hr(request,id):
     contexto = {"paciente": paciente,"medico": med,"agenda":age}
     
     return render(request,"anularhr_paciente.html", contexto)
+
+
 @login_required()
 def mi_cuenta(request, id):
     

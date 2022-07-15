@@ -8,5 +8,3 @@ def micuenta(request):
 def nuestraclinica(request):
     return render(request,"nuestra-clinica.html")
 
-def funcionarios(request):
-    return render(request,"funcionarios.html")  

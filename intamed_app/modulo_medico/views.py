@@ -165,7 +165,7 @@ def pdf_orden(request,det_o,id,id_exa,te):
 
     p.drawString(20, 740, f"Direccion           : {u.direccion}")
     p.drawString(20, 720, f"Fecha Emisión  :  {formato} ")
-    p.drawString(350,740, f"Direccion clinica: [Direccion Clinica X, X] ")
+    p.drawString(350,740, f"Direccion clinica: Ovalle #345")
     
     p.line(20,700,570,700)
     p.drawString(20, 680, f"Detalle Orden: ")
@@ -173,11 +173,11 @@ def pdf_orden(request,det_o,id,id_exa,te):
     p.drawString(40, 620, det_o)
     p.line(20, 120, 570, 120)
     
-    p.drawString(350, 100, f"Run profesional :{usu_medico.run}-{usu_medico.dv} ")
-    p.drawString(350, 80, f"Medico Tratante : {usu_medico.p_nombre} {usu_medico.apellido_pa}")
-    p.drawString(350, 60, f"Especialidad    : ")
-    p.drawString(20, 100, f"Servicios de salud Intemed ")
-    p.drawString(20, 80, f"RUT: 96.999.888-2 ")
+    p.drawString(350, 100, f"Run profesional : {usu_medico.run}-{usu_medico.dv} ")
+    p.drawString(350, 80,  f"Medico Tratante : {usu_medico.p_nombre} {usu_medico.apellido_pa} {usu_medico.apellido_ma}")
+    p.drawString(350, 60,  f"Especialidad    : Ginecologia")
+    p.drawString(20, 100,  f"Servicios de Salud Intemed ")
+    p.drawString(20, 80,   f"RUT             : 96.999.888-2 ")
 
     # Close the PDF object cleanly, and we're done.
     p.showPage()
@@ -284,48 +284,44 @@ def pdf_certi(request,detC,id):
 def genpdf_boleta(request,id):
     arr_1= id.split('-')
 
-
-    # Create a file-like buffer to receive PDF data.
     buffer = io.BytesIO()
     bol = Boleta.objects.get(id_atencion=arr_1[0])
     uss = Usuario.objects.get(run=arr_1[1])
-    #img_file = "./modulo_recepcion/static/img/intemed.png"
+    med = Usuario.objects.get(run=arr_1[2])
+    img_file = "./modulo_recepcion/static/img/intemed.png"
     valor = bol.monto_pago
     
-    # Create the PDF object, using the buffer as its "file."
     p = canvas.Canvas(buffer)
-    # Draw things on the PDF. Here's where the PDF generation happens.
-    # See the ReportLab documentation for the full list of functionality.
-
     x_cord = 350
     y_cord = 510
-    #p.drawImage(img_file, x_cord, y_cord, width=200, preserveAspectRatio=True, mask='auto')
+    p.drawImage(img_file, x_cord, y_cord, width=200, preserveAspectRatio=True, mask='auto')
     p.drawString(240, 820, f"BONO DE ATENCION: {arr_1[0]}")
-    p.drawString(20, 780, f"Nombre Paciente: {uss.p_nombre} {uss.s_nombre}")
-    p.drawString(20, 760, f"Edad:  {uss.edad_actual}  Sexo: X")
+    p.drawString(20, 780, f"Nombre Paciente: {uss.p_nombre} {uss.s_nombre} {uss.apellido_pa} {uss.apellido_ma}")
+    p.drawString(20, 760, f"Edad:  {uss.edad_actual} Años")
     p.drawString(20, 740, f"Direccion      : {uss.direccion}")
     p.drawString(20, 720, f"Fecha Emisión  :  {bol.fecha_boleta} ")
-    p.drawString(350,720, f"Direccion clinica: [Direccion Clinica X, X] ")
+    p.drawString(350,720, f"Direccion clinica: Ovalle #347")
 
-    p.drawString(20, 690, f"Detalle Atencion ")
+    p.drawString(20, 680, f"Detalle Atencion ")
 
-    p.line(20, 120, 570, 120)
+    p.line(20,700,570,700)
 
-    p.drawString(20, 640, f"Atencion: X")
-    p.drawString(350, 640, f"Por un valor de     :${valor}")
+    p.drawString(20, 640, f"Atencion: {arr_1[0]}")
+    p.drawString(350, 640, f"Por un valor de     : ${valor}")
     
-    p.line(20, 170, 570, 170)
+  
     
-    p.drawString(350, 590, f"Valor Total a pagar :${valor}")
+    p.drawString(350, 570, f"Valor Total a pagar : ${valor}")
+    p.line(20, 600, 570, 600)
+
     
-    p.drawString(20, 500, f"Run profesional : ")
-    p.drawString(20, 480, f"Medico Tratante : ")
-    p.drawString(20, 460, f"Especialidad    : ")
+    p.drawString(20, 500, f"Run profesional : {med.run}-{med.dv}")
+    p.drawString(20, 480, f"Medico Tratante : {med.p_nombre} {med.apellido_pa} {med.apellido_ma}")
+    p.drawString(20, 460, f"Especialidad    : Ginecologia ")
 
     p.drawString(350, 500, f"Servicios de salud Intamed ")
     p.drawString(350, 480, f"RUT: 96.999.888-2 ")
 
-    p.line(320, 320, 520, 320)
     p.drawString(350, 460, f"Firma Institucion")
 
     p.showPage()
@@ -401,10 +397,23 @@ def agenda(request):
     #medi = Medico.objects.get(run_medico=usu_medico)
     disp = Disponibilidad.objects.filter(run_medico=run_med)
     det_age= det_agenda.objects.filter(idd__in=disp)
+    u_p = Usuario.objects.filter(run__in=det_age)
+
+    r_p = list(det_agenda.objects.values_list('run_pac').filter(idd__in=disp))
+    array_p=[]
+    for p in r_p:
+        array_p.append(p[0])
+    
+    user_p = Usuario.objects.filter(run__in=array_p)
+
+
+    
+
+
     ################################
     contexto = {
         "pacientes": pacientes,
-        "antiguo": zip(pacientes, array_antiguedad),
+        "antiguo": zip(user_p, array_antiguedad,det_age),
         "disponibilidad": disp,
         "medico": usu_medico,
         "agenda": det_age
@@ -582,11 +591,14 @@ def consultaV(request):
     t_diag = TipoDiagnostico.objects.all()
     if request.POST:
         run_paciente = request.POST.get("rutPaciente2")
+        print(run_paciente)
         user_c = Usuario.objects.all().filter(run=run_paciente).count()
+        pa_u =  Usuario.objects.get(run=run_paciente)
         print(user_c)
 
         if user_c > 0:
-            return redirect('consultaP', id=run_paciente)
+            response = redirect('modulo_medico:consultaP',id=run_paciente)
+            return response #consultaP(request,run_paciente)
         else:
             mensaje = True
             contexto = {"ECivil": estadoCivil,

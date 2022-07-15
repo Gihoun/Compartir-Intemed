@@ -29,12 +29,18 @@ from django.core.mail import send_mail
 # Create your views here.
 @login_required()
 def inicio(request):
-
-
-    return render(request, "index_recepcion.html")
+    logueado = request.user
+    run_re = logueado.usuario_django.run_django
+    usu_re = Usuario.objects.get(run=run_re)
+    contexto = {"recep":usu_re}
+    return render(request, "index_recepcion.html",contexto)
 
 @login_required()
 def ingresarPac(request):
+    logueado = request.user
+    run_re = logueado.usuario_django.run_django
+    usu_re = Usuario.objects.get(run=run_re)
+    
     comunas = Comuna.objects.all()
     nacionalidades = Nacionalidad.objects.all()
     estados = EstadoCivil.objects.all()
@@ -114,7 +120,7 @@ def ingresarPac(request):
                 print("Error, Campos Nulos")
     else:
         print("Error, Sin retorno del Formulario")
-    contexto = {"estadoCivil":estados, "comuna":comunas, "genero": generos, "nacionalidad": nacionalidades, "prevision": previsiones}
+    contexto = {"estadoCivil":estados, "comuna":comunas, "genero": generos, "nacionalidad": nacionalidades, "prevision": previsiones,"recep":usu_re}
     return render(request, "ingresar_paciente.html", contexto)
 
 
@@ -122,12 +128,15 @@ def ingresarPac(request):
 @login_required()
 def ingresarPago(request):
     prev = Prevision.objects.all()   
+    logueado = request.user
+    run_re = logueado.usuario_django.run_django
+    usu_re = Usuario.objects.get(run=run_re)
+   
     if request.POST:
-        rp = request.POST.get('runp')
-        fdr_uno = request.POST.get('flexRadioDefault')
-        
+        rp = request.POST.get('runp')        
         inpvalue = request.POST.get('inpval')
-        print(f'input value {inpvalue}')
+        id_dispo = request.POST.get('id_dispon')
+        print(f'input value {inpvalue} id disp {id_dispo}')
         if rp is not None: 
             if rp.strip()!= '':
                 runf = rp
@@ -153,7 +162,9 @@ def ingresarPago(request):
             
             print("SE GENERARA LA BOLETA")
             pac = Paciente.objects.get(run_paciente=rp)
+            disp = Disponibilidad.objects.get(id_disp=id_dispo)
             print(f'id PACIENTE {runf}')
+            med = disp.run_medico_id
             
             try:
                 # generar atencion vacia 
@@ -184,7 +195,7 @@ def ingresarPago(request):
                 newB.monto_pago = inpvalue
                 try:
                     newB.save()  ##just for testing
-                    dat = str(ate_new.id_atencion) + '-' + str(runf)
+                    dat = str(ate_new.id_atencion) + '-' + str(runf) + '-'+ str(med)
                     print(f'BOLETA INGRESADA CON EXITO {ate_new.id_atencion}')
                     #response = redirect('modulo_recepcion:genpdf',id=dat)
                     return genpdf_boleta(request,dat)             
@@ -194,52 +205,33 @@ def ingresarPago(request):
             except:
                 print(" EL PACIENTE NO TIENE ATENCION GENERADA")
 
-        contexto={"pac": obj_pac,"prevision": prev,"agenda": age}
+        contexto={"pac": obj_pac,"prevision": prev,"agenda": age,"recep":usu_re}
         return render(request,"ingresar_pago.html",contexto)
 
-    contexto={"prevision":prev}
+    contexto={"prevision":prev,"recep":usu_re}
    
     return render(request,"ingresar_pago.html",contexto)
 
 
 
-
-
-def genpdf(request):
-    # Create a file-like buffer to receive PDF data.
-    buffer = io.BytesIO()
-
-    # Create the PDF object, using the buffer as its "file."
-    p = canvas.Canvas(buffer)
-
-    # Draw things on the PDF. Here's where the PDF generation happens.
-    # See the ReportLab documentation for the full list of functionality.
-    p.drawString(100, 100, "Hello world.")
-
-    # Close the PDF object cleanly, and we're done.
-    p.showPage()
-    p.save()
-
-    # FileResponse sets the Content-Disposition header so that browsers
-    # present the option to save the file.
-    buffer.seek(0)
-    return FileResponse(buffer, as_attachment=True, filename='hello.pdf')
-
 @login_required()
 def filtro_pacientes(request):
+    logueado = request.user
+    run_re = logueado.usuario_django.run_django
+    usu_re = Usuario.objects.get(run=run_re)
     users_all = Usuario.objects.all()
     if request.POST:
         busqueda = request.POST.get("txbusqueda")
         pac_ret = Usuario.objects.all().select_related('paciente').filter(run__startswith=busqueda, id_perfil=4)
         cant_p = pac_ret.count()
         if cant_p>=1:
-            contexto = {"usuarios":pac_ret,"cantidad":cant_p}
+            contexto = {"usuarios":pac_ret,"cantidad":cant_p,"recep":usu_re}
         else:
-            contexto = {"usuarios":0,"cantidad":0}
+            contexto = {"usuarios":0,"cantidad":0,"recep":usu_re}
     else:
         users_pac = Usuario.objects.all().select_related('paciente').filter(id_perfil=4)[:25]
         userp_cant = users_pac.count()
-        contexto = {"usuarios":users_pac,"cantidad":userp_cant}
+        contexto = {"usuarios":users_pac,"cantidad":userp_cant,"recep":usu_re}
     return render(request, 'buscar_paciente.html', contexto)
  
 
@@ -247,6 +239,9 @@ def filtro_pacientes(request):
 @login_required()
 def editar_paciente(request,id):
     logger = logging.getLogger(__name__)
+    logueado = request.user
+    run_re = logueado.usuario_django.run_django
+    usu_re = Usuario.objects.get(run=run_re)
     mensaje = ''
 
     prevision = Prevision.objects.all()
@@ -290,7 +285,7 @@ def editar_paciente(request,id):
 
                 mensaje="paciente guardado exitosamente"
                 contexto = {"paciente": userr, "prevision": prevision, "telefonos": num_tel, "cantidad": cant_tel,
-                "comuna": comunas, "nacionalidad": nacionalidades, "estado": estados, "genero": generos}
+                "comuna": comunas, "nacionalidad": nacionalidades, "estado": estados, "genero": generos,"recep":usu_re}
             except:
                 mensaje="usuario base guardado problemas en paciente"
         else:
@@ -300,7 +295,7 @@ def editar_paciente(request,id):
    
 
     contexto = {"paciente": paciente, "prevision": prevision, "telefonos": num_tel, "cantidad": cant_tel,
-                "comuna": comunas, "nacionalidad": nacionalidades, "estado": estados, "genero": generos}
+                "comuna": comunas, "nacionalidad": nacionalidades, "estado": estados, "genero": generos,"recep":usu_re}
    
     return render(request, 'editar_paciente.html',contexto)
 
@@ -308,7 +303,9 @@ def editar_paciente(request,id):
 
 def anularHora(request):
     users_all = Usuario.objects.all()
-    
+    logueado = request.user
+    run_re = logueado.usuario_django.run_django
+    usu_re = Usuario.objects.get(run=run_re)
     med = Usuario.objects.filter(id_perfil=2)
 
    
@@ -317,7 +314,7 @@ def anularHora(request):
 
     age = Disponibilidad.objects.filter(id_disp__in=tomadas)
 
-    contexto = {"medico": med,"agenda":age,"det_age":det_age}
+    contexto = {"medico": med,"agenda":age,"det_age":det_age,"recep":usu_re}
 
     if request.POST:
         idh= request.POST.get("id_hora")
@@ -341,7 +338,7 @@ def anularHora(request):
             
             det_h = agenda_hora.objects.filter(fecha_hora__date=fecha_s)
             dispo= Disponibilidad.objects.filter(id_horaD__in=det_h,id_disp__in=tomadas)
-            contexto = {"medico": med,"agenda":dispo,"det_age":det_age}
+            contexto = {"medico": med,"agenda":dispo,"det_age":det_age,"recep":usu_re}
             
             #paciente = Usuario.objects.get(run=id_pac)
     
@@ -352,6 +349,9 @@ def tomar_hora(request):
     tom = det_agenda.objects.values_list("idda")
     disp = Disponibilidad.objects.select_related('id_horaD').exclude(id_disp__in=tom)
 
+    logueado = request.user
+    run_re = logueado.usuario_django.run_django
+    usu_re = Usuario.objects.get(run=run_re)
     
     if request.POST:
         runm = request.POST.get("run_medic")
@@ -396,8 +396,6 @@ def tomar_hora(request):
             disp = Disponibilidad.objects.filter(run_medico=runm).select_related('id_horaD').exclude(id_disp__in=tom)
 
     
-    contexto = {"medico":med,"disponibilidad":disp}
+    contexto = {"medico":med,"disponibilidad":disp,"recep":usu_re}
     return render(request,'tomar_hora.html',contexto)
 
-def vista_boleta(request):
-    return render(request,'boleta_skull.html')
