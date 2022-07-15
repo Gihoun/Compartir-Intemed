@@ -123,9 +123,7 @@ def ingresarPac(request):
 def ingresarPago(request):
     prev = Prevision.objects.all()   
     if request.POST:
-        rp = request.POST.get('runp')
-        fdr_uno = request.POST.get('flexRadioDefault')
-        
+        rp = request.POST.get('runp')        
         inpvalue = request.POST.get('inpval')
         print(f'input value {inpvalue}')
         if rp is not None: 
