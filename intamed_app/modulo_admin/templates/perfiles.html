@@ -47,9 +47,9 @@
                         Acción
                       </button>
                       <ul class="dropdown-menu dropdown-menu-dark" style="padding-bottom: 10%;">
-                        <li><a id="1"  class="dropdown-item" href="#" value="editar" onclick="mostrarperfil({{usu.run}},{{usu.id_perfil_id}})" >cambiar de perfil</a></li>
-                        <li><a id="1"  class="dropdown-item" href="{% url 'edit_colab' usu.run %}" value="editar">Editar</a></li>
-                        <li><button href="#" class="btn dropdown-item" name="eliminar" onclick="eliminarColab({{usu.run}})" value="{{usu.run}}">Eliminar</button></li>  
+                        <li><a id="1"  class="dropdown-item" href="#" value="editar" onclick="mostrarperfil({{usu.run}},{{usu.id_perfil_id}})" >Cambiar de perfil</a></li>
+                        <!-- <li><a id="1"  class="dropdown-item" href="{% url 'edit_colab' usu.run %}" value="editar">Editar</a></li>
+                        <li><button href="#" class="btn dropdown-item" name="eliminar" onclick="eliminarColab({{usu.run}})" value="{{usu.run}} ">Eliminar</button></li>-->  
                       </ul>
                     </div>
                   </td>
@@ -57,6 +57,7 @@
               {% endfor %} 
           {% elif cantidad < 1 %}
         <tr>
+  
           <td>--</td>
           <td>No Encontrado</td>
           <td>No Encontrado</td>

@@ -39,18 +39,25 @@
           </tr>
         </thead>
         <tbody>
-          {% for pac,x,y in antiguo %}
+          
+          {% for disp in disponibilidad %}      
+          {% for ag in agenda%}
+
           <tr>
-            <th>{{pac.p_nombre}} {{pac.apellido_pa}} {{pac.apellido_ma}}</th>
-            <td class="edadPaciente text-start">{{pac.edad_actual}} años</td>
-            <td>{{y.idd.id_horaD.fecha_hora}}</td>
-            {% if x == "Nuevo" %}
-            <td><a href="{% url 'modulo_medico:atePaciente' pac.run %}">{{x}}</a></td>
+            {% if ag.idd == disp %}
+            <th>{{ag.run_pac.run_paciente.p_nombre}} {{ag.run_pac.run_paciente.apellido_pa}} {{ag.run_pac.run_paciente.apellido_ma}}</th>
+            <td class="edadPaciente text-start">{{ag.run_pac.run_paciente.edad_actual}} años</td>
+            <td>{{ag.idd.id_horaD.fecha_hora}}</td>    
+   
+            <td><a href="{% url 'modulo_medico:consultaP' ag.run_pac.run_paciente.run %}" >Antiguo</a></td> 
+            
             {% else %}
-            <td><a href="{% url 'modulo_medico:consultaP' pac.run %}">{{x}}</a></td>
+
             {% endif %}
           </tr>
           {% endfor %}
+          {% endfor %}  
+             
         </tbody>
       </table>
     </div>
@@ -90,7 +97,7 @@
                 <td>
                 {% for ag in agenda%}
                 
-                  {% if ag.idd == disp%}
+                  {% if ag.idd == disp %}
                 agendada por: {{ag.run_pac_id}} 
                   {% else %}
                     -

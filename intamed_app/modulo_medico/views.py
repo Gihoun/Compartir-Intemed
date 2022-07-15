@@ -357,13 +357,7 @@ def agenda(request):
     pacientes = Usuario.objects.filter(id_perfil=4)[:20]
     for x in pacientes:
         array_paciente.append(x.run)
-    for x in array_paciente:
-        ateExiste = DetalleAtencion.objects.filter(run_paciente=x)
-        cant = ateExiste.count()
-        if cant > 1:
-            array_antiguedad.append("Antiguo")
-        else:
-            array_antiguedad.append("Nuevo")
+    
     zip(pacientes, array_antiguedad)
 
     # codigo agregado
@@ -397,28 +391,40 @@ def agenda(request):
     #medi = Medico.objects.get(run_medico=usu_medico)
     disp = Disponibilidad.objects.filter(run_medico=run_med)
     det_age= det_agenda.objects.filter(idd__in=disp)
-    u_p = Usuario.objects.filter(run__in=det_age)
 
     r_p = list(det_agenda.objects.values_list('run_pac').filter(idd__in=disp))
     array_p=[]
     for p in r_p:
         array_p.append(p[0])
+    print(array_p)
+    array_p.sort()
+    for x in array_p:
+        ateExiste = DetalleAtencion.objects.filter(run_paciente=x)
+        cant = ateExiste.count()
+        print(cant)
+        if cant > 1:
+            array_antiguedad.append("Antiguo")
+        else:
+            array_antiguedad.append("Nuevo")
     
     user_p = Usuario.objects.filter(run__in=array_p)
-
-
+    print(array_antiguedad)
     
-
-
     ################################
     contexto = {
         "pacientes": pacientes,
-        "antiguo": zip(user_p, array_antiguedad,det_age),
+        "antiguo": zip(user_p,disp),
         "disponibilidad": disp,
         "medico": usu_medico,
         "agenda": det_age
+
+
     }
     return render(request, "agenda_paciente.html", contexto)
+
+
+
+
 
 @login_required()
 def atePaciente(request, id):
