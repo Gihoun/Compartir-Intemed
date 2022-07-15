@@ -46,6 +46,7 @@
         <div class="d-flex">
             <!-- Tabla de navegacion vertical  -->
             <div class="nav flex-column nav-pills me-5" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+              <a style="text-decoration: none;" href="{% url 'modulo_recepcion:ingresarPac' %}">
                 <button class="nav-link border m-3  btn btn-primary" id="v-pills-ingresarP-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ingresarP" type="button" role="tab" aria-controls="v-pills-ingresarP" aria-selected="false">
                     <div class="row align-items-center">
                         <div class="col-3 ">
@@ -55,11 +56,12 @@
                               </svg>
                         </div>
                         <div class="col-9 text-center overflow-hidden">
-                            <a class="nav-link" href="{% url 'modulo_recepcion:ingresarPac' %}">Ingresar Paciente</a>
-                        </div>
+                          Ingresar Paciente
+                      </div>
                     </div>
-                    
                 </button>
+              </a>
+              <a style="text-decoration: none;" href="{% url 'modulo_recepcion:buscarPac' %}"> 
                 <button class="nav-link border m-3 btn btn-primary" id="v-pills-buscarP-tab" data-bs-toggle="pill" data-bs-target="#v-pills-buscarP" type="button" role="tab" aria-controls="v-pills-buscarP" aria-selected="false">
                     <div class="row align-items-center">
                         <div class="col-3 ">
@@ -68,11 +70,13 @@
                               </svg>
                         </div>
                         <div class="col-9 text-center overflow-hidden">
-                            <a class="nav-link" href="{% url 'modulo_recepcion:buscarPac' %}"> Buscar Paciente</a>
+                            Buscar Paciente
                         </div>
                     </div>
                     
                 </button>
+              </a>
+              <a style="text-decoration: none;" href= "{% url 'modulo_recepcion:anularHor' %}">
                 <button class="nav-link border m-3 btn btn-primary" id="v-pills-ingresarPago-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ingresarPago" type="button" role="tab" aria-controls="v-pills-ingresarPago" aria-selected="false">
                     <div class="row align-items-center">
                         <div class="col-3 ">
@@ -81,11 +85,13 @@
                               </svg>
                         </div>
                         <div class="col-9 text-center overflow-hidden">
-                            <a class="nav-link" href= "{% url 'modulo_recepcion:anularHor' %}">Anular Hora</a>
+                          Anular Hora
                         </div>
                     </div>
                     
                 </button>
+              </a>
+              <a style="text-decoration: none;" href="{% url 'modulo_recepcion:ingresarPag' %}">
                 <button class="nav-link border m-3 btn btn-primary" id="v-pills-ingresarPago-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ingresarPago" type="button" role="tab" aria-controls="v-pills-ingresarPago" aria-selected="false">
                     <div class="row align-items-center">
                         <div class="col-3 ">
@@ -94,14 +100,26 @@
                               </svg>
                         </div>
                         <div class="col-9 text-center overflow-hidden">
-                            <a class="nav-link" href="{% url 'modulo_recepcion:ingresarPag' %}">Ingresar Pago</a>
+                          Ingresar Pago
                         </div>
                     </div>
-                    
+                 </a>
                 </button>
+                <a style="text-decoration: none;" href="{% url 'modulo_recepcion:tomar_hr' %}">
                 <button class="nav-link border m-3 btn btn-primary" id="v-pills-ingresarPago-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ingresarPago" type="button" role="tab" aria-controls="v-pills-ingresarPago" aria-selected="false">
-                    <a class="nav-link" href="{% url 'modulo_recepcion:tomar_hr' %}">Tomar hora Atencion</a>
+                    <div class="row align-items-center">
+                      <div class="col-3 ">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-calendar-week" viewBox="0 0 16 16">
+                          <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
+                          <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                        </svg>
+                      </div>
+                      <div class="col-9 text-center overflow-hidden">
+                        Tomar hora Atencion
+                      </div>
+                    </div>
                 </button>
+                </a>
             </div>
 
             <!-- Contenido de los tab de cada tabla -->
