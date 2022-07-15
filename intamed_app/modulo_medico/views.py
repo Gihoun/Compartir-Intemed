@@ -5,12 +5,11 @@ from curses import use_default_colors
 from email import message_from_binary_file
 from multiprocessing import context
 from multiprocessing.sharedctypes import Array
-from pickle import NONE
 from select import select
 from xml.dom import NoDataAllowedErr
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from modulo_admin.models import Agenda, Comuna, DetalleFarmaco, Diagnostico, EstadoCivil, Examen, Genero, Medico, Nacionalidad, Paciente, Receta, ResultadoExamen, TipoDiagnostico, TipoExamen, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono
+from modulo_admin.models import Agenda, Comuna,Boleta, DetalleFarmaco, Diagnostico, EstadoCivil, Examen, Genero, Medico, Nacionalidad, Paciente, Receta, ResultadoExamen, TipoDiagnostico, TipoExamen, Usuario, Atencion, Farmaco, Prevision, TelefonoUsuario, Telefono
 from modulo_admin.models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato, Alergia, DetalleAlergia, DetalleAtencion
 from modulo_medico.models import Disponibilidad, agenda_hora, det_agenda
 from modulo_admin.metodos import agregar_disp
@@ -36,7 +35,7 @@ from reportlab.lib.pagesizes import letter
 
 # Create your views here.
 ### Procedimentos almacenados para insert ####
-@login_required()
+
 def insert_DetAtencio(x, y):
     with connection.cursor() as cursor:
         cursor.callproc("sp_detalle_atencion", (x, y))
@@ -49,10 +48,12 @@ def insert_DetAlergia(x, y):
     with connection.cursor() as cursor:
         cursor.callproc("sp_detalle_alergia", (x, y))
     return True
+
 ##############################################
 
 @login_required()
 def receta_med(request,id):  
+    print(id)
     ar_id = id.split('-')
     u =  Usuario.objects.get(run = ar_id[1])
     a = Atencion.objects.get(id_atencion = ar_id[0])
@@ -279,6 +280,64 @@ def pdf_certi(request,detC,id):
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename=namefile)
 
+
+def genpdf_boleta(request,id):
+    arr_1= id.split('-')
+
+
+    # Create a file-like buffer to receive PDF data.
+    buffer = io.BytesIO()
+    bol = Boleta.objects.get(id_atencion=arr_1[0])
+    uss = Usuario.objects.get(run=arr_1[1])
+    #img_file = "./modulo_recepcion/static/img/intemed.png"
+    valor = bol.monto_pago
+    
+    # Create the PDF object, using the buffer as its "file."
+    p = canvas.Canvas(buffer)
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+
+    x_cord = 350
+    y_cord = 510
+    #p.drawImage(img_file, x_cord, y_cord, width=200, preserveAspectRatio=True, mask='auto')
+    p.drawString(240, 820, f"BONO DE ATENCION: {arr_1[0]}")
+    p.drawString(20, 780, f"Nombre Paciente: {uss.p_nombre} {uss.s_nombre}")
+    p.drawString(20, 760, f"Edad:  {uss.edad_actual}  Sexo: X")
+    p.drawString(20, 740, f"Direccion      : {uss.direccion}")
+    p.drawString(20, 720, f"Fecha Emisión  :  {bol.fecha_boleta} ")
+    p.drawString(350,720, f"Direccion clinica: [Direccion Clinica X, X] ")
+
+    p.drawString(20, 690, f"Detalle Atencion ")
+
+    p.line(20, 120, 570, 120)
+
+    p.drawString(20, 640, f"Atencion: X")
+    p.drawString(350, 640, f"Por un valor de     :${valor}")
+    
+    p.line(20, 170, 570, 170)
+    
+    p.drawString(350, 590, f"Valor Total a pagar :${valor}")
+    
+    p.drawString(20, 500, f"Run profesional : ")
+    p.drawString(20, 480, f"Medico Tratante : ")
+    p.drawString(20, 460, f"Especialidad    : ")
+
+    p.drawString(350, 500, f"Servicios de salud Intamed ")
+    p.drawString(350, 480, f"RUT: 96.999.888-2 ")
+
+    p.line(320, 320, 520, 320)
+    p.drawString(350, 460, f"Firma Institucion")
+
+    p.showPage()
+    p.save()
+
+    buffer.seek(0)
+
+    filname = 'boleta' + str(id) + '.pdf'
+    
+    return FileResponse(buffer, as_attachment=True, filename=filname)
+
+
 @login_required()
 def inicio(request):
 
@@ -294,7 +353,8 @@ def agenda(request):
     logueado = request.user
     run_med = logueado.usuario_django.run_django
     usu_medico = Usuario.objects.get(run=run_med)
-    print(f'este es el usuario django en agenda {run_med}')
+
+
     ##########
     array_paciente = []
     array_antiguedad = []
@@ -353,6 +413,9 @@ def agenda(request):
 
 @login_required()
 def atePaciente(request, id):
+    logueado = request.user
+    run_med = logueado.usuario_django.run_django
+    usu_medico = Usuario.objects.get(run=run_med)
 
     tel_users = TelefonoUsuario.objects.get(run_usuario=id)
     usuario = Usuario.objects.get(run=id)
@@ -367,20 +430,18 @@ def atePaciente(request, id):
     t_diag = TipoDiagnostico.objects.all()
     t_farma = TipoFarmaco.objects.all()
     id_diag = Diagnostico.objects.aggregate(maximo=Max('id_diagnostico'))['maximo']
-    id_at = Atencion.objects.aggregate(maximo=Max('id_atencion'))['maximo']
-    id_receta = Receta.objects.aggregate(maximo=Max('id_receta'))['maximo']
     list_ate=[]
     last_detAt = DetalleAtencion.objects.filter(run_paciente=id)
     ids_ate = list(last_detAt.values_list("id_atencion"))
     for id in ids_ate:
-        list_ate.append(id[0])
+        list_ate.append(id[0]) 
     try:
         aten_pa = Atencion.objects.get(id_atencion__in=list_ate)
-        print(aten_pa.id_atencion)
     except:
         aten_pa= None
-    
-      
+
+
+    c_receta= str(aten_pa.id_atencion)+'-'+str(usuario.run)
     if request.POST:
 
         # VAR de Usuario para su modificacion
@@ -429,31 +490,39 @@ def atePaciente(request, id):
         x.medicacion_habitual = medi_hab
 
         ################## Receta Paciente = R ##################################
-        r = Receta()
-        r.id_receta = id_receta + 1
-        r.descripcion_receta = medi_hab
+        idr_actual = Receta.objects.aggregate(maximo=Max('id_receta'))['maximo']
+        receta = Receta.objects.get(id_receta=idr_actual)
+        
+        ################## Orden Examen = O ##################################    
+        ido_actual = Examen.objects.aggregate(maximo=Max('id_examen'))['maximo']
+        orden = Examen.objects.get(id_examen=ido_actual)
+
 
         ################## Receta Paciente = A ##################################
         a_get = request.POST.get('inputDetalleA')
         # Alergias cortadas para su identificacion
         split_ale = a_get.split()
 
-        if x.talla is not None and x.peso is not None and x.imc is not None and x.observaciones is not None and x.cirugias is not None and x.enfermedad is not None and x.medicacion_habitual:
-            if x.talla.strip() != '' and x.peso.strip() != '' and x.imc.strip() != '' and x.observaciones.strip() != '' and x.cirugias.strip() != '' and x.enfermedad.strip() != '' and x.medicacion_habitual:
+        if x.talla is not None and x.peso is not None and x.imc is not None and x.observaciones is not None and x.cirugias is not None and x.enfermedades is not None and x.medicacion_habitual:
+            if x.talla.strip() != '' and x.peso.strip() != '' and x.imc.strip() != '' and x.observaciones.strip() != '' and x.cirugias.strip() != '' and x.enfermedades.strip() != '' and x.medicacion_habitual:
                 try:
                     z.save()
-                    r.save()
+
                     ################### Detalle Farmaco = dt ####################################
                     for f in farmaname:
                         fa = Farmaco.objects.get(nombre_farmaco=f)
-                        insert_DetFarmaco(r.id_receta, fa.id_farmaco)
+                        #insert_DetFarmaco(r.id_receta, fa.id_farmaco)
                     #### Valores Registro Atencion = Y ############################# 
                     aten_pa.id_diagnostico = Diagnostico.objects.get(id_diagnostico=z.id_diagnostico)
                     aten_pa.exploracion_clinica = request.POST.get("inputExplo")
-                    if r.id_receta is not None:
-                        aten_pa.id_receta = Receta.objects.get(id_receta=r.id_receta)
+                    if receta.id_receta is not None:
+                        aten_pa.id_receta = Receta.objects.get(id_receta=receta.id_receta)
                     else:
                         aten_pa.id_receta = None
+                    if orden.id_examen is not None:
+                        aten_pa.id_examen = Examen.objects.get(id_examen=orden.id_examen)
+                    else:
+                        aten_pa.id_examen = None
                     aten_pa.comentario_atencion =  request.POST.get("inputComent")
                     aten_pa.tratamiento = request.POST.get("inputTrata")
                     aten_pa.id_agenda = Agenda.objects.get(id_agenda=999)
@@ -482,7 +551,9 @@ def atePaciente(request, id):
         "tip_diag": t_diag,
         "todo_farma": farma,
         "tip_farma": t_farma,
-        "atencion": aten_pa
+        "atencion": aten_pa,
+        "medico": usu_medico,
+        "receta":c_receta,
 
     }
     return render(request, "atencion_paciente.html", contexto)
@@ -492,6 +563,9 @@ def atePaciente(request, id):
 
 @login_required()
 def consultaV(request):
+    logueado = request.user
+    run_med = logueado.usuario_django.run_django
+    usu_medico = Usuario.objects.get(run=run_med)
     # Estado Civil sin paciente.
     estadoCivil = EstadoCivil.objects.all()
     # Prevision sin pacientes
@@ -523,11 +597,10 @@ def consultaV(request):
                         "User_p": user,
                         "existe": mensaje,
                         "tip_diag": t_diag,
+                        "medico": usu_medico,
                         }
             return render(request, "consulta_paciente.html", contexto)
     else:
-        prueba = request.POST.get('inputHabmed')
-        print(prueba)
         mensaje = False
         contexto = {"ECivil": estadoCivil,
                     "prevision": cat_prevision,
@@ -537,13 +610,15 @@ def consultaV(request):
                     "User_p": user,
                     "existe": mensaje,
                     "tip_diag": t_diag,
-                    "prueba":prueba
-
+                    "medico": usu_medico,
                     }
         return render(request, "consulta_paciente.html", contexto)
 
 @login_required()
 def consultaP(request, id):
+    logueado = request.user
+    run_med = logueado.usuario_django.run_django
+    usu_medico = Usuario.objects.get(run=run_med)
     mensaje = 10
     # Pacioente Antiguo por ID, datos de observaciones y demas
     pacientes = Paciente.objects.get(run_paciente=id)
@@ -575,7 +650,6 @@ def consultaP(request, id):
     aten_pa = Atencion.objects.filter(id_atencion__in=lista_ate).order_by('-id_atencion')[:3]
     c_receta= str(id_ate.id_atencion)+'-'+str(user.run)
 
-    print(c_receta) 
     ids_re = []
     for rece in aten_pa:
         ids_re.append(rece.id_receta)
@@ -596,6 +670,15 @@ def consultaP(request, id):
     id_diag = Diagnostico.objects.aggregate(maximo=Max('id_diagnostico'))['maximo']
     t_farma = TipoFarmaco.objects.all()
     id_receta = Receta.objects.aggregate(maximo=Max('id_receta'))['maximo']
+
+
+    ################## Receta Paciente = R ##################################
+    idr_actual = Receta.objects.aggregate(maximo=Max('id_receta'))['maximo']
+    receta = Receta.objects.get(id_receta=idr_actual)
+        
+    ################## Orden Examen = O ##################################    
+    ido_actual = Examen.objects.aggregate(maximo=Max('id_examen'))['maximo']
+    orden = Examen.objects.get(id_examen=ido_actual)
 
     if request.POST:
         x = Paciente()
@@ -648,11 +731,6 @@ def consultaP(request, id):
         z.nombre_diag = request.POST.get("inputDiagnostico2")
         z.id_tipo_diag = TipoDiagnostico.objects.get(tipo_diag=t_diagnostico)
 
-        ################## Receta Paciente = R ##################################
-        r = Receta()
-        r.id_receta = id_receta + 1
-        r.descripcion_receta = medicamento
-
         ################## Receta Paciente = A ##################################
         a_get = request.POST.get('inputDetalleA')
         # Alergias cortadas para su identificacion
@@ -661,20 +739,22 @@ def consultaP(request, id):
         if user.correo is not None and user.direccion is not None and user.id_comuna is not None and user.id_estado is not None and x.talla is not None and x.peso is not None and x.observaciones is not None and x.cirugias is not None and x.enfermedades is not None and x.medicacion_habitual:
             if user.correo.strip() != '' and user.direccion.strip() != '' and x.talla.strip() != '' and x.peso.strip() != '' and x.observaciones.strip() != '' and x.cirugias.strip() != '' and x.enfermedades.strip() != '' and x.medicacion_habitual:
                 try:
-                    z.save()
-                    r.save()
+                    z.save()              
                     ################### Detalle Farmaco = dt ####################################
                     for f in farmaname:
                         fa = Farmaco.objects.get(nombre_farmaco=f)
-                        insert_DetFarmaco(r.id_receta, fa.id_farmaco)
+                        #insert_DetFarmaco(r.id_receta, fa.id_farmaco)
                     #### Valores Registro Atencion = Y #############################
- 
                     id_ate.id_diagnostico = Diagnostico.objects.get(id_diagnostico=z.id_diagnostico)
                     id_ate.exploracion_clinica = request.POST.get("inputExplo")
-                    if r.id_receta is not None:
-                        id_ate.id_receta = Receta.objects.get(id_receta=r.id_receta)
+                    if receta.id_receta is not None:
+                        id_ate.id_receta = Receta.objects.get(id_receta=receta.id_receta)
                     else:
                         id_ate.id_receta = None
+                    if orden.id_examen is not None:
+                        id_ate.id_examen = Examen.objects.get(id_examen=orden.id_examen)
+                    else:
+                        id_ate.id_examen = None
                     ########## Valores de Alergias y Detalles #########
                     for a in split_ale:
                         al = Alergia.objects.get(nombre_alergia=a)
@@ -687,7 +767,7 @@ def consultaP(request, id):
                     x.save()
                     id_ate.save()
                     mensaje = 0
-                    return redirect('consultaP', h=id)
+                    #return redirect('modulo_medico:consultaP', h=id)
                 except:
                     mensaje = 1
             else:
@@ -710,6 +790,7 @@ def consultaP(request, id):
                 "farma_pa":zip(aten_pa,real_far),
                 "lista_ate":aten_pa,
                 "receta":c_receta,
+                "medico": usu_medico,
 
                 }
     return render(request, "consulta_paciente.html", contexto)

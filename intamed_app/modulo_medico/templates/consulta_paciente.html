@@ -53,9 +53,9 @@
 
 {% if User_p.run %}
 <form class="row " method="POST" enctype="multipart/form-data" action="{% url 'modulo_medico:consultaP' User_p.run %}">
-    {% else %}
+{% else %}
     <form class="row " method="POST" enctype="multipart/form-data" action="{% url 'index' %}">
-        {% endif %}
+{% endif %}
         {% csrf_token %}
         <div class="row mt-3">
             <div class="col-md-3">
@@ -267,18 +267,18 @@
                                     <label for="inputObserva" class="form-label fw-bolder">Observaciones
                                         Paciente</label>
                                     <textarea class="form'control" name="inputObserva" id="inputObserva" rows="6"
-                                        style="resize: none;" cols="30">{{paciente.observaciones}}</textarea>
+                                         >{{paciente.observaciones}}</textarea>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="inputEnf" class="form-label fw-bolder">Enfermedades Paciente</label>
                                     <textarea class="form'control" name="inputEnf" id="inputEnf" rows="6"
-                                        style="resize: none;" cols="30">{{paciente.enfermedades}}</textarea>
+                                        >{{paciente.enfermedades}}</textarea>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="inputAQuiru" class="form-label fw-bolder">Antecedentes
                                         Quirúrgicos</label>
                                     <textarea class="form'control" name="inputAQuiru" id="inputAQuiru" rows="6"
-                                        style="resize: none;" cols="30">{{paciente.cirugias}}</textarea>
+                                         >{{paciente.cirugias}}</textarea>
                                 </div>
                             </div>
                             <h3 class="text-center mt-4"> Medicación Habitual</h3>

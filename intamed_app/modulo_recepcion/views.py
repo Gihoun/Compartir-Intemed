@@ -4,7 +4,7 @@ from .metodos import *
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from modulo_medico.models import *
-from modulo_medico.views import insert_DetAtencio
+from modulo_medico.views import insert_DetAtencio,genpdf_boleta
 from modulo_admin.models import Comuna, EstadoCivil, Genero, Medico, Nacionalidad, Paciente, Usuario, Atencion, Farmaco
 from modulo_admin.models import TipoFarmaco, PerfilUsuario, Administrador, Recepcionista, Contrato, TipoContrato, Alergia
 from modulo_admin.models import Prevision, TelefonoUsuario, Telefono, DetalleAlergia, DetalleAtencion, Boleta
@@ -24,7 +24,7 @@ import io
 from django.http import FileResponse
 from reportlab.pdfgen import canvas
 from django.shortcuts import redirect
-from reportlab.lib.pagesizes import A4,letter
+from django.core.mail import send_mail
 
 # Create your views here.
 @login_required()
@@ -121,8 +121,7 @@ def ingresarPac(request):
 
 @login_required()
 def ingresarPago(request):
-    prev = Prevision.objects.all()
-    
+    prev = Prevision.objects.all()   
     if request.POST:
         rp = request.POST.get('runp')
         fdr_uno = request.POST.get('flexRadioDefault')
@@ -184,87 +183,47 @@ def ingresarPago(request):
                 newB.fecha_boleta = f_boleta
                 newB.monto_pago = inpvalue
                 try:
-                    bol = Boleta.objects.get(id_atencion=ate_new)
-                    print(" YA SE REALIZO EL PAGO POR ESTA ATENCION")
-                except:
                     newB.save()  ##just for testing
                     dat = str(ate_new.id_atencion) + '-' + str(runf)
                     print(f'BOLETA INGRESADA CON EXITO {ate_new.id_atencion}')
-                    response = redirect('modulo_recepcion:genpdf',id=dat)
-                    return response
+                    #response = redirect('modulo_recepcion:genpdf',id=dat)
+                    return genpdf_boleta(request,dat)             
+                except:
+                    bol = Boleta.objects.get(id_atencion=ate_new)
+                    print(" YA SE REALIZO EL PAGO POR ESTA ATENCION")
             except:
                 print(" EL PACIENTE NO TIENE ATENCION GENERADA")
 
         contexto={"pac": obj_pac,"prevision": prev,"agenda": age}
         return render(request,"ingresar_pago.html",contexto)
-    else:
-        contexto={"prevision":prev}
+
+    contexto={"prevision":prev}
    
     return render(request,"ingresar_pago.html",contexto)
 
-@login_required()
-def genpdf_boleta(request,id):
-    arr_1= id.split('-')
 
 
+
+
+def genpdf(request):
     # Create a file-like buffer to receive PDF data.
     buffer = io.BytesIO()
-    bol = Boleta.objects.get(id_atencion=arr_1[0])
-    uss = Usuario.objects.get(run=arr_1[1])
-    img_file = "./modulo_recepcion/static/img/intemed.png"
-    valor = bol.monto_pago
-    
+
     # Create the PDF object, using the buffer as its "file."
     p = canvas.Canvas(buffer)
+
     # Draw things on the PDF. Here's where the PDF generation happens.
     # See the ReportLab documentation for the full list of functionality.
-    w, h = letter
-
-    x_cord = 350
-    y_cord = 510
-    p.drawImage(img_file, x_cord, y_cord, width=200, preserveAspectRatio=True, mask='auto')
-    p.drawString(240, 820, f"BONO DE ATENCION: {arr_1[0]}")
-    p.drawString(20, 780, f"Nombre Paciente: {uss.p_nombre} {uss.s_nombre}")
-    p.drawString(20, 760, f"Edad:  {uss.edad_actual}  Sexo: X")
-    p.drawString(20, 740, f"Direccion      : {uss.direccion}")
-    p.drawString(20, 720, f"Fecha Emisión  :  {bol.fecha_boleta} ")
-    p.drawString(350,720, f"Direccion clinica: [Direccion Clinica X, X] ")
-
-    p.drawString(20, 690, f"Detalle Atencion ")
-
-    p.line(20, h-120, 570, h-120)
-
-    p.drawString(20, 640, f"Atencion: X")
-    p.drawString(350, 640, f"Por un valor de     :${valor}")
-    
-    p.line(20, h-170, 570, h-170)
-    
-    p.drawString(350, 590, f"Valor Total a pagar :${valor}")
-    
-
-
-    p.drawString(20, 500, f"Run profesional : ")
-    p.drawString(20, 480, f"Medico Tratante : ")
-    p.drawString(20, 460, f"Especialidad    : ")
-
-
-    p.drawString(350, 500, f"Servicios de salud Intamed ")
-    p.drawString(350, 480, f"RUT: 96.999.888-2 ")
-
-    p.line(320, h-320, 520, h-320)
-    p.drawString(350, 460, f"Firma Institucion")
+    p.drawString(100, 100, "Hello world.")
 
     # Close the PDF object cleanly, and we're done.
     p.showPage()
     p.save()
+
     # FileResponse sets the Content-Disposition header so that browsers
     # present the option to save the file.
     buffer.seek(0)
-
-    filname = 'boleta' + str(id) + '.pdf'
-    
-
-    return FileResponse(buffer, as_attachment=False, filename=filname)
+    return FileResponse(buffer, as_attachment=True, filename='hello.pdf')
 
 @login_required()
 def filtro_pacientes(request):
@@ -371,8 +330,8 @@ def anularHora(request):
             print(f"la hora que se elimino {idh}")
             send_mail(
                     'Subject here',
-                    'Here is the message.',
-                    'andrea.verdugomunoz@gmail.com',
+                    'Hora eliminada.',
+                    'intemed.clinica@gmail.com',
                     ['an.verdugom@duocuc.cl'],
                     fail_silently=False,
             )
@@ -405,6 +364,7 @@ def tomar_hora(request):
             print(f'el valor de selhora {sel_hora}')
             di = Disponibilidad.objects.get(id_disp=sel_hora)
             pac = Paciente.objects.get(run_paciente=rut)
+            userP =  Usuario.objects.get(run=rut)
             
             try:
                 test_det = det_agenda.objects.get(idd=sel_hora)
@@ -416,6 +376,13 @@ def tomar_hora(request):
                 new_agenda.idda = sel_hora
                 new_agenda.save()
                 print(f'hora agendada con exito')
+                send_mail(
+                    'Subject here',
+                    'Hora Agendada ',
+                    'intemed.clinica@gmail.com',
+                    ['an.verdugom@duocuc.cl'],
+                    fail_silently=False,
+                )
         if dat is not None and dat != '':
             
             arr_date= dat.split("-")

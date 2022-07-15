@@ -144,15 +144,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
 DATE_FORMAT = ('Y-m-d')
 
-#Working in progress
-EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST="smtp-mail.outlook.com"
-EMAIL_USE_TLS=True
-EMAIL_PORT=587
-EMAIL_HOST_USER="envioautomaticoduoc@outlook.es"
-EMAIL_HOST_PASSWORD="duocenvioautomatico987"
-SERVER_EMAIL = EMAIL_HOST_USER
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+#Working in progress - Intemedclinica9898
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+
+EMAIL_HOST_USER="intemed.clinica@gmail.com"
+EMAIL_HOST_PASSWORD="qzampultszefwaxp"
 
 
 

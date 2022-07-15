@@ -76,14 +76,15 @@ def anular_hr(request,id):
 
     if request.POST:
         idh= request.POST.get("id_hora")
+
         
         deta = det_agenda.objects.get(idda=idh)
         deta.delete()
         print(f"la hora que se eliminada {idh}")
         send_mail(
                 'Subject here',
-                'Here is the message.',
-                'andrea.verdugomunoz@gmail.com',
+                'Hora Anulada '+paciente.p_nombre,
+                'intemed.clinica@gmail.com',
                 ['an.verdugom@duocuc.cl'],
                 fail_silently=False,
         )

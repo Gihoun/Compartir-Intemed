@@ -215,18 +215,18 @@
                         <div class="row align-items-center">
                             <div class="col-md-4">
                                 <label for="inputexcli" class="form-label fw-bolder">Observaciones Paciente</label>
-                                <textarea class="form'control" name="inputObserva" id="inputObserva" cols="30"
-                                    rows="6" style="resize: none;">{{paciente.observaciones}}</textarea>
+                                <textarea class="form'control" name="inputObserva" id="inputObserva" cols="30" rows="6"
+                                    style="resize: none;">{{paciente.observaciones}}</textarea>
                             </div>
                             <div class="col-md-4">
                                 <label for="inputEnf" class="form-label fw-bolder">Enfermedades Paciente</label>
-                                <textarea class="form'control" name="inputEnf" id="inputEnf" cols="30"
-                                    rows="6" style="resize: none;">{{paciente.enfermedades}}</textarea>
+                                <textarea class="form'control" name="inputEnf" id="inputEnf" cols="30" rows="6"
+                                    style="resize: none;">{{paciente.enfermedades}}</textarea>
                             </div>
                             <div class="col-md-4">
                                 <label for="inputTrata" class="form-label fw-bolder">Antecedentes Quirúrgicos</label>
-                                <textarea class="form'control" name="inputAQuiru" id="inputAQuiru" cols="30"
-                                    rows="6" style="resize: none;">{{paciente.cirugias}}</textarea>
+                                <textarea class="form'control" name="inputAQuiru" id="inputAQuiru" cols="30" rows="6"
+                                    style="resize: none;">{{paciente.cirugias}}</textarea>
                             </div>
                         </div>
                         <h3 class="text-center mt-4"> Medicación Habitual</h3>
@@ -242,20 +242,21 @@
                                 <tbody class="text-start">
                                     <tr id="row">
                                         <td>
-                                            <input type="text" id="inputNfarmaco" placeholder="Ingrese Fármaco" name="inputNfarmaco"
-                                                oninput="auto_farma(this.id)">
+                                            <input type="text" id="inputNfarmaco" placeholder="Ingrese Fármaco"
+                                                name="inputNfarmaco" oninput="auto_farma(this.id)">
                                         </td>
                                         <td>
-                                            <input type="text" id="inputDfarmaco" placeholder="Ingrese Dosis" name="inputDfarmaco">
+                                            <input type="text" id="inputDfarmaco" placeholder="Ingrese Dosis"
+                                                name="inputDfarmaco">
                                         </td>
                                         <td>
-                                            <input type="text" id="inputVfarmaco" placeholder="Ingrese Via Adminsitración"
-                                                name="inputVfarmaco">
+                                            <input type="text" id="inputVfarmaco"
+                                                placeholder="Ingrese Via Adminsitración" name="inputVfarmaco">
                                         </td>
                                         <td>
-                                            <button class="mt-1" type="button" id="eliminarFar" onclick="delRow()" disabled><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                                                    class="bi bi-trash3" viewBox="0 0 16 16">
+                                            <button class="mt-1" type="button" id="eliminarFar" onclick="delRow()"
+                                                disabled><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                    fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
                                                     <path
                                                         d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
                                                 </svg>
@@ -267,9 +268,9 @@
                                     function auto_farma(x) {
                                         var farmDispo = [
                                             {% for x in todo_farma %}
-            
+
                                     "{{x.nombre_farmaco}}",
-            
+
                                         {% endfor %}
                                     ];
                                     $("#" + x).autocomplete({
@@ -282,11 +283,13 @@
                         <div class="row">
                             <label for="inputHabmed" class="form-label fw-bolder">Medicamentos Habituales</label>
                             <div class="input-group mb-3 ">
-                                <input type="text" class="form-control" placeholder="Medicamentos Habituales" id="inputHabmed"
-                                    name="inputHabmed" aria-describedby="refresh_farma" value="{{paciente.medicacion_habitual}}">
+                                <input type="text" class="form-control" placeholder="Medicamentos Habituales"
+                                    id="inputHabmed" name="inputHabmed" aria-describedby="refresh_farma"
+                                    value="{{paciente.medicacion_habitual}}">
                                 <button class="btn btn-outline-secondary" type="button" id="refresh_farma"
-                                    onclick="refresh_Farma('tablaF')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                        fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                                    onclick="refresh_Farma('tablaF')"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                        height="16" fill="currentColor" class="bi bi-arrow-clockwise"
+                                        viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"
                                             d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
                                         <path
@@ -295,14 +298,14 @@
                             </div>
                         </div>
                         <div class="text-end">
-                           <button type="button" class="btn btn-primary fs-6 m-2" onclick="add_row('tablaF')">Agregar
-                                Fármaco <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                            <button type="button" class="btn btn-primary fs-6 m-2" onclick="add_row('tablaF')">Agregar
+                                Fármaco <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                                     <path
                                         d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
                                 </svg>
-            
-                            </button> 
+
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -323,8 +326,9 @@
                 type="button" role="tab" aria-controls="diagnostico" aria-selected="false">Diagnostico</button>
         </li>
         <li class="nav-item text-center" role="presentation">
-            <button class="nav-link fw-bolder" id="ant-expclinico-tab" data-bs-toggle="tab" data-bs-target="#ant-expclinico"
-                type="button" role="tab" aria-controls="ant-expclinico" aria-selected="false">Exploración Clinica</button>
+            <button class="nav-link fw-bolder" id="ant-expclinico-tab" data-bs-toggle="tab"
+                data-bs-target="#ant-expclinico" type="button" role="tab" aria-controls="ant-expclinico"
+                aria-selected="false">Exploración Clinica</button>
         </li>
         <li class="nav-item text-center" role="presentation">
             <button class="nav-link fw-bolder" id="ant-clinico-tab" data-bs-toggle="tab" data-bs-target="#ant-clinico"
@@ -376,30 +380,35 @@
                     d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
             </svg>
         </button>
-        <button type="button" class="btn btn-secondary fs-6 m-2"> Generar Certificado <svg
-                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
-                <path
-                    d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0z" />
-            </svg>
-        </button>
-        <button type="button" class="btn btn-secondary fs-6 m-2">Generar Orden de Exámen <svg
-                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-file-earmark-pdf-fill" viewBox="0 0 16 16">
-                <path
-                    d="M5.523 12.424c.14-.082.293-.162.459-.238a7.878 7.878 0 0 1-.45.606c-.28.337-.498.516-.635.572a.266.266 0 0 1-.035.012.282.282 0 0 1-.026-.044c-.056-.11-.054-.216.04-.36.106-.165.319-.354.647-.548zm2.455-1.647c-.119.025-.237.05-.356.078a21.148 21.148 0 0 0 .5-1.05 12.045 12.045 0 0 0 .51.858c-.217.032-.436.07-.654.114zm2.525.939a3.881 3.881 0 0 1-.435-.41c.228.005.434.022.612.054.317.057.466.147.518.209a.095.095 0 0 1 .026.064.436.436 0 0 1-.06.2.307.307 0 0 1-.094.124.107.107 0 0 1-.069.015c-.09-.003-.258-.066-.498-.256zM8.278 6.97c-.04.244-.108.524-.2.829a4.86 4.86 0 0 1-.089-.346c-.076-.353-.087-.63-.046-.822.038-.177.11-.248.196-.283a.517.517 0 0 1 .145-.04c.013.03.028.092.032.198.005.122-.007.277-.038.465z" />
-                <path fill-rule="evenodd"
-                    d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm5.5 1.5v2a1 1 0 0 0 1 1h2l-3-3zM4.165 13.668c.09.18.23.343.438.419.207.075.412.04.58-.03.318-.13.635-.436.926-.786.333-.401.683-.927 1.021-1.51a11.651 11.651 0 0 1 1.997-.406c.3.383.61.713.91.95.28.22.603.403.934.417a.856.856 0 0 0 .51-.138c.155-.101.27-.247.354-.416.09-.181.145-.37.138-.563a.844.844 0 0 0-.2-.518c-.226-.27-.596-.4-.96-.465a5.76 5.76 0 0 0-1.335-.05 10.954 10.954 0 0 1-.98-1.686c.25-.66.437-1.284.52-1.794.036-.218.055-.426.048-.614a1.238 1.238 0 0 0-.127-.538.7.7 0 0 0-.477-.365c-.202-.043-.41 0-.601.077-.377.15-.576.47-.651.823-.073.34-.04.736.046 1.136.088.406.238.848.43 1.295a19.697 19.697 0 0 1-1.062 2.227 7.662 7.662 0 0 0-1.482.645c-.37.22-.699.48-.897.787-.21.326-.275.714-.08 1.103z" />
-            </svg>
-        </button>
-        <a href="{% url 'modulo_medico:recetaP' paciente.run %}">
+        <a href="{% url 'modulo_medico:certiP' receta %}"><button type="button" class="btn btn-secondary fs-6 m-2">
+                Generar Certificado <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0z" />
+                </svg>
+            </button>
+        </a>
+
+        <a href="{% url 'modulo_medico:ordenP' receta %}"><button type="button"
+                class="btn btn-secondary fs-6 m-2">Generar Orden de Exámen <svg xmlns="http://www.w3.org/2000/svg"
+                    width="16" height="16" fill="currentColor" class="bi bi-file-earmark-pdf-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M5.523 12.424c.14-.082.293-.162.459-.238a7.878 7.878 0 0 1-.45.606c-.28.337-.498.516-.635.572a.266.266 0 0 1-.035.012.282.282 0 0 1-.026-.044c-.056-.11-.054-.216.04-.36.106-.165.319-.354.647-.548zm2.455-1.647c-.119.025-.237.05-.356.078a21.148 21.148 0 0 0 .5-1.05 12.045 12.045 0 0 0 .51.858c-.217.032-.436.07-.654.114zm2.525.939a3.881 3.881 0 0 1-.435-.41c.228.005.434.022.612.054.317.057.466.147.518.209a.095.095 0 0 1 .026.064.436.436 0 0 1-.06.2.307.307 0 0 1-.094.124.107.107 0 0 1-.069.015c-.09-.003-.258-.066-.498-.256zM8.278 6.97c-.04.244-.108.524-.2.829a4.86 4.86 0 0 1-.089-.346c-.076-.353-.087-.63-.046-.822.038-.177.11-.248.196-.283a.517.517 0 0 1 .145-.04c.013.03.028.092.032.198.005.122-.007.277-.038.465z" />
+                    <path fill-rule="evenodd"
+                        d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm5.5 1.5v2a1 1 0 0 0 1 1h2l-3-3zM4.165 13.668c.09.18.23.343.438.419.207.075.412.04.58-.03.318-.13.635-.436.926-.786.333-.401.683-.927 1.021-1.51a11.651 11.651 0 0 1 1.997-.406c.3.383.61.713.91.95.28.22.603.403.934.417a.856.856 0 0 0 .51-.138c.155-.101.27-.247.354-.416.09-.181.145-.37.138-.563a.844.844 0 0 0-.2-.518c-.226-.27-.596-.4-.96-.465a5.76 5.76 0 0 0-1.335-.05 10.954 10.954 0 0 1-.98-1.686c.25-.66.437-1.284.52-1.794.036-.218.055-.426.048-.614a1.238 1.238 0 0 0-.127-.538.7.7 0 0 0-.477-.365c-.202-.043-.41 0-.601.077-.377.15-.576.47-.651.823-.073.34-.04.736.046 1.136.088.406.238.848.43 1.295a19.697 19.697 0 0 1-1.062 2.227 7.662 7.662 0 0 0-1.482.645c-.37.22-.699.48-.897.787-.21.326-.275.714-.08 1.103z" />
+                </svg>
+            </button>
+        </a>
+
+        <a href="{% url 'modulo_medico:recetaP' receta %}">
             <button type="button" class="btn btn-success fs-6 m-2"> Generar Receta <svg
                     xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                     <path
                         d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
                 </svg>
-            </button></a>
+            </button>
+        </a>
     </div>
 </form>
 {% endblock contenido %}
